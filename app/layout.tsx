@@ -42,15 +42,7 @@ export const metadata: Metadata = {
       "I build high-performance web applications for early-stage founders using modern web stacks.",
     url: "https://aditya-builds.vercel.app",
     siteName: "Aditya Portfolio",
-    images: [
-      {
-        url: "https://aditya-builds.vercel.app/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Aditya — Full-Stack Web Developer",
-      },
-    ],
-    locale: "en_US",
+    locale: "en_IN",
     type: "website",
   },
 
