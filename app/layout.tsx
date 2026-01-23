@@ -39,11 +39,11 @@ export const metadata: Metadata = {
     title: "Aditya — Full-Stack Web Developer",
     description:
       "I build high-performance web applications for early-stage founders using modern web stacks.",
-    url: "https://yourdomain.com",
+    url: "https://aditya-builds.vercel.app",
     siteName: "Aditya Portfolio",
     images: [
       {
-        url: "https://yourdomain.com/og.png",
+        url: "https://aditya-builds.vercel.app/og.png",
         width: 1200,
         height: 630,
         alt: "Aditya — Full-Stack Web Developer",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: "Aditya — Full-Stack Web Developer",
     description:
       "Building fast, scalable SaaS products with Next.js and modern web tech.",
-    images: ["https://yourdomain.com/og.png"],
+    images: ["https://aditya-builds.vercel.app/og.png"],
   },
 
   robots: {
