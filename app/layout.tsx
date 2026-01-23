@@ -55,11 +55,9 @@ export const metadata: Metadata = {
   },
 
   twitter: {
-    card: "summary_large_image",
     title: "Aditya — Full-Stack Web Developer",
     description:
       "Building fast, scalable SaaS products with Next.js and modern web tech.",
-    images: ["https://aditya-builds.vercel.app/og.png"],
   },
 
   robots: {
