@@ -1,10 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import X from "@/public/x-icon";
-import { Moon, PinIcon, Sun } from "lucide-react";
+import { Check, Copy, Moon, PinIcon, Sun } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -14,6 +15,14 @@ import Peerlist from "@/public/peerlist";
 
 export function Hero() {
   const { theme, setTheme } = useTheme();
+  const [copied, setCopied] = useState(false);
+
+  const copyDiscordId = () => {
+    navigator.clipboard.writeText("t1x_faker");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <motion.section
       className="space-y-4 px-6"
@@ -155,6 +164,31 @@ export function Hero() {
               </TooltipTrigger>
               <TooltipContent>
                 <p>Peerlist</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={copyDiscordId}
+                  className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                >
+                  <Image
+                    src="/discord.svg"
+                    alt="Discord"
+                    width={20}
+                    height={20}
+                  />
+                  <span className="text-sm">@t1x_faker</span>
+                  {copied ? (
+                    <Check className="h-3.5 w-3.5 text-green-500" />
+                  ) : (
+                    <Copy className="h-3.5 w-3.5" />
+                  )}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{copied ? "Copied!" : "Click to copy"}</p>
               </TooltipContent>
             </Tooltip>
           </motion.div>
