@@ -29,7 +29,14 @@ export function Skills() {
 
   return (
     <section className="px-6 border-t border-dashed pt-6">
-      <h2 className="text-xl font-semibold mb-4">Stack</h2>
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2, delay: 0.1 }}
+        className="text-xl font-semibold mb-4"
+      >
+        Stack
+      </motion.h2>
       <TooltipProvider delayDuration={0}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
