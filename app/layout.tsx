@@ -21,7 +21,10 @@ export const metadata: Metadata = {
   title: "Aditya — Full-Stack Web Developer",
   description:
     "Full-stack web developer building fast, scalable web applications for early-stage founders. Next.js, React, TypeScript, Prisma,Trpc , PostgreSQL.",
-
+  verification: {
+    google:
+      "google-site-verification=g3qcAByxzXth5-9FAc4ZGNbMuD360f9xaQkpa18yads",
+  },
   keywords: [
     "Full-stack developer",
     "Web developer",
