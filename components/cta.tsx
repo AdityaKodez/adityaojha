@@ -36,16 +36,16 @@ export function CTA() {
         <Button
           variant="outline"
           size="lg"
-          className="flex items-center gap-2 cursor-default"
+          className="flex items-center gap-2 cursor-pointer"
           disabled={false}
           onClick={copyDiscordId}
         >
           <Image src="/discord.svg" alt="Discord" width={16} height={16} />
           @t1x_faker
           {copied ? (
-            <Check className="h-4 w-4 text-green-500" />
+            <Check className="size-3 text-green-500" />
           ) : (
-            <Copy className="h-4 w-4 text-muted-foreground" />
+            <Copy className="size-3 text-muted-foreground" />
           )}
         </Button>
       </div>
