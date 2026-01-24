@@ -1,46 +1,56 @@
 "use client";
-import { Badge } from "@/components/ui/badge";
 import {
-  Blocks,
-  Atom,
-  FileCode,
-  Wind,
-  Layers,
-  ShieldCheck,
-  Database,
-  Server,
-  Bot,
-} from "lucide-react";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { motion } from "motion/react";
+import NextjsIcon from "@/public/stacks/nextjs";
+import ReactIcon from "@/public/stacks/react";
+import TSIcon from "@/public/stacks/ts";
+import TailwindIcon from "@/public/stacks/tailwind";
+import ShadcnIcon from "@/public/stacks/shadcn";
+import AuthIcon from "@/public/stacks/auth";
+import PrismaIcon from "@/public/stacks/prisma";
+import TrpcIcon from "@/public/stacks/trcp";
 
 export function Skills() {
   const skills = [
-    { name: "Next.js", icon: Blocks },
-    { name: "React", icon: Atom },
-    { name: "TypeScript", icon: FileCode },
-    { name: "Tailwind CSS", icon: Wind },
-    { name: "shadcn/ui", icon: Layers },
-    { name: "better-auth", icon: ShieldCheck },
-    { name: "Prisma", icon: Database },
-    { name: "PostgreSQL", icon: Server },
-    { name: "AI / LLM", icon: Bot },
+    { name: "Next.js", icon: NextjsIcon },
+    { name: "React", icon: ReactIcon },
+    { name: "TypeScript", icon: TSIcon },
+    { name: "Tailwind CSS", icon: TailwindIcon },
+    { name: "shadcn/ui", icon: ShadcnIcon },
+    { name: "better-auth", icon: AuthIcon },
+    { name: "Prisma", icon: PrismaIcon },
+    { name: "TRPC", icon: TrpcIcon },
   ];
 
   return (
-    <section className="px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.2, delay: 0.1 }}
-        className="flex flex-wrap gap-2"
-      >
-        {skills.map((skill) => (
-          <Badge key={skill.name} variant="secondary">
-            <skill.icon className="h-3.5 w-3.5" />
-            {skill.name}
-          </Badge>
-        ))}
-      </motion.div>
+    <section className="px-6 border-t border-dashed pt-6">
+      <h2 className="text-xl font-semibold mb-4">Stack</h2>
+      <TooltipProvider delayDuration={0}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, delay: 0.1 }}
+          className="flex flex-wrap gap-5"
+        >
+          {skills.map((skill) => (
+            <Tooltip key={skill.name}>
+              <TooltipTrigger asChild>
+                <div className="grayscale hover:grayscale-0 transition-all duration-300 cursor-help">
+                  <skill.icon size="24" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs font-medium">{skill.name}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
+        </motion.div>
+      </TooltipProvider>
     </section>
   );
 }

@@ -46,7 +46,7 @@ export function Hero() {
         </motion.div>
         <div className="space-y-2">
           <motion.h2
-            className="text-lg font-semibold mb-3"
+            className="text-xl font-semibold mb-3"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
@@ -54,7 +54,7 @@ export function Hero() {
             Hello, I&apos;m Aditya 👋
           </motion.h2>
           <motion.h1
-            className="text-2xl font-bold tracking-tight"
+            className="text-3xl font-bold tracking-tight"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.2 }}
@@ -70,7 +70,7 @@ export function Hero() {
             using Next.js and Prisma.
           </motion.h1>
           <motion.p
-            className="text-xs text-muted-foreground"
+            className="text-md text-muted-foreground"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}

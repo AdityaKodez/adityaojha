@@ -8,8 +8,8 @@ const About = () => {
       transition={{ duration: 0.2, delay: 0.1 }}
       className="px-6 border-t border-dashed pt-6"
     >
-      <h2 className="text-lg font-semibold mb-3">About me</h2>
-      <p className="text-sm text-muted-foreground">
+      <h2 className="text-xl font-semibold mb-3">About me</h2>
+      <p className="text-lg text-muted-foreground">
         I started experimenting with computers and building small things early
         on, long before I understood where it would lead. The path wasn’t clean
         or linear, and I had to learn{" "}
