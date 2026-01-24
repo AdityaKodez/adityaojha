@@ -13,7 +13,7 @@ const Typescript01 = ({ size }: Typescript01Props) => (
     <g
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
+      strokeLinecap="round"
       stroke-linejoin="round"
       stroke-width="1.5"
       color="currentColor"

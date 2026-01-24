@@ -131,26 +131,6 @@ export function Hero() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="https://discord.com/users/USE1243105196477911061"
-                  target="_blank"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Image
-                    src="/discord.svg"
-                    alt="Discord"
-                    width={24}
-                    height={24}
-                  />
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Discord</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
                   href="https://x.com/AdiKodez"
                   target="_blank"
                   className="text-muted-foreground hover:text-foreground transition-colors"
