@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Aditya — Full-Stack Web Developer",
     description:
       "I build high-performance web applications for early-stage founders using modern web stacks.",
-    url: "https://aditya-builds.vercel.app",
+    url: "https://akodez.xyz",
     siteName: "Aditya Portfolio",
     locale: "en_IN",
     type: "website",
