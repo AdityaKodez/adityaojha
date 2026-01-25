@@ -15,7 +15,7 @@ export function CTA() {
     setTimeout(() => setCopied(false), 2000);
   };
   return (
-    <section className="px-6">
+    <section className="px-6 border-t border-dashed pt-6">
       <h2 className="text-xl font-semibold mb-3 underline underline-offset-4 decoration-border">
         Ready to build?
       </h2>
@@ -23,7 +23,7 @@ export function CTA() {
         I am currently available for scoped MVP projects. Reach out if you are
         ready to ship.
       </p>
-      <div className="flex gap-3 ">
+      <div className="flex gap-3">
         <Button variant="outline" size="lg" asChild>
           <Link
             href="mailto:adityakodez@gmail.com"

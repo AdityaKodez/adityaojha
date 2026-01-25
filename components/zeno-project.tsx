@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export function ZenoProject() {
   return (
-    <section className="px-6">
+    <section className="px-6 border-t border-dashed pt-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -51,7 +51,7 @@ export function ZenoProject() {
               <Badge variant="secondary">Prisma</Badge>
             </div>
           </CardContent>
-          <CardFooter className="border-t border-dashed flex gap-6">
+          <CardFooter className="border-t border-dashed flex gap-6 py-4">
             <div className="flex items-center gap-1.5">
               <Users className="h-3.5 w-3.5 text-muted-foreground" />
               <span className="text-xs font-medium text-muted-foreground">

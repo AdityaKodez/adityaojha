@@ -12,11 +12,9 @@ export default function Home() {
       <Hero />
       <Skills />
       <About />
-      <div className="border-t border-dashed" />
       <ZenoProject />
       <Services />
       <HowIWork />
-      <div className="border-t border-dashed" />
       <CTA />
     </main>
   );

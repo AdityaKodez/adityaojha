@@ -1,6 +1,6 @@
 export function HowIWork() {
   return (
-    <section className="px-6">
+    <section className="px-6 border-t border-dashed pt-6">
       <h2 className="text-xl font-semibold mb-3">How I work</h2>
       <ul className="space-y-1.5 text-sm text-muted-foreground list-disc list-inside">
         <li>
