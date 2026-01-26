@@ -9,7 +9,7 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen max-w-3xl mx-auto py-12 md:py-16 space-y-8 border border-dashed bg-background overflow-hidden">
+    <main className="relative min-h-screen max-w-3xl mx-auto py-12 md:py-16 space-y-8 border border-dashed  overflow-hidden">
       <Hero />
       <Skills />
       <About />

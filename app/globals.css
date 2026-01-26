@@ -121,7 +121,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply text-foreground selection:bg-gray-400 selection:text-white;
+    @apply  bg-background text-foreground selection:bg-gray-400 selection:text-white;
   }
 }
 
