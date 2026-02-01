@@ -10,6 +10,7 @@ import Link from "next/link";
 export function ZenoProject() {
   return (
     <section className="px-6 border-t border-dashed pt-6">
+      <h1 className="text-xl font-semibold mb-6">Projects</h1>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -72,20 +73,22 @@ export function ZenoProject() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mt-8"
+        className="mt-12"
       >
-        <div className="flex items-center gap-2 mb-3 px-1">
-          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
-            Currently building
-          </h2>
-        </div>
-        <Card className="shadow-none border-dashed rounded-sm">
-          <CardContent className="pt-5 flex gap-4">
-            <div className="space-y-3">
+        <Card className="overflow-hidden shadow-none border-none rounded-sm">
+          <div className="aspect-video relative bg-muted max-h-[350px]">
+            <Image
+              src="/root.png"
+              alt="Root - Math Drill Engine"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <CardContent className="p-4 space-y-3">
+            <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="font-semibold text-base mb-1">
-                  Class 10 Practice Platform
+                <h3 className="font-semibold text-lg">
+                  Root — Math Drill Engine
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   A practice-focused web app centered on question patterns and
@@ -93,26 +96,16 @@ export function ZenoProject() {
                   workflows and how data models evolve with usage.
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <Badge
-                  variant="outline"
-                  className="bg-background text-xs font-normal"
-                >
-                  Education
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className="bg-background text-xs font-normal"
-                >
-                  UX Research
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className="bg-background text-xs font-normal"
-                >
-                  Data Modeling
-                </Badge>
-              </div>
+              <Button asChild variant="outline" size="sm" className="shrink-0">
+                <Link href="https://root.akoder.xyz/" target="_blank">
+                  Live <ForwardIcon className="ml-1.5 h-3 w-3" />
+                </Link>
+              </Button>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              <Badge variant="secondary">Education</Badge>
+              <Badge variant="secondary">UX Research</Badge>
+              <Badge variant="secondary">Data Modeling</Badge>
             </div>
           </CardContent>
         </Card>
