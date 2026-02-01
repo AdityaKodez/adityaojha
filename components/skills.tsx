@@ -40,8 +40,9 @@ export function Skills() {
       <TooltipProvider delayDuration={0}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2, delay: 0.1 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.3, delay: 0.1 }}
           className="flex flex-wrap gap-5"
         >
           {skills.map((skill) => (

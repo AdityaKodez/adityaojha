@@ -53,9 +53,10 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2, delay: 0.1 }}
         >
-          <Avatar className="h-20 w-20 shrink-0">
+          <Avatar className="h-20 w-20 shrink-0 border border-dashed hover:border-foreground/50 transition-colors ring-0">
             <AvatarImage src="/profile.png" alt="@akcll" />
             <AvatarFallback>AK</AvatarFallback>
           </Avatar>
@@ -126,18 +127,23 @@ export function Hero() {
           >
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link
-                  href="https://github.com/AdityaKodez"
-                  target="_blank"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  <Image
-                    src="/github.svg"
-                    alt="GitHub"
-                    width={24}
-                    height={24}
-                  />
-                </Link>
+                  <Link
+                    href="https://github.com/AdityaKodez"
+                    target="_blank"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <Image
+                      src="/github.svg"
+                      alt="GitHub"
+                      width={24}
+                      height={24}
+                    />
+                  </Link>
+                </motion.div>
               </TooltipTrigger>
               <TooltipContent>
                 <p>GitHub</p>
@@ -146,13 +152,18 @@ export function Hero() {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link
-                  href="https://x.com/AdiKodez"
-                  target="_blank"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  <X size="20" color="currentColor" />
-                </Link>
+                  <Link
+                    href="https://x.com/AdiKodez"
+                    target="_blank"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <X size="20" color="currentColor" />
+                  </Link>
+                </motion.div>
               </TooltipTrigger>
               <TooltipContent>
                 <p>X (Twitter)</p>
@@ -161,13 +172,18 @@ export function Hero() {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link
-                  href="https://peerlist.io/faker"
-                  target="_blank"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  <Peerlist size="20" />
-                </Link>
+                  <Link
+                    href="https://peerlist.io/faker"
+                    target="_blank"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <Peerlist size="20" />
+                  </Link>
+                </motion.div>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Peerlist</p>

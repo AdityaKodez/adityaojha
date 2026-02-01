@@ -1,4 +1,5 @@
 "use client";
+import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Gmail from "@/public/stacks/gmail";
@@ -15,10 +16,14 @@ export function CTA() {
     setTimeout(() => setCopied(false), 2000);
   };
   return (
-    <section className="px-6 border-t border-dashed pt-6">
-      <h2 className="text-xl font-semibold mb-3 underline underline-offset-4 decoration-border">
-        Ready to build?
-      </h2>
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="px-6 border-t border-dashed pt-6 pb-12"
+    >
+      <h2 className="text-xl font-semibold mb-3">Ready to build?</h2>
       <p className="text-lg text-muted-foreground mb-6">
         I am currently available for scoped MVP projects. Reach out if you are
         ready to ship.
@@ -63,6 +68,6 @@ export function CTA() {
           </TooltipContent>
         </Tooltip>
       </div>
-    </section>
+    </motion.section>
   );
 }
