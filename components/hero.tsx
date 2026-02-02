@@ -38,13 +38,30 @@ export function Hero() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
     >
-      <div className="flex justify-end gap-2 items-center">
+      <div className="flex justify-end items-center">
+        <div className="border-r pr-2">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="https://github.com/AdityaKodez/adityaojha"
+                target="_blank"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <OpenSrc size="20" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>This project is open source !</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 cursor-pointer"
+              className="h-8 w-8 cursor-pointer border-r"
               onClick={() => {
                 playAudio();
                 setTimeout(() => {
@@ -59,20 +76,6 @@ export function Hero() {
           </TooltipTrigger>
           <TooltipContent>
             <p>Toggle theme</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Link
-              href="https://github.com/AdityaKodez/adityaojha"
-              target="_blank"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <OpenSrc size="24" />
-            </Link>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>This project is open source</p>
           </TooltipContent>
         </Tooltip>
       </div>
