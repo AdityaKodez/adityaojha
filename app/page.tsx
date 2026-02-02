@@ -1,21 +1,24 @@
-import { Hero } from "@/components/hero";
-import { ZenoProject } from "@/components/zeno-project";
-import { Skills } from "@/components/skills";
-import { Services } from "@/components/services";
-import { HowIWork } from "@/components/how-i-work";
-import { CTA } from "@/components/cta";
 import About from "@/components/about";
+import { CTA } from "@/components/cta";
+import { Hero } from "@/components/hero";
+import { HowIWork } from "@/components/how-i-work";
+import { Services } from "@/components/services";
+import { Skills } from "@/components/skills";
+import { Testimonials } from "@/components/testimonials";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+import { ZenoProject } from "@/components/zeno-project";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen max-w-3xl mx-auto py-12 md:py-16 space-y-8 border border-dashed  overflow-hidden">
+    <main className="relative min-h-screen max-w-3xl mx-auto py-8 md:pt-16 space-y-8 border border-dashed  overflow-hidden">
       <Hero />
       <Skills />
       <About />
+      <Testimonials />
       <ZenoProject />
       <Services />
       <HowIWork />
+
       <CTA />
 
       {/* Progressive Blur - Fixed to bottom of viewport */}

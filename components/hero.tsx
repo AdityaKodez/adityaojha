@@ -10,13 +10,20 @@ import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function Hero() {
   const { theme, setTheme } = useTheme();
   const [copied, setCopied] = useState(false);
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const playAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
   const copyDiscordId = () => {
     navigator.clipboard.writeText("t1x_faker");
     setCopied(true);
@@ -37,7 +44,12 @@ export function Hero() {
               variant="ghost"
               size="icon"
               className="h-8 w-8 cursor-pointer"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={() => {
+                playAudio();
+                setTimeout(() => {
+                  setTheme(theme === "dark" ? "light" : "dark");
+                }, 200);
+              }}
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
@@ -49,6 +61,7 @@ export function Hero() {
           </TooltipContent>
         </Tooltip>
       </div>
+      <audio ref={audioRef} src="/switch.mp3" preload="auto" />
       <div className="flex items-start max-sm:flex-col gap-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}

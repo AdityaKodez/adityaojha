@@ -18,9 +18,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aditya — Full-Stack Web Developer",
+  title: {
+    default: "Aditya — Full-Stack Web Developer",
+    template: "%s | Aditya",
+  },
   description:
-    "Full-stack web developer building fast, scalable web applications for early-stage founders. Next.js, React, TypeScript, Prisma,Trpc , PostgreSQL.",
+    "Full-stack web developer building fast, scalable web applications for early-stage founders. Next.js, React, TypeScript, Prisma, Trpc, PostgreSQL.",
   verification: {
     google:
       "google-site-verification=g3qcAByxzXth5-9FAc4ZGNbMuD360f9xaQkpa18yads",
@@ -75,7 +78,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider>
+            
+            {children}
+            </TooltipProvider>
         </ThemeProvider>
         <Analytics />
       </body>

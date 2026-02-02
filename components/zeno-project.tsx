@@ -9,14 +9,17 @@ import Link from "next/link";
 
 export function ZenoProject() {
   return (
-    <section className="px-6 border-t border-dashed pt-6">
-      <h2 className="text-xl font-semibold mb-6">Projects</h2>
+    <section className="border-t border-dashed pt-6">
+      <h2 className="text-xl font-semibold mb-6 border-y px-6 py-2">
+        Projects
+      </h2>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
+        className="px-6"
       >
         <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
           <Card className="overflow-hidden shadow-none border border-dashed rounded-sm transition-colors hover:border-foreground/20 ring-0">
@@ -82,7 +85,7 @@ export function ZenoProject() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mt-12"
+        className="mt-8 px-6"
       >
         <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
           <Card className="overflow-hidden shadow-none border border-dashed rounded-sm transition-colors hover:border-foreground/20 ring-0">
