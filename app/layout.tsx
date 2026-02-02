@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://akoder.xyz"),
   title: {
     default: "Aditya — Full-Stack Web Developer",
     template: "%s | Aditya",
@@ -46,16 +47,27 @@ export const metadata: Metadata = {
     title: "Aditya — Full-Stack Web Developer",
     description:
       "I build high-performance web applications for early-stage founders using modern web stacks.",
-    url: "https://akodez.xyz",
+    url: "https://akoder.xyz",
     siteName: "Aditya Portfolio",
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/profile.png",
+        width: 1200,
+        height: 630,
+        alt: "Aditya — Full-Stack Web Developer",
+      },
+    ],
   },
 
   twitter: {
+    card: "summary_large_image",
     title: "Aditya — Full-Stack Web Developer",
     description:
       "Building fast, scalable SaaS products with Next.js and modern web tech.",
+    images: ["/profile.png"],
+    creator: "@AdityaKodez",
   },
 
   robots: {
