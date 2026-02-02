@@ -79,7 +79,7 @@ export function CTA() {
             <TooltipTrigger asChild>
               <Button variant="outline" size="lg" asChild>
                 <Link
-                  href="https://buymeacoffee.com/adityakodez"
+                  href="https://buymeacoffee.com/adiKodez"
                   target="_blank"
                   className="flex items-center gap-2"
                 >
