@@ -56,7 +56,7 @@ export function Testimonials() {
               transition={{ duration: 0.2 }}
               className="w-[300px] md:w-[350px]"
             >
-              <Card className="h-full border border-dashed shadow-none hover:border-foreground/20 transition-colors ring-0 rounded-none">
+              <Card className="h-full border border-dashed shadow-none hover:border-foreground/20 transition-colors ring-0 rounded-none bg-background hover:bg-muted">
                 <CardContent className="p-3 flex flex-col gap-2 h-full">
                   <p className="text-sm text-muted-foreground leading-tight flex-1">
                     &quot;{testimonial.content}&quot;

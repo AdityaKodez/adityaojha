@@ -3,6 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import OpenSrc from "@/public/stacks/open-src";
 import Peerlist from "@/public/peerlist";
 import X from "@/public/x-icon";
 import { Check, Copy, Moon, PinIcon, Sun } from "lucide-react";
@@ -37,7 +38,7 @@ export function Hero() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
     >
-      <div className="flex justify-end gap-2">
+      <div className="flex justify-end gap-2 items-center">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -58,6 +59,20 @@ export function Hero() {
           </TooltipTrigger>
           <TooltipContent>
             <p>Toggle theme</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link
+              href="https://github.com/AdityaKodez/adityaojha"
+              target="_blank"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <OpenSrc size="24" />
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>This project is open source</p>
           </TooltipContent>
         </Tooltip>
       </div>
