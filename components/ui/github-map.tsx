@@ -137,7 +137,7 @@ const GitHubCalendar = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
-      className="p-4 border-y border-dashed"
+      className="p-4 border-y border-dashed overflow-x-auto overflow-y-hidden"
     >
       <div className="flex">
         <div>
