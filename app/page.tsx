@@ -17,17 +17,18 @@ export default async function Home() {
   return (
     <main className="relative min-h-screen max-w-3xl mx-auto py-8 md:pt-16 space-y-8 border border-dashed overflow-hidden">
       <Hero />
-      <div className="overflow-y-auto">
-        <Suspense fallback={<GitSkeleton />}>
-          <GitHubCalendar data={contributionData} />
-        </Suspense>
-      </div>
       <Skills />
       <About />
       <Testimonials />
       <ZenoProject />
       <Services />
       <HowIWork />
+
+      <div className="overflow-y-auto">
+        <Suspense fallback={<GitSkeleton />}>
+          <GitHubCalendar data={contributionData} />
+        </Suspense>
+      </div>
 
       <CTA />
 
