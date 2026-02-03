@@ -6,6 +6,7 @@ import { BarChart3, ForwardIcon, Users } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function ZenoProject() {
   return (
@@ -44,16 +45,23 @@ export function ZenoProject() {
                     Shipped solo and iterated based on usage.
                   </p>
                 </div>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="sm"
-                  className="shrink-0"
-                >
-                  <Link href="https://shipzeno.vercel.app/" target="_blank">
-                    Live <ForwardIcon className="ml-1.5 h-3 w-3" />
-                  </Link>
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="shrink-0"
+                    >
+                      <Link href="https://zeno.akoder.xyz/" target="_blank">
+                        Live <ForwardIcon className="ml-1.5 h-3 w-3" />
+                      </Link>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Live Preview</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 <Badge variant="secondary">Next.js</Badge>
@@ -109,16 +117,23 @@ export function ZenoProject() {
                     workflows and how data models evolve with usage.
                   </p>
                 </div>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="sm"
-                  className="shrink-0"
-                >
-                  <Link href="https://root.akoder.xyz/" target="_blank">
-                    Live <ForwardIcon className="ml-1.5 h-3 w-3" />
-                  </Link>
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="shrink-0"
+                    >
+                      <Link href="https://root.akoder.xyz/" target="_blank">
+                        Live <ForwardIcon className="ml-1.5 h-3 w-3" />
+                      </Link>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Live Preview</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 <Badge variant="secondary">Education</Badge>
