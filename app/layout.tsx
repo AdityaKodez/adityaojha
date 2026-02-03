@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/profile.png",
+        url: "https://akoder.xyz/profile.png",
         width: 1200,
         height: 630,
         alt: "Aditya — Full-Stack Web Developer",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     title: "Aditya — Full-Stack Web Developer",
     description:
       "Building fast, scalable SaaS products with Next.js and modern web tech.",
-    images: ["/profile.png"],
+    images: ["https://akoder.xyz/profile.png"],
     creator: "@AdityaKodez",
   },
 
