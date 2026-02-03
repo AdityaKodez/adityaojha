@@ -33,7 +33,7 @@ export function HowIWork() {
         <div className="flex justify-end pr-4">
           <Signature
             className="text-foreground/80 max-sm:h-10 "
-            viewport={{ amount: 0.8 }}
+            viewport={{ amount: 0.1 }}
           />
         </div>
       </div>

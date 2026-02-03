@@ -21,10 +21,10 @@ export function Signature({ className, controls, viewport }: SignatureProps) {
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
-        initial={{ pathLength: 0 }}
+        initial={{ pathLength: 0, opacity: 0 }}
         animate={controls}
-        whileInView={!controls ? { pathLength: 1 } : undefined}
-        viewport={{ once: true, amount: 0.5, ...viewport }}
+        whileInView={!controls ? { pathLength: 1, opacity: 1 } : undefined}
+        viewport={{ once: true, amount: 0.2, ...viewport }}
         transition={{ duration: 2, ease: "easeInOut" }}
       />
     </svg>
