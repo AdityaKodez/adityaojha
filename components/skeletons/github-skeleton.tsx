@@ -7,7 +7,7 @@ export const GitSkeleton = () => {
   const days = Array.from({ length: 7 });
 
   return (
-    <div className="p-4 border-y border-dashed overflow-x-auto">
+    <div className="p-4 border-y border-dashed overflow-x-auto overflow-y-hidden">
       <div className="flex flex-col gap-2">
         {/* Month Labels Skeleton */}
         <div className="flex w-full justify-between gap-2 mb-1 h-4 relative">
