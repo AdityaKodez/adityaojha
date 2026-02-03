@@ -3,15 +3,25 @@ import { CTA } from "@/components/cta";
 import { Hero } from "@/components/hero";
 import { HowIWork } from "@/components/how-i-work";
 import { Services } from "@/components/services";
+import { GitSkeleton } from "@/components/skeletons/github-skeleton";
 import { Skills } from "@/components/skills";
 import { Testimonials } from "@/components/testimonials";
+import { GitHubCalendar } from "@/components/ui/github-map";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { ZenoProject } from "@/components/zeno-project";
+import { fetchGithubData } from "@/lib/github";
+import { Suspense } from "react";
+export default async function Home() {
+  const contributionData = await fetchGithubData("AdityaKodez");
 
-export default function Home() {
   return (
-    <main className="relative min-h-screen max-w-3xl mx-auto py-8 md:pt-16 space-y-8 border border-dashed  overflow-hidden">
+    <main className="relative min-h-screen max-w-3xl mx-auto py-8 md:pt-16 space-y-8 border border-dashed overflow-hidden">
       <Hero />
+      <div className="overflow-y-auto">
+        <Suspense fallback={<GitSkeleton />}>
+          <GitHubCalendar data={contributionData} />
+        </Suspense>
+      </div>
       <Skills />
       <About />
       <Testimonials />
