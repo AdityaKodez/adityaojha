@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { Kbd } from "./ui/kbd";
+import { WritingUnderline } from "./writing-underline";
 
 export function Hero() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -136,23 +137,20 @@ export function Hero() {
             Hello, I&apos;m Aditya
           </motion.h2>
           <motion.h1
-            className="text-3xl font-bold tracking-tight"
+            className="text-3xl font-bold tracking-tight max-sm:text-2xl"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.2 }}
           >
             I ship{" "}
-            <span className="underline underline-offset-4 decoration-border">
+            <WritingUnderline delay={0.8}>
               production-ready SaaS MVPs
-            </span>{" "}
-            in{" "}
-            <span className="underline underline-offset-4 decoration-border">
-              2–4 weeks
-            </span>{" "}
-            using Next.js and Prisma.
+            </WritingUnderline>{" "}
+            in <WritingUnderline delay={1.2}>2–4 weeks</WritingUnderline> using
+            Next.js and Prisma.
           </motion.h1>
           <motion.p
-            className="text-md text-muted-foreground"
+            className="text-md max-sm:text-sm text-muted-foreground"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}
