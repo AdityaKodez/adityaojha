@@ -26,10 +26,9 @@ const testimonials = [
     name: "ElongatedBear",
     role: "Redditor",
     content: "You've got a good eye for design",
-    avatar: "EW",
+    avatar: "EB",
     image: "/testimonial/elongated.png",
-  },
-  {
+  },  {
     name: "Garvit Joshi",
     role: "Creator of animbits.dev.",
     content: "I like the minimalistic look good work.",
