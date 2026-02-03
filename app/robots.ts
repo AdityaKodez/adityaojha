@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/private/",
     },
-    sitemap: "https://root.akoder.xyz/sitemap.xml",
+    sitemap: "https://akoder.xyz/sitemap.xml",
   };
 }
