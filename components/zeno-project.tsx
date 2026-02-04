@@ -141,6 +141,20 @@ export function ZenoProject() {
                 <Badge variant="secondary">Data Modeling</Badge>
               </div>
             </CardContent>
+            <CardFooter className="border-t border-dashed flex gap-6 py-4">
+              <div className="flex items-center gap-1.5">
+                <Users className="h-3.5 w-3.5 text-muted-foreground" />
+                <span className="text-xs font-medium text-muted-foreground">
+                  40+ students
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <BarChart3 className="h-3.5 w-3.5 text-muted-foreground" />
+                <span className="text-xs font-medium text-muted-foreground">
+                  50 + Session Created
+                </span>
+              </div>
+            </CardFooter>
           </Card>
         </motion.div>
       </motion.div>
