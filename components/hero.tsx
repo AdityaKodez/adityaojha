@@ -134,7 +134,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
-            Hello, I&apos;m Aditya
+            Hello, I&apos;m Aditya Ojha
           </motion.h2>
           <motion.h1
             className="text-3xl font-bold tracking-tight max-sm:text-2xl"
