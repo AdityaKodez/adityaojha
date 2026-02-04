@@ -65,11 +65,6 @@ export const metadata: Metadata = {
     images: ["https://akoder.xyz/profile.png"],
     creator: "@AdityaKodez",
   },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
   icons: {
     icon: "/favicon.svg",
   },
