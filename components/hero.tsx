@@ -156,7 +156,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}
           >
-            Built and shipped 2 full-stack products with{" "}
+            Built and shipped full-stack products with{" "}
             <span className="underline underline-offset-4 decoration-border/50">
               real users
             </span>

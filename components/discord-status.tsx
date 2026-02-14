@@ -176,7 +176,7 @@ function TooltipBody({ data }: { data: LanyardData }) {
     return <p>Currently offline</p>;
   }
 
-  return <p>Nothing active right now</p>;
+  return <p>No activity right now.</p>;
 }
 
 export function DiscordStatus() {
@@ -223,7 +223,10 @@ export function DiscordStatus() {
         </div>
       </TooltipTrigger>
       <TooltipContent side="bottom" className="p-2.5">
-        <TooltipBody data={data} />
+        <div className="space-y-1">
+          <TooltipBody data={data} />
+          <p className="text-[10px] text-muted-foreground">From Discord status</p>
+        </div>
       </TooltipContent>
     </Tooltip>
   );

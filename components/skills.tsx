@@ -1,10 +1,4 @@
 "use client";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { motion } from "motion/react";
 import NextjsIcon from "@/public/stacks/nextjs";
 import ReactIcon from "@/public/stacks/react";
@@ -37,28 +31,25 @@ export function Skills() {
       >
         Stack
       </motion.h2>
-      <TooltipProvider delayDuration={0}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          className="flex flex-wrap gap-5 px-6"
-        >
-          {skills.map((skill) => (
-            <Tooltip key={skill.name}>
-              <TooltipTrigger asChild>
-                <div className="grayscale hover:grayscale-0 transition-all duration-300 cursor-help">
-                  <skill.icon size="24" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-xs font-medium">{skill.name}</p>
-              </TooltipContent>
-            </Tooltip>
-          ))}
-        </motion.div>
-      </TooltipProvider>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+        className="flex flex-wrap gap-5 px-6"
+      >
+        {skills.map((skill) => (
+          <div
+            key={skill.name}
+            className="rounded-sm border border-dashed px-2 py-1"
+          >
+            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <skill.icon size="20" />
+              <span className="text-xs">{skill.name}</span>
+            </div>
+          </div>
+        ))}
+      </motion.div>
     </section>
   );
 }
