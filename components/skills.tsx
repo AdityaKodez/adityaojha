@@ -36,15 +36,15 @@ export function Skills() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.3, delay: 0.1 }}
-        className="flex flex-wrap gap-2.5 px-6"
+        className="flex flex-wrap gap-3 px-6"
       >
         {skills.map((skill) => (
           <div
             key={skill.name}
-            className="rounded-sm border border-dashed px-1.5 py-0.5"
+            className="rounded-sm border border-dashed px-2 py-1"
           >
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <skill.icon size="16" />
+            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <skill.icon size="20" />
               <span className="text-xs">{skill.name}</span>
             </div>
           </div>
