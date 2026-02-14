@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+
 import { Button } from "@/components/ui/button";
 import Peerlist from "@/public/peerlist";
 import OpenSrc from "@/public/stacks/open-src";
@@ -15,6 +15,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { Kbd } from "./ui/kbd";
 import { WritingUnderline } from "./writing-underline";
+import DiscordStatus from "./discord-status";
 
 export function Hero() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -68,7 +69,7 @@ export function Hero() {
   return (
     <motion.section
       className="space-y-4 px-6"
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
     >
@@ -177,10 +178,7 @@ export function Hero() {
               </TooltipContent>
             </Tooltip>
 
-            <Badge variant="outline" className="gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-              Open to work
-            </Badge>
+            <DiscordStatus />
           </motion.div>
           <motion.div
             className="flex items-center gap-3 pt-1"
