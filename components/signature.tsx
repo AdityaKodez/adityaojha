@@ -21,7 +21,7 @@ export function Signature({ className, controls, viewport }: SignatureProps) {
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
+        initial={false}
         animate={controls}
         whileInView={!controls ? { pathLength: 1, opacity: 1 } : undefined}
         viewport={{ once: true, amount: 0.2, ...viewport }}

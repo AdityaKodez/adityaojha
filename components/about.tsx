@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 const About = () => {
   return (
     <motion.section
-      initial={{ opacity: 0.01, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, delay: 0.1 }}
       className="border-t border-dashed pt-6"

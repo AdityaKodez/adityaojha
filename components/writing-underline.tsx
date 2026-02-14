@@ -25,7 +25,7 @@ export function WritingUnderline({
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
-          initial={{ pathLength: 0 }}
+          initial={false}
           whileInView={{ pathLength: 1 }}
           viewport={{ once: true }}
           transition={{

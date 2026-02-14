@@ -21,7 +21,7 @@ const OpenSrc = ({ size = "24", className }: Props) => (
       fill="currentColor"
       stroke="currentColor"
       strokeWidth="0.5"
-      initial={{ pathLength: 0, fillOpacity: 0 }}
+      initial={false}
       animate={{ pathLength: 1, fillOpacity: 1 }}
       transition={{
         pathLength: { duration: 1, ease: "easeInOut" },

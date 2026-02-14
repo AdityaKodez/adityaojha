@@ -24,7 +24,7 @@ export function Skills() {
   return (
     <section className=" border-t border-dashed pt-6">
       <motion.h2
-        initial={{ opacity: 0, y: 20 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, delay: 0.1 }}
         className="text-xl font-semibold mb-3 border-y px-6 py-2"
@@ -32,7 +32,7 @@ export function Skills() {
         Stack
       </motion.h2>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.3, delay: 0.1 }}
