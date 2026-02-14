@@ -15,6 +15,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { Kbd } from "./ui/kbd";
 import { WritingUnderline } from "./writing-underline";
+import DiscordStatus from "./discord-status";
 
 export function Hero() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -279,6 +280,14 @@ export function Hero() {
                 </p>
               </TooltipContent>
             </Tooltip>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2, delay: 0.45 }}
+            className="pt-2"
+          >
+            <DiscordStatus />
           </motion.div>
         </div>
       </div>

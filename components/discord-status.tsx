@@ -5,10 +5,10 @@ import {
   statusDotColorMap,
   type LanyardData,
 } from "@/lib/discord-status";
-import useSWR from "@/lib/use-swr";
+import { useQuery } from "@/lib/react-query";
 
-const fetcher = async (url: string): Promise<LanyardData> => {
-  const response = await fetch(url);
+const fetchDiscordStatus = async (): Promise<LanyardData> => {
+  const response = await fetch("/api/discord-status");
 
   if (!response.ok) {
     throw new Error("Failed to fetch Discord status.");
@@ -18,12 +18,14 @@ const fetcher = async (url: string): Promise<LanyardData> => {
 };
 
 export function DiscordStatus() {
-  const { data, error, isLoading } = useSWR<LanyardData>(
-    "/api/discord-status",
-    fetcher,
+  const { data, error, isLoading, isFetching } = useQuery<LanyardData>(
+    "discord-status",
+    fetchDiscordStatus,
     {
-      refreshInterval: 30_000,
-      revalidateOnFocus: false,
+      staleTime: 60_000,
+      gcTime: 600_000,
+      refetchInterval: 30_000,
+      refetchOnWindowFocus: true,
     },
   );
 
@@ -48,12 +50,17 @@ export function DiscordStatus() {
 
   return (
     <section className="rounded-xl border border-dashed p-4 space-y-2">
-      <div className="flex items-center gap-2 text-sm font-medium">
-        <span
-          aria-label={`Discord status: ${data.discord_status}`}
-          className={`inline-flex h-2.5 w-2.5 rounded-full ${statusDotColorMap[data.discord_status]}`}
-        />
-        <span className="capitalize">{data.discord_status}</span>
+      <div className="flex items-center justify-between gap-2 text-sm font-medium">
+        <div className="flex items-center gap-2">
+          <span
+            aria-label={`Discord status: ${data.discord_status}`}
+            className={`inline-flex h-2.5 w-2.5 rounded-full ${statusDotColorMap[data.discord_status]}`}
+          />
+          <span className="capitalize">{data.discord_status}</span>
+        </div>
+        {isFetching ? (
+          <span className="text-xs text-muted-foreground">Syncing...</span>
+        ) : null}
       </div>
 
       {spotify ? (
