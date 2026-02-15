@@ -24,19 +24,19 @@ export function Skills() {
   return (
     <section className=" border-t border-dashed pt-6">
       <motion.h2
-        initial={false}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, delay: 0.1 }}
-        className="text-xl font-semibold mb-3 border-y px-6 py-2"
+        className="no-js-visible text-xl font-semibold mb-3 border-y px-6 py-2"
       >
         Stack
       </motion.h2>
       <motion.div
-        initial={false}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.3, delay: 0.1 }}
-        className="flex flex-wrap gap-3 px-6"
+        className="no-js-visible flex flex-wrap gap-3 px-6"
       >
         {skills.map((skill) => (
           <div

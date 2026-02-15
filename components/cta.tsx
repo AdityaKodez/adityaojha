@@ -17,11 +17,11 @@ export function CTA() {
   };
   return (
     <motion.section
-      initial={false}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="border-y border-dashed pt-6 pb-12"
+      className="no-js-visible border-y border-dashed pt-6 pb-12"
     >
       <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">
         Ready to build?

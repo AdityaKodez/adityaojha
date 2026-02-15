@@ -21,9 +21,10 @@ export function Signature({ className, controls, viewport }: SignatureProps) {
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
-        initial={false}
+        initial={{ pathLength: 0, opacity: 0.8 }}
         animate={controls}
         whileInView={!controls ? { pathLength: 1, opacity: 1 } : undefined}
+        className="no-js-visible"
         viewport={{ once: true, amount: 0.2, ...viewport }}
         transition={{ duration: 2, ease: "easeInOut" }}
       />

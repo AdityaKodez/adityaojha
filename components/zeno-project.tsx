@@ -16,11 +16,11 @@ export function ZenoProject() {
       </h2>
 
       <motion.div
-        initial={false}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="px-6"
+        className="no-js-visible px-6"
       >
         <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
           <Card className="overflow-hidden shadow-none border border-dashed rounded-sm transition-colors hover:border-foreground/20 ring-0">
@@ -89,11 +89,11 @@ export function ZenoProject() {
       </motion.div>
 
       <motion.div
-        initial={false}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mt-8 px-6"
+        className="no-js-visible mt-8 px-6"
       >
         <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
           <Card className="overflow-hidden shadow-none border border-dashed rounded-sm transition-colors hover:border-foreground/20 ring-0">
