@@ -3,10 +3,10 @@ import { motion } from "motion/react";
 const About = () => {
   return (
     <motion.section
-      initial={false}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, delay: 0.1 }}
-      className="border-t border-dashed pt-6"
+      className="no-js-visible border-t border-dashed pt-6"
     >
       <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">
         About me

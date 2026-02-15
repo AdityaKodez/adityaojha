@@ -68,8 +68,8 @@ export function Hero() {
 
   return (
     <motion.section
-      className="space-y-4 px-6"
-      initial={false}
+      className="no-js-visible space-y-4 px-6"
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
     >
@@ -118,10 +118,11 @@ export function Hero() {
       <audio ref={audioRef} src="/switch.mp3" preload="auto" />
       <div className="flex items-start max-sm:flex-col gap-6">
         <motion.div
-          initial={false}
+          initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2, delay: 0.1 }}
+          className="no-js-visible"
         >
           <Avatar className="h-20 w-20 shrink-0 border border-dashed hover:border-foreground/50 transition-colors ring-0">
             <AvatarImage src="/profile.png" alt="@akcll" />
@@ -130,16 +131,16 @@ export function Hero() {
         </motion.div>
         <div className="space-y-2">
           <motion.h2
-            className="text-xl font-semibold mb-3 flex items-center gap-2"
-            initial={false}
+            className="no-js-visible text-xl font-semibold mb-3 flex items-center gap-2"
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
             Hello, I&apos;m Aditya Ojha
           </motion.h2>
           <motion.h1
-            className="text-3xl font-bold tracking-tight max-sm:text-2xl"
-            initial={false}
+            className="no-js-visible text-3xl font-bold tracking-tight max-sm:text-2xl"
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.2 }}
           >
@@ -151,8 +152,8 @@ export function Hero() {
             Next.js and Prisma.
           </motion.h1>
           <motion.p
-            className="text-md max-sm:text-sm text-muted-foreground"
-            initial={false}
+            className="no-js-visible text-md max-sm:text-sm text-muted-foreground"
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}
           >
@@ -163,8 +164,8 @@ export function Hero() {
             . Strong focus on auth, data models, and iteration speed.
           </motion.p>
           <motion.div
-            className="flex items-center gap-3 text-sm text-muted-foreground"
-            initial={false}
+            className="no-js-visible flex items-center gap-3 text-sm text-muted-foreground"
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}
           >
@@ -181,8 +182,8 @@ export function Hero() {
             <DiscordStatus />
           </motion.div>
           <motion.div
-            className="flex items-center gap-3 pt-1"
-            initial={false}
+            className="no-js-visible flex items-center gap-3 pt-1"
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.4 }}
           >

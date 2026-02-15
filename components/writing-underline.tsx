@@ -25,8 +25,9 @@ export function WritingUnderline({
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
-          initial={false}
+          initial={{ pathLength: 0 }}
           whileInView={{ pathLength: 1 }}
+          className="no-js-visible"
           viewport={{ once: true }}
           transition={{
             duration: 0.8,
