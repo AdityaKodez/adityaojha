@@ -20,20 +20,20 @@ export default async function Home() {
   return (
     <main className="relative min-h-screen max-w-3xl mx-auto  md:pb-16 space-y-8 border border-dashed overflow-hidden">
       <Banner />
-      <ParallaxSection offset={18}>
+      <ParallaxSection offset={42} direction={1}>
         <Hero />
       </ParallaxSection>
-      <ParallaxSection offset={14}>
+      <ParallaxSection offset={34} direction={-1}>
         <Social />
       </ParallaxSection>
-      <ParallaxSection offset={10}>
+      <ParallaxSection offset={28} direction={1}>
         <Skills />
       </ParallaxSection>
       <About />
-      <ParallaxSection offset={12}>
+      <ParallaxSection offset={30} direction={-1}>
         <Testimonials />
       </ParallaxSection>
-      <ParallaxSection offset={10}>
+      <ParallaxSection offset={26} direction={1}>
         <ZenoProject />
       </ParallaxSection>
       <Services />
