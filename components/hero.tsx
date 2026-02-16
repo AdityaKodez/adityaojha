@@ -11,20 +11,20 @@ import DiscordStatus from "./discord-status";
 export function Hero() {
   return (
     <motion.section
-      className="no-js-visible space-y-4 px-6"
+      className="no-js-visible relative z-20 -mt-24 space-y-4 px-6"
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
     >
-      <div className="flex items-start max-sm:flex-col gap-6">
+      <div className="flex items-start flex-col gap-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.2, delay: 0.1 }}
+          whileHover={{ scale: 1.01 }}
+          transition={{ duration: 0.1, delay: 0.1 }}
           className="no-js-visible"
         >
-          <Avatar className="h-20 w-20 shrink-0 border border-dashed hover:border-foreground/50 transition-colors ring-0">
+          <Avatar className="size-24 shrink-0 border-2 border-dashed border-foreground/50 bg-background shadow-xl">
             <AvatarImage src="/profile.png" alt="@akcll" />
             <AvatarFallback>AK</AvatarFallback>
           </Avatar>
@@ -36,7 +36,13 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
-            Hello, I&apos;m Aditya Ojha
+            Hello, I&apos;m Aditya Ojha{" "}
+            <span
+              className="text-2xl hover:animate-wave inline-block"
+              style={{ transformOrigin: "70% 70%" }}
+            >
+              👋
+            </span>
           </motion.p>
           <motion.h1
             className="no-js-visible text-3xl font-bold tracking-tight max-sm:text-2xl"
@@ -64,7 +70,7 @@ export function Hero() {
             . Strong focus on auth, data models, and iteration speed.
           </motion.p>
           <motion.div
-            className="no-js-visible flex items-center gap-3 text-sm text-muted-foreground"
+            className="no-js-visible flex mt-6 items-center gap-3 text-sm text-muted-foreground"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}

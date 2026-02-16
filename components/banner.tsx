@@ -51,7 +51,7 @@ export function Banner() {
 
   return (
     <motion.div
-      className="relative h-40 w-full overflow-hidden border-b border-dashed"
+      className="relative h-40 w-full overflow-hidden  border-dashed border-b-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}

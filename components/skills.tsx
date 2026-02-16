@@ -41,7 +41,7 @@ export function Skills() {
         {skills.map((skill) => (
           <div
             key={skill.name}
-            className="rounded-sm border border-dashed px-2 py-1"
+            className="rounded-sm border border-dashed px-2 py-1 hover:bg-muted/50 transition-colors"
           >
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
               <skill.icon size="20" />
