@@ -12,6 +12,7 @@ import { GitHubCalendar } from "@/components/ui/github-map";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { ZenoProject } from "@/components/zeno-project";
 import { fetchGithubData } from "@/lib/github";
+import { Heart } from "lucide-react";
 import { Suspense } from "react";
 export default async function Home() {
   const contributionData = await fetchGithubData("AdityaKodez");
@@ -31,6 +32,13 @@ export default async function Home() {
         <GitHubCalendar data={contributionData} />
       </Suspense>
       <CTA />
+      <footer className="pb-8 text-center text-sm text-muted-foreground space-y-1">
+        <p className="inline-flex items-center gap-1">
+          Designed &amp; Made with
+          <Heart className="size-4 fill-red-500 text-red-500" />
+        </p>
+        <p>© {new Date().getFullYear()} Aditya. All rights reserved.</p>
+      </footer>
 
       {/* Progressive Blur - Fixed to bottom of viewport */}
       <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none">
