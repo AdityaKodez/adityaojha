@@ -96,7 +96,7 @@ export function Hero() {
                 ref={buttonRef}
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 cursor-pointer rounded-none"
+                className="h-8 w-8 cursor-pointer rounded-none border-0"
                 onClick={() => {
                   toggleTheme();
                 }}
@@ -152,7 +152,7 @@ export function Hero() {
             Next.js and Prisma.
           </motion.h1>
           <motion.p
-            className="no-js-visible text-md max-sm:text-sm text-muted-foreground"
+            className="no-js-visible mt-2 text-md max-sm:text-sm text-muted-foreground"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}
