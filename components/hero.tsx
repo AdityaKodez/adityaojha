@@ -73,14 +73,14 @@ export function Hero() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
     >
-      <div className="flex justify-end items-center">
-        <div className="border-r pr-2">
+      <div className="flex items-center justify-end">
+        <div className="flex items-center overflow-hidden rounded-md border border-border/60 divide-x divide-border/60">
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 href="https://github.com/AdityaKodez/adityaojha"
                 target="_blank"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="flex h-8 w-8 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
               >
                 <OpenSrc size="20" />
               </Link>
@@ -89,30 +89,30 @@ export function Hero() {
               <p>This project is open source !</p>
             </TooltipContent>
           </Tooltip>
-        </div>
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              ref={buttonRef}
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 cursor-pointer border-r"
-              onClick={() => {
-                toggleTheme();
-              }}
-            >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>
-              Toggle theme <Kbd>D</Kbd>
-            </p>
-          </TooltipContent>
-        </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                ref={buttonRef}
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 cursor-pointer rounded-none border-0"
+                onClick={() => {
+                  toggleTheme();
+                }}
+              >
+                <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>
+                Toggle theme <Kbd>D</Kbd>
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </div>
 
       <audio ref={audioRef} src="/switch.mp3" preload="auto" />
@@ -152,7 +152,7 @@ export function Hero() {
             Next.js and Prisma.
           </motion.h1>
           <motion.p
-            className="no-js-visible text-md max-sm:text-sm text-muted-foreground"
+            className="no-js-visible mt-2 text-md max-sm:text-sm text-muted-foreground"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}
