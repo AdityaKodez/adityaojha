@@ -1,14 +1,15 @@
 "use client";
 
+import Peerlist from "@/public/peerlist";
+import Gmail from "@/public/stacks/gmail";
+import X from "@/public/x-icon";
+import { Check, Coffee, Copy } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { Kbd } from "./ui/kbd";
-import { Check, Copy } from "lucide-react";
-import Peerlist from "@/public/peerlist";
-import X from "@/public/x-icon";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const socials = [
   {
@@ -35,6 +36,18 @@ const socials = [
     href: null,
     icon: "discord",
   },
+  {
+    platform: "Email",
+    handle: "adityakodez@gmail.com",
+    href: "mailto:adityakodez@gmail.com",
+    icon: "gmail",
+  },
+  {
+    platform: "Buy me a coffee",
+    handle: "@adiKodez",
+    href: "https://buymeacoffee.com/adiKodez",
+    icon: "coffee",
+  },
 ] as const;
 
 function SocialIcon({ icon, size = 18 }: { icon: string; size?: number }) {
@@ -51,6 +64,10 @@ function SocialIcon({ icon, size = 18 }: { icon: string; size?: number }) {
       return (
         <Image src="/discord.svg" alt="Discord" width={size} height={size} />
       );
+    case "gmail":
+      return <Gmail size={String(size)} />;
+    case "coffee":
+      return <Coffee size={size} className="fill-yellow-200" />;
     default:
       return null;
   }
@@ -92,28 +109,20 @@ const Social = () => {
     >
       <h2 className="text-xl font-semibold border-y px-6 py-2">Connect</h2>
 
-      <div className="grid grid-cols-2  max-sm:grid-cols-1">
+      {/* 2×3 grid — each cell gets all 4 borders, negative margin collapses them into single lines */}
+      <div className="grid grid-cols-2 max-sm:grid-cols-1 overflow-hidden -mb-px">
         {socials.map((social, idx) => {
           const isDiscord = social.icon === "discord";
+          const isEmail = social.icon === "gmail";
 
-          const content = (
+          const cellContent = (
             <motion.div
-              key={social.platform}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, delay: 0.55 + idx * 0.05 }}
-              className={`
-                no-js-visible group flex items-center gap-3 p-4
-                border border-dashed
-                transition-colors hover:bg-muted/50
-                ${idx === 0 && "border-b-0 border-l-0"}
-                ${idx % 2 === 0 ? "max-sm:border-r-0 sm:border-r-0" : ""}
-                ${idx < 2 ? "max-sm:border-b-0 sm:border-b-0" : ""} 
-                ${idx === 2 && "border-l-0"}
-                max-sm:border-r max-sm:${idx < 3 ? "border-b-0" : ""}
-              `}
+              className="no-js-visible group flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/50"
             >
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border border-dashed text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30 transition-colors">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30 transition-colors">
                 <SocialIcon icon={social.icon} size={18} />
               </div>
               <div className="flex flex-col min-w-0">
@@ -136,6 +145,7 @@ const Social = () => {
             </motion.div>
           );
 
+          // Discord = copy to clipboard action
           if (isDiscord) {
             return (
               <Tooltip key={social.platform}>
@@ -144,7 +154,7 @@ const Social = () => {
                     onClick={copyDiscordId}
                     className="text-left cursor-pointer"
                   >
-                    {content}
+                    {cellContent}
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -156,6 +166,26 @@ const Social = () => {
             );
           }
 
+          // Email = mailto link (no target _blank needed)
+          if (isEmail) {
+            return (
+              <Tooltip key={social.platform}>
+                <TooltipTrigger asChild>
+                  <Link
+                    href={social.href}
+                    className="focus-visible:outline-none"
+                  >
+                    {cellContent}
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Send an email</p>
+                </TooltipContent>
+              </Tooltip>
+            );
+          }
+
+          // Everything else = external link
           return (
             <Tooltip key={social.platform}>
               <TooltipTrigger asChild>
@@ -164,7 +194,7 @@ const Social = () => {
                   target="_blank"
                   className="focus-visible:outline-none"
                 >
-                  {content}
+                  {cellContent}
                 </Link>
               </TooltipTrigger>
               <TooltipContent>
