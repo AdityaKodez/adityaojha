@@ -10,6 +10,7 @@ import Social from "@/components/social";
 import { Testimonials } from "@/components/testimonials";
 import { GitHubCalendar } from "@/components/ui/github-map";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+import { ParallaxSection } from "@/components/parallax-section";
 import { ZenoProject } from "@/components/zeno-project";
 import { fetchGithubData } from "@/lib/github";
 import { Suspense } from "react";
@@ -19,12 +20,22 @@ export default async function Home() {
   return (
     <main className="relative min-h-screen max-w-3xl mx-auto  md:pb-16 space-y-8 border border-dashed overflow-hidden">
       <Banner />
-      <Hero />
-      <Social />
-      <Skills />
+      <ParallaxSection offset={18}>
+        <Hero />
+      </ParallaxSection>
+      <ParallaxSection offset={14}>
+        <Social />
+      </ParallaxSection>
+      <ParallaxSection offset={10}>
+        <Skills />
+      </ParallaxSection>
       <About />
-      <Testimonials />
-      <ZenoProject />
+      <ParallaxSection offset={12}>
+        <Testimonials />
+      </ParallaxSection>
+      <ParallaxSection offset={10}>
+        <ZenoProject />
+      </ParallaxSection>
       <Services />
       <HowIWork />
       <Suspense fallback={<GitSkeleton />}>
