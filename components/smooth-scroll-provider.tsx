@@ -30,7 +30,7 @@ export function SmoothScrollProvider({ children }: PropsWithChildren) {
     void importModule("lenis/react")
       .then((module) => {
         if (isMounted && module.ReactLenis) {
-          setReactLenis(() => module.ReactLenis);
+          setReactLenis(module.ReactLenis);
         }
       })
       .catch(() => {
