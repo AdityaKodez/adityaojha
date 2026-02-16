@@ -58,7 +58,7 @@ export function Banner() {
     >
       {/* Banner image */}
       <Image
-        src="/banner-2.png"
+        src="/banner.png"
         alt="Banner"
         fill
         className="object-cover"
