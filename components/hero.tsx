@@ -3,15 +3,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Button } from "@/components/ui/button";
-import Peerlist from "@/public/peerlist";
 import OpenSrc from "@/public/stacks/open-src";
-import X from "@/public/x-icon";
-import { Check, Copy, Moon, PinIcon, Sun } from "lucide-react";
+import { Moon, PinIcon, Sun } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
-import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { Kbd } from "./ui/kbd";
 import { WritingUnderline } from "./writing-underline";
@@ -19,7 +16,6 @@ import DiscordStatus from "./discord-status";
 
 export function Hero() {
   const { setTheme, resolvedTheme } = useTheme();
-  const [copied, setCopied] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const playAudio = () => {
@@ -28,11 +24,6 @@ export function Hero() {
     }
   };
 
-  const copyDiscordId = useCallback(() => {
-    navigator.clipboard.writeText("t1x_faker");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }, []);
   const toggleTheme = useCallback(() => {
     playAudio();
     setTimeout(() => {
@@ -55,16 +46,11 @@ export function Hero() {
         e.preventDefault();
         buttonRef.current?.click();
       }
-
-      if (e.key.toLowerCase() === "c") {
-        e.preventDefault();
-        copyDiscordId();
-      }
     };
 
     window.addEventListener("keydown", handleGlobalKeyDown);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
-  }, [copyDiscordId]);
+  }, []);
 
   return (
     <motion.section
@@ -130,14 +116,14 @@ export function Hero() {
           </Avatar>
         </motion.div>
         <div className="space-y-2">
-          <motion.h2
-            className="no-js-visible text-xl font-semibold mb-3 flex items-center gap-2"
+          <motion.p
+            className="no-js-visible text-lg font-semibold mb-3 flex items-center gap-2"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
             Hello, I&apos;m Aditya Ojha
-          </motion.h2>
+          </motion.p>
           <motion.h1
             className="no-js-visible text-3xl font-bold tracking-tight max-sm:text-2xl"
             initial={{ opacity: 0, y: 12 }}
@@ -152,7 +138,7 @@ export function Hero() {
             Next.js and Prisma.
           </motion.h1>
           <motion.p
-            className="no-js-visible mt-2 text-md max-sm:text-sm text-muted-foreground"
+            className="no-js-visible mt-4 text-md max-sm:text-sm text-muted-foreground"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}
@@ -180,104 +166,6 @@ export function Hero() {
             </Tooltip>
 
             <DiscordStatus />
-          </motion.div>
-          <motion.div
-            className="no-js-visible flex items-center gap-3 pt-1"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2, delay: 0.4 }}
-          >
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <motion.div
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Link
-                    href="https://github.com/AdityaKodez"
-                    target="_blank"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <Image
-                      src="/github.svg"
-                      alt="GitHub"
-                      width={24}
-                      height={24}
-                    />
-                  </Link>
-                </motion.div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>GitHub</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <motion.div
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Link
-                    href="https://x.com/AdiKodez"
-                    target="_blank"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <X size="20" color="currentColor" />
-                  </Link>
-                </motion.div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>X (Twitter)</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <motion.div
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Link
-                    href="https://peerlist.io/faker"
-                    target="_blank"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <Peerlist size="20" />
-                  </Link>
-                </motion.div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Peerlist</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={copyDiscordId}
-                  className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                >
-                  <Image
-                    src="/discord.svg"
-                    alt="Discord"
-                    width={20}
-                    height={20}
-                  />
-                  <span className="text-sm">@t1x_faker</span>
-                  {copied ? (
-                    <Check className="h-3.5 w-3.5 text-green-500" />
-                  ) : (
-                    <Copy className="h-3.5 w-3.5" />
-                  )}
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>
-                  {copied ? "Copied!" : "Click to copy"} <Kbd>C</Kbd>
-                </p>
-              </TooltipContent>
-            </Tooltip>
           </motion.div>
         </div>
       </div>

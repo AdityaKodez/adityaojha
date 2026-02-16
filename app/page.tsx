@@ -5,6 +5,7 @@ import { HowIWork } from "@/components/how-i-work";
 import { Services } from "@/components/services";
 import { GitSkeleton } from "@/components/skeletons/github-skeleton";
 import { Skills } from "@/components/skills";
+import Social from "@/components/social";
 import { Testimonials } from "@/components/testimonials";
 import { GitHubCalendar } from "@/components/ui/github-map";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
@@ -17,6 +18,7 @@ export default async function Home() {
   return (
     <main className="relative min-h-screen max-w-3xl mx-auto py-8 md:pt-16 space-y-8 border border-dashed overflow-hidden">
       <Hero />
+      <Social />
       <Skills />
       <About />
       <Testimonials />
