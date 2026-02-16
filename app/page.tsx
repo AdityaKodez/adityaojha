@@ -32,18 +32,16 @@ export default async function Home() {
         <GitHubCalendar data={contributionData} />
       </Suspense>
       <CTA />
-      <footer className="mx-4 mb-8 rounded-2xl border border-dashed bg-muted/20 px-4 py-6 text-center">
-        <div className="mx-auto flex max-w-sm flex-col items-center gap-2 text-sm text-muted-foreground">
-          <p className="inline-flex items-center justify-center gap-1.5 font-medium text-foreground">
-            Designed &amp; Made with
-            <Heart className="size-4 fill-rose-500 text-rose-500" />
-          </p>
-          <p className="text-xs sm:text-sm">
-            © {new Date().getFullYear()} Aditya. All rights reserved.
-          </p>
-        </div>
-      </footer>
-
+ <footer className="mt-12 border-t py-8 text-left text-sm text-muted-foreground">
+  <div className="container flex flex-col gap-1">
+    <p className="font-medium text-foreground flex items-center gap-1">
+      Designed & Made by Aditya with <Heart className="w-4 h-4 text-red-700 fill-red-400" />
+    </p>
+    <p className="text-xs">
+      © {new Date().getFullYear()} All rights reserved.
+    </p>
+  </div>
+</footer>
       {/* Progressive Blur - Fixed to bottom of viewport */}
       <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none">
         <ProgressiveBlur position="bottom" height="100px" />
