@@ -1,6 +1,5 @@
 "use client";
 import { motion } from "motion/react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Gmail from "@/public/stacks/gmail";
 import Image from "next/image";
@@ -8,12 +7,17 @@ import { Check, Copy, Coffee } from "lucide-react";
 import { useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 export function CTA() {
-  const [copied, setCopied] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
 
   const copyDiscordId = () => {
     navigator.clipboard.writeText("t1x_faker");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopiedField("discord");
+    setTimeout(() => setCopiedField(null), 2000);
+  };
+  const copyEmail = () => {
+    navigator.clipboard.writeText("adityakodez@gmail.com");
+    setCopiedField("email");
+    setTimeout(() => setCopiedField(null), 2000);
   };
   return (
     <motion.section
@@ -26,67 +30,104 @@ export function CTA() {
       <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">
         Ready to build?
       </h2>
-      <div className="px-6">
-        <p className="text-lg text-muted-foreground mb-6">
+      <div>
+        <p className="px-6 text-md text-muted-foreground mb-6">
           I am currently available for scoped MVP projects. Reach out if you are
           ready to ship.
         </p>
-        <div className="flex gap-3 flex-wrap">
+        <div className="grid border-t border-dashed grid-cols-3 max-sm:grid-cols-1 overflow-hidden">
+          {/* Email */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="outline" size="lg" asChild>
-                <Link
-                  href="mailto:adityakodez@gmail.com"
-                  className="flex items-center gap-2"
-                >
-                  <Gmail size="16" />
-                  Email Me
-                </Link>
-              </Button>
+              <button onClick={copyEmail} className="text-left cursor-pointer">
+                <div className="group flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/50">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30 transition-colors">
+                    <Gmail size="18" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-sm font-medium leading-none">
+                      Email
+                    </span>
+                    <span className="text-xs text-muted-foreground mt-1 truncate">
+                      adityakodez@gmail.com
+                    </span>
+                  </div>
+                  <div className="ml-auto">
+                    {copiedField === "email" ? (
+                      <Check className="h-3.5 w-3.5 text-green-500" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    )}
+                  </div>
+                </div>
+              </button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Email Me</p>
+              <p>{copiedField === "email" ? "Copied!" : "Copy email"}</p>
             </TooltipContent>
           </Tooltip>
+
+          {/* Discord */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="outline"
-                size="lg"
-                className="flex items-center gap-2 cursor-pointer"
-                disabled={false}
+              <button
                 onClick={copyDiscordId}
+                className="text-left cursor-pointer"
               >
-                <Image
-                  src="/discord.svg"
-                  alt="Discord"
-                  width={16}
-                  height={16}
-                />
-                @t1x_faker
-                {copied ? (
-                  <Check className="size-3 text-green-500" />
-                ) : (
-                  <Copy className="size-3 text-muted-foreground" />
-                )}
-              </Button>
+                <div className="group flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/50">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30 transition-colors">
+                    <Image
+                      src="/discord.svg"
+                      alt="Discord"
+                      width={18}
+                      height={18}
+                    />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-sm font-medium leading-none">
+                      Discord
+                    </span>
+                    <span className="text-xs text-muted-foreground mt-1 truncate">
+                      @t1x_faker
+                    </span>
+                  </div>
+                  <div className="ml-auto">
+                    {copiedField === "discord" ? (
+                      <Check className="h-3.5 w-3.5 text-green-500" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    )}
+                  </div>
+                </div>
+              </button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Dm me on discord</p>
+              <p>{copiedField === "discord" ? "Copied!" : "Copy Discord ID"}</p>
             </TooltipContent>
           </Tooltip>
+
+          {/* Buy me a coffee */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="outline" size="lg" asChild>
-                <Link
-                  href="https://buymeacoffee.com/adiKodez"
-                  target="_blank"
-                  className="flex items-center gap-2"
-                >
-                  <Coffee size="16" className="fill-yellow-200" />
-                  Buy me a coffee
-                </Link>
-              </Button>
+              <Link
+                href="https://buymeacoffee.com/adiKodez"
+                target="_blank"
+                className="focus-visible:outline-none"
+              >
+                <div className="group flex items-center gap-3 p-4 border-b border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/50">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30 transition-colors">
+                    <Coffee size={18} className="fill-yellow-200" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-sm font-medium leading-none">
+                      Buy me a coffee
+                    </span>
+                    <span className="text-xs text-muted-foreground mt-1 truncate">
+                      @adiKodez
+                    </span>
+                  </div>
+                </div>
+              </Link>
             </TooltipTrigger>
             <TooltipContent>
               <p>Thank You ❤️</p>

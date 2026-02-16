@@ -74,12 +74,13 @@ function SocialIcon({ icon, size = 18 }: { icon: string; size?: number }) {
 }
 
 const Social = () => {
-  const [copied, setCopied] = useState(false);
+  const [discordCopied, setDiscordCopied] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false);
 
   const copyDiscordId = useCallback(() => {
     navigator.clipboard.writeText("t1x_faker");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setDiscordCopied(true);
+    setTimeout(() => setDiscordCopied(false), 2000);
   }, []);
 
   useEffect(() => {
@@ -99,6 +100,30 @@ const Social = () => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [copyDiscordId]);
+
+  const copyEmail = useCallback(() => {
+    navigator.clipboard.writeText("adityakodez@gmail.com");
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target as HTMLElement).isContentEditable
+      ) {
+        return;
+      }
+      if (e.key.toLowerCase() === "e") {
+        e.preventDefault();
+        copyEmail();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [copyEmail]);
 
   return (
     <motion.section
@@ -133,9 +158,15 @@ const Social = () => {
                   {social.handle}
                 </span>
               </div>
-              {isDiscord && (
+              {(isDiscord || isEmail) && (
                 <div className="ml-auto">
-                  {copied ? (
+                  {isDiscord ? (
+                    discordCopied ? (
+                      <Check className="h-3.5 w-3.5 text-green-500" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    )
+                  ) : emailCopied ? (
                     <Check className="h-3.5 w-3.5 text-green-500" />
                   ) : (
                     <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
@@ -159,7 +190,7 @@ const Social = () => {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    {copied ? "Copied!" : "Click to copy"} <Kbd>C</Kbd>
+                    {discordCopied ? "Copied!" : "Click to copy"} <Kbd>C</Kbd>
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -179,7 +210,9 @@ const Social = () => {
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Send an email</p>
+                  <p>
+                    {emailCopied ? "Copied!" : "Click to copy"} <Kbd>E</Kbd>
+                  </p>
                 </TooltipContent>
               </Tooltip>
             );
