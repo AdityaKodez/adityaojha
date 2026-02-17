@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { PinIcon } from "lucide-react";
+import { PinIcon, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { WritingUnderline } from "./writing-underline";
@@ -22,12 +22,20 @@ export function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.1, delay: 0.1 }}
-          className="no-js-visible"
+          className="no-js-visible relative"
         >
           <Avatar className="size-24 shrink-0 border-2 border-dashed border-foreground/50 bg-background shadow-xl">
             <AvatarImage src="/profile.png" alt="@akcll" />
             <AvatarFallback>AK</AvatarFallback>
           </Avatar>
+          <motion.div
+            className="absolute -top-2 -right-2 pointer-events-none"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: 0.6 }}
+          >
+            <Sparkles className="size-4 fill-amber-400 text-amber-400" />
+          </motion.div>
         </motion.div>
         <div className="space-y-2">
           <motion.p

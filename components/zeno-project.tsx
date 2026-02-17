@@ -14,17 +14,20 @@ export function ZenoProject() {
       <h2 className="text-xl font-semibold mb-6 border-y px-6 py-2">
         Projects
       </h2>
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="no-js-visible px-6"
+        className="no-js-visible grid grid-cols-1 md:grid-cols-2 gap-4 px-6"
       >
-        <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
-          <Card className="overflow-hidden shadow-none border border-dashed rounded-sm transition-colors hover:border-foreground/20 ring-0">
-            <div className="aspect-video relative bg-muted max-h-[300px]">
+        <motion.div
+          whileHover={{ y: -4 }}
+          transition={{ duration: 0.2 }}
+          className="h-full"
+        >
+          <Card className="h-full flex flex-col overflow-hidden shadow-none border border-dashed rounded-none transition-colors hover:border-foreground/20 ring-0 bg-background">
+            <div className="aspect-video relative bg-muted">
               <Image
                 src="/zeno.png"
                 alt="Zeno SaaS Boilerplate"
@@ -32,13 +35,13 @@ export function ZenoProject() {
                 className="object-cover"
               />
             </div>
-            <CardContent className="p-4 space-y-3">
+            <CardContent className="p-4 space-y-3 flex-grow">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h3 className="font-semibold text-lg">
                     Zeno — Accountability tracker for builders
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                     Designed and shipped a full-stack web app to track work
                     logs, streaks, and performance trends. Built authentication,
                     streak logic, analytics dashboards, and core data models.
@@ -86,18 +89,14 @@ export function ZenoProject() {
             </CardFooter>
           </Card>
         </motion.div>
-      </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="no-js-visible mt-8 px-6"
-      >
-        <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
-          <Card className="overflow-hidden shadow-none border border-dashed rounded-sm transition-colors hover:border-foreground/20 ring-0">
-            <div className="aspect-video relative bg-muted max-h-[350px]">
+        <motion.div
+          whileHover={{ y: -4 }}
+          transition={{ duration: 0.2 }}
+          className="h-full"
+        >
+          <Card className="h-full flex flex-col overflow-hidden shadow-none border border-dashed rounded-none transition-colors hover:border-foreground/20 ring-0 bg-background">
+            <div className="aspect-video relative bg-muted">
               <Image
                 src="/root.png"
                 alt="Root - Math Drill Engine"
@@ -105,13 +104,13 @@ export function ZenoProject() {
                 className="object-cover"
               />
             </div>
-            <CardContent className="p-4 space-y-3">
+            <CardContent className="p-4 space-y-3 flex-grow">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h3 className="font-semibold text-lg">
                     Root — Math Drill Engine
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                     A practice-focused web app centered on question patterns and
                     timed drills. Exploring how students interact with practice
                     workflows and how data models evolve with usage.
@@ -145,7 +144,7 @@ export function ZenoProject() {
               <div className="flex items-center gap-1.5">
                 <Users className="h-3.5 w-3.5 text-muted-foreground" />
                 <span className="text-xs font-medium text-muted-foreground">
-                  40+ students
+                  50+ students
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
