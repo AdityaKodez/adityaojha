@@ -28,14 +28,7 @@ export function Hero() {
             <AvatarImage src="/profile.png" alt="@akcll" />
             <AvatarFallback>AK</AvatarFallback>
           </Avatar>
-          <motion.div
-            className="absolute -top-2 -right-2 pointer-events-none"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.6 }}
-          >
-            <Sparkles className="size-4 fill-amber-400 text-amber-400" />
-          </motion.div>
+         
         </motion.div>
         <div className="space-y-2">
           <motion.p
