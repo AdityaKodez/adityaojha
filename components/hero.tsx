@@ -2,11 +2,11 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { PinIcon, Sparkles } from "lucide-react";
+import { Globe2Icon, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
+import DiscordStatus from "./discord-status";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { WritingUnderline } from "./writing-underline";
-import DiscordStatus from "./discord-status";
 
 export function Hero() {
   return (
@@ -85,7 +85,7 @@ export function Hero() {
           >
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1.5">
-                <PinIcon className="h-4 w-4" />
+                <Globe2Icon className="h-4 w-4" />
                 <span>New Delhi, India</span>
               </TooltipTrigger>
               <TooltipContent>

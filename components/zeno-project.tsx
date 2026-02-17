@@ -26,7 +26,10 @@ export function ZenoProject() {
           transition={{ duration: 0.2 }}
           className="h-full"
         >
-          <Card className="h-full flex flex-col overflow-hidden shadow-none border border-dashed rounded-none transition-colors hover:border-foreground/20 ring-0 bg-background">
+          <Card
+            className="h-full flex flex-col overflow-hidden shadow-none border border-dashed rounded-none transition-colors 
+          hover:bg-card/50 hover:border-foreground/20 ring-0 bg-background"
+          >
             <div className="aspect-video relative bg-muted">
               <Image
                 src="/zeno.png"
@@ -35,7 +38,7 @@ export function ZenoProject() {
                 className="object-cover"
               />
             </div>
-            <CardContent className="p-4 space-y-3 flex-grow">
+            <CardContent className="p-4 space-y-3 grow">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h3 className="font-semibold text-lg">
@@ -95,7 +98,7 @@ export function ZenoProject() {
           transition={{ duration: 0.2 }}
           className="h-full"
         >
-          <Card className="h-full flex flex-col overflow-hidden shadow-none border border-dashed rounded-none transition-colors hover:border-foreground/20 ring-0 bg-background">
+          <Card className="h-full flex flex-col overflow-hidden shadow-none border border-dashed rounded-none transition-colors hover:bg-card/50 hover:border-foreground/20 ring-0 bg-background">
             <div className="aspect-video relative bg-muted">
               <Image
                 src="/root.png"
@@ -104,7 +107,7 @@ export function ZenoProject() {
                 className="object-cover"
               />
             </div>
-            <CardContent className="p-4 space-y-3 flex-grow">
+            <CardContent className="p-4 space-y-3 grow">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h3 className="font-semibold text-lg">
