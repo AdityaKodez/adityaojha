@@ -37,9 +37,19 @@ export const metadata: Metadata = {
     "Tailwind CSS",
     "Software Engineer",
     "India",
+    "Aditya",
+    "Aditya Ojha",
+    "AdityaKodez",
+    "SaaS",
   ],
   authors: [{ name: "Aditya", url: "https://akoder.xyz" }],
   creator: "Aditya",
+  publisher: "Aditya",
+  classification: "Portfolio",
+  category: "technology",
+  alternates: {
+    canonical: "https://akoder.xyz",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -63,11 +73,12 @@ export const metadata: Metadata = {
     description:
       "Aditya is a Full-stack Engineer building high-performance web applications. Specializing in Next.js, TypeScript, and modern web architecture.",
     images: ["/profile.png"],
-    creator: "@AdityaKodez",
+    creator: "@AdiKodez",
   },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
+    apple: "/apple-touch-icon.png",
   },
   robots: {
     index: true,
@@ -80,6 +91,35 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: "google-site-verification-code", // Placeholder
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Aditya Ojha",
+  url: "https://akoder.xyz",
+  jobTitle: "Full-Stack Engineer",
+  description:
+    "Full-stack Engineer building high-performance web applications. Specializing in Next.js, TypeScript, and modern web architecture.",
+  knowsAbout: [
+    "Next.js",
+    "TypeScript",
+    "React",
+    "Prisma",
+    "Tailwind CSS",
+    "Node.js",
+    "PostgreSQL",
+    "AWS",
+  ],
+  sameAs: [
+    "https://github.com/AdityaKodez",
+    "https://x.com/AdiKodez",
+    "https://linkedin.com/in/adityakodez",
+  ],
+  image: "https://akoder.xyz/profile.png",
 };
 
 export default function RootLayout({
@@ -93,6 +133,12 @@ export default function RootLayout({
       className={bricolageGrotesque.variable}
       suppressHydrationWarning
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

@@ -1,4 +1,4 @@
-import About from "@/components/about";
+import { About } from "@/components/about";
 import { Banner } from "@/components/banner";
 import { CTA } from "@/components/cta";
 import { Hero } from "@/components/hero";
@@ -17,7 +17,10 @@ export default async function Home() {
   const contributionData = await fetchGithubData("AdityaKodez");
 
   return (
-    <main className="relative min-h-screen max-w-3xl mx-auto  md:pb-16 space-y-8 border border-dashed overflow-hidden">
+    <main
+      id="main-content"
+      className="relative min-h-screen max-w-3xl mx-auto  md:pb-16 space-y-8 border border-dashed overflow-hidden"
+    >
       <Banner />
       <Hero />
       <Social />

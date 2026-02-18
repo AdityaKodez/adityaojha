@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { Globe2Icon, Sparkles } from "lucide-react";
+import { Globe2Icon } from "lucide-react";
 import { motion } from "motion/react";
 import DiscordStatus from "./discord-status";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
@@ -28,7 +28,6 @@ export function Hero() {
             <AvatarImage src="/profile.png" alt="@akcll" />
             <AvatarFallback>AK</AvatarFallback>
           </Avatar>
-         
         </motion.div>
         <div className="space-y-2">
           <motion.p

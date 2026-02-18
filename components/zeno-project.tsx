@@ -10,7 +10,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function ZenoProject() {
   return (
-    <section className="border-t border-dashed pt-6">
+    <section id="projects" className="border-t border-dashed pt-6">
       <h2 className="text-xl font-semibold mb-6 border-y px-6 py-2">
         Projects
       </h2>

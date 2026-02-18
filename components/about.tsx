@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "motion/react";
-const About = () => {
+export const About = () => {
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -31,4 +31,4 @@ const About = () => {
   );
 };
 
-export default About;
+

@@ -26,6 +26,7 @@ export function CTA() {
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       className="no-js-visible border-y border-dashed pt-6 pb-12"
+      id="contact"
     >
       <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">
         Ready to build?
