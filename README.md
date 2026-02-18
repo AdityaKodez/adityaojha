@@ -38,3 +38,7 @@ if you found this useful maybe [buy me a coffee](https://buymeacoffee.com/adiKod
 cheers
 aditya
 a student pretending to be dev 
+
+## license
+
+this project is licensed under the [MIT License](./LICENSE).
