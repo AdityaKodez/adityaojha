@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Analytics } from "@vercel/analytics/next";
+import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
 
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -146,7 +147,9 @@ export default function RootLayout({
           <style>{`.no-js-visible { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; stroke-dasharray: none !important; }`}</style>
         </noscript>
         <ThemeProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <SmoothScrollProvider>
+            <TooltipProvider>{children}</TooltipProvider>
+          </SmoothScrollProvider>
         </ThemeProvider>
         <Analytics />
       </body>
