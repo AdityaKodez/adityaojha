@@ -1,12 +1,9 @@
+import { siteConfig } from "@/config/site";
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: "https://akoder.xyz",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-  ];
+  return siteConfig.meta.sitemap.map((item) => ({
+    ...item,
+    lastModified: new Date(),
+  }));
 }

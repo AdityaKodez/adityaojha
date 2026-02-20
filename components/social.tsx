@@ -1,5 +1,7 @@
 "use client";
 
+import { socialSectionConfig, socialsConfig } from "@/config/socials";
+import type { SocialIcon, SocialLink } from "@/config/types";
 import Peerlist from "@/public/peerlist";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
@@ -7,63 +9,24 @@ import { Check, Coffee, Copy } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Kbd } from "./ui/kbd";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
-const socials = [
-  {
-    platform: "GitHub",
-    handle: "@AdityaKodez",
-    href: "https://github.com/AdityaKodez",
-    icon: "github",
-  },
-  {
-    platform: "X (Twitter)",
-    handle: "@AdiKodez",
-    href: "https://x.com/AdiKodez",
-    icon: "x",
-  },
-  {
-    platform: "Peerlist",
-    handle: "@faker",
-    href: "https://peerlist.io/faker",
-    icon: "peerlist",
-  },
-  {
-    platform: "Discord",
-    handle: "@t1x_faker",
-    href: null,
-    icon: "discord",
-  },
-  {
-    platform: "Email",
-    handle: "adityakodez@gmail.com",
-    href: "mailto:adityakodez@gmail.com",
-    icon: "gmail",
-  },
-  {
-    platform: "Buy me a coffee",
-    handle: "@adiKodez",
-    href: "https://buymeacoffee.com/adiKodez",
-    icon: "coffee",
-  },
-] as const;
+const sortedSocials = socialsConfig
+  .filter((item) => item.enabled !== false)
+  .sort((a, b) => a.order - b.order);
 
-function SocialIcon({ icon, size = 18 }: { icon: string; size?: number }) {
+function SocialIconNode({ icon, size = 18 }: { icon: SocialIcon; size?: number }) {
   switch (icon) {
     case "github":
-      return (
-        <Image src="/github.svg" alt="GitHub" width={size} height={size} />
-      );
+      return <Image src="/github.svg" alt="GitHub" width={size} height={size} />;
     case "x":
       return <X size={String(size)} color="currentColor" />;
     case "peerlist":
       return <Peerlist size={String(size)} />;
     case "discord":
-      return (
-        <Image src="/discord.svg" alt="Discord" width={size} height={size} />
-      );
+      return <Image src="/discord.svg" alt="Discord" width={size} height={size} />;
     case "gmail":
       return <Gmail size={String(size)} />;
     case "coffee":
@@ -74,38 +37,23 @@ function SocialIcon({ icon, size = 18 }: { icon: string; size?: number }) {
 }
 
 const Social = () => {
-  const [discordCopied, setDiscordCopied] = useState(false);
-  const [emailCopied, setEmailCopied] = useState(false);
+  const [copied, setCopied] = useState<Record<string, boolean>>({});
 
-  const copyDiscordId = useCallback(() => {
-    navigator.clipboard.writeText("t1x_faker");
-    setDiscordCopied(true);
-    setTimeout(() => setDiscordCopied(false), 2000);
-  }, []);
+  const copyEnabled = useMemo(
+    () => sortedSocials.filter((item) => item.action === "copy" && item.copyValue),
+    [],
+  );
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement ||
-        (e.target as HTMLElement).isContentEditable
-      ) {
-        return;
-      }
-      if (e.key.toLowerCase() === "c") {
-        e.preventDefault();
-        copyDiscordId();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [copyDiscordId]);
-
-  const copyEmail = useCallback(() => {
-    navigator.clipboard.writeText("adityakodez@gmail.com");
-    setEmailCopied(true);
-    setTimeout(() => setEmailCopied(false), 2000);
-  }, []);
+  const handleCopy = (social: SocialLink) => {
+    if (!social.copyValue) {
+      return;
+    }
+    navigator.clipboard.writeText(social.copyValue);
+    setCopied((prev) => ({ ...prev, [social.id]: true }));
+    setTimeout(() => {
+      setCopied((prev) => ({ ...prev, [social.id]: false }));
+    }, 2000);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -116,14 +64,20 @@ const Social = () => {
       ) {
         return;
       }
-      if (e.key.toLowerCase() === "e") {
+
+      const target = copyEnabled.find(
+        (item) => item.shortcutKey?.toLowerCase() === e.key.toLowerCase(),
+      );
+
+      if (target) {
         e.preventDefault();
-        copyEmail();
+        handleCopy(target);
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [copyEmail]);
+  }, [copyEnabled]);
 
   return (
     <motion.section
@@ -132,13 +86,11 @@ const Social = () => {
       transition={{ duration: 0.2, delay: 0.5 }}
       className="no-js-visible border-t border-dashed pt-6"
     >
-      <h2 className="text-xl font-semibold border-y px-6 py-2">Connect</h2>
+      <h2 className="text-xl font-semibold border-y px-6 py-2">{socialSectionConfig.title}</h2>
 
-      {/* 2×3 grid — each cell gets all 4 borders, negative margin collapses them into single lines */}
       <div className="grid grid-cols-2 max-sm:grid-cols-1 overflow-hidden -mb-px">
-        {socials.map((social, idx) => {
-          const isDiscord = social.icon === "discord";
-          const isEmail = social.icon === "gmail";
+        {sortedSocials.map((social, idx) => {
+          const isCopyAction = social.action === "copy";
 
           const cellContent = (
             <motion.div
@@ -148,25 +100,15 @@ const Social = () => {
               className="no-js-visible group flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/50"
             >
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30 transition-colors">
-                <SocialIcon icon={social.icon} size={18} />
+                <SocialIconNode icon={social.icon} size={18} />
               </div>
               <div className="flex flex-col min-w-0">
-                <span className="text-sm font-medium leading-none">
-                  {social.platform}
-                </span>
-                <span className="text-xs text-muted-foreground mt-1 truncate">
-                  {social.handle}
-                </span>
+                <span className="text-sm font-medium leading-none">{social.platform}</span>
+                <span className="text-xs text-muted-foreground mt-1 truncate">{social.handle}</span>
               </div>
-              {(isDiscord || isEmail) && (
+              {isCopyAction && (
                 <div className="ml-auto">
-                  {isDiscord ? (
-                    discordCopied ? (
-                      <Check className="h-3.5 w-3.5 text-green-500" />
-                    ) : (
-                      <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    )
-                  ) : emailCopied ? (
+                  {copied[social.id] ? (
                     <Check className="h-3.5 w-3.5 text-green-500" />
                   ) : (
                     <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
@@ -176,62 +118,37 @@ const Social = () => {
             </motion.div>
           );
 
-          // Discord = copy to clipboard action
-          if (isDiscord) {
+          if (isCopyAction) {
             return (
-              <Tooltip key={social.platform}>
+              <Tooltip key={social.id}>
                 <TooltipTrigger asChild>
-                  <button
-                    onClick={copyDiscordId}
-                    className="text-left cursor-pointer"
-                  >
+                  <button onClick={() => handleCopy(social)} className="text-left cursor-pointer">
                     {cellContent}
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    {discordCopied ? "Copied!" : "Click to copy"} <Kbd>C</Kbd>
+                    {copied[social.id] ? "Copied!" : social.tooltipDefault}
+                    {social.shortcutKey ? <Kbd>{social.shortcutKey}</Kbd> : null}
                   </p>
                 </TooltipContent>
               </Tooltip>
             );
           }
 
-          // Email = mailto link (no target _blank needed)
-          if (isEmail) {
-            return (
-              <Tooltip key={social.platform}>
-                <TooltipTrigger asChild>
-                  <Link
-                    href={social.href}
-                    className="focus-visible:outline-none"
-                  >
-                    {cellContent}
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>
-                    {emailCopied ? "Copied!" : "Click to copy"} <Kbd>E</Kbd>
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            );
-          }
-
-          // Everything else = external link
           return (
-            <Tooltip key={social.platform}>
+            <Tooltip key={social.id}>
               <TooltipTrigger asChild>
                 <Link
-                  href={social.href!}
-                  target="_blank"
+                  href={social.href ?? "#"}
+                  target={social.action === "external" ? "_blank" : undefined}
                   className="focus-visible:outline-none"
                 >
                   {cellContent}
                 </Link>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{social.platform}</p>
+                <p>{social.tooltipDefault ?? social.platform}</p>
               </TooltipContent>
             </Tooltip>
           );

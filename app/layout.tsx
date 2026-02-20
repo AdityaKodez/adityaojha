@@ -1,9 +1,10 @@
-import { Metadata } from "next";
-import { Geist, Geist_Mono, Bricolage_Grotesque } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { siteConfig } from "@/config/site";
 import { Analytics } from "@vercel/analytics/next";
+import { Metadata } from "next";
+import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -21,64 +22,41 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://akoder.xyz"),
+  metadataBase: new URL(siteConfig.meta.url),
   title: {
-    default: "Aditya — Full-Stack Engineer",
-    template: "%s | Aditya",
+    default: siteConfig.meta.title,
+    template: siteConfig.meta.titleTemplate,
   },
-  description:
-    "Aditya is a Full-stack Engineer building high-performance web applications. Specializing in Next.js, TypeScript, and modern web architecture.",
-  keywords: [
-    "Full-stack Engineer",
-    "Web Developer",
-    "Next.js",
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "Software Engineer",
-    "India",
-    "Aditya",
-    "Aditya Ojha",
-    "AdityaKodez",
-    "SaaS",
-  ],
-  authors: [{ name: "Aditya", url: "https://akoder.xyz" }],
-  creator: "Aditya",
-  publisher: "Aditya",
-  classification: "Portfolio",
-  category: "technology",
+  description: siteConfig.meta.description,
+  keywords: siteConfig.meta.keywords,
+  authors: siteConfig.meta.authors,
+  creator: siteConfig.meta.creator,
+  publisher: siteConfig.meta.publisher,
+  classification: siteConfig.meta.classification,
+  category: siteConfig.meta.category,
   alternates: {
-    canonical: "https://akoder.xyz",
+    canonical: siteConfig.meta.url,
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: "https://akoder.xyz",
-    title: "Aditya — Full-Stack Engineer",
-    description:
-      "Aditya is a Full-stack Engineer building high-performance web applications. Specializing in Next.js, TypeScript, and modern web architecture.",
-    siteName: "Aditya",
-    images: [
-      {
-        url: "/profile.png",
-        width: 1200,
-        height: 630,
-        alt: "Aditya — Full-Stack Engineer",
-      },
-    ],
+    locale: siteConfig.meta.locale,
+    url: siteConfig.meta.url,
+    title: siteConfig.meta.title,
+    description: siteConfig.meta.description,
+    siteName: siteConfig.meta.shortTitle,
+    images: [siteConfig.meta.ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aditya — Full-Stack Engineer",
-    description:
-      "Aditya is a Full-stack Engineer building high-performance web applications. Specializing in Next.js, TypeScript, and modern web architecture.",
-    images: ["/profile.png"],
-    creator: "@AdiKodez",
+    title: siteConfig.meta.title,
+    description: siteConfig.meta.description,
+    images: [siteConfig.meta.ogImage.url],
+    creator: siteConfig.meta.twitterCreator,
   },
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-    apple: "/apple-touch-icon.png",
+    icon: siteConfig.meta.icon,
+    shortcut: siteConfig.meta.icon,
+    apple: siteConfig.meta.appleIcon,
   },
   robots: {
     index: true,
@@ -92,34 +70,20 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "google-site-verification-code", // Placeholder
+    google: siteConfig.meta.googleVerification,
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Aditya Ojha",
-  url: "https://akoder.xyz",
+  name: siteConfig.personal.fullName,
+  url: siteConfig.meta.url,
   jobTitle: "Full-Stack Engineer",
-  description:
-    "Full-stack Engineer building high-performance web applications. Specializing in Next.js, TypeScript, and modern web architecture.",
-  knowsAbout: [
-    "Next.js",
-    "TypeScript",
-    "React",
-    "Prisma",
-    "Tailwind CSS",
-    "Node.js",
-    "PostgreSQL",
-    "AWS",
-  ],
-  sameAs: [
-    "https://github.com/AdityaKodez",
-    "https://x.com/AdiKodez",
-    "https://linkedin.com/in/adityakodez",
-  ],
-  image: "https://akoder.xyz/profile.png",
+  description: siteConfig.meta.description,
+  knowsAbout: ["Next.js", "TypeScript", "React", "Prisma", "Tailwind CSS", "Node.js", "PostgreSQL", "AWS"],
+  sameAs: ["https://github.com/AdityaKodez", "https://x.com/AdiKodez", "https://linkedin.com/in/adityakodez"],
+  image: `${siteConfig.meta.url}/profile.png`,
 };
 
 export default function RootLayout({
@@ -128,20 +92,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={bricolageGrotesque.variable}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={bricolageGrotesque.variable} suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <noscript>
           <style>{`.no-js-visible { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; stroke-dasharray: none !important; }`}</style>
         </noscript>
