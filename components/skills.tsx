@@ -37,13 +37,15 @@ function SkillCell({ skill, idx }: { skill: SkillItem; idx: number }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, delay: 0.15 + idx * 0.03 }}
-      className="no-js-visible group flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/50"
+      className="no-js-visible group flex items-center gap-2 px-4 py-2 border border-dashed rounded-full transition-colors hover:bg-muted/50"
     >
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30 transition-colors">
-        <Icon size="18" />
+      <div className="flex shrink-0 items-center justify-center text-muted-foreground group-hover:text-foreground transition-colors">
+        <Icon size="16" />
       </div>
       <div className="flex flex-col min-w-0">
-        <span className="text-sm font-medium leading-none">{skill.name}</span>
+        <span className="text-sm font-medium leading-none text-muted-foreground group-hover:text-foreground transition-colors">
+          {skill.name}
+        </span>
       </div>
     </motion.div>
   );
@@ -51,16 +53,16 @@ function SkillCell({ skill, idx }: { skill: SkillItem; idx: number }) {
 
 export function Skills() {
   return (
-    <section className=" border-t border-dashed pt-6">
+    <section className="border-t border-dashed pt-6 pb-8">
       <motion.h2
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, delay: 0.1 }}
-        className="no-js-visible text-xl font-semibold mb-3 border-y px-6 py-2"
+        className="no-js-visible text-xl font-semibold mb-6 px-6"
       >
         {skillsSectionConfig.title}
       </motion.h2>
-      <div className="grid grid-cols-2 max-sm:grid-cols-1 overflow-hidden -mb-px">
+      <div className="flex flex-wrap gap-3 px-6">
         {enabledSkills.map((skill, idx) => (
           <SkillCell key={skill.id} skill={skill} idx={idx} />
         ))}
