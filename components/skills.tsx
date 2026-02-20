@@ -13,7 +13,7 @@ import TrpcIcon from "@/public/stacks/trcp";
 import TSIcon from "@/public/stacks/ts";
 import type { ComponentType } from "react";
 
-const skillIconMap: Record<SkillIcon, ComponentType<{ size?: string }>> = {
+const skillIconMap: Record<SkillIcon, ComponentType<{ size: string }>> = {
   nextjs: NextjsIcon,
   react: ReactIcon,
   typescript: TSIcon,
