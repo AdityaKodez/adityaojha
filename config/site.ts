@@ -107,7 +107,7 @@ export const siteConfig: PortfolioConfig = {
     about: true,
     testimonials: true,
     projects: true,
-    experience: true,
+    experience: false,
     services: true,
     workflow: true,
     github: true,
