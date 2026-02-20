@@ -1,6 +1,14 @@
 "use client";
+
+import { siteConfig } from "@/config/site";
 import { motion } from "motion/react";
+
 export const About = () => {
+  const [firstPhrase, secondPhrase] = siteConfig.about.emphasizedPhrases;
+  const [intro, restWithSecond] = siteConfig.about.body.split(firstPhrase);
+  const [middle, outro] = (restWithSecond ?? "").split(secondPhrase);
+  const canFormat = Boolean(restWithSecond) && Boolean(secondPhrase) && outro !== undefined;
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -9,26 +17,23 @@ export const About = () => {
       className="no-js-visible border-t border-dashed pt-6"
     >
       <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">
-        About me
+        {siteConfig.about.title}
       </h2>
       <div className="px-6">
         <p className="text-lg text-muted-foreground">
-          I started experimenting with computers and building small things early
-          on, long before I understood where it would lead. The path wasn’t
-          clean or linear, and I had to learn{" "}
-          <span className="underline underline-offset-4 decoration-border">
-            discipline and consistency
-          </span>{" "}
-          the hard way. Building products eventually became how I stay focused —
-          turning effort into something{" "}
-          <span className="underline underline-offset-4 decoration-border">
-            concrete and useful
-          </span>
-          .
+          {canFormat ? (
+            <>
+              {intro}
+              <span className="underline underline-offset-4 decoration-border">{firstPhrase}</span>{" "}
+              {middle}
+              <span className="underline underline-offset-4 decoration-border">{secondPhrase}</span>
+              {outro}
+            </>
+          ) : (
+            siteConfig.about.body
+          )}
         </p>
       </div>
     </motion.section>
   );
 };
-
-

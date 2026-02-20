@@ -1,7 +1,8 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import { heroConfig } from "@/config/hero";
+import { siteConfig } from "@/config/site";
 import { Globe2Icon } from "lucide-react";
 import { motion } from "motion/react";
 import DiscordStatus from "./discord-status";
@@ -9,6 +10,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { WritingUnderline } from "./writing-underline";
 
 export function Hero() {
+  const [beforeHighlight, afterHighlight] = heroConfig.description.split(
+    heroConfig.descriptionHighlight,
+  );
+
   return (
     <motion.section
       className="no-js-visible relative z-20 -mt-24 space-y-4 px-6"
@@ -25,8 +30,11 @@ export function Hero() {
           className="no-js-visible relative"
         >
           <Avatar className="size-24 shrink-0 border-2 border-dashed border-foreground/50 bg-background shadow-xl">
-            <AvatarImage src="/profile.png" alt="@akcll" />
-            <AvatarFallback>AK</AvatarFallback>
+            <AvatarImage
+              src={siteConfig.personal.avatar.src}
+              alt={siteConfig.personal.avatar.alt}
+            />
+            <AvatarFallback>{siteConfig.personal.avatar.fallback}</AvatarFallback>
           </Avatar>
         </motion.div>
         <div className="space-y-2">
@@ -36,12 +44,12 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
-            Hello, I&apos;m Aditya Ojha{" "}
+            {heroConfig.greeting}
             <span
               className="text-2xl hover:animate-wave inline-block"
               style={{ transformOrigin: "70% 70%" }}
             >
-              👋
+              {heroConfig.waveEmoji}
             </span>
           </motion.p>
           <motion.h1
@@ -50,12 +58,12 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.2 }}
           >
-            I ship{" "}
+            {heroConfig.headlineBefore}{" "}
             <WritingUnderline delay={0.8}>
-              production-ready SaaS MVPs
+              {heroConfig.highlightedPhrases[0]}
             </WritingUnderline>{" "}
-            in <WritingUnderline delay={1.2}>2–4 weeks</WritingUnderline> using
-            Next.js and Prisma.
+            in <WritingUnderline delay={1.2}>{heroConfig.highlightedPhrases[1]}</WritingUnderline>{" "}
+            {heroConfig.headlineAfter}
           </motion.h1>
           <motion.p
             className="no-js-visible mt-4 text-md max-sm:text-sm text-muted-foreground"
@@ -63,11 +71,17 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.3 }}
           >
-            Built and shipped full-stack products with{" "}
-            <span className="underline underline-offset-4 decoration-border/50">
-              real users
-            </span>
-            . Strong focus on auth, data models, and iteration speed.
+            {afterHighlight === undefined ? (
+              heroConfig.description
+            ) : (
+              <>
+                {beforeHighlight}
+                <span className="underline underline-offset-4 decoration-border/50">
+                  {heroConfig.descriptionHighlight}
+                </span>
+                {afterHighlight}
+              </>
+            )}
           </motion.p>
           <motion.div
             className="no-js-visible flex mt-6 items-center gap-3 text-sm text-muted-foreground"
@@ -78,10 +92,10 @@ export function Hero() {
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1.5">
                 <Globe2Icon className="h-4 w-4" />
-                <span>New Delhi, India</span>
+                <span>{siteConfig.personal.location.label}</span>
               </TooltipTrigger>
               <TooltipContent>
-                <span>UTC +5:30</span>
+                <span>{siteConfig.personal.location.timezone}</span>
               </TooltipContent>
             </Tooltip>
 

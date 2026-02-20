@@ -1,0 +1,56 @@
+import type { Testimonial } from "@/config/types";
+
+export const testimonialsConfig: Testimonial[] = [
+  {
+    id: "vishal",
+    name: "Vishal Sharma",
+    role: "Student",
+    content:
+      "Your portfolio UI looks good, well which tech stack and state management you have used ?",
+    avatar: "VS",
+    image: "/testimonial/vishal.png",
+    order: 1,
+    enabled: true,
+  },
+  {
+    id: "natey",
+    name: "natey_mac",
+    role: "Redditor",
+    content:
+      "This is great. Most of the portfolios people post here are doing WAY too much. Yours here shows off just enough skill and an eye for design and doesn’t look like a boiler plate template to me at least. So great work. No notes.",
+    avatar: "NM",
+    image: "/testimonial/natey.png",
+    order: 2,
+    enabled: true,
+  },
+  {
+    id: "elongated",
+    name: "ElongatedBear",
+    role: "Redditor",
+    content: "You've got a good eye for design",
+    avatar: "EB",
+    image: "/testimonial/elongated.png",
+    order: 3,
+    enabled: true,
+  },
+  {
+    id: "garvit",
+    name: "Garvit Joshi",
+    role: "Creator of animbits.dev.",
+    content: "I like the minimalistic look good work.",
+    avatar: "GJ",
+    image: "/testimonial/garvit.png",
+    order: 4,
+    enabled: true,
+  },
+  {
+    id: "vivek",
+    name: "Vivek Singh",
+    role: "CoFounder at Digia",
+    content: "Congrats on your launch. Looking forward",
+    avatar: "VS",
+    image: "/testimonial/vivek.png",
+    order: 5,
+    enabled: true,
+  },
+];
