@@ -14,7 +14,9 @@ export function Experience() {
 
   return (
     <section className="border-t border-dashed pt-6">
-      <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">{experienceSectionConfig.title}</h2>
+      <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">
+        {experienceSectionConfig.title}
+      </h2>
       <div className="px-6 space-y-4">
         {enabledExperience.map((item, idx) => (
           <motion.article
@@ -27,7 +29,7 @@ export function Experience() {
           >
             <h3 className="text-base font-semibold">{item.role}</h3>
             <p className="text-sm text-muted-foreground">
-              {item.company} · {item.period}
+              {item.company} · <span className="font-pixel">{item.period}</span>
             </p>
             <p className="mt-2 text-sm text-muted-foreground">{item.summary}</p>
             {item.highlights?.length ? (

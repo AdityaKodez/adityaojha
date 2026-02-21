@@ -34,12 +34,14 @@ export function Hero() {
               src={siteConfig.personal.avatar.src}
               alt={siteConfig.personal.avatar.alt}
             />
-            <AvatarFallback>{siteConfig.personal.avatar.fallback}</AvatarFallback>
+            <AvatarFallback>
+              {siteConfig.personal.avatar.fallback}
+            </AvatarFallback>
           </Avatar>
         </motion.div>
         <div className="space-y-2">
           <motion.p
-            className="no-js-visible text-lg font-semibold mb-3 flex items-center gap-2"
+            className="no-js-visible text-lg font-pixel font-semibold mb-3 flex items-center gap-2 tracking-wide"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
@@ -62,7 +64,10 @@ export function Hero() {
             <WritingUnderline delay={0.8}>
               {heroConfig.highlightedPhrases[0]}
             </WritingUnderline>{" "}
-            in <WritingUnderline delay={1.2}>{heroConfig.highlightedPhrases[1]}</WritingUnderline>{" "}
+            in{" "}
+            <WritingUnderline delay={1.2}>
+              {heroConfig.highlightedPhrases[1]}
+            </WritingUnderline>{" "}
             {heroConfig.headlineAfter}
           </motion.h1>
           <motion.p
@@ -92,7 +97,9 @@ export function Hero() {
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1.5">
                 <Globe2Icon className="h-4 w-4" />
-                <span>{siteConfig.personal.location.label}</span>
+                <span className="font-pixel">
+                  {siteConfig.personal.location.label}
+                </span>
               </TooltipTrigger>
               <TooltipContent>
                 <span>{siteConfig.personal.location.timezone}</span>

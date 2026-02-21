@@ -7,7 +7,8 @@ export const About = () => {
   const [firstPhrase, secondPhrase] = siteConfig.about.emphasizedPhrases;
   const [intro, restWithSecond] = siteConfig.about.body.split(firstPhrase);
   const [middle, outro] = (restWithSecond ?? "").split(secondPhrase);
-  const canFormat = Boolean(restWithSecond) && Boolean(secondPhrase) && outro !== undefined;
+  const canFormat =
+    Boolean(restWithSecond) && Boolean(secondPhrase) && outro !== undefined;
 
   return (
     <motion.section
@@ -24,9 +25,13 @@ export const About = () => {
           {canFormat ? (
             <>
               {intro}
-              <span className="underline underline-offset-4 decoration-border">{firstPhrase}</span>{" "}
+              <span className="underline underline-offset-4 decoration-border">
+                {firstPhrase}
+              </span>{" "}
               {middle}
-              <span className="underline underline-offset-4 decoration-border">{secondPhrase}</span>
+              <span className="underline underline-offset-4 decoration-border">
+                {secondPhrase}
+              </span>
               {outro}
             </>
           ) : (

@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <main className="relative min-h-screen max-w-3xl mx-auto py-8 md:pt-16 space-y-8 border border-dashed flex flex-col items-center justify-center text-center px-4 overflow-hidden">
       <div className="space-y-4">
-        <h1 className="text-8xl font-mono text-primary font-bold tracking-tighter">
+        <h1 className="text-8xl font-pixel text-primary font-bold tracking-tighter">
           404
         </h1>
         <h2 className="text-2xl font-semibold tracking-tight">

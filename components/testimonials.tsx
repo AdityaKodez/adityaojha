@@ -16,7 +16,11 @@ export function Testimonials() {
       <div className="relative">
         <InfiniteSlider gap={4} speed={50} speedOnHover={10}>
           {enabledTestimonials.map((testimonial) => (
-            <motion.div key={testimonial.id} transition={{ duration: 0.2 }} className="w-[300px] md:w-[350px]">
+            <motion.div
+              key={testimonial.id}
+              transition={{ duration: 0.2 }}
+              className="w-[300px] md:w-[350px]"
+            >
               <Card className="h-full border border-dashed shadow-none hover:border-foreground/20 transition-colors ring-0 rounded-none bg-background hover:bg-muted">
                 <CardContent className="p-3 flex flex-col gap-2 h-full">
                   <p className="text-sm text-muted-foreground leading-tight flex-1">
@@ -25,13 +29,20 @@ export function Testimonials() {
 
                   <div className="flex items-center gap-3 mt-auto">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={testimonial.image} alt={testimonial.name} />
+                      <AvatarImage
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                      />
                       <AvatarFallback>{testimonial.avatar}</AvatarFallback>
                     </Avatar>
 
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium leading-none">{testimonial.name}</span>
-                      <span className="text-xs text-muted-foreground mt-1">{testimonial.role}</span>
+                      <span className="text-sm font-medium leading-none">
+                        {testimonial.name}
+                      </span>
+                      <span className="text-xs text-muted-foreground mt-1 font-pixel">
+                        {testimonial.role}
+                      </span>
                     </div>
                   </div>
                 </CardContent>

@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/site";
 import { Analytics } from "@vercel/analytics/next";
+import { GeistPixelGrid } from "geist/font/pixel";
 import { Metadata } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -81,8 +82,21 @@ const jsonLd = {
   url: siteConfig.meta.url,
   jobTitle: "Full-Stack Engineer",
   description: siteConfig.meta.description,
-  knowsAbout: ["Next.js", "TypeScript", "React", "Prisma", "Tailwind CSS", "Node.js", "PostgreSQL", "AWS"],
-  sameAs: ["https://github.com/AdityaKodez", "https://x.com/AdiKodez", "https://linkedin.com/in/adityakodez"],
+  knowsAbout: [
+    "Next.js",
+    "TypeScript",
+    "React",
+    "Prisma",
+    "Tailwind CSS",
+    "Node.js",
+    "PostgreSQL",
+    "AWS",
+  ],
+  sameAs: [
+    "https://github.com/AdityaKodez",
+    "https://x.com/AdiKodez",
+    "https://linkedin.com/in/adityakodez",
+  ],
   image: `${siteConfig.meta.url}/profile.png`,
 };
 
@@ -92,11 +106,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={bricolageGrotesque.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${bricolageGrotesque.variable} ${GeistPixelGrid.variable}`}
+      suppressHydrationWarning
+    >
       <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <noscript>
           <style>{`.no-js-visible { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; stroke-dasharray: none !important; }`}</style>
         </noscript>

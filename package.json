@@ -15,6 +15,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
+    "geist": "^1.7.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.563.0",
     "motion": "^12.29.2",

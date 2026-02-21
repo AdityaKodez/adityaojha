@@ -17,16 +17,26 @@ const sortedSocials = socialsConfig
   .filter((item) => item.enabled !== false)
   .sort((a, b) => a.order - b.order);
 
-function SocialIconNode({ icon, size = 18 }: { icon: SocialIcon; size?: number }) {
+function SocialIconNode({
+  icon,
+  size = 18,
+}: {
+  icon: SocialIcon;
+  size?: number;
+}) {
   switch (icon) {
     case "github":
-      return <Image src="/github.svg" alt="GitHub" width={size} height={size} />;
+      return (
+        <Image src="/github.svg" alt="GitHub" width={size} height={size} />
+      );
     case "x":
       return <X size={String(size)} color="currentColor" />;
     case "peerlist":
       return <Peerlist size={String(size)} />;
     case "discord":
-      return <Image src="/discord.svg" alt="Discord" width={size} height={size} />;
+      return (
+        <Image src="/discord.svg" alt="Discord" width={size} height={size} />
+      );
     case "gmail":
       return <Gmail size={String(size)} />;
     case "coffee":
@@ -40,7 +50,8 @@ const Social = () => {
   const [copied, setCopied] = useState<Record<string, boolean>>({});
 
   const copyEnabled = useMemo(
-    () => sortedSocials.filter((item) => item.action === "copy" && item.copyValue),
+    () =>
+      sortedSocials.filter((item) => item.action === "copy" && item.copyValue),
     [],
   );
 
@@ -86,7 +97,9 @@ const Social = () => {
       transition={{ duration: 0.2, delay: 0.5 }}
       className="no-js-visible border-t border-dashed pt-6"
     >
-      <h2 className="text-xl font-semibold border-y px-6 py-2">{socialSectionConfig.title}</h2>
+      <h2 className="text-xl font-semibold border-y px-6 py-2">
+        {socialSectionConfig.title}
+      </h2>
 
       <div className="grid grid-cols-2 max-sm:grid-cols-1 overflow-hidden -mb-px">
         {sortedSocials.map((social, idx) => {
@@ -103,8 +116,12 @@ const Social = () => {
                 <SocialIconNode icon={social.icon} size={18} />
               </div>
               <div className="flex flex-col min-w-0">
-                <span className="text-sm font-medium leading-none">{social.platform}</span>
-                <span className="text-xs text-muted-foreground mt-1 truncate">{social.handle}</span>
+                <span className="text-sm font-medium leading-none">
+                  {social.platform}
+                </span>
+                <span className="text-xs text-muted-foreground mt-1 truncate font-pixel">
+                  {social.handle}
+                </span>
               </div>
               {isCopyAction && (
                 <div className="ml-auto">
@@ -122,14 +139,19 @@ const Social = () => {
             return (
               <Tooltip key={social.id}>
                 <TooltipTrigger asChild>
-                  <button onClick={() => handleCopy(social)} className="text-left cursor-pointer">
+                  <button
+                    onClick={() => handleCopy(social)}
+                    className="text-left cursor-pointer"
+                  >
                     {cellContent}
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
                     {copied[social.id] ? "Copied!" : social.tooltipDefault}
-                    {social.shortcutKey ? <Kbd>{social.shortcutKey}</Kbd> : null}
+                    {social.shortcutKey ? (
+                      <Kbd>{social.shortcutKey}</Kbd>
+                    ) : null}
                   </p>
                 </TooltipContent>
               </Tooltip>

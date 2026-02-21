@@ -13,17 +13,25 @@ export function HowIWork() {
       transition={{ duration: 0.5 }}
       className="no-js-visible border-t border-dashed pt-6"
     >
-      <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">{siteConfig.workflow.title}</h2>
+      <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">
+        {siteConfig.workflow.title}
+      </h2>
       <div className="px-6 flex flex-col gap-4">
         <ul className="space-y-1.5 text-sm text-muted-foreground list-disc list-inside">
           {siteConfig.workflow.items.map((item) => (
             <li key={item.label}>
-              <span className="font-medium text-foreground">{item.label}:</span> {item.description}
+              <span className="font-medium text-foreground font-pixel">
+                {item.label}:
+              </span>{" "}
+              {item.description}
             </li>
           ))}
         </ul>
         <div className="flex justify-end pr-4">
-          <Signature className="text-foreground/80 max-sm:h-10 " viewport={{ amount: 0.1 }} />
+          <Signature
+            className="text-foreground/80 max-sm:h-10 "
+            viewport={{ amount: 0.1 }}
+          />
         </div>
       </div>
     </motion.section>

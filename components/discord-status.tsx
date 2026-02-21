@@ -218,14 +218,16 @@ export function DiscordStatus() {
         <div>
           <Badge variant="outline" className="gap-1.5 cursor-default">
             <StatusIcon className={`h-3 w-3 ${config.iconClassName}`} />
-            {config.label}
+            <span className="font-pixel">{config.label}</span>
           </Badge>
         </div>
       </TooltipTrigger>
       <TooltipContent side="bottom" className="p-2.5">
         <div className="space-y-1">
           <TooltipBody data={data} />
-          <p className="text-[10px] text-muted-foreground">From Discord status</p>
+          <p className="text-[10px] text-muted-foreground">
+            From Discord status
+          </p>
         </div>
       </TooltipContent>
     </Tooltip>
