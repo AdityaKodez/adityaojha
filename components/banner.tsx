@@ -8,13 +8,42 @@ import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Kbd } from "./ui/kbd";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function Banner() {
   const { setTheme, resolvedTheme } = useTheme();
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [starCount, setStarCount] = useState<string | null>(null);
+
+  useEffect(() => {
+    const path = new URL(siteConfig.banner.openSourceUrl).pathname.split("/").filter(Boolean);
+    const [owner, repo] = path;
+
+    if (!owner || !repo) return;
+
+    const fetchStarCount = async () => {
+      try {
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+        if (!response.ok) return;
+
+        const data = (await response.json()) as { stargazers_count?: number };
+        if (typeof data.stargazers_count !== "number") return;
+
+        setStarCount(
+          new Intl.NumberFormat("en", {
+            notation: "compact",
+            maximumFractionDigits: 1,
+          }).format(data.stargazers_count),
+        );
+      } catch {
+        // silently fail to keep the UI stable
+      }
+    };
+
+    fetchStarCount();
+  }, []);
 
   const playAudio = () => {
     if (audioRef.current) {
@@ -67,9 +96,10 @@ export function Banner() {
               <Link
                 href={siteConfig.banner.openSourceUrl}
                 target="_blank"
-                className="flex h-8 w-8 items-center justify-center text-white/70 transition-colors hover:text-white"
+                className="flex h-8 items-center justify-center gap-1 px-2 text-white/70 transition-colors hover:text-white"
               >
                 <OpenSrc size="20" />
+                {starCount ? <span className="text-[10px] leading-none font-medium">{starCount}</span> : null}
               </Link>
             </TooltipTrigger>
             <TooltipContent>
