@@ -48,21 +48,26 @@ function ProjectCard({
         {featured ? (
           /* Featured: side-by-side layout on md+ */
           <div className="flex flex-col md:flex-row">
-            <div className="aspect-video md:aspect-auto relative bg-muted md:w-1/2 md:min-h-[260px]">
+            <Link
+              href={`/project/${project.id}`}
+              className="aspect-video md:aspect-auto relative bg-muted md:w-1/2 md:min-h-[260px] block overflow-hidden group"
+            >
               <Image
                 src={project.image}
                 alt={project.imageAlt}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
-            </div>
+            </Link>
             <div className="flex flex-col grow md:w-1/2">
               <CardContent className="p-4 md:p-5 space-y-3 grow">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="font-semibold text-lg md:text-xl">
-                      {project.title}
-                    </h3>
+                    <Link href={`/project/${project.id}`}>
+                      <h3 className="font-semibold text-lg md:text-xl hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+                    </Link>
                     <p className="text-sm text-muted-foreground leading-relaxed mt-1">
                       {project.description}
                     </p>
@@ -121,18 +126,25 @@ function ProjectCard({
         ) : (
           /* Standard: stacked layout */
           <>
-            <div className="aspect-video relative bg-muted">
+            <Link
+              href={`/project/${project.id}`}
+              className="aspect-video relative bg-muted block overflow-hidden group"
+            >
               <Image
                 src={project.image}
                 alt={project.imageAlt}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
-            </div>
+            </Link>
             <CardContent className="p-4 space-y-3 grow">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="font-semibold text-lg">{project.title}</h3>
+                  <Link href={`/project/${project.id}`}>
+                    <h3 className="font-semibold text-lg hover:text-primary transition-colors">
+                      {project.title}
+                    </h3>
+                  </Link>
                   <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                     {project.description}
                   </p>

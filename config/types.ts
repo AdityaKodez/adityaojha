@@ -43,7 +43,14 @@ export interface SiteMetaConfig {
   robots: MetadataRoute.Robots;
   sitemap: Array<{
     url: string;
-    changeFrequency: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+    changeFrequency:
+      | "always"
+      | "hourly"
+      | "daily"
+      | "weekly"
+      | "monthly"
+      | "yearly"
+      | "never";
     priority: number;
   }>;
 }
@@ -138,8 +145,9 @@ export interface ProjectMetric {
 export interface Project {
   id: string;
   title: string;
-  
+
   description: string;
+  content?: string;
   image: string;
   imageAlt: string;
   liveUrl?: string;
