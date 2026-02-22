@@ -8,6 +8,7 @@ import type { ProjectMetric } from "@/config/types";
 import { BarChart3, ForwardIcon, Users } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
+import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
@@ -30,51 +31,59 @@ function Metric({ metric }: { metric: ProjectMetric }) {
   );
 }
 
-export function ZenoProject() {
+function ProjectCard({
+  project,
+  featured = false,
+}: {
+  project: (typeof enabledProjects)[number];
+  featured?: boolean;
+}) {
   return (
-    <section id="projects" className="border-t border-dashed pt-6">
-      <h2 className="text-xl font-semibold mb-6 border-y px-6 py-2">
-        {projectsSectionConfig.title}
-      </h2>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="no-js-visible grid grid-cols-1 md:grid-cols-2 gap-4 px-6"
-      >
-        {enabledProjects.map((project) => (
-          <motion.div
-            key={project.id}
-            whileHover={{ y: -4 }}
-            transition={{ duration: 0.2 }}
-            className="h-full"
-          >
-            <Card className="h-full flex flex-col overflow-hidden shadow-none border border-dashed rounded-none transition-colors hover:bg-card/50 hover:border-foreground/20 ring-0 bg-background">
-              <div className="aspect-video relative bg-muted">
-                <Image
-                  src={project.image}
-                  alt={project.imageAlt}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <CardContent className="p-4 space-y-3 grow">
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2 }}
+      className="h-full"
+    >
+      <Card className="h-full flex flex-col overflow-hidden shadow-none border border-dashed rounded-none transition-colors hover:bg-card/50 hover:border-foreground/20 ring-0 bg-background">
+        {featured ? (
+          /* Featured: side-by-side layout on md+ */
+          <div className="flex flex-col md:flex-row">
+            <div className="aspect-video md:aspect-auto relative bg-muted md:w-1/2 md:min-h-[260px]">
+              <Image
+                src={project.image}
+                alt={project.imageAlt}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="flex flex-col grow md:w-1/2">
+              <CardContent className="p-4 md:p-5 space-y-3 grow">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="font-semibold text-lg">{project.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                    <h3 className="font-semibold text-lg md:text-xl">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mt-1">
                       {project.description}
                     </p>
                   </div>
-                  {project.liveUrl ? (
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {project.tags.map((tag) => (
+                    <Badge key={tag} variant="secondary">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2">
+                  {project.liveUrl && (
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button
                           asChild
                           variant="outline"
                           size="sm"
-                          className="shrink-0"
+                          className="w-fit"
                         >
                           <Link href={project.liveUrl} target="_blank">
                             {projectsSectionConfig.liveButtonLabel}{" "}
@@ -86,14 +95,18 @@ export function ZenoProject() {
                         <p>{projectsSectionConfig.liveTooltip}</p>
                       </TooltipContent>
                     </Tooltip>
-                  ) : null}
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary">
-                      {tag}
-                    </Badge>
-                  ))}
+                  )}
+
+                  {project.githubUrl && (
+                    <Link
+                      href={project.githubUrl}
+                      target="_blank"
+                      className="flex items-center gap-2 text-xs hover:text-primary transition-colors"
+                    >
+                      <FaGithub className="size-4 " />
+                      Source code
+                    </Link>
+                  )}
                 </div>
               </CardContent>
               {project.metrics?.length ? (
@@ -103,9 +116,96 @@ export function ZenoProject() {
                   ))}
                 </CardFooter>
               ) : null}
-            </Card>
-          </motion.div>
-        ))}
+            </div>
+          </div>
+        ) : (
+          /* Standard: stacked layout */
+          <>
+            <div className="aspect-video relative bg-muted">
+              <Image
+                src={project.image}
+                alt={project.imageAlt}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <CardContent className="p-4 space-y-3 grow">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="font-semibold text-lg">{project.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                    {project.description}
+                  </p>
+                </div>
+                {project.liveUrl ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="shrink-0"
+                      >
+                        <Link href={project.liveUrl} target="_blank">
+                          {projectsSectionConfig.liveButtonLabel}{" "}
+                          <ForwardIcon className="ml-1.5 h-3 w-3" />
+                        </Link>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{projectsSectionConfig.liveTooltip}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ) : null}
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {project.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </CardContent>
+            {project.metrics?.length ? (
+              <CardFooter className="border-t border-dashed flex gap-6 py-4">
+                {project.metrics.map((metric) => (
+                  <Metric key={metric.label} metric={metric} />
+                ))}
+              </CardFooter>
+            ) : null}
+          </>
+        )}
+      </Card>
+    </motion.div>
+  );
+}
+
+export function ZenoProject() {
+  const [featured, ...rest] = enabledProjects;
+
+  return (
+    <section id="projects" className="border-t border-dashed pt-6">
+      <h2 className="text-xl font-semibold mb-6 border-y px-6 py-2">
+        {projectsSectionConfig.title}
+      </h2>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="no-js-visible space-y-4 px-6"
+      >
+        {/* Featured project — full width */}
+        {featured && <ProjectCard project={featured} featured />}
+
+        {/* Remaining projects — 2-col grid */}
+        {rest.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {rest.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        )}
       </motion.div>
     </section>
   );

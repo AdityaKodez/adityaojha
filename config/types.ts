@@ -138,10 +138,13 @@ export interface ProjectMetric {
 export interface Project {
   id: string;
   title: string;
+  
   description: string;
   image: string;
   imageAlt: string;
   liveUrl?: string;
+  githubUrl?: string;
+
   tags: string[];
   metrics?: ProjectMetric[];
   order: number;
