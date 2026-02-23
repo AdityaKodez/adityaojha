@@ -64,7 +64,7 @@ export function Hero() {
         >
           <ElectricBorder
             color="#FCF55F"
-            speed={1}
+            speed={0.4}
             chaos={0.12}
             style={{ borderRadius: "50%" }}
             className={`transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
