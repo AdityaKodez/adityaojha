@@ -12,6 +12,7 @@ export const testimonialsConfig: Testimonial[] = [
     order: 1,
     enabled: true,
   },
+
   {
     id: "natey",
     name: "natey_mac",
@@ -51,6 +52,26 @@ export const testimonialsConfig: Testimonial[] = [
     avatar: "VS",
     image: "/testimonial/vivek.png",
     order: 5,
+    enabled: true,
+  },
+  {
+    id: "Tolani",
+    name: "Tolani",
+    role: "Frontend Developer",
+    content: "Just took a look And i love it",
+    avatar: "TL",
+    image: "/testimonial/tolani.png",
+    order: 6,
+    enabled: true,
+  },
+  {
+    id: "Sahil",
+    name: "Sahil Sahu",
+    role: "Developer",
+    content: "Cool bro",
+    avatar: "SA",
+    image: "/testimonial/sahil.png",
+    order: 7,
     enabled: true,
   },
 ];
