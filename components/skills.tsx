@@ -52,7 +52,7 @@ export function Skills() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, delay: 0.1 }}
-        className="no-js-visible text-xl font-semibold font-pixel mb-4 border-y px-6 py-2"
+        className="no-js-visible section-heading mb-4"
       >
         {skillsSectionConfig.title}
       </motion.h2>

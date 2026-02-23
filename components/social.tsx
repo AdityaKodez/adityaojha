@@ -97,7 +97,7 @@ const Social = () => {
       transition={{ duration: 0.2, delay: 0.5 }}
       className="no-js-visible border-t border-dashed pt-6"
     >
-      <h2 className="text-xl font-semibold border-y px-6 py-2">
+      <h2 className="section-heading mb-3">
         {socialSectionConfig.title}
       </h2>
 

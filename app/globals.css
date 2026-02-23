@@ -126,6 +126,17 @@
   body {
     @apply  bg-background text-foreground selection:bg-gray-400 selection:text-white;
   }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .section-heading {
+    @apply text-xl font-semibold border-y border-dashed bg-muted/20 px-6 py-2;
+  }
 }
 
 @keyframes wave {
