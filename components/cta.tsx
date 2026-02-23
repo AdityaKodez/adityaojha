@@ -45,7 +45,7 @@ export function CTA() {
       className="no-js-visible border-y border-dashed pt-6 pb-12"
       id="contact"
     >
-      <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">{siteConfig.contact.title}</h2>
+      <h2 className="section-heading mb-3">{siteConfig.contact.title}</h2>
       <div>
         <p className="px-6 text-md text-muted-foreground mb-6">{siteConfig.contact.description}</p>
         <div className="grid border-t border-dashed grid-cols-3 max-sm:grid-cols-1 overflow-hidden">

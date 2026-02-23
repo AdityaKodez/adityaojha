@@ -14,7 +14,7 @@ export function Experience() {
 
   return (
     <section className="border-t border-dashed pt-6">
-      <h2 className="text-xl font-semibold mb-3 border-y px-6 py-2">
+      <h2 className="section-heading mb-3">
         {experienceSectionConfig.title}
       </h2>
       <div className="px-6 space-y-4">

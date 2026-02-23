@@ -197,7 +197,7 @@ export function ZenoProject() {
 
   return (
     <section id="projects" className="border-t border-dashed pt-6">
-      <h2 className="text-xl font-semibold mb-6 border-y px-6 py-2">
+      <h2 className="section-heading mb-6">
         {projectsSectionConfig.title}
       </h2>
       <motion.div
