@@ -17,19 +17,27 @@ export function Hero() {
   const AudioRef = useRef<HTMLAudioElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
+  const handleAudio = (play: boolean) => {
     const audio = AudioRef.current;
     if (!audio) return;
 
-    if (isHovered) {
-      audio.play().catch(() => {});
+    if (play) {
+      audio.playbackRate = 1.25;
       audio.volume = 0.7;
-      audio.playbackRate = 4;
+      audio.play().catch(() => {});
     } else {
       audio.pause();
       audio.currentTime = 0;
     }
-  }, [isHovered]);
+  };
+
+  // Cleanup on unmount only
+  useEffect(() => {
+    const audio = AudioRef.current;
+    return () => {
+      audio?.pause();
+    };
+  }, []);
 
   return (
     <motion.section
@@ -44,8 +52,14 @@ export function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.1, delay: 0.1 }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseEnter={() => {
+            setIsHovered(true);
+            handleAudio(true);
+          }}
+          onMouseLeave={() => {
+            setIsHovered(false);
+            handleAudio(false);
+          }}
           className="no-js-visible relative cursor-pointer"
         >
           <ElectricBorder
@@ -78,7 +92,7 @@ export function Hero() {
             </AvatarFallback>
           </Avatar>
         </motion.div>
-        <audio src="/electric.mp3" ref={AudioRef} loop preload="true" />
+        <audio src="/electric.mp3" ref={AudioRef} loop preload="auto" />
         <div className="space-y-2">
           <motion.p
             className="no-js-visible text-lg font-pixel font-semibold mb-3 flex items-center gap-2 tracking-wide"
