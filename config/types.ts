@@ -99,6 +99,7 @@ export type SkillIcon =
   | "react"
   | "typescript"
   | "tailwind"
+  | "ai-sdk"
   | "shadcn"
   | "better-auth"
   | "prisma"
