@@ -12,6 +12,7 @@ import TailwindIcon from "@/public/stacks/tailwind";
 import TrpcIcon from "@/public/stacks/trcp";
 import TSIcon from "@/public/stacks/ts";
 import type { ComponentType } from "react";
+import AiSdk from "@/public/stacks/ai-sdk";
 
 const skillIconMap: Record<SkillIcon, ComponentType<{ size: string }>> = {
   nextjs: NextjsIcon,
@@ -20,6 +21,7 @@ const skillIconMap: Record<SkillIcon, ComponentType<{ size: string }>> = {
   tailwind: TailwindIcon,
   shadcn: ShadcnIcon,
   "better-auth": AuthIcon,
+  "ai-sdk" : AiSdk,
   prisma: PrismaIcon,
   trpc: TrpcIcon,
 };
