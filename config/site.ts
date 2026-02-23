@@ -1,6 +1,7 @@
 import { socialsConfig } from "@/config/socials";
 import type { PortfolioConfig } from "@/config/types";
-
+import X from "@/public/x-icon";
+import { FaYoutube } from "react-icons/fa";
 export const siteConfig: PortfolioConfig = {
   meta: {
     url: "https://akoder.xyz",
@@ -73,7 +74,9 @@ export const siteConfig: PortfolioConfig = {
       },
       sitemap: "https://akoder.xyz/sitemap.xml",
     },
-    sitemap: [{ url: "https://akoder.xyz", changeFrequency: "monthly", priority: 1 }],
+    sitemap: [
+      { url: "https://akoder.xyz", changeFrequency: "monthly", priority: 1 },
+    ],
   },
   personal: {
     fullName: "Aditya Ojha",
@@ -95,10 +98,11 @@ export const siteConfig: PortfolioConfig = {
     "about",
     "testimonials",
     "projects",
+    "github",
+    "bookmarks",
     "experience",
     "services",
     "workflow",
-    "github",
     "contact",
   ],
   sectionFlags: {
@@ -107,6 +111,7 @@ export const siteConfig: PortfolioConfig = {
     about: true,
     testimonials: true,
     projects: true,
+    bookmarks: true,
     experience: false,
     services: true,
     workflow: true,
@@ -157,6 +162,57 @@ export const siteConfig: PortfolioConfig = {
     title: "Ready to build?",
     description:
       "I am currently available for scoped MVP projects. Reach out if you are ready to ship.",
-    channels: socialsConfig.filter((item) => ["email", "discord", "coffee"].includes(item.id)),
+    channels: socialsConfig.filter((item) =>
+      ["email", "discord", "coffee"].includes(item.id),
+    ),
+  },
+  bookmarks: {
+    title: "Bookmarks",
+
+    items: [
+      {
+        id: "1",
+        url: "https://x.com/thedankoe/status/2014022520513634718",
+        title: "The future of work when work is meaningless",
+        domain: "x.com",
+        icon: X,
+      },
+      {
+        id: "2",
+        url: "https://youtu.be/xwbI8VOsDTo?si=bSU7AkTOZJt-esFd",
+        title: "Power Of Words | Mohammed Qathani",
+        domain: "youtube.com",
+        icon: FaYoutube,
+      },
+      {
+        id: "3",
+        url: "https://x.com/thedankoe/status/2010751592346030461",
+        title: "How To Fix Your Life In 1 Day",
+
+        domain: "x.com",
+        icon: X,
+      },
+      {
+        id: "4",
+        url: "https://www.youtube.com/watch?v=fq0txiTIiFM&list=PPSV",
+        title: "All of Computer Science in 10 Real Projects",
+        domain: "youtube.com",
+        icon: FaYoutube,
+      },
+      {
+        id: "5",
+        url: "https://x.com/digiii/status/2015009789546262984",
+        title: "Nothing matters, head for the mountains  ",
+        domain: "x.com",
+        icon: X,
+      },
+      {
+        id: "6",
+        url: "https://x.com/dwarkesh_sp/status/2022357801276690455",
+        title: "Dario's Interview ",
+        domain: "x.com",
+        icon: X,
+      },
+    ],
   },
 };

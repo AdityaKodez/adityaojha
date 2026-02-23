@@ -10,6 +10,7 @@ export type SectionId =
   | "services"
   | "workflow"
   | "github"
+  | "bookmarks"
   | "contact";
 
 export interface SectionFlags {
@@ -187,11 +188,25 @@ export interface ContactConfig {
   channels: SocialLink[];
 }
 
+export interface BookmarksConfig {
+  title: string;
+  items: Bookmark[];
+}
+
+export interface Bookmark {
+  id: string;
+  url: string;
+  title: string;
+  domain: string;
+  icon?: any;
+}
+
 export interface PortfolioConfig {
   meta: SiteMetaConfig;
   personal: PersonalInfo;
   sectionOrder: SectionId[];
   sectionFlags: Record<SectionId, boolean>;
+  bookmarks: BookmarksConfig;
   banner: {
     imageSrc: string;
     imageAlt: string;

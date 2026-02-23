@@ -117,7 +117,7 @@ const Social = () => {
                 <span className="text-sm font-medium leading-none">
                   {social.platform}
                 </span>
-                <span className="text-xs text-muted-foreground mt-1 truncate font-pixel">
+                <span className="text-xs text-muted-foreground mt-1 truncate font-mono">
                   {social.handle}
                 </span>
               </div>

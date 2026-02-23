@@ -12,6 +12,7 @@ import { Testimonials } from "@/components/testimonials";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { GitHubCalendar } from "@/components/ui/github-map";
 import { ZenoProject } from "@/components/zeno-project";
+import { Bookmarks } from "@/components/bookmarks";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
 import { fetchGithubData } from "@/lib/github";
@@ -24,6 +25,7 @@ const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   about: <About />,
   testimonials: <Testimonials />,
   projects: <ZenoProject />,
+  bookmarks: <Bookmarks />,
   experience: <Experience />,
   services: <Services />,
   workflow: <HowIWork />,
@@ -31,7 +33,8 @@ const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
 };
 
 export default async function Home() {
-  const shouldRenderGithub = siteConfig.sectionFlags.github && Boolean(process.env.GITHUB_TOKEN);
+  const shouldRenderGithub =
+    siteConfig.sectionFlags.github && Boolean(process.env.GITHUB_TOKEN);
   const contributionData = shouldRenderGithub
     ? await fetchGithubData(siteConfig.personal.githubUsername)
     : [];
