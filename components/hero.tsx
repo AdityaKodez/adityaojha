@@ -73,7 +73,7 @@ export function Hero() {
             style={{ borderRadius: "50%" }}
             className={`transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
           >
-            <Avatar className="size-24 shrink-0 border-2 border-dashed border-foreground/50 bg-background shadow-xl">
+            <Avatar className="size-24 shrink-0 border-2 border-foreground/50 bg-background shadow-xl">
               <AvatarImage
                 src={siteConfig.personal.avatar.src}
                 alt={siteConfig.personal.avatar.alt}
@@ -85,7 +85,8 @@ export function Hero() {
           </ElectricBorder>
 
           <Avatar
-            className={`absolute inset-0 size-24 shrink-0 border-2 border-dashed border-foreground/50 bg-background shadow-xl transition-opacity duration-300 ${isHovered ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+            className={`absolute inset-0 size-24 shrink-0 
+              ring-1 ring-border/50 ring-offset-1 ring-offset-background bg-background shadow-xl transition-opacity duration-300 ${isHovered ? "opacity-0 pointer-events-none" : "opacity-100"}`}
           >
             <AvatarImage
               src={siteConfig.personal.avatar.src}
