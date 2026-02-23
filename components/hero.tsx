@@ -8,11 +8,28 @@ import { motion } from "motion/react";
 import DiscordStatus from "./discord-status";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { WritingUnderline } from "./writing-underline";
-
+import ElectricBorder from "./react-bits/ElectricBorder";
+import { useEffect, useRef, useState } from "react";
 export function Hero() {
   const [beforeHighlight, afterHighlight] = heroConfig.description.split(
     heroConfig.descriptionHighlight,
   );
+  const AudioRef = useRef<HTMLAudioElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const audio = AudioRef.current;
+    if (!audio) return;
+
+    if (isHovered) {
+      audio.play().catch(() => {});
+      audio.volume = 0.7;
+      audio.playbackRate = 4;
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  }, [isHovered]);
 
   return (
     <motion.section
@@ -27,9 +44,31 @@ export function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.1, delay: 0.1 }}
-          className="no-js-visible relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="no-js-visible relative cursor-pointer"
         >
-          <Avatar className="size-24 shrink-0 border-2 border-dashed border-foreground/50 bg-background shadow-xl">
+          <ElectricBorder
+            color="#FCF55F"
+            speed={1}
+            chaos={0.12}
+            style={{ borderRadius: "50%" }}
+            className={`transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
+          >
+            <Avatar className="size-24 shrink-0 border-2 border-dashed border-foreground/50 bg-background shadow-xl">
+              <AvatarImage
+                src={siteConfig.personal.avatar.src}
+                alt={siteConfig.personal.avatar.alt}
+              />
+              <AvatarFallback>
+                {siteConfig.personal.avatar.fallback}
+              </AvatarFallback>
+            </Avatar>
+          </ElectricBorder>
+
+          <Avatar
+            className={`absolute inset-0 size-24 shrink-0 border-2 border-dashed border-foreground/50 bg-background shadow-xl transition-opacity duration-300 ${isHovered ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+          >
             <AvatarImage
               src={siteConfig.personal.avatar.src}
               alt={siteConfig.personal.avatar.alt}
@@ -39,6 +78,7 @@ export function Hero() {
             </AvatarFallback>
           </Avatar>
         </motion.div>
+        <audio src="/electric.mp3" ref={AudioRef} loop preload="true" />
         <div className="space-y-2">
           <motion.p
             className="no-js-visible text-lg font-pixel font-semibold mb-3 flex items-center gap-2 tracking-wide"
