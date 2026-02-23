@@ -18,14 +18,18 @@ export function Banner() {
   const [starCount, setStarCount] = useState<string | null>(null);
 
   useEffect(() => {
-    const path = new URL(siteConfig.banner.openSourceUrl).pathname.split("/").filter(Boolean);
+    const path = new URL(siteConfig.banner.openSourceUrl).pathname
+      .split("/")
+      .filter(Boolean);
     const [owner, repo] = path;
 
     if (!owner || !repo) return;
 
     const fetchStarCount = async () => {
       try {
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+        const response = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}`,
+        );
         if (!response.ok) return;
 
         const data = (await response.json()) as { stargazers_count?: number };
@@ -69,7 +73,9 @@ export function Banner() {
         return;
       }
 
-      if (e.key.toLowerCase() === siteConfig.banner.themeShortcut.toLowerCase()) {
+      if (
+        e.key.toLowerCase() === siteConfig.banner.themeShortcut.toLowerCase()
+      ) {
         e.preventDefault();
         buttonRef.current?.click();
       }
@@ -81,12 +87,19 @@ export function Banner() {
 
   return (
     <motion.div
-      className="relative h-40 w-full overflow-hidden  border-dashed border-b-2"
+      className="relative h-40 w-full overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <Image src={siteConfig.banner.imageSrc} alt={siteConfig.banner.imageAlt} fill className="object-cover" priority />
+      <Image
+        src={siteConfig.banner.imageSrc}
+        alt={siteConfig.banner.imageAlt}
+        fill
+        className="object-cover"
+        priority
+      />
+      <div className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15" />
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/80" />
 
       <div className="absolute top-3 right-3 z-10">
@@ -99,7 +112,11 @@ export function Banner() {
                 className="flex h-8 items-center justify-center gap-1 px-2 text-white/70 transition-colors hover:text-white"
               >
                 <OpenSrc size="20" />
-                {starCount ? <span className="text-[10px] leading-none font-medium">{starCount}</span> : null}
+                {starCount ? (
+                  <span className="text-[10px] leading-none font-medium">
+                    {starCount}
+                  </span>
+                ) : null}
               </Link>
             </TooltipTrigger>
             <TooltipContent>
@@ -120,19 +137,26 @@ export function Banner() {
               >
                 <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">{siteConfig.banner.themeToggleLabel}</span>
+                <span className="sr-only">
+                  {siteConfig.banner.themeToggleLabel}
+                </span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
               <p>
-                {siteConfig.banner.themeTooltip} <Kbd>{siteConfig.banner.themeShortcut}</Kbd>
+                {siteConfig.banner.themeTooltip}{" "}
+                <Kbd>{siteConfig.banner.themeShortcut}</Kbd>
               </p>
             </TooltipContent>
           </Tooltip>
         </div>
       </div>
 
-      <audio ref={audioRef} src={siteConfig.banner.switchAudioSrc} preload="auto" />
+      <audio
+        ref={audioRef}
+        src={siteConfig.banner.switchAudioSrc}
+        preload="auto"
+      />
     </motion.div>
   );
 }

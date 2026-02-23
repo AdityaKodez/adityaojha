@@ -97,9 +97,7 @@ const Social = () => {
       transition={{ duration: 0.2, delay: 0.5 }}
       className="no-js-visible border-t border-dashed pt-6"
     >
-      <h2 className="section-heading mb-3">
-        {socialSectionConfig.title}
-      </h2>
+      <h2 className="section-heading ">{socialSectionConfig.title}</h2>
 
       <div className="grid grid-cols-2 max-sm:grid-cols-1 overflow-hidden -mb-px">
         {sortedSocials.map((social, idx) => {

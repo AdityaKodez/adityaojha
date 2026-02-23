@@ -58,6 +58,7 @@ function ProjectCard({
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
+              <div className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15" />
             </Link>
             <div className="flex flex-col grow md:w-1/2">
               <CardContent className="p-4 md:p-5 space-y-3 grow">
@@ -136,6 +137,7 @@ function ProjectCard({
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
+              <div className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15" />
             </Link>
             <CardContent className="p-4 space-y-3 grow">
               <div className="flex items-start justify-between gap-4">
@@ -197,9 +199,7 @@ export function ZenoProject() {
 
   return (
     <section id="projects" className="border-t border-dashed pt-6">
-      <h2 className="section-heading mb-6">
-        {projectsSectionConfig.title}
-      </h2>
+      <h2 className="section-heading mb-6">{projectsSectionConfig.title}</h2>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

@@ -78,7 +78,7 @@ export function ProjectContent({ project }: { project: Project }) {
 
       <motion.div
         variants={imageVariants}
-        className="aspect-video relative bg-muted border-y overflow-hidden"
+        className="aspect-video relative bg-muted overflow-hidden"
       >
         <Image
           src={project.image}
@@ -87,6 +87,7 @@ export function ProjectContent({ project }: { project: Project }) {
           className="object-cover"
           priority
         />
+        <div className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15" />
       </motion.div>
 
       <div className="px-6 mt-4 space-y-8">
