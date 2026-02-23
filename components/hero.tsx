@@ -31,7 +31,6 @@ export function Hero() {
     }
   };
 
-  // Cleanup on unmount only
   useEffect(() => {
     const audio = AudioRef.current;
     return () => {
@@ -60,11 +59,16 @@ export function Hero() {
             setIsHovered(false);
             handleAudio(false);
           }}
+          onClick={() => {
+            if (AudioRef.current) {
+              AudioRef.current.play().catch(() => {});
+            }
+          }}
           className="no-js-visible relative cursor-pointer"
         >
           <ElectricBorder
             color="#FCF55F"
-            speed={0.4}
+            speed={0.2}
             chaos={0.12}
             style={{ borderRadius: "50%" }}
             className={`transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
