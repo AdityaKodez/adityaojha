@@ -101,12 +101,13 @@ export const siteConfig: PortfolioConfig = {
     "about",
     "testimonials",
     "projects",
-    "github",
-    "bookmarks",
-    "certifications",
     "experience",
-    "services",
     "workflow",
+    "services",
+    "github",
+    "certifications",
+    "bookmarks",
+
     "contact",
   ],
   sectionFlags: {

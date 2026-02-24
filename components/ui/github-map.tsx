@@ -111,7 +111,8 @@ const GitHubCalendar = ({
       const monthName = format(currentWeekStart, "MMM");
       if (
         monthLabels.length === 0 ||
-        monthLabels[monthLabels.length - 1].name !== monthName
+        (monthLabels[monthLabels.length - 1].name !== monthName &&
+          i - monthLabels[monthLabels.length - 1].weekIndex >= 3)
       ) {
         monthLabels.push({ name: monthName, weekIndex: i });
       }
@@ -123,7 +124,7 @@ const GitHubCalendar = ({
         key={i}
         className="text-xs text-muted-foreground absolute whitespace-nowrap"
         style={{
-          left: `${(m.weekIndex / weeks) * 100}%`,
+          left: `calc(${m.weekIndex} * (0.75rem + 0.125rem))`,
         }}
       >
         {m.name}
@@ -137,10 +138,10 @@ const GitHubCalendar = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
-      className="no-js-visible p-4 border-y border-dashed overflow-x-auto overflow-y-hidden"
+      className="no-js-visible p-2 border-y border-dashed overflow-x-auto overflow-y-hidden"
     >
-      <div className="flex">
-        <div>
+      <div className="flex w-max">
+        <div className="relative">
           <div className="relative h-4 w-full mb-2">{renderMonthLabels()}</div>
           <div className="flex gap-0.5">{renderWeeks()}</div>
         </div>
