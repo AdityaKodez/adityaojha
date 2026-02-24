@@ -11,7 +11,7 @@ export const projectsConfig: Project[] = [
     id: "gridly",
     title: "Gridly — The Premium SaaS Boilerplate",
     description:
-      "Built and open-sourced a full-stack SaaS starter kit with Auth, Prisma, Polar payments, and AI integrations via Vercel AI SDK. Designed to save developers 40+ hours of boilerplate setup. 100% free and MIT licensed.",
+      "Designed to save developers 40+ hours of boilerplate setup. Built and open-sourced a full-stack SaaS starter kit with Auth, Prisma, Polar payments, and AI integrations via Vercel AI SDK. 100% free and MIT licensed.",
     content:
       "Gridly is designed to be the ultimate starting point for modern SaaS applications. I noticed that many developers spend the first **40+ hours** of any new project just wiring up authentication, database schemas, and payment gateways. \n\n> Gridly solves this by providing a highly opinionated, yet flexible template.\n\n### Key features include:\n- **Full-stack Auth**: Fully integrated authentication system.\n- **Payments**: Seamless monetization using Polar.\n- **AI Ready**: Out-of-the-box AI integration capabilities with the Vercel AI SDK.\n- **Sleek UI**: A beautiful, responsive UI built with Tailwind CSS and ui components.\n\nThis project is fully open-source because I believe in giving back to the community and helping other builders launch their ideas faster.",
     image: "/gridly.png",

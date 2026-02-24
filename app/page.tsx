@@ -13,6 +13,7 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { GitHubCalendar } from "@/components/ui/github-map";
 import { ZenoProject } from "@/components/zeno-project";
 import { Bookmarks } from "@/components/bookmarks";
+import { Certifications } from "@/components/certifications";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
 import { fetchGithubData } from "@/lib/github";
@@ -26,6 +27,7 @@ const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   testimonials: <Testimonials />,
   projects: <ZenoProject />,
   bookmarks: <Bookmarks />,
+  certifications: <Certifications />,
   experience: <Experience />,
   services: <Services />,
   workflow: <HowIWork />,

@@ -1,13 +1,16 @@
-type BrandNextjsProps = {
-  size: string;
-};
+import { SVGProps } from "react";
 
-const BrandNextjs = ({ size }: BrandNextjsProps) => (
+interface BrandNextjsProps extends SVGProps<SVGSVGElement> {
+  size?: number | string;
+}
+
+const BrandNextjs = ({ size = 24, ...props }: BrandNextjsProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}
     viewBox="0 0 24 24"
+    {...props}
   >
     <path
       fill="none"
