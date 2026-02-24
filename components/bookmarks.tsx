@@ -2,7 +2,7 @@
 
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { ArrowDownCircleIcon, ArrowUpRight } from "lucide-react";
+import { ArrowDownCircleIcon, ArrowRightIcon } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
@@ -44,8 +44,7 @@ export function Bookmarks() {
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-full items-stretch p-4 
-                bg-background hover:bg-background/80 py-5 transition-all"
+                className="flex h-full items-stretch px-4 transition-colors hover:bg-muted/10 py-5"
               >
                 <div className="flex flex-1 items-center gap-4 min-w-0 relative z-10">
                   <div className="flex shrink-0 items-center justify-center size-10 rounded-sm relative transition-colors">
@@ -68,14 +67,16 @@ export function Bookmarks() {
                     </p>
                   </div>
 
-                  <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-muted/50 transition-all opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:bg-foreground group-hover:text-background">
-                    <ArrowUpRight className="size-3.5" />
-                  </div>
+                  <ArrowRightIcon
+                    className="ml-auto size-3.5 text-muted-foreground/30 group-hover:text-primary transition-all group-hover:translate-x-0.5 
+                      group-hover:-rotate-45
+                      group-hover:translate-y-0.5"
+                  />
                 </div>
               </Link>
               <div className="absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 pointer-events-none"></div>
               {/* Blueprint Texture on Hover */}
-              <div className="absolute inset-0 blueprint-bg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              <div className="absolute inset-0 blueprint-bg opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
               {/* Shimmer Line */}
               <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-foreground/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
