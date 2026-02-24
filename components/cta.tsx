@@ -51,16 +51,20 @@ export function CTA() {
         <div className="grid border-t border-dashed grid-cols-3 max-sm:grid-cols-1 overflow-hidden">
           {contactChannels.map((channel) => {
             const content = (
-              <div className="group flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/50">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30 transition-colors">
+              <div className="group relative flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/10 overflow-hidden">
+                <div className="absolute inset-0 blueprint-bg opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 group-hover:ring-muted-foreground/10 transition-colors pointer-events-none" />
+
+                <div className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-sm text-muted-foreground group-hover:text-foreground transition-colors bg-background">
                   <ContactIcon icon={channel.icon} />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 pointer-events-none rounded-sm"></div>
                 </div>
-                <div className="flex flex-col min-w-0">
+                <div className="relative z-10 flex flex-col min-w-0">
                   <span className="text-sm font-medium leading-none">{channel.platform}</span>
                   <span className="text-xs text-muted-foreground mt-1 truncate">{channel.handle}</span>
                 </div>
                 {channel.action === "copy" ? (
-                  <div className="ml-auto">
+                  <div className="relative z-10 ml-auto">
                     {copiedField === channel.id ? (
                       <Check className="h-3.5 w-3.5 text-green-500" />
                     ) : (

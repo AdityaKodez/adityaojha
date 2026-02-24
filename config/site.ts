@@ -213,6 +213,13 @@ export const siteConfig: PortfolioConfig = {
         domain: "x.com",
         icon: X,
       },
+      {
+        id: "7",
+        url: "https://youtu.be/aStHTTPxlis?si=VoWpllxMa1Ihphro",
+        title: "How Elon Work",
+        domain: "youtube.com",
+        icon: FaYoutube,
+      },
     ],
   },
 };
