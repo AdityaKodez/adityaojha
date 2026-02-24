@@ -190,8 +190,6 @@ export interface ContactConfig {
   channels: SocialLink[];
 }
 
-
-
 export type LinkCardIcon = ComponentType<
   SVGProps<SVGSVGElement> & {
     size?: number | string;
@@ -222,6 +220,7 @@ export interface Certification {
   url: string;
   title: string;
   domain: string;
+  date?: string;
   icon?: LinkCardIcon;
 }
 

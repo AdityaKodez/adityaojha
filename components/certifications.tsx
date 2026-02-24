@@ -61,13 +61,11 @@ export function Certifications() {
                     {item.title}
                   </h3>
                   <p className="truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground/60">
-                    {item.domain}
+                    {item.domain} {item.date && `• ${item.date}`}
                   </p>
                 </div>
 
-                <ArrowRightIcon
-                  className="ml-auto size-3.5 text-muted-foreground/30 transition-all group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:-rotate-45 group-hover:text-primary"
-                />
+                <ArrowRightIcon className="ml-auto size-3.5 text-muted-foreground/30 transition-all group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:-rotate-45 group-hover:text-primary" />
               </div>
             </Link>
             <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5" />
@@ -93,7 +91,10 @@ export function Certifications() {
           >
             {showAll ? "Show less" : `View all ${items.length} certifications`}
             <ArrowDownCircleIcon
-              className={cn("size-3.5 transition-transform", showAll && "rotate-180")}
+              className={cn(
+                "size-3.5 transition-transform",
+                showAll && "rotate-180",
+              )}
             />
           </Button>
         </motion.div>

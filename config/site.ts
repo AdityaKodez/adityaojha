@@ -1,7 +1,9 @@
 import { socialsConfig } from "@/config/socials";
 import type { PortfolioConfig } from "@/config/types";
 import SoloLearnIcon from "@/public/sololearn-icon";
+import BrandNextjs from "@/public/stacks/nextjs";
 import X from "@/public/x-icon";
+import { BookmarkCheckIcon } from "lucide-react";
 import { FaYoutube } from "react-icons/fa";
 export const siteConfig: PortfolioConfig = {
   meta: {
@@ -223,44 +225,64 @@ export const siteConfig: PortfolioConfig = {
         domain: "youtube.com",
         icon: FaYoutube,
       },
+      {
+        id: "8",
+        url: "https://arxiv.org/abs/1706.03762",
+        title: "Attention Is All You Need",
+        domain: "arxiv.org",
+        icon: BookmarkCheckIcon,
+      },
     ],
   },
   certifications: {
-    title: "Certifications",
+    title: "Learning Foundations",
     items: [
       {
         id: "certificate-1",
-        url: "https://www.sololearn.com/certificates/CC-FSTNML8K",
-        title: "SoloLearn Certificate · CC-FSTNML8K",
-        domain: "sololearn.com",
-        icon: SoloLearnIcon,
+        url: "https://nextjs.org/learn/certificate?course=react-foundations&user=45793&certId=react-foundations-45793-1771918035299",
+        title: "React Foundations",
+        domain: "nextjs.org",
+        date: "2025",
+        icon: BrandNextjs,
       },
       {
         id: "certificate-2",
-        url: "https://www.sololearn.com/certificates/CC-ATHOEG0Y",
-        title: "SoloLearn Certificate · CC-ATHOEG0Y",
+        url: "https://www.sololearn.com/certificates/CC-N1JK4PWH",
+        title: "Web Development",
         domain: "sololearn.com",
+        date: "2024",
         icon: SoloLearnIcon,
       },
       {
         id: "certificate-3",
-        url: "https://www.sololearn.com/certificates/CC-GFTWDLUT",
-        title: "SoloLearn Certificate · CC-GFTWDLUT",
-        domain: "sololearn.com",
-        icon: SoloLearnIcon,
+        url: "https://nextjs.org/learn/certificate?course=dashboard-app&user=45793&certId=dashboard-app-45793-1771919744029",
+        title: "App Router",
+        domain: "nextjs.org",
+        date: "2025",
+        icon: BrandNextjs,
       },
       {
         id: "certificate-4",
-        url: "https://www.sololearn.com/certificates/CC-IC6DYMJZ",
-        title: "SoloLearn Certificate · CC-IC6DYMJZ",
+        url: "https://www.sololearn.com/certificates/CC-FSTNML8K",
+        title: "Introduction to CSS",
         domain: "sololearn.com",
+        date: "2024",
         icon: SoloLearnIcon,
       },
       {
         id: "certificate-5",
-        url: "https://www.sololearn.com/certificates/CC-N1JK4PWH",
-        title: "SoloLearn Certificate · CC-N1JK4PWH",
+        url: "https://www.sololearn.com/certificates/CC-ATHOEG0Y",
+        title: "Introduction to C#",
         domain: "sololearn.com",
+        date: "2024",
+        icon: SoloLearnIcon,
+      },
+      {
+        id: "certificate-6",
+        url: "https://www.sololearn.com/certificates/CC-I0LF0CGS",
+        title: "Javascript Intermediate",
+        domain: "sololearn.com",
+        date: "2024",
         icon: SoloLearnIcon,
       },
     ],
