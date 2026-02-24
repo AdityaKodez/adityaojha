@@ -21,7 +21,7 @@ const skillIconMap: Record<SkillIcon, ComponentType<{ size: string }>> = {
   tailwind: TailwindIcon,
   shadcn: ShadcnIcon,
   "better-auth": AuthIcon,
-  "ai-sdk" : AiSdk,
+  "ai-sdk": AiSdk,
   prisma: PrismaIcon,
   trpc: TrpcIcon,
 };

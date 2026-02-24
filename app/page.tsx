@@ -42,27 +42,31 @@ export default async function Home() {
   return (
     <main
       id="main-content"
-      className="relative min-h-screen max-w-3xl mx-auto  md:pb-16 space-y-8 border border-dashed overflow-hidden"
+      className="relative min-h-screen max-w-3xl mx-auto md:pb-16 space-y-8 border border-dashed overflow-hidden"
     >
-      <Banner />
-      <Hero />
+      <div className="bg-background">
+        <Banner />
+        <Hero />
+      </div>
       {siteConfig.sectionOrder.map((sectionId) => {
         if (!siteConfig.sectionFlags[sectionId]) {
           return null;
         }
 
-        if (sectionId === "github") {
-          if (!shouldRenderGithub) {
-            return null;
-          }
-          return (
+        const content =
+          sectionId === "github" ? (
             <Suspense key="github" fallback={<GitSkeleton />}>
               <GitHubCalendar data={contributionData} />
             </Suspense>
+          ) : (
+            staticSections[sectionId]
           );
-        }
 
-        return <div key={sectionId}>{staticSections[sectionId]}</div>;
+        return (
+          <div key={sectionId} className="bg-background">
+            {content}
+          </div>
+        );
       })}
 
       <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none">

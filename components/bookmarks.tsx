@@ -14,7 +14,7 @@ export function Bookmarks() {
 
   if (!items || items.length === 0) return null;
 
-  const displayedItems = showAll ? items : items.slice(0, 3);
+  const displayedItems = showAll ? items : items.slice(0, 4);
 
   return (
     <section id="bookmarks" className="border-t border-dashed pt-6">
@@ -30,80 +30,80 @@ export function Bookmarks() {
         </motion.h2>
       </div>
 
-      <div className="grid">
+      <div className="grid grid-cols-1 sm:grid-cols-2">
         {displayedItems.map((item, index) => {
           return (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.2, delay: index * 0.05 }}
+              className="group relative"
             >
               <Link
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(
-                  "group relative flex items-stretch border-t border-dashed border-border/50 bg-background transition-all hover:border-foreground/20 hover:bg-muted/30",
-                  index === 0 && "border-t-0",
-                )}
+                className="flex h-full items-stretch p-4 
+                bg-background hover:bg-background/80 py-5 transition-all"
               >
-                <div className="flex shrink-0 items-center justify-center px-4 border-r border-dashed border-border/50 transition-colors group-hover:border-foreground/20">
-                  {item.icon && (
-                    <div className="relative p-2">
+                <div className="flex flex-1 items-center gap-4 min-w-0 relative z-10">
+                  <div className="flex shrink-0 items-center justify-center size-10 rounded-sm relative transition-colors">
+                    {item.icon && (
                       <item.icon
                         size={18}
                         color="currentColor"
                         className="text-muted-foreground transition-colors group-hover:text-foreground"
                       />
-                      <div
-                        className="pointer-events-none
-                        absolute inset-0 ring-1 ring-offset-0 ring-border/50 rounded-sm"
-                      />
-                    </div>
-                  )}
-                </div>
+                    )}
+                    <div className="absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 pointer-events-none rounded-sm"></div>
+                  </div>
 
-                <div className="flex flex-1 items-center justify-between gap-4 p-4 min-w-0">
-                  <div className="flex flex-col">
-                    <h3
-                      className="truncate font-medium tracking-tight transition-colors 
-                  text-muted-foreground
-                  group-hover:text-primary"
-                    >
+                  <div className="flex flex-col min-w-0 grow">
+                    <h3 className="truncate font-medium text-sm tracking-tight transition-colors text-muted-foreground group-hover:text-foreground">
                       {item.title}
                     </h3>
-                    <p className="truncate text-xs text-muted-foreground font-mono">
+                    <p className="truncate text-[10px] text-muted-foreground/60 font-mono uppercase tracking-wider">
                       {item.domain}
                     </p>
                   </div>
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted/50 transition-colors group-hover:bg-foreground group-hover:text-background">
-                    <ArrowUpRight className="size-4" />
+
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-muted/50 transition-all opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:bg-foreground group-hover:text-background">
+                    <ArrowUpRight className="size-3.5" />
                   </div>
                 </div>
               </Link>
+              <div className="absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 pointer-events-none"></div>
+              {/* Blueprint Texture on Hover */}
+              <div className="absolute inset-0 blueprint-bg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+              {/* Shimmer Line */}
+              <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-foreground/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             </motion.div>
           );
         })}
       </div>
 
-      {items.length > 2 && (
+      {items.length > 4 && (
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.2 }}
-          className="flex justify-center py-2 border-y "
+          className="flex justify-center border-y py-2"
         >
           <Button
             onClick={() => setShowAll(!showAll)}
-            variant="outline"
-            size={"lg"}
-            className="flex items-center gap-2"
+            variant="ghost"
+            size="sm"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground font-pixel text-xs"
           >
-            {showAll ? "Show less" : `Show all bookmarks (${items.length})`}
+            {showAll ? "Show less" : `View all ${items.length} bookmarks`}
             <ArrowDownCircleIcon
-              className={cn("size-4", showAll && "rotate-180")}
+              className={cn(
+                "size-3.5 transition-transform",
+                showAll && "rotate-180",
+              )}
             />
           </Button>
         </motion.div>

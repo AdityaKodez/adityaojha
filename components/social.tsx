@@ -5,7 +5,7 @@ import type { SocialIcon, SocialLink } from "@/config/types";
 import Peerlist from "@/public/peerlist";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
-import { Check, Coffee, Copy } from "lucide-react";
+import { ArrowUpRight, Check, Coffee, Copy } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -97,7 +97,7 @@ const Social = () => {
       transition={{ duration: 0.2, delay: 0.5 }}
       className="no-js-visible border-t border-dashed pt-6"
     >
-      <h2 className="section-heading ">{socialSectionConfig.title}</h2>
+      <h2 className="section-heading">{socialSectionConfig.title}</h2>
 
       <div className="grid grid-cols-2 max-sm:grid-cols-1 overflow-hidden -mb-px">
         {sortedSocials.map((social, idx) => {
@@ -108,28 +108,40 @@ const Social = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, delay: 0.55 + idx * 0.05 }}
-              className="no-js-visible group flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/50"
+              className="relative no-js-visible group flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/10 overflow-hidden"
             >
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30 transition-colors">
-                <SocialIconNode icon={social.icon} size={18} />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-sm font-medium leading-none">
-                  {social.platform}
-                </span>
-                <span className="text-xs text-muted-foreground mt-1 truncate font-mono">
-                  {social.handle}
-                </span>
-              </div>
-              {isCopyAction && (
-                <div className="ml-auto">
-                  {copied[social.id] ? (
-                    <Check className="h-3.5 w-3.5 text-green-500" />
-                  ) : (
-                    <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                  )}
+              {/* Blueprint Texture on Hover */}
+              <div className="absolute inset-0 blueprint-bg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+              {/* Shimmer Line */}
+              <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-foreground/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+              <div className="relative z-10 flex items-center gap-3 w-full">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm text-muted-foreground relative group-hover:text-foreground transition-colors bg-background">
+                  <SocialIconNode icon={social.icon} size={18} />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 pointer-events-none rounded-sm"></div>
                 </div>
-              )}
+
+                <div className="flex flex-col min-w-0">
+                  <span className="text-sm font-medium leading-none">
+                    {social.platform}
+                  </span>
+                  <span className="text-xs text-muted-foreground mt-1 truncate font-mono">
+                    {social.handle}
+                  </span>
+                </div>
+                {isCopyAction ? (
+                  <div className="ml-auto">
+                    {copied[social.id] ? (
+                      <Check className="h-3.5 w-3.5 text-green-500" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    )}
+                  </div>
+                ) : (
+                  <ArrowUpRight className="ml-auto size-3.5 text-muted-foreground/30 group-hover:text-primary transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                )}
+              </div>
             </motion.div>
           );
 

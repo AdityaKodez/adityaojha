@@ -40,7 +40,7 @@ export function Hero() {
 
   return (
     <motion.section
-      className="no-js-visible relative z-20 -mt-24 space-y-4 px-6"
+      className="no-js-visible relative z-20 -mt-14 space-y-4 px-6"
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}

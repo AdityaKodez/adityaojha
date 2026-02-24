@@ -17,9 +17,7 @@ export const About = () => {
       transition={{ duration: 0.2, delay: 0.1 }}
       className="no-js-visible border-t border-dashed pt-6"
     >
-      <h2 className="section-heading mb-3">
-        {siteConfig.about.title}
-      </h2>
+      <h2 className="section-heading mb-3">{siteConfig.about.title}</h2>
       <div className="px-6">
         <p className="text-lg text-muted-foreground">
           {canFormat ? (
