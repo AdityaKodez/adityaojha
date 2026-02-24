@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import type { ComponentType, SVGProps } from "react";
 
 export type SectionId =
   | "socials"
@@ -11,6 +12,7 @@ export type SectionId =
   | "workflow"
   | "github"
   | "bookmarks"
+  | "certifications"
   | "contact";
 
 export interface SectionFlags {
@@ -188,9 +190,23 @@ export interface ContactConfig {
   channels: SocialLink[];
 }
 
+
+
+export type LinkCardIcon = ComponentType<
+  SVGProps<SVGSVGElement> & {
+    size?: number | string;
+    color?: string;
+  }
+>;
+
 export interface BookmarksConfig {
   title: string;
   items: Bookmark[];
+}
+
+export interface CertificationsConfig {
+  title: string;
+  items: Certification[];
 }
 
 export interface Bookmark {
@@ -198,7 +214,15 @@ export interface Bookmark {
   url: string;
   title: string;
   domain: string;
-  icon?: any;
+  icon?: LinkCardIcon;
+}
+
+export interface Certification {
+  id: string;
+  url: string;
+  title: string;
+  domain: string;
+  icon?: LinkCardIcon;
 }
 
 export interface PortfolioConfig {
@@ -207,6 +231,7 @@ export interface PortfolioConfig {
   sectionOrder: SectionId[];
   sectionFlags: Record<SectionId, boolean>;
   bookmarks: BookmarksConfig;
+  certifications: CertificationsConfig;
   banner: {
     imageSrc: string;
     imageAlt: string;

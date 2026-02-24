@@ -1,5 +1,6 @@
 import { socialsConfig } from "@/config/socials";
 import type { PortfolioConfig } from "@/config/types";
+import SoloLearnIcon from "@/public/sololearn-icon";
 import X from "@/public/x-icon";
 import { FaYoutube } from "react-icons/fa";
 export const siteConfig: PortfolioConfig = {
@@ -100,6 +101,7 @@ export const siteConfig: PortfolioConfig = {
     "projects",
     "github",
     "bookmarks",
+    "certifications",
     "experience",
     "services",
     "workflow",
@@ -112,6 +114,7 @@ export const siteConfig: PortfolioConfig = {
     testimonials: true,
     projects: true,
     bookmarks: true,
+    certifications: true,
     experience: false,
     services: true,
     workflow: true,
@@ -219,6 +222,46 @@ export const siteConfig: PortfolioConfig = {
         title: "How Elon Work",
         domain: "youtube.com",
         icon: FaYoutube,
+      },
+    ],
+  },
+  certifications: {
+    title: "Certifications",
+    items: [
+      {
+        id: "certificate-1",
+        url: "https://www.sololearn.com/certificates/CC-FSTNML8K",
+        title: "SoloLearn Certificate · CC-FSTNML8K",
+        domain: "sololearn.com",
+        icon: SoloLearnIcon,
+      },
+      {
+        id: "certificate-2",
+        url: "https://www.sololearn.com/certificates/CC-ATHOEG0Y",
+        title: "SoloLearn Certificate · CC-ATHOEG0Y",
+        domain: "sololearn.com",
+        icon: SoloLearnIcon,
+      },
+      {
+        id: "certificate-3",
+        url: "https://www.sololearn.com/certificates/CC-GFTWDLUT",
+        title: "SoloLearn Certificate · CC-GFTWDLUT",
+        domain: "sololearn.com",
+        icon: SoloLearnIcon,
+      },
+      {
+        id: "certificate-4",
+        url: "https://www.sololearn.com/certificates/CC-IC6DYMJZ",
+        title: "SoloLearn Certificate · CC-IC6DYMJZ",
+        domain: "sololearn.com",
+        icon: SoloLearnIcon,
+      },
+      {
+        id: "certificate-5",
+        url: "https://www.sololearn.com/certificates/CC-N1JK4PWH",
+        title: "SoloLearn Certificate · CC-N1JK4PWH",
+        domain: "sololearn.com",
+        icon: SoloLearnIcon,
       },
     ],
   },
