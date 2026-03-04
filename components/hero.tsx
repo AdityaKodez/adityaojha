@@ -10,7 +10,9 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { WritingUnderline } from "./writing-underline";
 import ElectricBorder from "./react-bits/ElectricBorder";
 import { useEffect, useRef, useState } from "react";
+import { useHaptic } from "react-haptic";
 export function Hero() {
+  const { vibrate } = useHaptic();
   const [beforeHighlight, afterHighlight] = heroConfig.description.split(
     heroConfig.descriptionHighlight,
   );
@@ -67,13 +69,13 @@ export function Hero() {
           className="no-js-visible relative cursor-pointer"
         >
           <ElectricBorder
-            color="#FCF55F"
+            color="#FF9644"
             speed={0.2}
             chaos={0.12}
             style={{ borderRadius: "50%" }}
             className={`transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
           >
-            <Avatar className="size-24 shrink-0 border-2 border-foreground/50 bg-background shadow-xl">
+            <Avatar className="size-24 shrink-0 border-foreground/50 bg-background shadow-xl">
               <AvatarImage
                 src={siteConfig.personal.avatar.src}
                 alt={siteConfig.personal.avatar.alt}
@@ -108,7 +110,9 @@ export function Hero() {
             {heroConfig.greeting}
             <span
               className="text-2xl hover:animate-wave inline-block"
+              onMouseEnter={() => vibrate()}
               style={{ transformOrigin: "70% 70%" }}
+              
             >
               {heroConfig.waveEmoji}
             </span>
