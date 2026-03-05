@@ -44,7 +44,7 @@ export default async function Home() {
   return (
     <main
       id="main-content"
-      className="relative min-h-screen max-w-3xl mx-auto md:pb-16 space-y-8 border border-dashed overflow-hidden"
+      className="relative min-h-screen max-w-3xl mx-auto md:pb-16 space-y-8 border-2 overflow-hidden shadow-sm"
     >
       <div className="bg-background">
         <Banner />

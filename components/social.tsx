@@ -1,15 +1,15 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+import { motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRightIcon, Check, Coffee, Copy } from "lucide-react";
 import { socialSectionConfig, socialsConfig } from "@/config/socials";
 import type { SocialIcon, SocialLink } from "@/config/types";
 import Peerlist from "@/public/peerlist";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
-import { ArrowRightIcon, Check, Coffee, Copy } from "lucide-react";
-import { motion } from "motion/react";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
 import { Kbd } from "./ui/kbd";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
@@ -59,6 +59,7 @@ const Social = () => {
     if (!social.copyValue) {
       return;
     }
+
     navigator.clipboard.writeText(social.copyValue);
     setCopied((prev) => ({ ...prev, [social.id]: true }));
     setTimeout(() => {
@@ -80,10 +81,12 @@ const Social = () => {
         (item) => item.shortcutKey?.toLowerCase() === e.key.toLowerCase(),
       );
 
-      if (target) {
-        e.preventDefault();
-        handleCopy(target);
+      if (!target) {
+        return;
       }
+
+      e.preventDefault();
+      handleCopy(target);
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -94,54 +97,51 @@ const Social = () => {
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, delay: 0.5 }}
+      transition={{ duration: 0.22, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className="no-js-visible border-t border-dashed pt-6"
     >
       <h2 className="section-heading">{socialSectionConfig.title}</h2>
 
-      <div className="grid grid-cols-2 max-sm:grid-cols-1 overflow-hidden -mb-px">
+      <div className="grid grid-cols-2 -mb-px overflow-hidden max-sm:grid-cols-1">
         {sortedSocials.map((social, idx) => {
           const isCopyAction = social.action === "copy";
 
           const cellContent = (
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2, delay: 0.55 + idx * 0.05 }}
-              className="relative no-js-visible group flex items-center gap-3 p-4 max-sm:border-r-0 transition-colors hover:bg-muted/10 overflow-hidden"
+              transition={{ duration: 0.22, delay: 0.5 + idx * 0.045 }}
+              className="micro-transition relative no-js-visible flex items-center gap-3 overflow-hidden p-4 max-sm:border-r-0 group-hover:bg-muted/10 group-focus-visible:bg-muted/10 "
             >
-              {/* Blueprint Texture on Hover */}
-              <div className="absolute inset-0 blueprint-bg opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-45 micro-transition group-hover:opacity-100 group-focus-visible:opacity-100" />
 
-              {/* Shimmer Line */}
-              <div className="absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 group-hover:ring-muted-foreground/10 transition-colors pointer-events-none" />
+              <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 micro-transition group-hover:ring-muted-foreground/10 group-focus-visible:ring-muted-foreground/10" />
 
-              <div className="relative z-10 flex items-center gap-3 w-full">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm text-muted-foreground relative group-hover:text-foreground transition-colors bg-background">
+              <div className="relative z-10 flex w-full items-center gap-3">
+                <div className="micro-transition relative flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground group-hover:text-foreground group-focus-visible:text-foreground group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5">
                   <SocialIconNode icon={social.icon} size={18} />
-                  <div className="absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 pointer-events-none rounded-sm"></div>
+                  <div className="pointer-events-none absolute inset-0 rounded-sm ring-1 ring-inset ring-muted-foreground/5" />
                 </div>
 
-                <div className="flex flex-col min-w-0">
+                <div className="flex min-w-0 flex-col">
                   <span className="text-sm font-medium leading-none">
                     {social.platform}
                   </span>
-                  <span className="text-xs text-muted-foreground mt-1 truncate font-mono">
+                  <span className="mt-1 truncate font-mono text-xs text-muted-foreground">
                     {social.handle}
                   </span>
                 </div>
+
                 {isCopyAction ? (
                   <div className="ml-auto">
                     {copied[social.id] ? (
                       <Check className="h-3.5 w-3.5 text-green-500" />
                     ) : (
-                      <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                      <Copy className="h-3.5 w-3.5 text-muted-foreground micro-transition group-hover:text-foreground group-focus-visible:text-foreground" />
                     )}
                   </div>
                 ) : (
-                  <ArrowRightIcon
-                    className="ml-auto size-3.5 text-muted-foreground/30 group-hover:text-primary transition-all group-hover:translate-x-0.5 group-hover:-rotate-45 group-hover:translate-y-0.5"
-                  />
+                  <ArrowRightIcon className="ml-auto size-3.5 text-muted-foreground/30 micro-transition group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:-rotate-45 group-hover:text-primary group-focus-visible:translate-x-0.5 group-focus-visible:translate-y-0.5 group-focus-visible:-rotate-45 group-focus-visible:text-primary" />
                 )}
               </div>
             </motion.div>
@@ -153,7 +153,7 @@ const Social = () => {
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => handleCopy(social)}
-                    className="text-left cursor-pointer"
+                    className="group micro-press block w-full text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 focus-visible:ring-offset-0"
                   >
                     {cellContent}
                   </button>
@@ -161,9 +161,7 @@ const Social = () => {
                 <TooltipContent>
                   <p>
                     {copied[social.id] ? "Copied!" : social.tooltipDefault}
-                    {social.shortcutKey ? (
-                      <Kbd>{social.shortcutKey}</Kbd>
-                    ) : null}
+                    {social.shortcutKey ? <Kbd>{social.shortcutKey}</Kbd> : null}
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -176,7 +174,7 @@ const Social = () => {
                 <Link
                   href={social.href ?? "#"}
                   target={social.action === "external" ? "_blank" : undefined}
-                  className="focus-visible:outline-none"
+                  className="group micro-press block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 focus-visible:ring-offset-0"
                 >
                   {cellContent}
                 </Link>
@@ -193,3 +191,4 @@ const Social = () => {
 };
 
 export default Social;
+

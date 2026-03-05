@@ -1,42 +1,109 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { useHaptic } from "react-haptic";
+import { motion } from "motion/react";
+import { Globe2Icon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
-import { Globe2Icon } from "lucide-react";
-import { motion } from "motion/react";
 import DiscordStatus from "./discord-status";
+import ElectricBorder from "./react-bits/ElectricBorder";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { WritingUnderline } from "./writing-underline";
-import ElectricBorder from "./react-bits/ElectricBorder";
-import { useEffect, useRef, useState } from "react";
-import { useHaptic } from "react-haptic";
+
+const entryTransition = {
+  duration: 0.24,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+
+const interactionSpring = {
+  type: "spring" as const,
+  stiffness: 320,
+  damping: 24,
+  mass: 0.45,
+};
+
 export function Hero() {
   const { vibrate } = useHaptic();
   const [beforeHighlight, afterHighlight] = heroConfig.description.split(
     heroConfig.descriptionHighlight,
   );
-  const AudioRef = useRef<HTMLAudioElement>(null);
+
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const vibrateAudio = useRef<HTMLAudioElement>(null);
+  const stopAudioTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
   const [isHovered, setIsHovered] = useState(false);
 
+  const clearAudioStopTimeout = () => {
+    if (!stopAudioTimeoutRef.current) {
+      return;
+    }
+
+    clearTimeout(stopAudioTimeoutRef.current);
+    stopAudioTimeoutRef.current = null;
+  };
+
   const handleAudio = (play: boolean) => {
-    const audio = AudioRef.current;
-    if (!audio) return;
+    const audio = audioRef.current;
+    if (!audio) {
+      return;
+    }
+
+    clearAudioStopTimeout();
 
     if (play) {
-      audio.playbackRate = 1.25;
-      audio.volume = 0.7;
+      audio.playbackRate = 1.12;
+      audio.volume = 0.45;
       audio.play().catch(() => {});
-    } else {
+      return;
+    }
+
+    // A slight delay avoids harsh stop/start jitter during quick pointer moves.
+    stopAudioTimeoutRef.current = setTimeout(() => {
       audio.pause();
       audio.currentTime = 0;
+    }, 120);
+  };
+
+  const handleWaveAudio = (play: boolean) => {
+    const audio = vibrateAudio.current;
+    if (!audio) {
+      return;
     }
+
+    if (play) {
+      audio.currentTime = 0;
+      audio.playbackRate = 1;
+      audio.volume = 0.6;
+      audio.play().catch(() => {});
+      return;
+    }
+
+    audio.pause();
+    audio.currentTime = 0;
+  };
+
+  const startInteractiveState = () => {
+    setIsHovered(true);
+    handleAudio(true);
+  };
+
+  const stopInteractiveState = () => {
+    setIsHovered(false);
+    handleAudio(false);
   };
 
   useEffect(() => {
-    const audio = AudioRef.current;
+  const audio = audioRef.current;
+  const vibrate = vibrateAudio.current;
+
     return () => {
+      clearAudioStopTimeout();
       audio?.pause();
+      vibrate?.pause();
     };
   }, []);
 
@@ -45,35 +112,42 @@ export function Hero() {
       className="no-js-visible relative z-20 -mt-14 space-y-4 px-6"
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
+      transition={entryTransition}
     >
-      <div className="flex items-start flex-col gap-6">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
+      <div className="flex flex-col items-start gap-6">
+        <motion.button
+          type="button"
+          aria-label="Play avatar interaction"
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.01 }}
-          transition={{ duration: 0.1, delay: 0.1 }}
-          onMouseEnter={() => {
-            setIsHovered(true);
-            handleAudio(true);
-          }}
-          onMouseLeave={() => {
-            setIsHovered(false);
-            handleAudio(false);
-          }}
+          whileHover={{ y: -1.5, scale: 1.015 }}
+          whileFocus={{ y: -1.5, scale: 1.015 }}
+          whileTap={{ y: 0, scale: 0.995 }}
+          transition={interactionSpring}
+          onMouseEnter={startInteractiveState}
+          onMouseLeave={stopInteractiveState}
+          onFocus={startInteractiveState}
+          onBlur={stopInteractiveState}
           onClick={() => {
-            if (AudioRef.current) {
-              AudioRef.current.play().catch(() => {});
+            const audio = audioRef.current;
+            if (!audio) {
+              return;
             }
+
+            clearAudioStopTimeout();
+            audio.currentTime = 0;
+            audio.playbackRate = 1.12;
+            audio.volume = 0.45;
+            audio.play().catch(() => {});
           }}
-          className="no-js-visible relative cursor-pointer"
+          className="no-js-visible micro-press micro-transition-slow relative cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/25 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <ElectricBorder
             color="#FF9644"
             speed={0.2}
-            chaos={0.12}
+            chaos={0.1}
             style={{ borderRadius: "50%" }}
-            className={`transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
+            className={`micro-transition-slow ${isHovered ? "opacity-100" : "opacity-0"}`}
           >
             <Avatar className="size-24 shrink-0 border-foreground/50 bg-background shadow-xl">
               <AvatarImage
@@ -87,41 +161,48 @@ export function Hero() {
           </ElectricBorder>
 
           <Avatar
-            className={`absolute inset-0 size-24 shrink-0 
-              ring-1 ring-border/50 ring-offset-1 ring-offset-background bg-background shadow-xl transition-opacity duration-300 ${isHovered ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+            className={`micro-transition-slow absolute inset-0 size-24 shrink-0 ring-1 ring-border/50 ring-offset-1 ring-offset-background bg-background shadow-xl ${isHovered ? "pointer-events-none opacity-0" : "opacity-100"}`}
           >
             <AvatarImage
               src={siteConfig.personal.avatar.src}
               alt={siteConfig.personal.avatar.alt}
             />
-            <AvatarFallback>
-              {siteConfig.personal.avatar.fallback}
-            </AvatarFallback>
+            <AvatarFallback>{siteConfig.personal.avatar.fallback}</AvatarFallback>
           </Avatar>
-        </motion.div>
-        <audio src="/electric.mp3" ref={AudioRef} loop preload="auto" />
+        </motion.button>
+
+        <audio src="/electric.mp3" ref={audioRef} loop preload="auto" />
+        <audio src="/vibration.mp3" ref={vibrateAudio} loop preload="auto" />
         <div className="space-y-2">
           <motion.p
-            className="no-js-visible text-lg font-pixel font-semibold mb-3 flex items-center gap-2 tracking-wide"
+            className="no-js-visible mb-3 flex items-center gap-2 text-lg font-pixel font-semibold tracking-wide"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2, delay: 0.1 }}
+            transition={{ ...entryTransition, delay: 0.1 }}
           >
             {heroConfig.greeting}
             <span
-              className="text-2xl hover:animate-wave inline-block"
-              onMouseEnter={() => vibrate()}
+              className="inline-block text-2xl hover:animate-wave"
+              onMouseEnter={() => {
+                vibrate();
+                handleWaveAudio(true);
+              }}
+              onMouseLeave={() => handleWaveAudio(false)}
+              onFocus={() => handleWaveAudio(true)}
+              onBlur={() => handleWaveAudio(false)}
+              onTouchStart={() => handleWaveAudio(true)}
+              onTouchEnd={() => handleWaveAudio(false)}
               style={{ transformOrigin: "70% 70%" }}
-              
             >
               {heroConfig.waveEmoji}
             </span>
           </motion.p>
+
           <motion.h1
             className="no-js-visible text-3xl font-bold tracking-tight max-sm:text-2xl"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2, delay: 0.2 }}
+            transition={{ ...entryTransition, delay: 0.18 }}
           >
             {heroConfig.headlineBefore}{" "}
             <WritingUnderline delay={0.8}>
@@ -133,32 +214,34 @@ export function Hero() {
             </WritingUnderline>{" "}
             {heroConfig.headlineAfter}
           </motion.h1>
+
           <motion.p
-            className="no-js-visible mt-4 text-md max-sm:text-sm text-muted-foreground"
+            className="no-js-visible mt-4 text-md text-muted-foreground max-sm:text-sm"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2, delay: 0.3 }}
+            transition={{ ...entryTransition, delay: 0.24 }}
           >
             {afterHighlight === undefined ? (
               heroConfig.description
             ) : (
               <>
                 {beforeHighlight}
-                <span className="underline underline-offset-4 decoration-border/50">
+                <span className="underline decoration-border/50 underline-offset-4">
                   {heroConfig.descriptionHighlight}
                 </span>
                 {afterHighlight}
               </>
             )}
           </motion.p>
+
           <motion.div
-            className="no-js-visible flex mt-6 items-center gap-3 text-sm text-muted-foreground"
+            className="no-js-visible mt-6 flex items-center gap-3 text-sm text-muted-foreground"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2, delay: 0.3 }}
+            transition={{ ...entryTransition, delay: 0.28 }}
           >
             <Tooltip>
-              <TooltipTrigger className="flex items-center gap-1.5">
+              <TooltipTrigger className="micro-transition flex items-center gap-1.5 rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20">
                 <Globe2Icon className="h-4 w-4" />
                 <span className="font-pixel">
                   {siteConfig.personal.location.label}
@@ -176,3 +259,7 @@ export function Hero() {
     </motion.section>
   );
 }
+
+
+
+

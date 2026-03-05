@@ -117,7 +117,7 @@ function TooltipBody({ data }: { data: LanyardData }) {
   // ── Spotify ──
   if (spotify) {
     return (
-      <div className="flex items-center gap-2.5 max-w-[260px]">
+      <div className="flex items-center gap-2.5 max-w-65">
         <SafeImage
           src={spotify.album_art_url}
           alt={spotify.album}
@@ -146,7 +146,7 @@ function TooltipBody({ data }: { data: LanyardData }) {
       Activity;
 
     return (
-      <div className="flex items-center gap-2.5 max-w-[260px]">
+      <div className="flex items-center gap-2.5 max-w-65">
         <SafeImage
           src={activityImgUrl ?? ""}
           alt={activity.name}
@@ -218,7 +218,7 @@ export function DiscordStatus() {
         <div>
           <Badge variant="outline" className="gap-1.5 cursor-default">
             <StatusIcon className={`h-3 w-3 ${config.iconClassName}`} />
-            <span className="font-pixel">{config.label}</span>
+            <span className="font-sans">{config.label}</span>
           </Badge>
         </div>
       </TooltipTrigger>

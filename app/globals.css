@@ -51,6 +51,11 @@
 }
 
 :root {
+  --motion-duration-fast: 180ms;
+  --motion-duration-base: 220ms;
+  --motion-duration-slow: 280ms;
+  --motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
   --card: oklch(1 0 0);
@@ -138,6 +143,29 @@
     @apply text-xl font-semibold border-y border-dashed bg-muted/20 px-6 py-2;
   }
 
+  .micro-transition {
+    transition-property: transform, background-color, border-color, color, opacity, box-shadow;
+    transition-duration: var(--motion-duration-base);
+    transition-timing-function: var(--motion-ease-standard);
+    will-change: transform;
+  }
+
+  .micro-transition-slow {
+    transition-property: transform, background-color, border-color, color, opacity, box-shadow;
+    transition-duration: var(--motion-duration-slow);
+    transition-timing-function: var(--motion-ease-smooth);
+    will-change: transform;
+  }
+
+  .micro-press {
+    transition-property: transform;
+    transition-duration: var(--motion-duration-fast);
+    transition-timing-function: var(--motion-ease-standard);
+  }
+
+  .micro-press:active {
+    transform: scale(0.992);
+  }
   .blueprint-bg {
     background-image: 
       repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.015) 10px, rgba(0,0,0,0.015) 11px),
@@ -217,3 +245,4 @@
 .skip-to-content:focus {
   top: 0;
 }
+

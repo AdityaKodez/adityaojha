@@ -38,4 +38,9 @@ export const skillsConfig: SkillItem[] = [
   },
   { id: "prisma", name: "Prisma", icon: "prisma", order: 8, enabled: true },
   { id: "trpc", name: "TRPC", icon: "trpc", order: 9, enabled: true },
+ { id: "chat-gpt", name: "Claude", icon: "claude", order: 10, enabled: true },
+  { id: "tanstack", name: "Tanstack", icon: "tanstack", order: 11, enabled: true },
+  { id: "cursor", name: "Cursor", icon: "cursor", order: 12, enabled: true },
 ];
+
+

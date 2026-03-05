@@ -4,10 +4,10 @@ import { siteConfig } from "@/config/site";
 import { Analytics } from "@vercel/analytics/next";
 import { GeistPixelGrid } from "geist/font/pixel";
 import { Metadata } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const bricolageGrotesque = Bricolage_Grotesque({
+const DmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -108,7 +108,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolageGrotesque.variable} ${GeistPixelGrid.variable}`}
+      className={`${DmSans.variable} ${GeistPixelGrid.variable}`}
       suppressHydrationWarning
     >
       <head>

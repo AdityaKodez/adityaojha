@@ -106,7 +106,10 @@ export type SkillIcon =
   | "shadcn"
   | "better-auth"
   | "prisma"
-  | "trpc";
+  | "trpc"
+  | "tanstack"
+  | "claude"
+  | "cursor";
 
 export interface SocialLink {
   id: string;
@@ -249,3 +252,5 @@ export interface PortfolioConfig {
   };
   contact: ContactConfig;
 }
+
+
