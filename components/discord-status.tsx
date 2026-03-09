@@ -9,6 +9,7 @@ import {
 } from "@/lib/discord-status";
 import { useQuery } from "@/lib/react-query";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -27,8 +28,10 @@ import {
   Radio,
   Swords,
   Activity,
+  Play,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, type ComponentProps } from "react";
 
 const fetchDiscordStatus = async (): Promise<LanyardData> => {
@@ -128,8 +131,26 @@ function TooltipBody({ data }: { data: LanyardData }) {
           fallback={Music}
           fallbackClassName="h-5 w-5 shrink-0 text-green-400"
         />
-        <div className="min-w-0">
-          <p className="font-medium truncate">{spotify.song}</p>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <p className="font-medium truncate min-w-0 flex-1">{spotify.song}</p>
+            {spotify.track_id && (
+              <Link
+                href={`https://open.spotify.com/track/${spotify.track_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Play on Spotify"
+              >
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-6 w-6 shrink-0 hover:text-green-500 hover:border-green-500 transition-colors"
+                >
+                  <Play className="h-3 w-3" />
+                </Button>
+              </Link>
+            )}
+          </div>
           <p className="text-[11px] opacity-70 truncate">by {spotify.artist}</p>
         </div>
       </div>
