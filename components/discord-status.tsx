@@ -9,6 +9,7 @@ import {
 } from "@/lib/discord-status";
 import { useQuery } from "@/lib/react-query";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -138,10 +139,15 @@ function TooltipBody({ data }: { data: LanyardData }) {
                 href={`https://open.spotify.com/track/${spotify.track_id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shrink-0 hover:text-green-500 transition-colors"
                 title="Play on Spotify"
               >
-                <Play className="h-3 w-3" />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-6 w-6 shrink-0 hover:text-green-500 hover:border-green-500 transition-colors"
+                >
+                  <Play className="h-3 w-3" />
+                </Button>
               </Link>
             )}
           </div>
