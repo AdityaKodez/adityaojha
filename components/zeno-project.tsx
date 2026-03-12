@@ -47,25 +47,25 @@ function ProjectCard({
 }) {
   return (
     <motion.div
-      whileHover={{ y: -2 }}
-      whileTap={{ y: 0, scale: 0.997 }}
+      whileHover={{ y: -0.5 }}
+      whileTap={{ y: 0, scale: 0.9985 }}
       transition={cardHoverTransition}
       className="h-full"
     >
-      <Card className="micro-transition h-full rounded-none border border-dashed bg-background shadow-none ring-0 hover:border-foreground/20 hover:bg-card/45 hover:shadow-[0_12px_30px_-24px_rgba(0,0,0,0.5)] focus-within:border-foreground/20 focus-within:bg-card/45 focus-within:shadow-[0_12px_30px_-24px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col">
+      <Card className="p-0">
         {featured ? (
           <div className="flex flex-col md:flex-row">
             <Link
               href={`/project/${project.id}`}
-              className="group/project-media relative block aspect-video overflow-hidden bg-muted md:min-h-[260px] md:w-1/2 md:aspect-auto focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20"
+              className="group/project-media relative block aspect-video overflow-hidden bg-muted md:min-h-65 md:w-1/2 md:aspect-auto focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20"
             >
               <Image
                 src={project.image}
                 alt={project.imageAlt}
                 fill
-                className="micro-transition-slow object-cover group-hover/project-media:scale-[1.03] group-hover/project-media:-translate-y-0.5 group-focus-visible/project-media:scale-[1.03] group-focus-visible/project-media:-translate-y-0.5"
+                className="micro-transition-slow object-cover group-hover/project-media:scale-[1.01] group-focus-visible/project-media:scale-[1.01]"
               />
-              <div className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15" />
+             
             </Link>
 
             <div className="flex grow flex-col md:w-1/2">
@@ -74,7 +74,7 @@ function ProjectCard({
                   <div>
                     <Link
                       href={`/project/${project.id}`}
-                      className="micro-transition rounded-sm focus-visible:outline-none focus-visible:text-primary"
+                      className="micro-transition focus-visible:outline-none focus-visible:text-primary"
                     >
                       <h3 className="text-lg font-semibold transition-colors hover:text-primary md:text-xl">
                         {project.title}
@@ -143,7 +143,7 @@ function ProjectCard({
                 src={project.image}
                 alt={project.imageAlt}
                 fill
-                className="micro-transition-slow object-cover group-hover/project-media:scale-[1.03] group-hover/project-media:-translate-y-0.5 group-focus-visible/project-media:scale-[1.03] group-focus-visible/project-media:-translate-y-0.5"
+                className="micro-transition-slow object-cover group-hover/project-media:scale-[1.01] group-focus-visible/project-media:scale-[1.01]"
               />
               <div className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15" />
             </Link>
@@ -209,7 +209,15 @@ export function ZenoProject() {
 
   return (
     <section id="projects" className="border-t border-dashed pt-6">
-      <h2 className="section-heading mb-6">{projectsSectionConfig.title}</h2>
+         <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.2 }}
+          className="no-js-visible section-heading mb-3"
+        >
+          {projectsSectionConfig.title}
+        </motion.h2>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

@@ -10,7 +10,7 @@ export const testimonialsConfig: Testimonial[] = [
     avatar: "VS",
     image: "/testimonial/vishal.png",
     order: 1,
-    enabled: true,
+    enabled: false,
   },
 
   {
@@ -21,7 +21,7 @@ export const testimonialsConfig: Testimonial[] = [
       "This is great. Most of the portfolios people post here are doing WAY too much. Yours here shows off just enough skill and an eye for design and doesn’t look like a boiler plate template to me at least. So great work. No notes.",
     avatar: "NM",
     image: "/testimonial/natey.png",
-    order: 2,
+    order: 1,
     enabled: true,
   },
   {
@@ -31,7 +31,7 @@ export const testimonialsConfig: Testimonial[] = [
     content: "You've got a good eye for design",
     avatar: "EB",
     image: "/testimonial/elongated.png",
-    order: 3,
+    order: 2,
     enabled: true,
   },
   {
@@ -41,7 +41,7 @@ export const testimonialsConfig: Testimonial[] = [
     content: "I like the minimalistic look good work.",
     avatar: "GJ",
     image: "/testimonial/garvit.png",
-    order: 4,
+    order: 3,
     enabled: true,
   },
   {
@@ -51,8 +51,8 @@ export const testimonialsConfig: Testimonial[] = [
     content: "Congrats on your launch. Looking forward",
     avatar: "VS",
     image: "/testimonial/vivek.png",
-    order: 5,
-    enabled: true,
+    order: 4,
+    enabled: false,
   },
   {
     id: "Tolani",
@@ -61,8 +61,8 @@ export const testimonialsConfig: Testimonial[] = [
     content: "Just took a look And i love it",
     avatar: "TL",
     image: "/testimonial/tolani.png",
-    order: 6,
-    enabled: true,
+    order: 5,
+    enabled: false,
   },
   {
     id: "Sahil",
@@ -71,7 +71,7 @@ export const testimonialsConfig: Testimonial[] = [
     content: "Cool bro",
     avatar: "SA",
     image: "/testimonial/sahil.png",
-    order: 7,
-    enabled: true,
+    order: 6,
+    enabled: false,
   },
 ];

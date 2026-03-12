@@ -3,10 +3,10 @@ import type { HeroConfig } from "@/config/types";
 export const heroConfig: HeroConfig = {
   greeting: "Hello, I'm Aditya Ojha",
   waveEmoji: "👋",
-  headlineBefore: "I ship",
-  highlightedPhrases: ["production-ready SaaS MVPs", "2–4 weeks"],
-  headlineAfter: "using Next.js and Prisma.",
+  headlineBefore: "I help",
+  highlightedPhrases: ["early-stage founders launch SaaS MVPs", "2–4 weeks"],
+  headlineAfter: "with clear scope and clean handoff.",
   description:
-    "Built and shipped full-stack products with real users. Strong focus on auth, data models, and iteration speed.",
-  descriptionHighlight: "real users",
+    "Best for founders who need auth, billing, dashboards, and core workflows shipped without agency overhead.",
+  descriptionHighlight: "founders",
 };

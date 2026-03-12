@@ -28,8 +28,8 @@ import {
   Radio,
   Swords,
   Activity,
-  Play,
 } from "lucide-react";
+import { FaSpotify } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, type ComponentProps } from "react";
@@ -120,7 +120,8 @@ function TooltipBody({ data }: { data: LanyardData }) {
   // ── Spotify ──
   if (spotify) {
     return (
-      <div className="flex items-center gap-2.5 max-w-65">
+      <div className="flex items-center flex-col gap-1 max-w-65">
+  <div className="flex items-center gap-2.5 max-w-65 ">
         <SafeImage
           src={spotify.album_art_url}
           alt={spotify.album}
@@ -132,28 +133,33 @@ function TooltipBody({ data }: { data: LanyardData }) {
           fallbackClassName="h-5 w-5 shrink-0 text-green-400"
         />
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5 min-w-0">
-            <p className="font-medium truncate min-w-0 flex-1">{spotify.song}</p>
-            {spotify.track_id && (
+          <div className="flex items-center gap-1 min-w-0">
+              <p className="font-medium truncate ">{spotify.song}</p>
+            
+          </div>
+         <p className="text-[11px] opacity-70 truncate">
+                {spotify.artist} - {spotify.album}
+              </p>
+        </div> 
+
+      </div>
+           {spotify.track_id && (
               <Link
                 href={`https://open.spotify.com/track/${spotify.track_id}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Play on Spotify"
+                className="w-full mt-2"
+                prefetch="auto"
               >
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-6 w-6 shrink-0 hover:text-green-500 hover:border-green-500 transition-colors"
-                >
-                  <Play className="h-3 w-3" />
+                <Button variant="secondary" size={"lg"} className="w-full rounded-sm">
+                  <FaSpotify className="mr-2 text-green-600" />
+                  Listen on Spotify
                 </Button>
               </Link>
             )}
-          </div>
-          <p className="text-[11px] opacity-70 truncate">by {spotify.artist}</p>
-        </div>
       </div>
+    
     );
   }
 
@@ -167,16 +173,18 @@ function TooltipBody({ data }: { data: LanyardData }) {
       Activity;
 
     return (
-      <div className="flex items-center gap-2.5 max-w-65">
+      <div className="flex items-center gap-4 max-w-65">
+<Button variant="ghost" size={"icon-lg"} className="rounded-sm p-0">
         <SafeImage
           src={activityImgUrl ?? ""}
           alt={activity.name}
-          width={40}
-          height={40}
-          className="rounded-md shrink-0"
+          width={50}
+          height={50}
+          className="rounded-md shrink-0 "
           unoptimized
           fallback={FallbackIcon}
         />
+        </Button>
         <div className="min-w-0">
           <p className="font-medium truncate">{activity.name}</p>
           {activity.details && (
@@ -246,9 +254,7 @@ export function DiscordStatus() {
       <TooltipContent side="bottom" className="p-2.5">
         <div className="space-y-1">
           <TooltipBody data={data} />
-          <p className="text-[10px] text-muted-foreground">
-            From Discord status
-          </p>
+         
         </div>
       </TooltipContent>
     </Tooltip>

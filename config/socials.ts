@@ -1,7 +1,7 @@
 import type { SocialLink } from "@/config/types";
 
 export const socialSectionConfig = {
-  title: "Connect",
+  title: "Elsewhere",
 };
 
 export const socialsConfig: SocialLink[] = [
@@ -22,6 +22,7 @@ export const socialsConfig: SocialLink[] = [
     href: "https://x.com/AdiKodez",
     icon: "x",
     action: "external",
+    tooltipDefault: "Message on X",
     order: 2,
     enabled: true,
   },
@@ -43,7 +44,7 @@ export const socialsConfig: SocialLink[] = [
     action: "copy",
     copyValue: "t1x_faker",
     shortcutKey: "C",
-    tooltipDefault: "Click to copy",
+    tooltipDefault: "Copy username",
     order: 4,
     enabled: true,
   },
@@ -53,10 +54,8 @@ export const socialsConfig: SocialLink[] = [
     handle: "adityakodez@gmail.com",
     href: "mailto:adityakodez@gmail.com",
     icon: "gmail",
-    action: "copy",
-    copyValue: "adityakodez@gmail.com",
-    shortcutKey: "E",
-    tooltipDefault: "Click to copy",
+    action: "mailto",
+    tooltipDefault: "Send email",
     order: 5,
     enabled: true,
   },

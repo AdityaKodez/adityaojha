@@ -12,14 +12,15 @@ const enabledTestimonials = testimonialsConfig
 
 export function Testimonials() {
   return (
-    <section className="px-6 border-t border-dashed pt-8 overflow-hidden">
-      <div className="relative">
-        <InfiniteSlider gap={4} speed={50} speedOnHover={10}>
+    <section className="border-t border-dashed pt-8 overflow-hidden">
+         <h2 className="section-heading mb-3">Community</h2>
+      <div className="relative px-6 ">
+        <InfiniteSlider gap={4} speed={100} speedOnHover={30}>
           {enabledTestimonials.map((testimonial) => (
             <motion.div
               key={testimonial.id}
               transition={{ duration: 0.2 }}
-              className="w-[300px] md:w-[350px]"
+              className="w-75 md:w-87.5"
             >
               <Card className="h-full border border-dashed shadow-none hover:border-foreground/20 transition-colors ring-0 rounded-none bg-background hover:bg-muted">
                 <CardContent className="p-3 flex flex-col gap-2 h-full">

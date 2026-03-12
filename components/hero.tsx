@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useHaptic } from "react-haptic";
 import { motion } from "motion/react";
-import { Globe2Icon } from "lucide-react";
+import { Globe2Icon, MailIcon } from "lucide-react";
+import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
 import DiscordStatus from "./discord-status";
@@ -175,7 +177,7 @@ export function Hero() {
         <audio src="/vibration.mp3" ref={vibrateAudio} loop preload="auto" />
         <div className="space-y-2">
           <motion.p
-            className="no-js-visible mb-3 flex items-center gap-2 text-lg font-pixel font-semibold tracking-wide"
+            className="no-js-visible mb-4 flex items-center gap-2 text-lg font-pixel font-semibold tracking-wide"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...entryTransition, delay: 0.1 }}
@@ -235,10 +237,24 @@ export function Hero() {
           </motion.p>
 
           <motion.div
-            className="no-js-visible mt-6 flex items-center gap-3 text-sm text-muted-foreground"
+            className="no-js-visible mt-6 flex flex-wrap items-center gap-3"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...entryTransition, delay: 0.28 }}
+          >
+            <Button asChild size="lg">
+              <Link href="mailto:adityakodez@gmail.com">Discuss your MVP 
+              <MailIcon className="ml-1 h-5 w-5" />
+              </Link>
+            </Button>
+          
+          </motion.div>
+
+          <motion.div
+            className="no-js-visible mt-4 flex items-center gap-3 text-sm text-muted-foreground"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...entryTransition, delay: 0.32 }}
           >
             <Tooltip>
               <TooltipTrigger className="micro-transition flex items-center gap-1.5 rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20">

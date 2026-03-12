@@ -8,19 +8,20 @@ import { FaYoutube } from "react-icons/fa";
 export const siteConfig: PortfolioConfig = {
   meta: {
     url: "https://akoder.xyz",
-    title: "Aditya — Full-Stack Engineer",
+    title: "Aditya — SaaS MVP Developer for Founders",
     titleTemplate: "%s | Aditya",
     shortTitle: "Aditya",
     description:
-      "Aditya is a Full-stack Engineer building high-performance web applications. Specializing in Next.js, TypeScript, and modern web architecture.",
+      "Aditya builds early-stage SaaS MVPs for founders, with a focus on auth, billing, dashboards, admin tools, and clean first versions.",
     keywords: [
-      "Full-stack Engineer",
-      "Web Developer",
+      "SaaS MVP Developer",
+      "MVP Development",
+      "Founder Support",
       "Next.js",
       "React",
       "TypeScript",
       "Tailwind CSS",
-      "Software Engineer",
+      "Product Development",
       "India",
       "Aditya",
       "Aditya Ojha",
@@ -34,20 +35,20 @@ export const siteConfig: PortfolioConfig = {
     category: "technology",
     locale: "en_US",
     ogImage: {
-      url: "/profile.png",
+      url: "/profile.avif",
       width: 1200,
       height: 630,
-      alt: "Aditya — Full-Stack Engineer",
+      alt: "Aditya — SaaS MVP Developer for Founders",
     },
     twitterCreator: "@AdiKodez",
     icon: "/favicon.svg",
     appleIcon: "/apple-touch-icon.png",
     googleVerification: "google-site-verification-code",
     manifest: {
-      name: "Aditya — Full-Stack Engineer",
+      name: "Aditya — SaaS MVP Developer for Founders",
       short_name: "Aditya",
       description:
-        "Aditya is a Full-stack Engineer building high-performance web applications.",
+        "Aditya builds early-stage SaaS MVPs for founders.",
       start_url: "/",
       display: "standalone",
       background_color: "#fafafa",
@@ -85,7 +86,7 @@ export const siteConfig: PortfolioConfig = {
     fullName: "Aditya Ojha",
     firstName: "Aditya",
     avatar: {
-      src: "/profile.png",
+      src: "/profile.avif",
       alt: "@akcll",
       fallback: "AK",
     },
@@ -96,19 +97,14 @@ export const siteConfig: PortfolioConfig = {
     githubUsername: "AdityaKodez",
   },
   sectionOrder: [
-    "socials",
-    "skills",
-    "about",
-    "testimonials",
     "projects",
-    "experience",
-    "workflow",
     "services",
-    "github",
-    "certifications",
-    "bookmarks",
-
+    "workflow",
+    "about",
     "contact",
+    "testimonials",
+    "skills",
+    "socials",
   ],
   sectionFlags: {
     socials: true,
@@ -116,12 +112,12 @@ export const siteConfig: PortfolioConfig = {
     about: true,
     testimonials: true,
     projects: true,
-    bookmarks: true,
-    certifications: true,
+    bookmarks: false,
+    certifications: false,
     experience: false,
     services: true,
     workflow: true,
-    github: true,
+    github: false,
     contact: true,
   },
   banner: {
@@ -136,40 +132,57 @@ export const siteConfig: PortfolioConfig = {
   },
   about: {
     title: "About me",
-    body: "I started experimenting with computers and building small things early on, long before I understood where it would lead. The path wasn’t clean or linear, and I had to learn discipline and consistency the hard way. Building products eventually became how I stay focused — turning effort into something concrete and useful.",
-    emphasizedPhrases: ["discipline and consistency", "concrete and useful"],
+    body: "I build my own SaaS products end to end, which forces me to think beyond code: user flows, onboarding friction, data models, and deployment. That is why I work best with founders who need a practical v1 rather than a lot of process. My edge is turning ambiguous product ideas into scoped builds that ship fast and stay maintainable after launch.",
+    emphasizedPhrases: ["end to end", "practical v1"],
   },
   services: {
-    title: "What I can help you with",
+    title: "What I build best",
     items: [
-      "Rapid MVP development and deployment.",
-      "Scalable full-stack application architecture.",
-      "Performance optimization and code refactoring.",
+      "Founder-led SaaS MVPs with auth, onboarding, payments, dashboards, and admin tools.",
+      "Internal tools and back-office workflows that need clear roles, clean data models, and fast delivery.",
+      "Next.js products that need one strong feature shipped or a messy flow rebuilt without overengineering.",
     ],
   },
   workflow: {
-    title: "How I work",
+    title: "How I run a project",
     items: [
       {
-        label: "Scope Control",
-        description: "Requirements are locked before code. No feature creep.",
-      },
-      {
-        label: "Speed",
-        description: "I ship continuously. You see progress every day.",
+        label: "Scope",
+        description: "We agree on one core workflow, fixed deliverables, and what is explicitly out of scope.",
       },
       {
         label: "Communication",
-        description: "Async-first. No daily standups.",
+        description: "You get short async updates, working demos, and clear blockers instead of vague progress.",
+      },
+      {
+        label: "Handoff",
+        description: "I ship clean code, deployment support, and next-step recommendations after the first release.",
       },
     ],
   },
   contact: {
-    title: "Ready to build?",
+    title: "Need a builder for your v1?",
     description:
-      "I am currently available for scoped MVP projects. Reach out if you are ready to ship.",
+      "Email me with the product, target user, and deadline. If the scope is a fit, I’ll reply with next steps and a practical build recommendation.",
+    pricing: [
+      {
+        label: "Minimum engagement",
+        value: "$700",
+        note: "A good fit for smaller scoped builds, feature sprints, or setup work.",
+      },
+      {
+        label: "Typical MVP range",
+        value: "$2.5k-$5k",
+        note: "Most founder MVP builds land here once scope, integrations, and handoff are clear.",
+      },
+      {
+        label: "How pricing works",
+        value: "Final quote depends on scope",
+        note: "Complex workflows, billing, roles, and admin tooling push projects higher.",
+      },
+    ],
     channels: socialsConfig.filter((item) =>
-      ["email", "discord", "coffee"].includes(item.id),
+      ["email", "x", "discord"].includes(item.id),
     ),
   },
   bookmarks: {

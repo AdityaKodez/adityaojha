@@ -3,7 +3,8 @@
 import { siteConfig } from "@/config/site";
 import type { SocialIcon, SocialLink } from "@/config/types";
 import Gmail from "@/public/stacks/gmail";
-import { Check, Coffee, Copy } from "lucide-react";
+import X from "@/public/x-icon";
+import { Check, Copy } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +22,7 @@ function ContactIcon({ icon }: { icon: SocialIcon }) {
   if (icon === "discord") {
     return <Image src="/discord.svg" alt="Discord" width={18} height={18} />;
   }
-  return <Coffee size={18} className="fill-yellow-200" />;
+  return <X size={18} />;
 }
 
 export function CTA() {
@@ -42,12 +43,35 @@ export function CTA() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="no-js-visible border-y border-dashed pt-6 pb-12"
+      className="no-js-visible border-y border-dashed pt-6 pb-6"
       id="contact"
     >
       <h2 className="section-heading mb-3">{siteConfig.contact.title}</h2>
       <div>
         <p className="px-6 text-md text-muted-foreground mb-6">{siteConfig.contact.description}</p>
+
+        <div className="grid border-y border-dashed md:grid-cols-3 overflow-hidden">
+          {siteConfig.contact.pricing.map((item, index) => (
+            <div
+              key={item.label}
+              className={`relative p-4 ${index < siteConfig.contact.pricing.length - 1 ? "md:border-r" : ""} border-dashed max-md:border-b border-b-0 `}
+            >
+              <div className="absolute inset-0 blueprint-bg opacity-35 pointer-events-none" />
+              <div className="relative z-10 space-y-1.5">
+                <p className="text-xs font-mono uppercase tracking-wide text-muted-foreground">
+                  {item.label}
+                </p>
+                <p className="text-lg font-semibold tracking-tight text-foreground">
+                  {item.value}
+                </p>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {item.note}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="grid border-t border-dashed grid-cols-3 max-sm:grid-cols-1 overflow-hidden">
           {contactChannels.map((channel) => {
             const content = (

@@ -1,9 +1,9 @@
 import type { Project } from "@/config/types";
 
 export const projectsSectionConfig = {
-  title: "Projects",
-  liveButtonLabel: "Live",
-  liveTooltip: "Live Preview",
+  title: "Selected Builds",
+  liveButtonLabel: "View Product",
+  liveTooltip: "Open project",
 };
 
 export const projectsConfig: Project[] = [
@@ -11,17 +11,17 @@ export const projectsConfig: Project[] = [
     id: "gridly",
     title: "Gridly — The Premium SaaS Boilerplate",
     description:
-      "Designed to save developers 40+ hours of boilerplate setup. Built and open-sourced a full-stack SaaS starter kit with Auth, Prisma, Polar payments, and AI integrations via Vercel AI SDK. 100% free and MIT licensed.",
+      "Open-source SaaS starter kit built to remove the slowest part of shipping a new product: auth, payments, schemas, and AI setup.",
     content:
-      "Gridly is designed to be the ultimate starting point for modern SaaS applications. I noticed that many developers spend the first **40+ hours** of any new project just wiring up authentication, database schemas, and payment gateways. \n\n> Gridly solves this by providing a highly opinionated, yet flexible template.\n\n### Key features include:\n- **Full-stack Auth**: Fully integrated authentication system.\n- **Payments**: Seamless monetization using Polar.\n- **AI Ready**: Out-of-the-box AI integration capabilities with the Vercel AI SDK.\n- **Sleek UI**: A beautiful, responsive UI built with Tailwind CSS and ui components.\n\nThis project is fully open-source because I believe in giving back to the community and helping other builders launch their ideas faster.",
+      "## Problem\nEvery new SaaS idea starts with the same invisible tax: auth, schema design, payments, and baseline product scaffolding before the real feature even exists.\n\n## Solution\nI built Gridly as an open-source starter kit with authentication, Prisma models, Polar payments, AI SDK wiring, and a clean UI foundation. The goal was to remove repetitive setup work so a founder or developer can start from the first business feature instead of week-one plumbing.\n\n## Outcome\nGridly compresses the first build phase into hours instead of days and shows how I structure reusable product foundations, not just one-off pages. It is also a public proof point of how I think about shipping modern SaaS systems end to end.",
     image: "/gridly.png",
     githubUrl: "https://github.com/AdityaKodez/gridly",
     imageAlt: "Gridly - SaaS Starter Kit",
     liveUrl: "https://gridly.akoder.xyz/",
-    tags: ["Next.js", "TypeScript", "Prisma", "AI SDK", "Open Source"],
+    tags: ["Next.js", "TypeScript", "Prisma", "Payments", "Open Source"],
     metrics: [
-      { icon: "chart", label: "40+ hours saved" },
-      { icon: "users", label: "100% Free & OSS" },
+      { icon: "chart", label: "40+ setup hours removed" },
+      { icon: "users", label: "MIT licensed" },
     ],
     order: 1,
     enabled: true,
@@ -30,16 +30,16 @@ export const projectsConfig: Project[] = [
     id: "zeno",
     title: "Zeno — Accountability tracker for builders",
     description:
-      "Designed and shipped a full-stack web app to track work logs, streaks, and performance trends. Built authentication, streak logic, analytics dashboards, and core data models. Shipped solo and iterated based on usage.",
+      "Self-initiated SaaS app for builders who want a lightweight way to log work, keep streaks, and review performance over time.",
     content:
-      "Zeno was born out of a personal need to maintain momentum while building projects. Consistency is the hardest part of shipping products, and Zeno acts as an **accountability partner**.\n\n> The application features a robust streak-tracking engine that handles logging activity intelligently.\n\n### Core capabilities:\n- **Analytics**: It provides users with analytical dashboards that highlight performance trends over time, helping them identify their productivity patterns.\n- **Performance**: High-speed queries to ensure fast, snappy dashboards.\n- **Data Modeling**: Complex time-series data aggregation for streaks and activity logs.\n\nFrom a technical perspective, building Zeno involved deep dives into caching and query optimization.",
+      "## Problem\nSolo builders often know what they should be doing, but the feedback loop is weak. Most productivity tools are either too bloated, too generic, or disconnected from actual shipping habits.\n\n## Solution\nI built Zeno around one clear workflow: log meaningful work, preserve momentum with streaks, and surface performance trends through simple analytics. The product forced me to design authentication, streak logic, dashboards, and the data model as one connected system instead of isolated features.\n\n## Outcome\nZeno reached early usage with active builders and repeated logs, which gave me real feedback on onboarding, retention loops, and how a product evolves after launch. It is the clearest example of me shipping a full-stack product, then learning from actual behavior instead of stopping at the first deploy.",
     image: "/zeno.png",
     imageAlt: "Zeno SaaS Boilerplate",
     liveUrl: "https://zeno.akoder.xyz/",
-    tags: ["Next.js", "TypeScript", "Tailwind", "Prisma"],
+    tags: ["Next.js", "TypeScript", "Analytics", "Self-initiated"],
     metrics: [
       { icon: "users", label: "20+ active builders" },
-      { icon: "chart", label: "200+ logs created" },
+      { icon: "chart", label: "200+ logs recorded" },
     ],
     order: 2,
     enabled: true,
@@ -48,16 +48,16 @@ export const projectsConfig: Project[] = [
     id: "root",
     title: "Root — Math Drill Engine",
     description:
-      "A practice-focused web app centered on question patterns and timed drills. Exploring how students interact with practice workflows and how data models evolve with usage.",
+      "Practice product built to test how students respond to timed drills, simple feedback loops, and distraction-free study flows.",
     content:
-      "Root focuses on the fundamentals of mathematics by providing a **clean, distraction-free** environment for timed drills. The core philosophy is that active practice and pattern recognition are essential for student fluency.\n\n> Building Root has been an exercise in UX research—understanding the friction points students face when studying.\n\n### System Highlights:\n- **Dynamic Generation**: The application dynamically generates problem sets.\n- **Feedback Loops**: Tracks detailed metrics to provide actionable feedback over time.\n- **Cognitive Load**: Designing an interface that encourages focused, deep work without unnecessary distractions.",
+      "## Problem\nStudents lose momentum when practice tools are noisy, slow, or overloaded with features that distract from repetition and pattern recognition.\n\n## Solution\nI built Root around timed drills, simple question flows, and lightweight feedback loops. The interface is intentionally stripped down so the product supports practice discipline instead of competing for attention.\n\n## Outcome\nWith early student usage and repeat sessions, Root gave me signal on education UX, session design, and how behavior data should shape the next iteration of the product. It also shows that I can build beyond generic SaaS dashboards when the product demands a different interaction model.",
     image: "/root.png",
     imageAlt: "Root - Math Drill Engine",
     liveUrl: "https://root.akoder.xyz/",
-    tags: ["Education", "UX Research", "Data Modeling"],
+    tags: ["Education", "UX Research", "Data Modeling", "Self-initiated"],
     metrics: [
       { icon: "users", label: "50+ students" },
-      { icon: "chart", label: "50 + Session Created" },
+      { icon: "chart", label: "50+ practice sessions" },
     ],
     order: 3,
     enabled: true,

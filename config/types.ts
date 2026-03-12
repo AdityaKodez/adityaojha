@@ -187,9 +187,16 @@ export interface WorkflowItem {
   description: string;
 }
 
+export interface PricingAnchor {
+  label: string;
+  value: string;
+  note: string;
+}
+
 export interface ContactConfig {
   title: string;
   description: string;
+  pricing: PricingAnchor[];
   channels: SocialLink[];
 }
 

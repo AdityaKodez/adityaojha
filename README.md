@@ -1,14 +1,14 @@
 # hey, i'm aditya
 
-this is my personal portfolio. i decided to open source it cause i believe in learning by doing.
+this is my portfolio and a record of how i think about shipping products.
 
-i ship production ready saas mvps for early stage founders. usually takes me 2-4 weeks. i like moving fast and keeping things effective.
+i help early-stage founders launch scoped saas mvps. my sweet spot is auth, billing, dashboards, admin tools, and the first core workflow that needs to get into users' hands quickly.
 
-take a look around or fork it if you want.
+the site is open source because i want the work to be inspectable, reusable, and easy to learn from.
 
 ## the stack
 
-built this using the stuff i use everyday
+built with the tools i use for actual product work
 
 - **next.js 16** (app router)
 - **tailwind css v4** + **shadcn ui**
@@ -17,7 +17,7 @@ built this using the stuff i use everyday
 
 ## run it locally
 
-clone the repo and install dependencies 
+clone the repo and install dependencies
 
 ```bash
 git clone https://github.com/AdityaKodez/adityaojha.git
@@ -26,18 +26,17 @@ npm install
 npm run dev
 ```
 
-go to http://localhost:3000 and check it out.
+go to [http://localhost:3000](http://localhost:3000) and check it out.
 
 ## contact
 
-i'm always open to discussing new projects.
-dm me on [twitter](https://x.com/AdiKodez) or [email me](mailto:adityakodez@gmail.com) if you want to build something.
+if you have a product idea, a clear user, and a realistic deadline, reach out.
+dm me on [twitter](https://x.com/AdiKodez) or [email me](mailto:adityakodez@gmail.com).
 
 if you found this useful maybe [buy me a coffee](https://buymeacoffee.com/adiKodez)
 
 cheers
 aditya
-a student pretending to be dev 
 
 ## license
 

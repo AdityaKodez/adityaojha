@@ -6,6 +6,7 @@ import { GeistPixelGrid } from "geist/font/pixel";
 import { Metadata } from "next";
 import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
 const DmSans = DM_Sans({
   subsets: ["latin"],
@@ -108,7 +109,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${DmSans.variable} ${GeistPixelGrid.variable}`}
+      className={cn(GeistPixelGrid.variable, "font-sans", DmSans.variable)}
       suppressHydrationWarning
     >
       <head>
