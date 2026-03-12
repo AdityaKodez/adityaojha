@@ -201,19 +201,26 @@ export function Hero() {
           </motion.p>
 
           <motion.h1
-            className="no-js-visible text-3xl font-bold tracking-tight max-sm:text-xl"
+            className="no-js-visible text-3xl font-bold leading-[1.05] tracking-tight text-balance max-sm:text-2xl"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...entryTransition, delay: 0.18 }}
           >
-            {heroConfig.headlineBefore}{" "}
-            <WritingUnderline delay={0.8}>
+            <span className="block">{heroConfig.headlineBefore}</span>
+            <span className="underline decoration-border/50 underline-offset-4 sm:hidden">
               {heroConfig.highlightedPhrases[0]}
-            </WritingUnderline>{" "}
-            in{" "}
-            <WritingUnderline delay={1.2}>
-              {heroConfig.highlightedPhrases[1]}
-            </WritingUnderline>{" "}
+            </span>
+            <span className="hidden sm:inline">
+              <WritingUnderline delay={0.8}>
+                {heroConfig.highlightedPhrases[0]}
+              </WritingUnderline>
+            </span>{" "}
+            <span className="whitespace-nowrap">
+              in{" "}
+              <WritingUnderline delay={1.2}>
+                {heroConfig.highlightedPhrases[1]}
+              </WritingUnderline>
+            </span>{" "}
             {heroConfig.headlineAfter}
           </motion.h1>
 
