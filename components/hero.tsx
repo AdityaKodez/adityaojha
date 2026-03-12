@@ -201,7 +201,7 @@ export function Hero() {
           </motion.p>
 
           <motion.h1
-            className="no-js-visible text-3xl font-bold tracking-tight max-sm:text-2xl"
+            className="no-js-visible text-3xl font-bold tracking-tight max-sm:text-xl"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...entryTransition, delay: 0.18 }}
