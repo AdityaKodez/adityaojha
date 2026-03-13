@@ -146,7 +146,7 @@ export function Hero() {
           className="no-js-visible micro-press micro-transition-slow relative cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/25 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <ElectricBorder
-            color="#FF9644"
+            color="#EE4B2B"
             speed={0.2}
             chaos={0.1}
             style={{ borderRadius: "50%" }}
