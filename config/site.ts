@@ -102,6 +102,7 @@ export const siteConfig: PortfolioConfig = {
     "workflow",
     "about",
     "contact",
+    "github",
     "testimonials",
     "skills",
     "socials",
@@ -117,7 +118,7 @@ export const siteConfig: PortfolioConfig = {
     experience: false,
     services: true,
     workflow: true,
-    github: false,
+    github: true,
     contact: true,
   },
   banner: {

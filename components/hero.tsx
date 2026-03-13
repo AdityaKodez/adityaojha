@@ -11,6 +11,7 @@ import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
 import DiscordStatus from "./discord-status";
 import ElectricBorder from "./react-bits/ElectricBorder";
+import { HiMail } from "react-icons/hi";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { WritingUnderline } from "./writing-underline";
 
@@ -250,8 +251,10 @@ export function Hero() {
             transition={{ ...entryTransition, delay: 0.28 }}
           >
             <Button asChild size="lg">
-              <Link href="mailto:adityakodez@gmail.com">Discuss your MVP 
-              <MailIcon className="ml-1 h-5 w-5" />
+              <Link href="mailto:adityakodez@gmail.com">
+               <HiMail className="size-5" />
+              <span className="text-sm">Discuss your MVP</span>
+             
               </Link>
             </Button>
           

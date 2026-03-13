@@ -48,7 +48,7 @@ export function CTA() {
     >
       <h2 className="section-heading mb-3">{siteConfig.contact.title}</h2>
       <div>
-        <p className="px-6 text-md text-muted-foreground mb-6">{siteConfig.contact.description}</p>
+        <p className="px-3 text-md text-muted-foreground mb-3">{siteConfig.contact.description}</p>
 
         <div className="grid border-y border-dashed md:grid-cols-3 overflow-hidden">
           {siteConfig.contact.pricing.map((item, index) => (
