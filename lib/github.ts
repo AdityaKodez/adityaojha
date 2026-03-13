@@ -62,20 +62,15 @@ export async function fetchGithubData(
   const weeks =
     json.data?.user?.contributionsCollection?.contributionCalendar?.weeks ?? [];
 
-  const days: { date: string; count: number }[] = [];
-
   // Flatten weeks into days
-  weeks.forEach(
+  const days: { date: string; count: number }[] = weeks.flatMap(
     (week: {
       contributionDays: { date: string; contributionCount: number }[];
-    }) => {
-      week.contributionDays.forEach((day) => {
-        days.push({
-          date: day.date,
-          count: day.contributionCount,
-        });
-      });
-    },
+    }) =>
+      week.contributionDays.map((day) => ({
+        date: day.date,
+        count: day.contributionCount,
+      })),
   );
 
   // Normalize and color bucket
