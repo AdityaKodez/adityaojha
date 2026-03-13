@@ -26,7 +26,7 @@ interface GitHubCalendarProps {
 
 const GitHubCalendar = ({
   data,
-  colors = ["#fffde7", "#fff59d", "#ffeb3b", "#fbc02d", "#f57f17"],
+colors = ["#FFEBEE", "#FFCDD2", "#F44336", "#EF5350", "#B71C1C"],
 }: GitHubCalendarProps) => {
   const today = new Date();
   const startDate = subMonths(today, 12); // One year back

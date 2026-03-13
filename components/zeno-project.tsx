@@ -1,15 +1,16 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "motion/react";
-import { FaGithub } from "react-icons/fa";
-import { BarChart3, ForwardIcon, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { projectsConfig, projectsSectionConfig } from "@/config/projects";
 import type { ProjectMetric } from "@/config/types";
+import { BarChart3, Users } from "lucide-react";
+import { motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
+import { FaGithub } from "react-icons/fa";
+import { LuExternalLink } from "react-icons/lu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const enabledProjects = projectsConfig
@@ -101,7 +102,7 @@ function ProjectCard({
                         <Button asChild variant="outline" size="sm" className="w-fit">
                           <Link href={project.liveUrl} target="_blank">
                             {projectsSectionConfig.liveButtonLabel}{" "}
-                            <ForwardIcon className="ml-1.5 h-3 w-3" />
+                            <LuExternalLink className="ml-1.5 h-3 w-3" />
                           </Link>
                         </Button>
                       </TooltipTrigger>
@@ -170,7 +171,7 @@ function ProjectCard({
                       <Button asChild variant="outline" size="sm" className="shrink-0">
                         <Link href={project.liveUrl} target="_blank">
                           {projectsSectionConfig.liveButtonLabel}{" "}
-                          <ForwardIcon className="ml-1.5 h-3 w-3" />
+                          <LuExternalLink className="ml-1.5 h-3 w-3" />
                         </Link>
                       </Button>
                     </TooltipTrigger>
