@@ -109,6 +109,7 @@ export function Banner() {
               <Link
                 href={siteConfig.banner.openSourceUrl}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="flex h-8 items-center justify-center gap-1 px-2 text-white/70 transition-colors hover:text-white"
               >
                 <OpenSrc size="20" />

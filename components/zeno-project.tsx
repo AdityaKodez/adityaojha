@@ -100,7 +100,7 @@ function ProjectCard({
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button asChild variant="outline" size="sm" className="w-fit">
-                          <Link href={project.liveUrl} target="_blank">
+                          <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                             {projectsSectionConfig.liveButtonLabel}{" "}
                             <LuExternalLink className="ml-1.5 h-3 w-3" />
                           </Link>
@@ -116,6 +116,7 @@ function ProjectCard({
                     <Link
                       href={project.githubUrl}
                       target="_blank"
+                      rel="noopener noreferrer"
                       className="micro-transition flex items-center gap-2 text-xs hover:text-primary focus-visible:outline-none focus-visible:text-primary"
                     >
                       <FaGithub className="size-4" />
@@ -169,7 +170,7 @@ function ProjectCard({
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button asChild variant="outline" size="sm" className="shrink-0">
-                        <Link href={project.liveUrl} target="_blank">
+                        <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                           {projectsSectionConfig.liveButtonLabel}{" "}
                           <LuExternalLink className="ml-1.5 h-3 w-3" />
                         </Link>

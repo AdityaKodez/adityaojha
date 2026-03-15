@@ -117,7 +117,7 @@ export function CTA() {
             return (
               <Tooltip key={channel.id}>
                 <TooltipTrigger asChild>
-                  <Link href={channel.href ?? "#"} target="_blank" className="focus-visible:outline-none">
+                  <Link href={channel.href ?? "#"} target="_blank" rel="noopener noreferrer" className="focus-visible:outline-none">
                     {content}
                   </Link>
                 </TooltipTrigger>
