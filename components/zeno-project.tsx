@@ -126,7 +126,7 @@ function ProjectCard({
               </CardContent>
 
               {project.metrics?.length ? (
-                <CardFooter className="flex gap-6 border-t border-dashed py-4">
+                <CardFooter className="flex gap-6 border-t border-dashed py-4 rounded-none">
                   {project.metrics.map((metric) => (
                     <Metric key={metric.label} metric={metric} />
                   ))}
@@ -146,7 +146,7 @@ function ProjectCard({
                 fill
                 className="micro-transition-slow object-cover group-hover/project-media:scale-[1.01] group-focus-visible/project-media:scale-[1.01]"
               />
-              <div className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15" />
+             
             </Link>
 
             <CardContent className="grow space-y-3 p-4">

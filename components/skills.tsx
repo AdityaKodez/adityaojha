@@ -50,10 +50,10 @@ function SkillChip({ skill, idx }: { skill: SkillItem; idx: number }) {
 
   const chipClasses = [
     "no-js-visible inline-flex items-center gap-1.5 rounded-lg border border-dashed px-3 py-1.5 text-sm text-muted-foreground transition-colors cursor-grab",
-    "hover:text-foreground hover:border-foreground/40",
+    "hover:text-foreground hover:border-primary/40",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20",
-    isDragSource ? "border-foreground/70 bg-muted/80 text-foreground cursor-grabbing" : "",
-    isDropTarget ? "border-foreground/60 bg-muted/45 text-foreground" : "",
+    isDragSource ? "border-primary/70 bg-background/50 backdrop-blur-md text-foreground cursor-grabbing" : "",
+    isDropTarget ? "border-primary/60 bg-muted/45 text-foreground" : "",
   ].join(" ");
 
   return (
