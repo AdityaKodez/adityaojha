@@ -174,6 +174,7 @@ const Social = () => {
                 <Link
                   href={social.href ?? "#"}
                   target={social.action === "external" ? "_blank" : undefined}
+                  rel={social.action === "external" ? "noopener noreferrer" : undefined}
                   className="group micro-press block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 focus-visible:ring-offset-0"
                 >
                   {cellContent}
