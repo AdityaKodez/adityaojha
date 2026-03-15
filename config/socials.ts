@@ -62,7 +62,7 @@ export const socialsConfig: SocialLink[] = [
   {
     id: "reddit",
     platform: "Reddit",
-    handle: "@adiKodez",
+    handle: "u/Affectionate-Gur-318",
     href: "https://www.reddit.com/user/Affectionate-Gur-318/",
     icon: "reddit",
     action: "external",
