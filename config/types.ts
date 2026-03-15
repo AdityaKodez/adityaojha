@@ -131,7 +131,7 @@ export type SocialIcon =
   | "peerlist"
   | "discord"
   | "gmail"
-  | "coffee";
+  | "reddit";
 
 export interface Testimonial {
   id: string;

@@ -11,6 +11,7 @@ import Peerlist from "@/public/peerlist";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
 import { Kbd } from "./ui/kbd";
+import { FaReddit } from "react-icons/fa";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const sortedSocials = socialsConfig
@@ -39,8 +40,8 @@ function SocialIconNode({
       );
     case "gmail":
       return <Gmail size={String(size)} />;
-    case "coffee":
-      return <Coffee size={size} className="fill-yellow-200" />;
+    case "reddit":
+      return <FaReddit size={size} className="fill-orange-500" />;
     default:
       return null;
   }
