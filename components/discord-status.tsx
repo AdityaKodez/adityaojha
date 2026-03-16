@@ -1,13 +1,5 @@
 "use client";
 
-import {
-  getPrimaryActivity,
-  getActivityImageUrl,
-  ActivityType,
-  type LanyardData,
-  type DiscordStatus as DiscordStatusType,
-} from "@/lib/discord-status";
-import { useQuery } from "@/lib/react-query";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,23 +8,31 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
+  ActivityType,
+  getActivityImageUrl,
+  getPrimaryActivity,
+  type DiscordStatus as DiscordStatusType,
+  type LanyardData,
+} from "@/lib/discord-status";
+import { useQuery } from "@/lib/react-query";
+import {
+  Activity,
   Circle,
-  Moon,
-  MinusCircle,
   CircleOff,
-  Loader2,
-  Music,
-  Gamepad2,
   Code,
-  Tv,
+  Gamepad2,
+  Loader2,
+  MinusCircle,
+  Moon,
+  Music,
   Radio,
   Swords,
-  Activity,
+  Tv,
 } from "lucide-react";
-import { FaSpotify } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, type ComponentProps } from "react";
+import { FaSpotify } from "react-icons/fa";
 
 const fetchDiscordStatus = async (): Promise<LanyardData> => {
   const response = await fetch("/api/discord-status");
@@ -59,17 +59,17 @@ const statusConfig: Record<
   },
   idle: {
     icon: Moon,
-    label: "Idle",
+    label: "Chilling",
     iconClassName: "text-yellow-400 fill-yellow-400",
   },
   dnd: {
     icon: MinusCircle,
-    label: "Do Not Disturb",
+    label: "Deep Work",
     iconClassName: "text-red-500",
   },
   offline: {
-    icon: CircleOff,
-    label: "Offline",
+    icon: Moon,
+    label: "Sleeping",
     iconClassName: "text-muted-foreground",
   },
 };
@@ -121,45 +121,46 @@ function TooltipBody({ data }: { data: LanyardData }) {
   if (spotify) {
     return (
       <div className="flex items-center flex-col gap-1 max-w-65">
-  <div className="flex items-center gap-2.5 max-w-65 ">
-        <SafeImage
-          src={spotify.album_art_url}
-          alt={spotify.album}
-          width={40}
-          height={40}
-          className="rounded-md shrink-0"
-          unoptimized
-          fallback={Music}
-          fallbackClassName="h-5 w-5 shrink-0 text-green-400"
-        />
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1 min-w-0">
+        <div className="flex items-center gap-2.5 max-w-65 ">
+          <SafeImage
+            src={spotify.album_art_url}
+            alt={spotify.album}
+            width={40}
+            height={40}
+            className="rounded-md shrink-0"
+            unoptimized
+            fallback={Music}
+            fallbackClassName="h-5 w-5 shrink-0 text-green-400"
+          />
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-1 min-w-0">
               <p className="font-medium truncate ">{spotify.song}</p>
-            
+            </div>
+            <p className="text-[11px] opacity-70 truncate">
+              {spotify.artist} - {spotify.album}
+            </p>
           </div>
-         <p className="text-[11px] opacity-70 truncate">
-                {spotify.artist} - {spotify.album}
-              </p>
-        </div> 
-
+        </div>
+        {spotify.track_id && (
+          <Link
+            href={`https://open.spotify.com/track/${spotify.track_id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Play on Spotify"
+            className="w-full mt-2"
+            prefetch="auto"
+          >
+            <Button
+              variant="secondary"
+              size={"lg"}
+              className="w-full rounded-sm"
+            >
+              <FaSpotify className="mr-2 text-green-600" />
+              Listen on Spotify
+            </Button>
+          </Link>
+        )}
       </div>
-           {spotify.track_id && (
-              <Link
-                href={`https://open.spotify.com/track/${spotify.track_id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Play on Spotify"
-                className="w-full mt-2"
-                prefetch="auto"
-              >
-                <Button variant="secondary" size={"lg"} className="w-full rounded-sm">
-                  <FaSpotify className="mr-2 text-green-600" />
-                  Listen on Spotify
-                </Button>
-              </Link>
-            )}
-      </div>
-    
     );
   }
 
@@ -174,16 +175,16 @@ function TooltipBody({ data }: { data: LanyardData }) {
 
     return (
       <div className="flex items-center gap-4 max-w-65">
-<Button variant="ghost" size={"icon-lg"} className="rounded-sm p-0">
-        <SafeImage
-          src={activityImgUrl ?? ""}
-          alt={activity.name}
-          width={50}
-          height={50}
-          className="rounded-md shrink-0 "
-          unoptimized
-          fallback={FallbackIcon}
-        />
+        <Button variant="ghost" size={"icon-lg"} className="rounded-sm p-0">
+          <SafeImage
+            src={activityImgUrl ?? ""}
+            alt={activity.name}
+            width={50}
+            height={50}
+            className="rounded-md shrink-0 "
+            unoptimized
+            fallback={FallbackIcon}
+          />
         </Button>
         <div className="min-w-0">
           <p className="font-medium truncate">{activity.name}</p>
@@ -254,7 +255,6 @@ export function DiscordStatus() {
       <TooltipContent side="bottom" className="p-2.5">
         <div className="space-y-1">
           <TooltipBody data={data} />
-         
         </div>
       </TooltipContent>
     </Tooltip>

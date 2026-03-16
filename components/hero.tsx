@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useHaptic } from "react-haptic";
-import { motion } from "motion/react";
-import { Globe2Icon, MailIcon } from "lucide-react";
-import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
+import { Globe2Icon } from "lucide-react";
+import { motion } from "motion/react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { useHaptic } from "react-haptic";
+import { HiMail } from "react-icons/hi";
 import DiscordStatus from "./discord-status";
 import ElectricBorder from "./react-bits/ElectricBorder";
-import { HiMail } from "react-icons/hi";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { WritingUnderline } from "./writing-underline";
 
@@ -100,8 +100,8 @@ export function Hero() {
   };
 
   useEffect(() => {
-  const audio = audioRef.current;
-  const vibrate = vibrateAudio.current;
+    const audio = audioRef.current;
+    const vibrate = vibrateAudio.current;
 
     return () => {
       clearAudioStopTimeout();
@@ -170,7 +170,9 @@ export function Hero() {
               src={siteConfig.personal.avatar.src}
               alt={siteConfig.personal.avatar.alt}
             />
-            <AvatarFallback>{siteConfig.personal.avatar.fallback}</AvatarFallback>
+            <AvatarFallback>
+              {siteConfig.personal.avatar.fallback}
+            </AvatarFallback>
           </Avatar>
         </motion.button>
 
@@ -252,12 +254,10 @@ export function Hero() {
           >
             <Button asChild size="lg">
               <Link href="mailto:adityakodez@gmail.com">
-               <HiMail className="size-5" />
-              <span className="text-sm">Discuss your MVP</span>
-             
+                <HiMail className="size-5" />
+                <span className="text-sm">Discuss your MVP</span>
               </Link>
             </Button>
-          
           </motion.div>
 
           <motion.div
@@ -285,7 +285,3 @@ export function Hero() {
     </motion.section>
   );
 }
-
-
-
-

@@ -45,7 +45,7 @@ export default async function Home() {
   return (
     <main
       id="main-content"
-      className="relative min-h-screen gap-y-4 flex flex-col max-w-3xl mx-auto border-x-2 border-b-2 overflow-hidden"
+      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x-2 border-b-2 overflow-hidden"
     >
       <div className="bg-background">
         <Banner />
@@ -77,7 +77,6 @@ export default async function Home() {
       <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none">
         <ProgressiveBlur position="bottom" height="100px" />
       </div>
-
     </main>
   );
 }
