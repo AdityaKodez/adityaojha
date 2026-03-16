@@ -45,7 +45,7 @@ export default async function Home() {
   return (
     <main
       id="main-content"
-      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x-2 border-b-2 overflow-hidden"
+      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x-2 border-b-2 overflow-hidden pt-[env(safe-area-inset-top)]"
     >
       <div className="bg-background">
         <Banner />
