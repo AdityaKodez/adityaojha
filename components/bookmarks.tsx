@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { AccordionSection } from "./ui/accordion-section";
 
 type CollectionId = "certifications" | "bookmarks";
 
@@ -59,18 +60,7 @@ export function Bookmarks() {
   }
 
   return (
-    <section id="bookmarks" className="pt-6">
-      <div className="space-y-2">
-        <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.2 }}
-          className="no-js-visible section-heading"
-        >
-          {title}
-        </motion.h2>
-      </div>
+    <AccordionSection id="bookmarks" title={title}>
 
       <div className="border-b p-2">
         <div className="px-2">
@@ -188,6 +178,6 @@ export function Bookmarks() {
           )}
         </>
       )}
-    </section>
+    </AccordionSection>
   );
 }

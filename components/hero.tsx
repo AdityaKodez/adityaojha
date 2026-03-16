@@ -199,7 +199,11 @@ export function Hero() {
               onTouchEnd={() => handleWaveAudio(false)}
               style={{ transformOrigin: "70% 70%" }}
             >
-              {heroConfig.waveEmoji}
+              {typeof heroConfig.waveEmoji === "string" ? (
+                heroConfig.waveEmoji
+              ) : (
+                <heroConfig.waveEmoji className="dark:fill-yellow-700 fill-yellow-400" />
+              )}
             </span>
           </motion.p>
 

@@ -3,19 +3,11 @@
 import { siteConfig } from "@/config/site";
 import { motion } from "motion/react";
 import { Signature } from "./signature";
+import { AccordionSection } from "./ui/accordion-section";
 
 export function HowIWork() {
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5 }}
-      className="no-js-visible border-t border-dashed pt-6"
-    >
-      <h2 className="section-heading mb-3">
-        {siteConfig.workflow.title}
-      </h2>
+    <AccordionSection title={siteConfig.workflow.title}>
       <div className="px-6 flex flex-col gap-4">
         <ul className="space-y-1.5 text-sm text-muted-foreground list-disc list-inside">
           {siteConfig.workflow.items.map((item) => (
@@ -34,6 +26,6 @@ export function HowIWork() {
           />
         </div>
       </div>
-    </motion.section>
+    </AccordionSection>
   );
 }

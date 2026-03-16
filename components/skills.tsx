@@ -21,6 +21,7 @@ import { useSortable } from "@dnd-kit/react/sortable";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import { motion } from "motion/react";
 import { useState, type ComponentType } from "react";
+import { AccordionSection } from "./ui/accordion-section";
 
 const skillIconMap: Record<SkillIcon, ComponentType<{ size: string }>> = {
   nextjs: NextjsIcon,
@@ -89,15 +90,7 @@ export function Skills() {
   }
 
   return (
-    <section className="border-t border-dashed pt-6">
-      <motion.h2
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.2, delay: 0.1 }}
-        className="no-js-visible section-heading mb-4"
-      >
-        {skillsSectionConfig.title}
-      </motion.h2>
+    <AccordionSection title={skillsSectionConfig.title}>
 
       <div className="flex flex-wrap gap-2 px-6">
         <DndContext
@@ -111,7 +104,7 @@ export function Skills() {
           </SortableContext>
         </DndContext>
       </div>
-    </section>
+    </AccordionSection>
   );
 }
 

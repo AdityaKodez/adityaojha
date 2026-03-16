@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { AccordionSection } from "./ui/accordion-section";
 
 export function Certifications() {
   const { title, items } = siteConfig.certifications;
@@ -17,18 +18,7 @@ export function Certifications() {
   const displayedItems = showAll ? items : items.slice(0, 4);
 
   return (
-    <section id="certifications" className="border-t border-dashed pt-6">
-      <div className="space-y-2">
-        <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.2 }}
-          className="no-js-visible section-heading"
-        >
-          {title}
-        </motion.h2>
-      </div>
+    <AccordionSection id="certifications" title={title}>
 
       <div className="grid grid-cols-1 sm:grid-cols-2">
         {displayedItems.map((item, index) => (
@@ -99,6 +89,6 @@ export function Certifications() {
           </Button>
         </motion.div>
       )}
-    </section>
+    </AccordionSection>
   );
 }

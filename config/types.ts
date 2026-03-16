@@ -75,7 +75,7 @@ export interface PersonalInfo {
 
 export interface HeroConfig {
   greeting: string;
-  waveEmoji: string;
+  waveEmoji: string | React.ElementType;
   headlineBefore: string;
   highlightedPhrases: [string, string];
   headlineAfter: string;
