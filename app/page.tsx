@@ -74,7 +74,7 @@ export default async function Home() {
 
       <Footer />
 
-      <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none">
+      <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none pb-[env(safe-area-inset-bottom)]">
         <ProgressiveBlur position="bottom" height="100px" />
       </div>
     </main>
