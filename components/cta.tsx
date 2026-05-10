@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { Button } from "./ui/button";
 
 const contactChannels = siteConfig.contact.channels
   .filter((item) => item.enabled !== false)
@@ -48,7 +49,14 @@ export function CTA() {
     >
       <h2 className="section-heading mb-3">{siteConfig.contact.title}</h2>
       <div>
-        <p className="px-6 text-md text-muted-foreground mb-3">{siteConfig.contact.description}</p>
+        <p className="px-6 text-md text-muted-foreground mb-4">{siteConfig.contact.description}</p>
+        <div className="px-6 mb-6">
+          <Button asChild size="lg" className="w-fit">
+            <Link href="mailto:adityakodez@gmail.com?subject=MVP%20Project%20Inquiry" target="_blank" rel="noopener noreferrer">
+              Discuss your project 
+            </Link>
+          </Button>
+        </div>
 
         <div className="grid border-y border-dashed md:grid-cols-3 overflow-hidden">
           {siteConfig.contact.pricing.map((item, index) => (

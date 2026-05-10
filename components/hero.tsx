@@ -180,7 +180,7 @@ export function Hero() {
         <audio src="/vibration.mp3" ref={vibrateAudio} loop preload="auto" />
         <div className="space-y-2">
           <motion.p
-            className="no-js-visible mb-4 flex items-center gap-2 text-lg font-pixel font-semibold tracking-wide"
+            className="no-js-visible mb-4 flex items-center gap-2 text-lg font-mono font-semibold tracking-wide"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...entryTransition, delay: 0.1 }}

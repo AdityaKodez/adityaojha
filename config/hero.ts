@@ -8,6 +8,6 @@ export const heroConfig: HeroConfig = {
   highlightedPhrases: ["early-stage founders launch SaaS MVPs", "2–4 weeks"],
   headlineAfter: "with clear scope and clean handoff.",
   description:
-    "Best for founders who need auth, billing, dashboards, and core workflows shipped without agency overhead.",
+    "Best for founders who need auth, billing, dashboards, and core workflows shipped without agency overhead. Built Gridly, Zeno, Root — shipped and live.",
   descriptionHighlight: "founders",
 };

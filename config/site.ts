@@ -35,7 +35,7 @@ export const siteConfig: PortfolioConfig = {
     category: "technology",
     locale: "en_US",
     ogImage: {
-      url: "/profile.avif",
+      url: "/profile.png",
       width: 1200,
       height: 630,
       alt: "Aditya — SaaS MVP Developer for Founders",
@@ -47,8 +47,7 @@ export const siteConfig: PortfolioConfig = {
     manifest: {
       name: "Aditya — SaaS MVP Developer for Founders",
       short_name: "Aditya",
-      description:
-        "Aditya builds early-stage SaaS MVPs for founders.",
+      description: "Aditya builds early-stage SaaS MVPs for founders.",
       start_url: "/",
       display: "standalone",
       background_color: "#fafafa",
@@ -86,7 +85,7 @@ export const siteConfig: PortfolioConfig = {
     fullName: "Aditya Ojha",
     firstName: "Aditya",
     avatar: {
-      src: "/profile.avif",
+      src: "/profile.png",
       alt: "@akcll",
       fallback: "AK",
     },
@@ -98,12 +97,12 @@ export const siteConfig: PortfolioConfig = {
   },
   sectionOrder: [
     "projects",
+    "testimonials",
     "services",
     "workflow",
     "about",
     "contact",
     "github",
-    "testimonials",
     "skills",
     "bookmarks",
     "socials",
@@ -150,22 +149,25 @@ export const siteConfig: PortfolioConfig = {
     items: [
       {
         label: "Scope",
-        description: "We agree on one core workflow, fixed deliverables, and what is explicitly out of scope.",
+        description:
+          "We agree on one core workflow, fixed deliverables, and what is explicitly out of scope.",
       },
       {
         label: "Communication",
-        description: "You get short async updates, working demos, and clear blockers instead of vague progress.",
+        description:
+          "You get short async updates, working demos, and clear blockers instead of vague progress.",
       },
       {
         label: "Handoff",
-        description: "I ship clean code, deployment support, and next-step recommendations after the first release.",
+        description:
+          "I ship clean code, deployment support, and next-step recommendations after the first release.",
       },
     ],
   },
   contact: {
     title: "Need a builder for your v1?",
     description:
-      "Email me with the product, target user, and deadline. If the scope is a fit, I’ll reply with next steps and a practical build recommendation.",
+      "Send me an email with a brief overview of your product, target user, and deadline. If it's a good fit, we'll schedule a quick chat to map out next steps.",
     pricing: [
       {
         label: "Minimum engagement",
