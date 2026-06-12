@@ -41,10 +41,8 @@ function Metric({ metric }: { metric: ProjectMetric }) {
 
 function ProjectCard({
   project,
-  featured = false,
 }: {
   project: (typeof enabledProjects)[number];
-  featured?: boolean;
 }) {
   return (
     <motion.div
@@ -54,161 +52,88 @@ function ProjectCard({
       className="h-full"
     >
       <Card className="p-0">
-        {featured ? (
-          <div className="flex flex-col md:flex-row">
-            <Link
-              href={`/project/${project.id}`}
-              className="group/project-media relative block aspect-video overflow-hidden bg-muted md:min-h-65 md:w-1/2 md:aspect-auto focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20"
-            >
-              <Image
-                src={project.image}
-                alt={project.imageAlt}
-                fill
-                className="micro-transition-slow object-cover group-hover/project-media:scale-[1.01] group-focus-visible/project-media:scale-[1.01]"
-              />
-             
-            </Link>
+        <>
+          <Link
+            href={`/project/${project.id}`}
+            className="group/project-media relative block aspect-video overflow-hidden bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20"
+          >
+            <Image
+              src={project.image}
+              alt={project.imageAlt}
+              fill
+              className="micro-transition-slow object-cover group-hover/project-media:scale-[1.01] group-focus-visible/project-media:scale-[1.01]"
+            />
+           
+          </Link>
 
-            <div className="flex grow flex-col md:w-1/2">
-              <CardContent className="grow space-y-3 p-4 md:p-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <Link
-                      href={`/project/${project.id}`}
-                      className="micro-transition focus-visible:outline-none focus-visible:text-primary"
-                    >
-                      <h3 className="text-lg font-semibold transition-colors hover:text-primary md:text-xl">
-                        {project.title}
-                      </h3>
-                    </Link>
-                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                      {project.description}
-                    </p>
-                  </div>
-                </div>
+          <CardContent className="grow space-y-3 p-4">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <Link
+                  href={`/project/${project.id}`}
+                  className="micro-transition rounded-sm focus-visible:outline-none focus-visible:text-primary"
+                >
+                  <h3 className="text-lg font-semibold transition-colors hover:text-primary">
+                    {project.title}
+                  </h3>
+                </Link>
+                <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                  {project.description}
+                </p>
+              </div>
 
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="flex items-center gap-2">
-                  {project.liveUrl && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button asChild variant="outline" size="sm" className="w-fit">
-                          <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                            {projectsSectionConfig.liveButtonLabel}{" "}
-                            <LuExternalLink className="ml-1.5 h-3 w-3" />
-                          </Link>
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{projectsSectionConfig.liveTooltip}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
-
-                  {project.githubUrl && (
-                    <Link
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="micro-transition flex items-center gap-2 text-xs hover:text-primary focus-visible:outline-none focus-visible:text-primary"
-                    >
-                      <FaGithub className="size-4" />
-                      Source code
-                    </Link>
-                  )}
-                </div>
-              </CardContent>
-
-              {project.metrics?.length ? (
-                <CardFooter className="flex gap-6 border-t border-dashed py-4 rounded-none">
-                  {project.metrics.map((metric) => (
-                    <Metric key={metric.label} metric={metric} />
-                  ))}
-                </CardFooter>
+              {project.liveUrl ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button asChild variant="outline" size="sm" className="shrink-0">
+                      <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                        {projectsSectionConfig.liveButtonLabel}{" "}
+                        <LuExternalLink className="ml-1.5 h-3 w-3" />
+                      </Link>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{projectsSectionConfig.liveTooltip}</p>
+                  </TooltipContent>
+                </Tooltip>
               ) : null}
             </div>
-          </div>
-        ) : (
-          <>
-            <Link
-              href={`/project/${project.id}`}
-              className="group/project-media relative block aspect-video overflow-hidden bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20"
-            >
-              <Image
-                src={project.image}
-                alt={project.imageAlt}
-                fill
-                className="micro-transition-slow object-cover group-hover/project-media:scale-[1.01] group-focus-visible/project-media:scale-[1.01]"
-              />
-             
-            </Link>
 
-            <CardContent className="grow space-y-3 p-4">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <Link
-                    href={`/project/${project.id}`}
-                    className="micro-transition rounded-sm focus-visible:outline-none focus-visible:text-primary"
-                  >
-                    <h3 className="text-lg font-semibold transition-colors hover:text-primary">
-                      {project.title}
-                    </h3>
-                  </Link>
-                  <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
-                    {project.description}
-                  </p>
-                </div>
+            <div className="flex flex-wrap gap-1.5">
+              {project.tags.map((tag) => (
+                <Badge key={tag} variant="secondary">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
 
-                {project.liveUrl ? (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button asChild variant="outline" size="sm" className="shrink-0">
-                        <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                          {projectsSectionConfig.liveButtonLabel}{" "}
-                          <LuExternalLink className="ml-1.5 h-3 w-3" />
-                        </Link>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{projectsSectionConfig.liveTooltip}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ) : null}
-              </div>
+            {project.githubUrl && (
+              <Link
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="micro-transition flex items-center gap-2 text-xs hover:text-primary focus-visible:outline-none focus-visible:text-primary"
+              >
+                <FaGithub className="size-4" />
+                Source code
+              </Link>
+            )}
+          </CardContent>
 
-              <div className="flex flex-wrap gap-1.5">
-                {project.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-
-            {project.metrics?.length ? (
-              <CardFooter className="flex gap-6 border-t border-dashed py-4">
-                {project.metrics.map((metric) => (
-                  <Metric key={metric.label} metric={metric} />
-                ))}
-              </CardFooter>
-            ) : null}
-          </>
-        )}
+          {project.metrics?.length ? (
+            <CardFooter className="flex gap-6 border-t border-dashed py-4">
+              {project.metrics.map((metric) => (
+                <Metric key={metric.label} metric={metric} />
+              ))}
+            </CardFooter>
+          ) : null}
+        </>
       </Card>
     </motion.div>
   );
 }
 
 export function ZenoProject() {
-  const [featured, ...rest] = enabledProjects;
-
   return (
     <section id="projects" className="border-t border-dashed pt-6">
          <motion.h2
@@ -225,17 +150,13 @@ export function ZenoProject() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="no-js-visible space-y-4 px-6"
+        className="no-js-visible px-6"
       >
-        {featured && <ProjectCard project={featured} featured />}
-
-        {rest.length > 0 && (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {rest.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {enabledProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
       </motion.div>
     </section>
   );

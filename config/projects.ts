@@ -8,6 +8,25 @@ export const projectsSectionConfig = {
 
 export const projectsConfig: Project[] = [
   {
+    id: "aura",
+    title: "Aura — AI Study Planner",
+    description:
+      "AI-powered study planning tool that builds focused daily plans from exam goals, syllabus progress, and cognitive load — turning ambition into a calm, repeatable routine.",
+    content:
+      "## Problem\nStudents planning for competitive exams often burn out not from studying, but from planning itself. Generic tools either ignore cognitive load or try to gamify everything, adding noise instead of clarity.\n\n## Solution\nAura builds a focused daily plan using the student's exam goal, syllabus, progress, mistakes, and energy levels. The backend ranks topics first and sends a smaller set to the AI planner, so the model arranges a useful mix of study, revision, and tests — only when there is evidence for them. A wellness layer watches cognitive load and revision timing to keep days doable.\n\n## Outcome\nAura demonstrates full-stack AI product design: deterministic ranking on the backend, LLM orchestration for day planning, and a wellness-aware feedback loop that makes tomorrow's plan better based on today's real evidence. It is the clearest proof of building AI products where the model enhances a structured system instead of replacing it.",
+    image: "/aura.jpg",
+    githubUrl: "https://github.com/AdityaKodez/starter",
+    imageAlt: "Aura - AI Study Planner",
+    liveUrl: "https://aura.akoder.xyz",
+    tags: ["Next.js", "AI", "TypeScript", "Education", "Wellness"],
+    metrics: [
+      { icon: "chart", label: "Cognitive load balancing" },
+      { icon: "users", label: "AI-powered planning" },
+    ],
+    order: 1,
+    enabled: true,
+  },
+  {
     id: "gridly",
     title: "Gridly — The Premium SaaS Boilerplate",
     description:
@@ -23,7 +42,7 @@ export const projectsConfig: Project[] = [
       { icon: "chart", label: "40+ setup hours removed" },
       { icon: "users", label: "MIT licensed" },
     ],
-    order: 1,
+    order: 2,
     enabled: true,
   },
   {
@@ -41,7 +60,7 @@ export const projectsConfig: Project[] = [
       { icon: "users", label: "20+ active builders" },
       { icon: "chart", label: "200+ logs recorded" },
     ],
-    order: 2,
+    order: 3,
     enabled: true,
   },
   {
@@ -59,7 +78,7 @@ export const projectsConfig: Project[] = [
       { icon: "users", label: "50+ students" },
       { icon: "chart", label: "50+ practice sessions" },
     ],
-    order: 3,
+    order: 4,
     enabled: true,
   },
 ];
