@@ -1,23 +1,16 @@
 import { type LanyardData } from "@/lib/discord-status";
 import { NextResponse } from "next/server";
 
-const DISCORD_USER_ID = "1243105196477911061";
-
+const DISCORD_USER_ID = process.env.DISCORD_USER_ID ?? "1243105196477911061";
 export const revalidate = 60;
 
 export async function GET() {
-  if (!DISCORD_USER_ID) {
-    return NextResponse.json(
-      { error: "Missing DISCORD_USER_ID environment variable." },
-      { status: 500 },
-    );
-  }
-
   try {
     const response = await fetch(
-      `https://api.lanyard.rest/v1/users/1243105196477911061`,
+      `https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`,
       {
         next: { revalidate: 60 },
+        headers: { Accept: "application/json" },
       },
     );
 
@@ -40,7 +33,14 @@ export async function GET() {
       );
     }
 
-    return NextResponse.json(data.data);
+    // Serve from the shared/CDN cache and allow serving stale content while
+    // revalidating in the background. This collapses concurrent requests onto
+    // a single upstream fetch instead of hammering Lanyard on every miss.
+    return NextResponse.json(data.data, {
+      headers: {
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      },
+    });
   } catch {
     return NextResponse.json(
       { error: "Could not reach Lanyard API." },
