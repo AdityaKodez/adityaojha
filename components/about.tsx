@@ -48,7 +48,7 @@ export const About = () => {
   const [firstPhrase, secondPhrase] = siteConfig.about.emphasizedPhrases;
 
   const sentences = useMemo(
-    () => siteConfig.about.body.split(/(?<=\.)\s+/).filter(Boolean),
+    () => siteConfig.about.body.split(/(?<=\\.)\\s+/).filter(Boolean),
     [],
   );
 
@@ -73,7 +73,7 @@ export const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.24, delay: index * 0.06 }}
-              className="micro-transition group relative text-[1.03rem] leading-8 text-muted-foreground hover:text-foreground focus-within:text-foreground"
+              className="micro-transition group relative text-base leading-8 text-muted-foreground hover:text-foreground focus-within:text-foreground"
             >
               {renderHighlightedText(sentence, highlightPhrases)}
             </motion.p>
