@@ -17,7 +17,7 @@ import { Bookmarks } from "@/components/bookmarks";
 import { Certifications } from "@/components/certifications";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
-import { fetchGithubData } from "@/lib/github";
+import { fetchGithubData, type Contribution } from "@/lib/github";
 import type { ReactElement } from "react";
 import { Suspense } from "react";
 
@@ -38,9 +38,17 @@ const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
 export default async function Home() {
   const shouldRenderGithub =
     siteConfig.sectionFlags.github && Boolean(process.env.GITHUB_TOKEN);
-  const contributionData = shouldRenderGithub
-    ? await fetchGithubData(siteConfig.personal.githubUsername)
-    : [];
+
+  let contributionData: Contribution[] | null = null;
+  if (shouldRenderGithub) {
+    try {
+      contributionData = await fetchGithubData(
+        siteConfig.personal.githubUsername,
+      );
+    } catch {
+      // Silently fail — GitHub contributions are optional
+    }
+  }
 
   return (
     <>
@@ -58,7 +66,7 @@ export default async function Home() {
           }
 
           const content =
-            sectionId === "github" ? (
+            sectionId === "github" && contributionData !== null ? (
               <Suspense key="github" fallback={<GitSkeleton />}>
                 <GitHubCalendar data={contributionData} />
               </Suspense>
