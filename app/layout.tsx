@@ -126,6 +126,8 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
+          // JSON.stringify produces inert output — it cannot inject HTML or JS,
+          // so dangerouslySetInnerHTML is safe for JSON-LD structured data.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
