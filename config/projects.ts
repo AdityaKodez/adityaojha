@@ -8,6 +8,24 @@ export const projectsSectionConfig = {
 
 export const projectsConfig: Project[] = [
   {
+    id: "rixel",
+    title: "Rixel — AI App Security & Design Scanner",
+    description:
+      "AI app security and design scanner for founders. It finds the security mistakes AI-generated code ships by default — exposed secrets, disabled RLS, open API routes — plus the design flaws that make it feel unfinished. Every fix explained in plain English.",
+    content:
+      "## Problem\nAI ships vulnerabilities — and half-finished design — just as fast as it ships features. Tools like v0, Lovable, Bolt, and Replit let founders ship in a weekend, but they also repeat the same dangerous mistakes: Row Level Security left off, secrets hard-coded in the repo, API routes with no auth, contrast-failing text, missing loading/empty/error states, and spacing that just feels off.\n\n## Solution\nRixel scans your AI-generated app for the security mistakes that burn founders and the design flaws that make it feel unfinished. It connects your repo, detects issues, explains each one in plain English, generates ready-to-paste fix prompts for Cursor or Claude Code, re-scans to verify the fix closed, and monitors every deploy so nothing slips back in. Integrations cover GitHub, Vercel, Supabase, Neon, and Clerk.\n\n## Outcome\nRixel walks an app from vibe-coded to production-ready in six steps — Scan, Detect, Explain, Fix, Verify, Monitor. It ships finding fingerprinting to cut duplicate noise, automatic fix pull requests for critical risks, and a Starter ($19/mo) and Pro ($39/mo) plan backed by a 7-day free trial. It is a clear example of building a developer tool that turns security from a wall of jargon into founder-friendly, actionable fixes.",
+    image: "/rixel.png",
+    imageAlt: "Rixel - AI App Security & Design Scanner",
+    liveUrl: "https://rixel.tech",
+    tags: ["AI", "Security", "Design", "SaaS", "Developer Tools"],
+    metrics: [
+      { icon: "chart", label: "Continuous monitoring" },
+      { icon: "users", label: "Founder-first" },
+    ],
+    order: 1,
+    enabled: true,
+  },
+  {
     id: "aura",
     title: "Aura — AI Study Planner",
     description:
@@ -23,7 +41,7 @@ export const projectsConfig: Project[] = [
       { icon: "chart", label: "Cognitive load balancing" },
       { icon: "users", label: "AI-powered planning" },
     ],
-    order: 1,
+    order: 2,
     enabled: true,
   },
   {
@@ -42,7 +60,7 @@ export const projectsConfig: Project[] = [
       { icon: "chart", label: "40+ setup hours removed" },
       { icon: "users", label: "MIT licensed" },
     ],
-    order: 2,
+    order: 3,
     enabled: true,
   },
   {
@@ -60,9 +78,10 @@ export const projectsConfig: Project[] = [
       { icon: "users", label: "20+ active builders" },
       { icon: "chart", label: "200+ logs recorded" },
     ],
-    order: 3,
+    order: 4,
     enabled: true,
   },
+
   {
     id: "root",
     title: "Root — Math Drill Engine",
@@ -78,7 +97,7 @@ export const projectsConfig: Project[] = [
       { icon: "users", label: "50+ students" },
       { icon: "chart", label: "50+ practice sessions" },
     ],
-    order: 4,
+    order: 5,
     enabled: true,
   },
 ];

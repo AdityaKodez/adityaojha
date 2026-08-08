@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { projectsConfig, projectsSectionConfig } from "@/config/projects";
 import type { ProjectMetric } from "@/config/types";
-import { BarChart3, Users } from "lucide-react";
-import { motion } from "motion/react";
+import { ArrowDownCircleIcon, BarChart3, Users } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { LuExternalLink } from "react-icons/lu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
@@ -16,6 +17,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 const enabledProjects = projectsConfig
   .filter((item) => item.enabled !== false)
   .sort((a, b) => a.order - b.order);
+
+const INITIAL_VISIBLE_COUNT = 4;
 
 const cardHoverTransition = {
   type: "spring" as const,
@@ -46,12 +49,16 @@ function ProjectCard({
 }) {
   return (
     <motion.div
-      whileHover={{ y: -0.5 }}
-      whileTap={{ y: 0, scale: 0.9985 }}
+      layout="position"
+      initial={{ opacity: 0, y: 16, scale: 0.985 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 10, scale: 0.985 }}
+      whileHover={{ y: -2 }}
+      whileTap={{ y: 0, scale: 0.995 }}
       transition={cardHoverTransition}
       className="h-full"
     >
-      <Card className="p-0">
+      <Card className="flex h-full flex-col gap-0 overflow-hidden p-0">
         <>
           <Link
             href={`/project/${project.id}`}
@@ -63,7 +70,7 @@ function ProjectCard({
               fill
               className="micro-transition-slow object-cover group-hover/project-media:scale-[1.01] group-focus-visible/project-media:scale-[1.01]"
             />
-           
+
           </Link>
 
           <CardContent className="grow space-y-3 p-4">
@@ -134,6 +141,12 @@ function ProjectCard({
 }
 
 export function ZenoProject() {
+  const [showAll, setShowAll] = useState(false);
+
+  const visibleProjects = showAll
+    ? enabledProjects
+    : enabledProjects.slice(0, INITIAL_VISIBLE_COUNT);
+
   return (
     <section id="projects" className="border-t border-dashed pt-6">
          <motion.h2
@@ -150,15 +163,40 @@ export function ZenoProject() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="no-js-visible px-6"
+        className="no-js-visible "
       >
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {enabledProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+        <motion.div
+          id="projects-grid"
+          layout
+          className="grid auto-rows-fr grid-cols-1 gap-4 px-4 sm:px-6 md:grid-cols-2"
+        >
+          <AnimatePresence initial={false}>
+            {visibleProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+        {enabledProjects.length > INITIAL_VISIBLE_COUNT && (
+          <div className="mt-6 flex justify-center border-y border-dashed py-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAll((prev) => !prev)}
+              aria-expanded={showAll}
+              aria-controls="projects-grid"
+              className="group flex items-center gap-2 font-pixel text-xs text-muted-foreground hover:text-foreground"
+            >
+              {showAll
+                ? "Show less"
+                : `View all ${enabledProjects.length} projects`}
+              <ArrowDownCircleIcon
+                aria-hidden="true"
+                className={`size-3.5 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
+              />
+            </Button>
+          </div>
+        )}
       </motion.div>
     </section>
   );
 }
-
