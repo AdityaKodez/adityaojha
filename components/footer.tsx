@@ -1,6 +1,5 @@
 import { socialsConfig } from "@/config/socials";
 import { siteConfig } from "@/config/site";
-import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 const footerLinks = socialsConfig.filter(
@@ -10,75 +9,67 @@ const footerLinks = socialsConfig.filter(
     ["x", "github", "peerlist", "email"].includes(social.id),
 );
 
-const isometricBlocks = [
-  { left: "2%", width: "14%", height: "45%", delay: "0ms" },
-  { left: "15%", width: "10%", height: "72%", delay: "80ms" },
-  { left: "26%", width: "18%", height: "35%", delay: "120ms" },
-  { left: "44%", width: "12%", height: "58%", delay: "180ms" },
-  { left: "56%", width: "19%", height: "82%", delay: "240ms" },
-  { left: "75%", width: "11%", height: "44%", delay: "300ms" },
-  { left: "87%", width: "10%", height: "66%", delay: "360ms" },
+const buildings = [
+  { width: "w-12", height: "h-20" },
+  { width: "w-16", height: "h-28" },
+  { width: "w-10", height: "h-16" },
+  { width: "w-20", height: "h-32" },
+  { width: "w-14", height: "h-24" },
+  { width: "w-24", height: "h-36" },
+  { width: "w-12", height: "h-20" },
+  { width: "w-16", height: "h-28" },
+  { width: "w-10", height: "h-16" },
 ];
 
 export function Footer() {
   return (
-    <footer className="relative isolate overflow-hidden bg-background">
-      <div className="pointer-events-none relative h-72 overflow-hidden md:h-96" aria-hidden="true">
-        <div className="absolute inset-x-0 bottom-0 h-px bg-border" />
-        <div className="absolute inset-x-[-5%] bottom-[-16%] h-40 rotate-[-8deg] border-y border-primary/20 bg-primary/[0.03] [transform:perspective(500px)_rotateX(58deg)]" />
-        <div className="absolute inset-x-[-5%] bottom-[7%] h-px bg-border/70 [transform:rotate(-8deg)]" />
-        <div className="absolute inset-x-[-5%] bottom-[24%] h-px bg-border/50 [transform:rotate(-8deg)]" />
-
-        <div className="absolute inset-x-0 bottom-0 h-[78%]">
-          {isometricBlocks.map((block, index) => (
-            <div
-              key={`${block.left}-${index}`}
-              className="absolute bottom-0 border border-primary/25 bg-primary/[0.035] transition-colors duration-500 hover:bg-primary/10"
-              style={{
-                left: block.left,
-                width: block.width,
-                height: block.height,
-                animationDelay: block.delay,
-                clipPath: "polygon(14% 0, 100% 0, 100% 86%, 86% 100%, 0 100%, 0 14%)",
-              }}
-            >
-              <div className="absolute inset-0 border-r border-t border-primary/15" />
-            </div>
-          ))}
-        </div>
-
-        <div className="absolute bottom-5 left-6 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground md:left-10">
-          End of viewport / keep building
-        </div>
-      </div>
-
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 border-t border-border px-6 py-6 md:flex-row md:items-center md:justify-between md:px-10">
-        <div className="flex items-center gap-4">
-          <span className="font-mono text-lg font-bold tracking-[-0.16em] text-foreground" aria-label="Aditya Ojha">
-            AO
-          </span>
-          <span className="h-4 w-px bg-border" />
-          <span className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {siteConfig.personal.fullName}
-          </span>
-        </div>
-        <nav aria-label="Footer navigation" className="flex flex-wrap items-center gap-x-5 gap-y-2">
+    <footer className="mt-4 overflow-hidden border-t border-dashed bg-background">
+      <div className="flex min-h-14 items-center justify-between border-b border-dashed px-6">
+        <span className="font-pixel text-sm font-semibold tracking-tight text-foreground">
+          AO
+        </span>
+        <nav aria-label="Footer navigation" className="flex items-center gap-4">
           {footerLinks.map((social) => (
             <Link
               key={social.id}
               href={social.href!}
               target={social.action === "external" ? "_blank" : undefined}
               rel={social.action === "external" ? "noopener noreferrer" : undefined}
-              className="group inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="text-xs font-mono uppercase tracking-wide text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:text-foreground"
             >
               {social.id === "email" ? "Mail" : social.platform.replace(" (Twitter)", "")}
-              <ArrowUpRight className="size-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
             </Link>
           ))}
         </nav>
       </div>
+
+      <div className="relative h-72 overflow-hidden border-b border-dashed">
+        <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-25" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-border" />
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-2 px-4 [perspective:700px]">
+          {buildings.map((building, index) => (
+            <div
+              key={`${building.width}-${building.height}-${index}`}
+              className={`${building.width} ${building.height} relative shrink-0 border border-border/70 bg-background/40 [transform:rotateY(-18deg)_rotateX(2deg)]`}
+              aria-hidden="true"
+            >
+              <div className="absolute -right-3 -top-2 h-[calc(100%+1px)] w-3 origin-left border-y border-r border-border/50 bg-muted/10 [transform:skewY(-34deg)]" />
+              <div className="absolute -left-px -right-3 -top-2 h-2 origin-bottom border border-border/50 bg-background [transform:skewX(-56deg)]" />
+              {index % 3 === 0 ? (
+                <div className="absolute left-1/2 top-0 h-6 w-px -translate-x-1/2 -translate-y-full bg-border/70" />
+              ) : null}
+            </div>
+          ))}
+        </div>
+        <p className="absolute bottom-5 left-6 max-w-44 text-xs leading-relaxed text-muted-foreground">
+          Building useful software from {siteConfig.personal.location.label}.
+        </p>
+      </div>
+
+      <div className="flex items-center justify-between px-6 py-4 text-xs text-muted-foreground">
+        <span>© {new Date().getFullYear()} {siteConfig.personal.fullName}</span>
+        <span className="font-mono uppercase tracking-wide">Keep shipping</span>
+      </div>
     </footer>
   );
 }
-
-export default Footer;
