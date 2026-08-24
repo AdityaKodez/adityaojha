@@ -21,12 +21,18 @@ interface ContributionDay {
 
 interface GitHubCalendarProps {
   data: ContributionDay[]; // Contribution data
-  colors?: string[]; // Custom color scale (default: GitHub-like greens)
+  colors?: string[]; // Custom color scale (default: shadcn blue)
 }
 
 const GitHubCalendar = ({
   data,
-colors = ["#FFEBEE", "#FFCDD2", "#F44336", "#EF5350", "#B71C1C"],
+  colors = [
+    "var(--heatmap-level-0)",
+    "var(--heatmap-level-1)",
+    "var(--heatmap-level-2)",
+    "var(--heatmap-level-3)",
+    "var(--heatmap-level-4)",
+  ],
 }: GitHubCalendarProps) => {
   const today = new Date();
   const startDate = subMonths(today, 12); // One year back
