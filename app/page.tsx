@@ -73,9 +73,8 @@ export default async function Home() {
           );
         })}
 
+        <Footer />
       </main>
-
-      <Footer />
 
       <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none">
         <ProgressiveBlur
