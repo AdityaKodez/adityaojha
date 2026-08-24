@@ -1,13 +1,4 @@
-import { socialsConfig } from "@/config/socials";
 import { siteConfig } from "@/config/site";
-import Link from "next/link";
-
-const footerLinks = socialsConfig.filter(
-  (social) =>
-    social.enabled !== false &&
-    social.href &&
-    ["x", "github", "peerlist", "email"].includes(social.id),
-);
 
 const buildings = [
   { width: "w-12", height: "h-20" },
@@ -23,26 +14,7 @@ const buildings = [
 
 export function Footer() {
   return (
-    <footer className="mt-4 overflow-hidden border-t border-dashed bg-background">
-      <div className="flex min-h-14 items-center justify-between border-b border-dashed px-6">
-        <span className="font-pixel text-sm font-semibold tracking-tight text-foreground">
-          AO
-        </span>
-        <nav aria-label="Footer navigation" className="flex items-center gap-4">
-          {footerLinks.map((social) => (
-            <Link
-              key={social.id}
-              href={social.href!}
-              target={social.action === "external" ? "_blank" : undefined}
-              rel={social.action === "external" ? "noopener noreferrer" : undefined}
-              className="text-xs font-mono uppercase tracking-wide text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:text-foreground"
-            >
-              {social.id === "email" ? "Mail" : social.platform.replace(" (Twitter)", "")}
-            </Link>
-          ))}
-        </nav>
-      </div>
-
+    <footer className="mt-4 overflow-hidden bg-background">
       <div className="relative h-72 overflow-hidden border-b border-dashed">
         <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-25" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-border" />
@@ -61,7 +33,7 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <p className="absolute bottom-5 left-6 max-w-44 text-xs leading-relaxed text-muted-foreground">
+        <p className="absolute bottom-8 left-6 z-10 max-w-52 text-xs leading-relaxed text-muted-foreground">
           Building useful software from {siteConfig.personal.location.label}.
         </p>
       </div>
