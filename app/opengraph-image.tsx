@@ -15,17 +15,9 @@ const SERIF = "Instrument Serif";
 const loadFont = (file: string) =>
   readFileSync(path.join(process.cwd(), "lib", "fonts", file));
 
-const loadAvatar = () => {
-  const avatar = readFileSync(
-    path.join(process.cwd(), "public", "profile.png"),
-  );
-  return `data:image/png;base64,${avatar.toString("base64")}`;
-};
-
 export default async function handler() {
   const regular = loadFont("InstrumentSerif-Regular.ttf");
   const italic = loadFont("InstrumentSerif-Italic.ttf");
-  const avatar = loadAvatar();
 
   const displayName = siteConfig.personal.fullName;
   const siteUrl = siteConfig.meta.url.replace(/^https?:\/\//, "");
@@ -48,7 +40,6 @@ export default async function handler() {
           flex: 1,
           flexDirection: "column",
           justifyContent: "space-between",
-          paddingRight: 64,
         }}
       >
         <div
@@ -66,7 +57,7 @@ export default async function handler() {
           <div
             style={{
               fontFamily: SERIF,
-              fontSize: 118,
+              fontSize: 132,
               lineHeight: 1.05,
               color: "#171717",
             }}
@@ -77,11 +68,11 @@ export default async function handler() {
             style={{
               fontFamily: SERIF,
               fontStyle: "italic",
-              fontSize: 34,
+              fontSize: 36,
               lineHeight: 1.4,
               color: "#525252",
-              marginTop: 28,
-              maxWidth: 620,
+              marginTop: 32,
+              maxWidth: 760,
             }}
           >
             The soul becomes dyed with the color of its thoughts.
@@ -101,21 +92,6 @@ export default async function handler() {
             {siteUrl}
           </div>
         </div>
-      </div>
-
-      {/* Right: portrait */}
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <img
-          src={avatar}
-          alt=""
-          width={340}
-          height={340}
-          style={{
-            borderRadius: "50%",
-            border: "3px solid #171717",
-            objectFit: "cover",
-          }}
-        />
       </div>
     </div>,
     {
