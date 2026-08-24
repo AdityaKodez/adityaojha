@@ -35,7 +35,7 @@ export const siteConfig: PortfolioConfig = {
     category: "technology",
     locale: "en_US",
     ogImage: {
-      url: "/profile.png",
+      url: "/opengraph-image",
       width: 1200,
       height: 630,
       alt: "Aditya Ojha — building SaaS products in public",
