@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { projectsConfig, projectsSectionConfig } from "@/config/projects";
@@ -73,18 +72,18 @@ function ProjectCard({
 
           </Link>
 
-          <CardContent className="grow space-y-3 p-4">
-            <div className="flex items-start justify-between gap-4">
-              <div>
+          <CardContent className="flex grow flex-col gap-4 p-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0">
                 <Link
                   href={`/project/${project.id}`}
-                  className="micro-transition rounded-sm focus-visible:outline-none focus-visible:text-primary"
+                  className="group/title rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
                 >
-                  <h3 className="text-lg font-semibold transition-colors hover:text-primary">
+                  <h3 className="text-pretty text-lg font-semibold transition-colors group-hover/title:text-primary">
                     {project.title}
                   </h3>
                 </Link>
-                <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-1 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
                   {project.description}
                 </p>
               </div>
@@ -92,10 +91,10 @@ function ProjectCard({
               {project.liveUrl ? (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button asChild variant="outline" size="sm" className="shrink-0">
+                    <Button asChild variant="outline" size="sm" className="w-fit shrink-0 gap-1.5">
                       <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        {projectsSectionConfig.liveButtonLabel}{" "}
-                        <LuExternalLink className="ml-1.5 h-3 w-3" />
+                        {projectsSectionConfig.liveButtonLabel}
+                        <LuExternalLink aria-hidden="true" data-icon="inline-end" />
                       </Link>
                     </Button>
                   </TooltipTrigger>
@@ -106,25 +105,19 @@ function ProjectCard({
               ) : null}
             </div>
 
-            <div className="flex flex-wrap gap-1.5">
-              {project.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
+            <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
+              {project.githubUrl && (
+                <Link
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/source micro-transition inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-primary focus-visible:outline-none focus-visible:text-primary"
+                >
+                  <FaGithub aria-hidden="true" className="size-4 transition-transform group-hover/source:scale-110" />
+                  <span className="transition-colors">Source code</span>
+                </Link>
+              )}
             </div>
-
-            {project.githubUrl && (
-              <Link
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="micro-transition flex items-center gap-2 text-xs hover:text-primary focus-visible:outline-none focus-visible:text-primary"
-              >
-                <FaGithub className="size-4" />
-                Source code
-              </Link>
-            )}
           </CardContent>
 
           {project.metrics?.length ? (

@@ -88,6 +88,11 @@
   --sidebar-ring: oklch(0.708 0 0);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
+  --heatmap-level-0: oklch(0.97 0.014 254.604);
+  --heatmap-level-1: oklch(0.882 0.057 254.128);
+  --heatmap-level-2: oklch(0.707 0.165 254.624);
+  --heatmap-level-3: oklch(0.488 0.243 264.376);
+  --heatmap-level-4: oklch(0.379 0.146 265.522);
 }
 
 .dark {
@@ -122,6 +127,11 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --heatmap-level-0: oklch(0.245 0.02 254.604);
+  --heatmap-level-1: oklch(0.379 0.08 254.128);
+  --heatmap-level-2: oklch(0.488 0.14 254.624);
+  --heatmap-level-3: oklch(0.627 0.18 264.376);
+  --heatmap-level-4: oklch(0.707 0.165 254.624);
 }
 
 @layer base {
