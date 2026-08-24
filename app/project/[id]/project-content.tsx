@@ -84,6 +84,7 @@ export function ProjectContent({ project }: { project: Project }) {
           src={project.image}
           alt={project.imageAlt}
           fill
+          sizes="(min-width: 768px) 768px, 100vw"
           className="object-cover"
           priority
         />

@@ -44,7 +44,7 @@ export function CTA() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="no-js-visible border-y border-dashed pt-6 pb-6"
+      className="no-js-visible border-t border-b-2 border-dashed [border-bottom-style:solid] pt-6 pb-6"
       id="contact"
     >
       <h2 className="section-heading mb-3">{siteConfig.contact.title}</h2>

@@ -182,7 +182,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...entryTransition, delay: 0.1 }}
           >
-            {heroConfig.greeting}
+            <span className="font-serif">{heroConfig.greeting}</span>
             <span
               className="inline-block text-2xl hover:animate-wave"
               onMouseEnter={() => {
@@ -199,7 +199,7 @@ export function Hero() {
               {typeof heroConfig.waveEmoji === "string" ? (
                 heroConfig.waveEmoji
               ) : (
-                <heroConfig.waveEmoji className="dark:fill-yellow-700 fill-yellow-400" />
+                <heroConfig.waveEmoji className="dark:fill-orange-300 fill-orange-200" />
               )}
             </span>
           </motion.p>

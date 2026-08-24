@@ -1,46 +1,175 @@
-import { siteConfig } from "@/config/site";
+/* ------------------------------------------------------------------ */
+/* Garden palette — olive stems with colored blooms that read well on  */
+/* the theme-aware secondary surface in both light and dark mode.      */
+/* ------------------------------------------------------------------ */
 
-const buildings = [
-  { width: "w-12", height: "h-20" },
-  { width: "w-16", height: "h-28" },
-  { width: "w-10", height: "h-16" },
-  { width: "w-20", height: "h-32" },
-  { width: "w-14", height: "h-24" },
-  { width: "w-24", height: "h-36" },
-  { width: "w-12", height: "h-20" },
-  { width: "w-16", height: "h-28" },
-  { width: "w-10", height: "h-16" },
+const STEM = "text-[#98a265]";
+const BLOOM_PINK = "text-[#e06c9f]";
+const BLOOM_RED = "text-[#d9502b]";
+const BLOOM_BLUE = "text-[#82a9cc]";
+const BLOOM_CREAM = "text-[#cfc98d]";
+
+type Tone = "bloom" | "stem";
+
+type PlantLine = { t: string; tone: Tone };
+
+/* ASCII plant shapes, one inner array per visual line. */
+const KINDS = {
+  tulip: [
+    [{ t: " ,,,", tone: "bloom" }],
+    [{ t: "{({})}", tone: "bloom" }],
+    [{ t: " -Y-", tone: "stem" }],
+    [{ t: " \\|/", tone: "stem" }],
+    [{ t: " \\|/", tone: "stem" }],
+    [{ t: "^^^^^", tone: "stem" }],
+  ],
+  tulipTall: [
+    [{ t: " ,,,", tone: "bloom" }],
+    [{ t: "{({})}", tone: "bloom" }],
+    [{ t: " -Y-", tone: "stem" }],
+    [{ t: " \\|/", tone: "stem" }],
+    [{ t: " \\|/", tone: "stem" }],
+    [{ t: " \\|/", tone: "stem" }],
+    [{ t: "^^^^^", tone: "stem" }],
+  ],
+  pot: [
+    [{ t: "UUUUU", tone: "bloom" }],
+    [{ t: "(___)", tone: "bloom" }],
+    [{ t: "\\-Y-/", tone: "stem" }],
+    [{ t: " \\|/", tone: "stem" }],
+    [{ t: " \\|/", tone: "stem" }],
+    [{ t: "^^^^^", tone: "stem" }],
+  ],
+  smallPot: [
+    [{ t: "UUU", tone: "bloom" }],
+    [{ t: "(_)", tone: "bloom" }],
+    [{ t: " \\|", tone: "stem" }],
+    [{ t: "^^^^^", tone: "stem" }],
+  ],
+  star: [
+    [{ t: "(*)", tone: "bloom" }],
+    [{ t: ">/", tone: "stem" }],
+  ],
+  bud: [
+    [{ t: "(o)", tone: "bloom" }],
+    [{ t: "\\|/", tone: "stem" }],
+  ],
+  sprout: [[{ t: "\\ |/", tone: "stem" }]],
+  dotSprout: [
+    [{ t: " .", tone: "bloom" }],
+    [{ t: "\\|", tone: "stem" }],
+  ],
+  dotSproutHill: [
+    [{ t: " .", tone: "bloom" }],
+    [{ t: "\\|", tone: "stem" }],
+    [{ t: "^^^", tone: "stem" }],
+  ],
+  dots: [[{ t: "..", tone: "bloom" }]],
+  hillDot: [
+    [{ t: " .", tone: "bloom" }],
+    [{ t: "^^^", tone: "stem" }],
+  ],
+  tinyBloom: [
+    [{ t: "UUU", tone: "bloom" }],
+    [{ t: " Y", tone: "stem" }],
+    [{ t: "^^^^^", tone: "stem" }],
+  ],
+  fallen: [
+    [{ t: "\\( | ,-", tone: "stem" }],
+    [{ t: " \\|/", tone: "stem" }],
+  ],
+  at: [
+    [{ t: "@", tone: "bloom" }],
+    [{ t: "\\|/", tone: "stem" }],
+    [{ t: "^^^", tone: "stem" }],
+  ],
+} satisfies Record<string, PlantLine[][]>;
+
+type Plant = {
+  kind: keyof typeof KINDS;
+  left: number; // % of garden width
+  top: number; // % of garden height
+  bloom?: string; // tailwind text color for the bloom lines
+};
+
+/* Hardcoded scatter (no randomness) so SSR and client always match. */
+const PLANTS: Plant[] = [
+  { kind: "star", left: 4, top: 14, bloom: BLOOM_CREAM },
+  { kind: "dotSprout", left: 10, top: 52, bloom: BLOOM_PINK },
+  { kind: "sprout", left: 4, top: 70 },
+  { kind: "bud", left: 14, top: 70, bloom: BLOOM_RED },
+  { kind: "tulip", left: 9, top: 82, bloom: BLOOM_PINK },
+  { kind: "pot", left: 20, top: 40, bloom: BLOOM_BLUE },
+  { kind: "dots", left: 29, top: 8, bloom: BLOOM_PINK },
+  { kind: "tulipTall", left: 34, top: 10, bloom: BLOOM_PINK },
+  { kind: "dotSprout", left: 29, top: 55, bloom: BLOOM_RED },
+  { kind: "smallPot", left: 23, top: 66, bloom: BLOOM_PINK },
+  { kind: "sprout", left: 30, top: 84 },
+  { kind: "fallen", left: 22, top: 90 },
+  { kind: "hillDot", left: 40, top: 4, bloom: BLOOM_PINK },
+  { kind: "sprout", left: 46, top: 42 },
+  { kind: "tulipTall", left: 53, top: 42, bloom: BLOOM_RED },
+  { kind: "dotSproutHill", left: 47, top: 62, bloom: BLOOM_PINK },
+  { kind: "dots", left: 36, top: 68, bloom: BLOOM_PINK },
+  { kind: "tinyBloom", left: 41, top: 82, bloom: BLOOM_BLUE },
+  { kind: "sprout", left: 45, top: 94 },
+  { kind: "tulip", left: 62, top: 50, bloom: BLOOM_PINK },
+  { kind: "pot", left: 71, top: 36, bloom: BLOOM_BLUE },
+  { kind: "sprout", left: 72, top: 66 },
+  { kind: "star", left: 55, top: 74, bloom: BLOOM_CREAM },
+  { kind: "at", left: 56, top: 88, bloom: BLOOM_PINK },
+  { kind: "fallen", left: 67, top: 82 },
+  { kind: "sprout", left: 72, top: 93 },
+  { kind: "dots", left: 84, top: 50, bloom: BLOOM_PINK },
+  { kind: "star", left: 90, top: 38, bloom: BLOOM_CREAM },
+  { kind: "sprout", left: 93, top: 55 },
+  { kind: "smallPot", left: 94, top: 68, bloom: BLOOM_PINK },
+  { kind: "bud", left: 83, top: 62, bloom: BLOOM_RED },
+  { kind: "star", left: 86, top: 78, bloom: BLOOM_CREAM },
+  { kind: "bud", left: 79, top: 86, bloom: BLOOM_RED },
+  { kind: "tulip", left: 89, top: 86, bloom: BLOOM_PINK },
 ];
 
 export function Footer() {
   return (
-    <footer className="mt-4 overflow-hidden bg-background">
-      <div className="relative h-72 overflow-hidden border-b border-dashed">
-        <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-25" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-border" />
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-2 px-4 [perspective:700px]">
-          {buildings.map((building, index) => (
-            <div
-              key={`${building.width}-${building.height}-${index}`}
-              className={`${building.width} ${building.height} relative shrink-0 border border-border/70 bg-background/40 [transform:rotateY(-18deg)_rotateX(2deg)]`}
-              aria-hidden="true"
-            >
-              <div className="absolute -right-3 -top-2 h-[calc(100%+1px)] w-3 origin-left border-y border-r border-border/50 bg-muted/10 [transform:skewY(-34deg)]" />
-              <div className="absolute -left-px -right-3 -top-2 h-2 origin-bottom border border-border/50 bg-background [transform:skewX(-56deg)]" />
-              {index % 3 === 0 ? (
-                <div className="absolute left-1/2 top-0 h-6 w-px -translate-x-1/2 -translate-y-full bg-border/70" />
-              ) : null}
-            </div>
-          ))}
-        </div>
-        <p className="absolute bottom-8 left-6 z-10 max-w-52 text-xs leading-relaxed text-muted-foreground">
-          Building useful software from {siteConfig.personal.location.label}.
+    <footer className="overflow-hidden border-t border-dashed bg-muted/20">
+      <div className="px-6 pb-6 pt-8 md:px-8">
+        <p className="max-w-md font-serif text-xl italic leading-snug text-foreground md:text-2xl">
+          The soul becomes dyed with the color of its thoughts.
+        </p>
+        <p className="mt-3 font-mono text-[10px] tracking-[0.2em] text-muted-foreground/80">
+          — MARCUS AURELIUS
+        </p>
+        <p className="mt-5 font-mono text-[11px] tracking-[0.15em] text-muted-foreground">
+          MADE WITH &lt;3 AND LOTS OF COFFEE
         </p>
       </div>
 
-      <div className="flex items-center justify-between px-6 py-4 text-xs text-muted-foreground">
-        <span>© {new Date().getFullYear()} {siteConfig.personal.fullName}</span>
-        <span className="font-mono uppercase tracking-wide">Keep shipping</span>
+      <div
+        aria-hidden="true"
+        className="group/garden relative h-[310px] cursor-default select-none overflow-hidden md:h-[390px]"
+      >
+        {PLANTS.map((plant, index) => (
+          <pre
+            key={`${plant.kind}-${plant.left}-${plant.top}`}
+            style={{
+              left: `${plant.left}%`,
+              top: `${plant.top}%`,
+              transitionDelay: `${(index % 10) * 45}ms`,
+            }}
+            className="absolute font-mono text-[9px] leading-[1.3] transition-transform duration-500 ease-out group-hover/garden:-translate-y-1.5 motion-reduce:transition-none md:text-[10px]"
+          >
+            {KINDS[plant.kind].map((line, lineIndex) => (
+              <span
+                key={lineIndex}
+                className={line[0].tone === "bloom" ? plant.bloom ?? STEM : STEM}
+              >
+                {line[0].t}
+                {"\n"}
+              </span>
+            ))}
+          </pre>
+        ))}
       </div>
     </footer>
   );

@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistPixelGrid } from "geist/font/pixel";
 import { Metadata, Viewport } from "next";
-import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +22,13 @@ export const viewport: Viewport = {
 const DmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
 });
 
 const geistSans = Geist({
@@ -124,6 +131,7 @@ export default function RootLayout({
         GeistPixelGrid.variable,
         "bg-background font-sans",
         DmSans.variable,
+        instrumentSerif.variable,
       )}
       suppressHydrationWarning
     >

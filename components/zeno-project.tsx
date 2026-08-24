@@ -67,6 +67,7 @@ function ProjectCard({
               src={project.image}
               alt={project.imageAlt}
               fill
+              sizes="(min-width: 768px) 384px, 100vw"
               className="micro-transition-slow object-cover group-hover/project-media:scale-[1.01] group-focus-visible/project-media:scale-[1.01]"
             />
 
