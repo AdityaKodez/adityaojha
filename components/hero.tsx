@@ -4,12 +4,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
-import { Globe2Icon } from "lucide-react";
+import { ArrowDown, Globe2Icon } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useHaptic } from "react-haptic";
-import { HiMail } from "react-icons/hi";
+import X from "@/public/x-icon";
 import DiscordStatus from "./discord-status";
 import ElectricBorder from "./react-bits/ElectricBorder";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
@@ -257,9 +257,19 @@ export function Hero() {
             transition={{ ...entryTransition, delay: 0.28 }}
           >
             <Button asChild size="lg">
-              <Link href="mailto:adityakodez@gmail.com">
-                <HiMail className="size-5" />
-                <span className="text-sm">Discuss your MVP</span>
+              <Link
+                href="https://x.com/AdiKodez"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <X data-icon="inline-start" />
+                <span className="text-sm">Follow the build on X</span>
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link href="#projects">
+                <span className="text-sm">See what I&apos;ve shipped</span>
+                <ArrowDown data-icon="inline-end" />
               </Link>
             </Button>
           </motion.div>

@@ -1,7 +1,7 @@
 import type { Project } from "@/config/types";
 
 export const projectsSectionConfig = {
-  title: "Selected Builds",
+  title: "Products I’ve shipped",
   liveButtonLabel: "View Product",
   liveTooltip: "Open project",
 };

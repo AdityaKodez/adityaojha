@@ -92,7 +92,7 @@ const jsonLd = {
   "@type": "Person",
   name: siteConfig.personal.fullName,
   url: siteConfig.meta.url,
-  jobTitle: "Full-Stack Engineer",
+  jobTitle: "Product Engineer and SaaS Builder",
   description: siteConfig.meta.description,
   knowsAbout: [
     "Next.js",
@@ -120,7 +120,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(GeistPixelGrid.variable, "font-sans", DmSans.variable)}
+      className={cn(
+        GeistPixelGrid.variable,
+        "bg-background font-sans",
+        DmSans.variable,
+      )}
       suppressHydrationWarning
     >
       <head>
