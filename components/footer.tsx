@@ -14,7 +14,7 @@ const buildings = [
 
 export function Footer() {
   return (
-    <footer className="mt-4 overflow-hidden bg-background">
+    <footer className="w-full overflow-hidden bg-background">
       <div className="relative h-72 overflow-hidden border-b border-dashed">
         <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-25" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-border" />
