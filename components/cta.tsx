@@ -63,7 +63,7 @@ export function CTA() {
           </Button>
         </div>
 
-        <div className="grid border-t border-dashed grid-cols-3 max-sm:grid-cols-1 overflow-hidden">
+        <div className="grid border-t border-b border-dashed grid-cols-3 max-sm:grid-cols-1 overflow-hidden">
           {contactChannels.map((channel) => {
             const content = (
               <div className="group relative flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/10 overflow-hidden">
