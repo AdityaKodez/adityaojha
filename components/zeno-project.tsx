@@ -55,9 +55,9 @@ function ProjectCard({
       whileHover={{ y: -2 }}
       whileTap={{ y: 0, scale: 0.995 }}
       transition={cardHoverTransition}
-      className="h-full"
+      className=""
     >
-      <Card className="flex h-full flex-col gap-0 overflow-hidden p-0">
+      <Card className="flex flex-col gap-0 overflow-hidden p-0">
         <>
           <Link
             href={`/project/${project.id}`}
@@ -72,7 +72,7 @@ function ProjectCard({
 
           </Link>
 
-          <CardContent className="flex grow flex-col gap-4 p-4">
+          <CardContent className="flex flex-col gap-3 p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
                 <Link
@@ -105,7 +105,7 @@ function ProjectCard({
               ) : null}
             </div>
 
-            <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
               {project.githubUrl && (
                 <Link
                   href={project.githubUrl}
@@ -161,7 +161,7 @@ export function ZenoProject() {
         <motion.div
           id="projects-grid"
           layout
-          className="grid auto-rows-fr grid-cols-1 gap-4 px-4 sm:px-6 md:grid-cols-2"
+          className="grid grid-cols-1 gap-4 px-4 sm:px-6 md:grid-cols-2"
         >
           <AnimatePresence initial={false}>
             {visibleProjects.map((project) => (
