@@ -103,7 +103,6 @@ export const siteConfig: PortfolioConfig = {
     "skills",
     "bookmarks",
     "socials",
-    "contact",
   ],
   sectionFlags: {
     socials: true,
@@ -117,7 +116,7 @@ export const siteConfig: PortfolioConfig = {
     services: false,
     workflow: false,
     github: true,
-    contact: true,
+    contact: false,
   },
   banner: {
     imageSrc: "/images/brand-background.png",
