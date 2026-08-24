@@ -52,35 +52,18 @@ export function CTA() {
         <p className="px-6 text-md text-muted-foreground mb-4">{siteConfig.contact.description}</p>
         <div className="px-6 mb-6">
           <Button asChild size="lg" className="w-fit">
-            <Link href="mailto:adityakodez@gmail.com?subject=MVP%20Project%20Inquiry" target="_blank" rel="noopener noreferrer">
-              Discuss your project 
+            <Link
+              href="https://x.com/AdiKodez"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <X data-icon="inline-start" />
+              Follow @AdiKodez
             </Link>
           </Button>
         </div>
 
-        <div className="grid border-y border-dashed md:grid-cols-3 overflow-hidden">
-          {siteConfig.contact.pricing.map((item, index) => (
-            <div
-              key={item.label}
-              className={`relative p-4 ${index < siteConfig.contact.pricing.length - 1 ? "md:border-r" : ""} border-dashed max-md:border-b border-b-0 `}
-            >
-              <div className="absolute inset-0 blueprint-bg opacity-35 pointer-events-none" />
-              <div className="relative z-10 space-y-1.5">
-                <p className="text-xs font-mono uppercase tracking-wide text-muted-foreground">
-                  {item.label}
-                </p>
-                <p className="text-lg font-semibold tracking-tight text-foreground">
-                  {item.value}
-                </p>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {item.note}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="grid border-t border-dashed grid-cols-3 max-sm:grid-cols-1 overflow-hidden">
+        <div className="grid border-t border-b border-dashed grid-cols-3 max-sm:grid-cols-1 overflow-hidden">
           {contactChannels.map((channel) => {
             const content = (
               <div className="group relative flex items-center gap-3 p-4 border-b border-r border-dashed max-sm:border-r-0 transition-colors hover:bg-muted/10 overflow-hidden">

@@ -8,11 +8,11 @@ import { FaYoutube } from "react-icons/fa";
 export const siteConfig: PortfolioConfig = {
   meta: {
     url: "https://akoder.xyz",
-    title: "Aditya — SaaS MVP Developer for Founders",
-    titleTemplate: "%s | Aditya",
-    shortTitle: "Aditya",
+    title: "Aditya Ojha — Building SaaS in Public",
+    titleTemplate: "%s | Aditya Ojha",
+    shortTitle: "Aditya Ojha",
     description:
-      "Aditya builds early-stage SaaS MVPs for founders, with a focus on auth, billing, dashboards, admin tools, and clean first versions.",
+      "Aditya builds SaaS products end to end and shares the product decisions, technical tradeoffs, mistakes, and lessons in public.",
     keywords: [
       "SaaS MVP Developer",
       "MVP Development",
@@ -38,16 +38,16 @@ export const siteConfig: PortfolioConfig = {
       url: "/profile.png",
       width: 1200,
       height: 630,
-      alt: "Aditya — SaaS MVP Developer for Founders",
+      alt: "Aditya Ojha — building SaaS products in public",
     },
     twitterCreator: "@AdiKodez",
     icon: "/favicon.svg",
     appleIcon: "/apple-touch-icon.png",
     googleVerification: "google-site-verification-code",
     manifest: {
-      name: "Aditya — SaaS MVP Developer for Founders",
+      name: "Aditya Ojha — Building SaaS in Public",
       short_name: "Aditya",
-      description: "Aditya builds early-stage SaaS MVPs for founders.",
+      description: "Aditya builds SaaS products and shares the process in public.",
       start_url: "/",
       display: "standalone",
       background_color: "#fafafa",
@@ -97,12 +97,9 @@ export const siteConfig: PortfolioConfig = {
   },
   sectionOrder: [
     "projects",
-    "testimonials",
-    "services",
-    "workflow",
     "about",
-    "contact",
     "github",
+    "testimonials",
     "skills",
     "bookmarks",
     "socials",
@@ -116,14 +113,14 @@ export const siteConfig: PortfolioConfig = {
     bookmarks: true,
     certifications: false,
     experience: false,
-    services: true,
-    workflow: true,
+    services: false,
+    workflow: false,
     github: true,
-    contact: true,
+    contact: false,
   },
   banner: {
-    imageSrc: "/banner.png",
-    imageAlt: "Banner",
+    imageSrc: "/images/brand-background.png",
+    imageAlt: "Halftone skyline glowing in blue, teal, and orange",
     openSourceUrl: "https://github.com/AdityaKodez/adityaojha",
     openSourceTooltip: "This project is open source !",
     themeToggleLabel: "Toggle theme",
@@ -132,9 +129,9 @@ export const siteConfig: PortfolioConfig = {
     switchAudioSrc: "/switch.mp3",
   },
   about: {
-    title: "About me",
-    body: "I build my own SaaS products end to end, which forces me to think beyond code: user flows, onboarding friction, data models, and deployment. That is why I work best with founders who need a practical v1 rather than a lot of process. My edge is turning ambiguous product ideas into scoped builds that ship fast and stay maintainable after launch.",
-    emphasizedPhrases: ["end to end", "practical v1"],
+    title: "Building is how I learn",
+    body: "I build SaaS products end to end: from the first rough idea to product flows, data models, deployment, and the uncomfortable moment real people use them. I share the decisions, mistakes, and lessons because the process is more useful than a polished launch announcement. Right now, I am focused on shipping small, useful software and becoming a sharper product engineer with every release.",
+    emphasizedPhrases: ["end to end", "share the decisions"],
   },
   services: {
     title: "What I build best",
@@ -165,9 +162,9 @@ export const siteConfig: PortfolioConfig = {
     ],
   },
   contact: {
-    title: "Need a builder for your v1?",
+    title: "Follow the build, not just the launch",
     description:
-      "Send me an email with a brief overview of your product, target user, and deadline. If it's a good fit, we'll schedule a quick chat to map out next steps.",
+      "On X, I share product progress, technical decisions, failed ideas, and the lessons that only appear after shipping.",
     pricing: [
       {
         label: "Minimum engagement",

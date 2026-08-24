@@ -96,7 +96,7 @@ export function Banner() {
         src={siteConfig.banner.imageSrc}
         alt={siteConfig.banner.imageAlt}
         fill
-        className="object-cover"
+        className="object-cover object-center"
         priority
       />
       <div className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15" />

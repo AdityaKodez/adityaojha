@@ -1,15 +1,12 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
 import { Globe2Icon } from "lucide-react";
 import { motion } from "motion/react";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useHaptic } from "react-haptic";
-import { HiMail } from "react-icons/hi";
 import DiscordStatus from "./discord-status";
 import ElectricBorder from "./react-bits/ElectricBorder";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
@@ -249,20 +246,6 @@ export function Hero() {
               </>
             )}
           </motion.p>
-
-          <motion.div
-            className="no-js-visible mt-6 flex flex-wrap items-center gap-3"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ...entryTransition, delay: 0.28 }}
-          >
-            <Button asChild size="lg">
-              <Link href="mailto:adityakodez@gmail.com">
-                <HiMail className="size-5" />
-                <span className="text-sm">Discuss your MVP</span>
-              </Link>
-            </Button>
-          </motion.div>
 
           <motion.div
             className="no-js-visible mt-4 flex items-center gap-3 text-sm text-muted-foreground"

@@ -4,10 +4,10 @@ import { MdWavingHand } from "react-icons/md";
 export const heroConfig: HeroConfig = {
   greeting: "Hello, I'm Aditya Ojha",
   waveEmoji: MdWavingHand,
-  headlineBefore: "I help",
-  highlightedPhrases: ["early-stage founders launch SaaS MVPs", "2–4 weeks"],
-  headlineAfter: "with clear scope and clean handoff.",
+  headlineBefore: "I build",
+  highlightedPhrases: ["SaaS products", "public"],
+  headlineAfter: "and share what I learn.",
   description:
-    "Best for founders who need auth, billing, dashboards, and core workflows shipped without agency overhead. Built Gridly, Zeno, Root — shipped and live.",
-  descriptionHighlight: "founders",
+    "Building Gridly, Zeno, and Root end to end — sharing product decisions, technical tradeoffs, mistakes, and lessons along the way.",
+  descriptionHighlight: "sharing",
 };
