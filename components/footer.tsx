@@ -141,7 +141,7 @@ export function Footer() {
           — MARCUS AURELIUS
         </p>
         <p className="mt-5 font-mono text-[11px] tracking-[0.15em] text-muted-foreground">
-          MADE WITH &lt;3 AND LOTS OF COFFEE
+          Made with &lt;3 and lots of coffee.
         </p>
       </div>
 

@@ -15,14 +15,14 @@ export function Testimonials() {
     <section className="border-t border-dashed pt-8 overflow-hidden">
          <h2 className="section-heading mb-3">Community</h2>
       <div className="relative px-6 ">
-        <InfiniteSlider gap={10} speed={100} speedOnHover={30}>
+        <InfiniteSlider gap={0} speed={80} speedOnHover={30}>
           {enabledTestimonials.map((testimonial) => (
             <motion.div
               key={testimonial.id}
               transition={{ duration: 0.2 }}
               className="w-85 md:w-87.5 py-2.5 md:py-3 0"
             >
-              <Card className="h-full bg-background hover:bg-muted/50 transition-colors cursor-pointer
+              <Card className="h-full bg-background hover:bg-muted/50 transition-colors cursor-pointer rounded-none
               ">
                 <CardContent className="p-3 flex flex-col gap-2 h-full">
                   <p className="text-sm text-muted-foreground leading-tight flex-1">

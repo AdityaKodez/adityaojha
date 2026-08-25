@@ -25,6 +25,9 @@
 *.pem
 .freebuff/
 
+# private planning docs
+/plans/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

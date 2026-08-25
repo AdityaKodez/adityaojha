@@ -97,10 +97,10 @@ export const siteConfig: PortfolioConfig = {
   },
   sectionOrder: [
     "projects",
+    "skills",
     "about",
     "github",
     "testimonials",
-    "skills",
     "bookmarks",
     "socials",
   ],

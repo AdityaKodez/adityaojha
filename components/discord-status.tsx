@@ -246,7 +246,7 @@ export function DiscordStatus() {
     <Tooltip>
       <TooltipTrigger asChild>
         <div>
-          <Badge variant="outline" className="gap-1.5 cursor-default">
+          <Badge variant="ghost" className="gap-1.5 cursor-default">
             <StatusIcon className={`h-3 w-3 ${config.iconClassName}`} />
             <span className="font-sans">{config.label}</span>
           </Badge>

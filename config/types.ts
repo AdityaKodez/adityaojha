@@ -89,10 +89,22 @@ export interface AboutConfig {
   emphasizedPhrases: [string, string];
 }
 
+export type SkillCategory =
+  | "language"
+  | "frontend"
+  | "backend"
+  | "workflow-ai";
+
+export interface SkillCategoryConfig {
+  id: SkillCategory;
+  label: string;
+}
+
 export interface SkillItem {
   id: string;
   name: string;
   icon: SkillIcon;
+  category: SkillCategory;
   order: number;
   enabled?: boolean;
 }
@@ -101,6 +113,7 @@ export type SkillIcon =
   | "nextjs"
   | "react"
   | "typescript"
+  | "javascript"
   | "tailwind"
   | "ai-sdk"
   | "shadcn"
@@ -149,6 +162,8 @@ export interface ProjectMetric {
   label: string;
 }
 
+export type ProjectStatus = "building" | "new" | "shipped";
+
 export interface Project {
   id: string;
   title: string;
@@ -159,6 +174,10 @@ export interface Project {
   imageAlt: string;
   liveUrl?: string;
   githubUrl?: string;
+
+  year: number;
+  status: ProjectStatus;
+  category: string;
 
   tags: string[];
   metrics?: ProjectMetric[];
