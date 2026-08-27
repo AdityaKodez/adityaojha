@@ -85,7 +85,7 @@ export const siteConfig: PortfolioConfig = {
     fullName: "Aditya Ojha",
     firstName: "Aditya",
     avatar: {
-      src: "/profile.png",
+      src: "/profile.avif",
       alt: "@akcll",
       fallback: "AK",
     },
@@ -119,7 +119,7 @@ export const siteConfig: PortfolioConfig = {
     contact: false,
   },
   banner: {
-    imageSrc: "/images/brand-background.png",
+    imageSrc: "/images/brand-background.webp",
     imageAlt: "Halftone skyline glowing in blue, teal, and orange",
     openSourceUrl: "https://github.com/AdityaKodez/adityaojha",
     openSourceTooltip: "This project is open source !",

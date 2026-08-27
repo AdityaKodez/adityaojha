@@ -322,8 +322,9 @@ export function ZenoProject() {
               <Image
                 src={activeProject.image}
                 alt=""
-                width={600}
-                height={338}
+                width={300}
+                height={169}
+                sizes="300px"
                 className="aspect-video w-full object-cover"
               />
               <div className="border-t border-dashed px-3 py-1.5 font-mono text-[11px] text-muted-foreground">

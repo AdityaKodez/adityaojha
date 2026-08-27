@@ -1,7 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { useMotionValue, animate, motion } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useMotionValue, animate, motion, useInView } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
 import useMeasure from 'react-use-measure';
 
 export type InfiniteSliderProps = {
@@ -23,6 +23,8 @@ export function InfiniteSlider({
   reverse = false,
   className,
 }: InfiniteSliderProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: '200px' });
   const [currentSpeed, setCurrentSpeed] = useState(speed);
   const [ref, { width, height }] = useMeasure();
   const translation = useMotionValue(0);
@@ -30,8 +32,10 @@ export function InfiniteSlider({
   const [key, setKey] = useState(0);
 
   useEffect(() => {
-    let controls;
     const size = direction === 'horizontal' ? width : height;
+    if (!isInView || size === 0) return;
+
+    let controls: { stop: () => void } | undefined;
     const contentSize = size + gap;
     const from = reverse ? -contentSize / 2 : 0;
     const to = reverse ? 0 : -contentSize / 2;
@@ -64,8 +68,9 @@ export function InfiniteSlider({
       });
     }
 
-    return controls?.stop;
+    return () => controls?.stop();
   }, [
+    isInView,
     key,
     translation,
     currentSpeed,
@@ -91,9 +96,9 @@ export function InfiniteSlider({
     : {};
 
   return (
-    <div className={cn('overflow-hidden', className)}>
+    <div ref={containerRef} className={cn('overflow-hidden', className)}>
       <motion.div
-        className='flex w-max'
+        className="flex w-max will-change-transform transform-gpu"
         style={{
           ...(direction === 'horizontal'
             ? { x: translation }
@@ -104,8 +109,20 @@ export function InfiniteSlider({
         ref={ref}
         {...hoverProps}
       >
-        {children}
-        {children}
+        {React.Children.map(children, (child, idx) =>
+          React.isValidElement(child)
+            ? React.cloneElement(child, {
+                key: child.key ? `orig-${child.key}` : `orig-${idx}`,
+              })
+            : child,
+        )}
+        {React.Children.map(children, (child, idx) =>
+          React.isValidElement(child)
+            ? React.cloneElement(child, {
+                key: child.key ? `dup-${child.key}` : `dup-${idx}`,
+              })
+            : child,
+        )}
       </motion.div>
     </div>
   );
