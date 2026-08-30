@@ -2,7 +2,6 @@ import { About } from "@/components/about";
 import { CTA } from "@/components/cta";
 import { Experience } from "@/components/experience";
 import { Footer } from "@/components/footer";
-import { HeaderActions } from "@/components/header-actions";
 import { Hero } from "@/components/hero";
 import { HowIWork } from "@/components/how-i-work";
 import { Services } from "@/components/services";
@@ -48,9 +47,6 @@ export default async function Home() {
         id="main-content"
         className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-[env(safe-area-inset-top)]"
       >
-        <div className="sticky top-3 sm:top-4 z-40 flex justify-end px-6 -mb-12 pointer-events-none">
-          <HeaderActions />
-        </div>
         <div className="bg-background">
           <Hero />
         </div>

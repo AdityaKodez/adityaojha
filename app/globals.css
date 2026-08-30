@@ -194,6 +194,60 @@
 
 }
 
+/* Shiki / rehype-pretty-code token theming — driven by the project's class-based dark mode. */
+code[data-theme*=" "] {
+  background-color: transparent !important;
+}
+code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+.dark code[data-theme*=" "] span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style);
+  font-weight: var(--shiki-dark-font-weight);
+  text-decoration: var(--shiki-dark-text-decoration);
+}
+[data-rehype-pretty-code-figure] {
+  margin: 1rem 0;
+}
+[data-rehype-pretty-code-figure] pre {
+  background-color: transparent;
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: calc(var(--radius) - 4px);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+[data-rehype-pretty-code-figure] code {
+  display: grid;
+  background-color: transparent;
+  counter-reset: line;
+  white-space: pre;
+}
+[data-rehype-pretty-code-figure] code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: var(--muted-foreground);
+}
+[data-rehype-pretty-code-figure] [data-highlighted-line] {
+  background-color: color-mix(in oklab, var(--muted-foreground) 8%, transparent);
+  margin-inline: -1rem;
+  padding-inline: 1rem;
+  border-left: 2px solid var(--primary);
+}
+[data-rehype-pretty-code-figure] [data-highlighted-chars] {
+  background-color: color-mix(in oklab, var(--primary) 12%, transparent);
+  border-radius: 4px;
+  padding: 0.05rem 0.25rem;
+}
+
 @keyframes wave {
   0% { transform: rotate(0deg); }
   10% { transform: rotate(14deg); }

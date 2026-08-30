@@ -44,3 +44,6 @@ server.log
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent workspace
+.workbuddy-ai/
