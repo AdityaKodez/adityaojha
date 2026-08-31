@@ -26,5 +26,5 @@
       "type": "registry:ui"
     }
   ],
-  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/infinite-slider.json\n```\n\n## Usage\n\n```tsx\nimport { InfiniteSlider } from \"@/components/motion-primitives/infinite-slider\";\n\nexport function TechMarquee() {\n  return (\n    <InfiniteSlider gap={16} speed={60}>\n      <span>React</span>\n      <span>Next.js</span>\n      <span>TypeScript</span>\n    </InfiniteSlider>\n  );\n}\n```"
+  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/infinite-slider\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { InfiniteSlider } from \"@/components/motion-primitives/infinite-slider\";\n\nexport function TechMarquee() {\n  return (\n    <InfiniteSlider gap={16} speed={60}>\n      <span>React</span>\n      <span>Next.js</span>\n      <span>TypeScript</span>\n    </InfiniteSlider>\n  );\n}\n```"
 }

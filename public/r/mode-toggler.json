@@ -29,5 +29,5 @@
       "type": "registry:ui"
     }
   ],
-  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/mode-toggler.json\n```\n\n## Usage\n\n```tsx\nimport { ModeToggler } from \"@/components/ui/mode-toggler\";\n\nexport function Header() {\n  return (\n    <header className=\"flex items-center justify-between px-4 h-12\">\n      <span>my app</span>\n      <ModeToggler />\n    </header>\n  );\n}\n```"
+  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/mode-toggler\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { ModeToggler } from \"@/components/ui/mode-toggler\";\n\nexport function Header() {\n  return (\n    <header className=\"flex items-center justify-between px-4 h-12\">\n      <span>my app</span>\n      <ModeToggler />\n    </header>\n  );\n}\n```"
 }

@@ -15,12 +15,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { InstallCommand } from "@/components/copy-block";
+import { CopyBlock, InstallCommand } from "@/components/copy-block";
 import { markdownComponents } from "@/components/markdown-components";
 import { findComponent, getEnabledComponents } from "@/config/components";
 import {
   getAddCommands,
-  getNamespacedAddCommand,
+  getRegistrySetupSnippet,
+  registryConfig,
 } from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
@@ -158,16 +159,21 @@ export default async function ComponentDetailPage({
           commands={getAddCommands(component.id)}
         />
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          Install often? Register the namespace once in{" "}
+          First time? Register the{" "}
+          <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
+            {registryConfig.namespace}
+          </code>{" "}
+          namespace once in{" "}
           <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
             components.json
           </code>{" "}
-          and use the shorter form{" "}
-          <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
-            {getNamespacedAddCommand(component.id)}
-          </code>
-          .
+          and every component installs by name.
         </p>
+        <CopyBlock
+          className="mt-2"
+          value={getRegistrySetupSnippet()}
+          copyLabel="copy registry config"
+        />
       </section>
 
       {/* Docs — usage, props, notes. */}

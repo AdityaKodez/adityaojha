@@ -32,7 +32,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json\n```\n\n## Usage\n\n```tsx\nimport { DottedWorldMap } from \"@/components/ui/dotted-world-map\";\n\nconst points = [\n  { name: \"London\", lat: 51.5074, lng: -0.1278, value: 0.9, radius: 12 },\n  { name: \"Tokyo\", lat: 35.6762, lng: 139.6503, value: 0.8, radius: 12 },\n  { name: \"New York\", lat: 40.7128, lng: -74.006, value: 0.95, radius: 13 },\n];\n\nexport function VisitorsMap() {\n  return <DottedWorldMap points={points} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/dotted-world-map\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { DottedWorldMap } from \"@/components/ui/dotted-world-map\";\n\nconst points = [\n  { name: \"London\", lat: 51.5074, lng: -0.1278, value: 0.9, radius: 12 },\n  { name: \"Tokyo\", lat: 35.6762, lng: 139.6503, value: 0.8, radius: 12 },\n  { name: \"New York\", lat: 40.7128, lng: -74.006, value: 0.95, radius: 13 },\n];\n\nexport function VisitorsMap() {\n  return <DottedWorldMap points={points} />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -65,7 +65,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/copy-command-block.json\n```\n\n## Usage\n\n```tsx\nimport { CopyCommandBlock } from \"@/components/ui/copy-command-block\";\n\nexport function Command() {\n  return <CopyCommandBlock commands={{ npm: \"npm i motion\", pnpm: \"pnpm add motion\" }} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/copy-command-block\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { CopyCommandBlock } from \"@/components/ui/copy-command-block\";\n\nexport function Command() {\n  return <CopyCommandBlock commands={{ npm: \"npm i motion\", pnpm: \"pnpm add motion\" }} />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -98,7 +98,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/github-map.json\n```\n\n## Usage\n\n```tsx\nimport { GitHubCalendar } from \"@/components/ui/github-map\";\n\nexport function ActivityGraph() {\n  return <GitHubCalendar data={[{ date: \"2025-01-01\", count: 4 }]} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/github-map\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { GitHubCalendar } from \"@/components/ui/github-map\";\n\nexport function ActivityGraph() {\n  return <GitHubCalendar data={[{ date: \"2025-01-01\", count: 4 }]} />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -127,7 +127,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/project-explorer.json\n```\n\n## Usage\n\n```tsx\nimport { ProjectExplorer } from \"@/components/project-explorer\";\n\nexport function WorkShowcase() {\n  return <ProjectExplorer />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/project-explorer\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { ProjectExplorer } from \"@/components/project-explorer\";\n\nexport function WorkShowcase() {\n  return <ProjectExplorer />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -153,7 +153,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/progressive-blur.json\n```\n\n## Usage\n\n```tsx\nimport { ProgressiveBlur } from \"@/components/ui/progressive-blur\";\n\nexport function HeaderOverlay() {\n  return <ProgressiveBlur position=\"top\" height=\"80px\" />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/progressive-blur\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { ProgressiveBlur } from \"@/components/ui/progressive-blur\";\n\nexport function HeaderOverlay() {\n  return <ProgressiveBlur position=\"top\" height=\"80px\" />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -182,7 +182,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/infinite-slider.json\n```\n\n## Usage\n\n```tsx\nimport { InfiniteSlider } from \"@/components/motion-primitives/infinite-slider\";\n\nexport function TechMarquee() {\n  return (\n    <InfiniteSlider gap={16} speed={60}>\n      <span>React</span>\n      <span>Next.js</span>\n      <span>TypeScript</span>\n    </InfiniteSlider>\n  );\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/infinite-slider\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { InfiniteSlider } from \"@/components/motion-primitives/infinite-slider\";\n\nexport function TechMarquee() {\n  return (\n    <InfiniteSlider gap={16} speed={60}>\n      <span>React</span>\n      <span>Next.js</span>\n      <span>TypeScript</span>\n    </InfiniteSlider>\n  );\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -210,7 +210,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/carousel.json\n```\n\n## Usage\n\n```tsx\nimport { Carousel } from \"@/components/ui/carousel\";\n\nexport function SlideShow() {\n  return (\n    <Carousel\n      items={[\n        { id: \"1\", title: \"Slide 1\", content: <div>Content 1</div> },\n        { id: \"2\", title: \"Slide 2\", content: <div>Content 2</div> },\n      ]}\n    />\n  );\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/carousel\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { Carousel } from \"@/components/ui/carousel\";\n\nexport function SlideShow() {\n  return (\n    <Carousel\n      items={[\n        { id: \"1\", title: \"Slide 1\", content: <div>Content 1</div> },\n        { id: \"2\", title: \"Slide 2\", content: <div>Content 2</div> },\n      ]}\n    />\n  );\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -242,7 +242,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/mode-toggler.json\n```\n\n## Usage\n\n```tsx\nimport { ModeToggler } from \"@/components/ui/mode-toggler\";\n\nexport function Header() {\n  return (\n    <header className=\"flex items-center justify-between px-4 h-12\">\n      <span>my app</span>\n      <ModeToggler />\n    </header>\n  );\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/mode-toggler\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { ModeToggler } from \"@/components/ui/mode-toggler\";\n\nexport function Header() {\n  return (\n    <header className=\"flex items-center justify-between px-4 h-12\">\n      <span>my app</span>\n      <ModeToggler />\n    </header>\n  );\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -270,7 +270,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/interactive-skill-cloud.json\n```\n\n## Usage\n\n```tsx\nimport { InteractiveSkillCloud } from \"@/components/ui/interactive-skill-cloud\";\nimport { Code2, Zap } from \"lucide-react\";\n\nconst items = [\n  { id: \"react\", name: \"React\", icon: <Code2 className=\"size-4\" /> },\n  { id: \"zap\", name: \"tRPC\", icon: <Zap className=\"size-4\" /> },\n];\n\nexport function TechStack() {\n  return <InteractiveSkillCloud items={items} height={360} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/interactive-skill-cloud\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { InteractiveSkillCloud } from \"@/components/ui/interactive-skill-cloud\";\nimport { Code2, Zap } from \"lucide-react\";\n\nconst items = [\n  { id: \"react\", name: \"React\", icon: <Code2 className=\"size-4\" /> },\n  { id: \"zap\", name: \"tRPC\", icon: <Zap className=\"size-4\" /> },\n];\n\nexport function TechStack() {\n  return <InteractiveSkillCloud items={items} height={360} />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -303,7 +303,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/contact-channels.json\n```\n\n## Usage\n\n```tsx\nimport { ContactChannels } from \"@/components/ui/contact-channels\";\nimport { Github, Mail } from \"lucide-react\";\n\nconst channels = [\n  { id: \"github\", platform: \"github\", handle: \"@octocat\", href: \"https://github.com\", action: \"external\", icon: <Github className=\"size-4\" /> },\n  { id: \"email\", platform: \"email\", handle: \"hi@example.com\", action: \"copy\", copyValue: \"hi@example.com\", shortcutKey: \"e\", icon: <Mail className=\"size-4\" /> },\n];\n\nexport function Contact() {\n  return <ContactChannels items={channels} columns={2} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/contact-channels\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { ContactChannels } from \"@/components/ui/contact-channels\";\nimport { Github, Mail } from \"lucide-react\";\n\nconst channels = [\n  { id: \"github\", platform: \"github\", handle: \"@octocat\", href: \"https://github.com\", action: \"external\", icon: <Github className=\"size-4\" /> },\n  { id: \"email\", platform: \"email\", handle: \"hi@example.com\", action: \"copy\", copyValue: \"hi@example.com\", shortcutKey: \"e\", icon: <Mail className=\"size-4\" /> },\n];\n\nexport function Contact() {\n  return <ContactChannels items={channels} columns={2} />;\n}\n```"
     }
   ]
 }

@@ -97,11 +97,8 @@ export default function ComponentsPage() {
           copyLabel="copy registry config"
         />
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          Or skip the setup and copy the direct{" "}
-          <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
-            npx shadcn add
-          </code>{" "}
-          command on any component page.
+          Each component page shows the install command for npm, pnpm, yarn,
+          and bun.
         </p>
       </section>
     </main>

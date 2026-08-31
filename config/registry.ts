@@ -38,18 +38,14 @@ const RUNNERS: Record<PackageManager, string> = {
   bun: "bunx --bun shadcn@latest",
 };
 
-export function getRegistryItemUrl(id: string): string {
-  return `${siteUrl}/r/${id}.json`;
-}
-
 /** Per-package-manager `shadcn add` commands for one registry item. */
 export function getAddCommands(id: string): Record<PackageManager, string> {
-  const url = getRegistryItemUrl(id);
+  const target = `${registryConfig.namespace}/${id}`;
   return {
-    npm: `${RUNNERS.npm} add ${url}`,
-    pnpm: `${RUNNERS.pnpm} add ${url}`,
-    yarn: `${RUNNERS.yarn} add ${url}`,
-    bun: `${RUNNERS.bun} add ${url}`,
+    npm: `${RUNNERS.npm} add ${target}`,
+    pnpm: `${RUNNERS.pnpm} add ${target}`,
+    yarn: `${RUNNERS.yarn} add ${target}`,
+    bun: `${RUNNERS.bun} add ${target}`,
   };
 }
 
@@ -58,9 +54,4 @@ export function getRegistrySetupSnippet(): string {
   return `"registries": {
   "${registryConfig.namespace}": "${registryConfig.itemUrlPattern}"
 }`;
-}
-
-/** Short-form add command, available once the namespace is configured. */
-export function getNamespacedAddCommand(id: string): string {
-  return `npx shadcn@latest add ${registryConfig.namespace}/${id}`;
 }

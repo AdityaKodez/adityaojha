@@ -25,5 +25,5 @@
       "type": "registry:ui"
     }
   ],
-  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/interactive-skill-cloud.json\n```\n\n## Usage\n\n```tsx\nimport { InteractiveSkillCloud } from \"@/components/ui/interactive-skill-cloud\";\nimport { Code2, Zap } from \"lucide-react\";\n\nconst items = [\n  { id: \"react\", name: \"React\", icon: <Code2 className=\"size-4\" /> },\n  { id: \"zap\", name: \"tRPC\", icon: <Zap className=\"size-4\" /> },\n];\n\nexport function TechStack() {\n  return <InteractiveSkillCloud items={items} height={360} />;\n}\n```"
+  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/interactive-skill-cloud\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { InteractiveSkillCloud } from \"@/components/ui/interactive-skill-cloud\";\nimport { Code2, Zap } from \"lucide-react\";\n\nconst items = [\n  { id: \"react\", name: \"React\", icon: <Code2 className=\"size-4\" /> },\n  { id: \"zap\", name: \"tRPC\", icon: <Zap className=\"size-4\" /> },\n];\n\nexport function TechStack() {\n  return <InteractiveSkillCloud items={items} height={360} />;\n}\n```"
 }

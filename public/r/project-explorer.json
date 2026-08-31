@@ -26,5 +26,5 @@
       "type": "registry:ui"
     }
   ],
-  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/project-explorer.json\n```\n\n## Usage\n\n```tsx\nimport { ProjectExplorer } from \"@/components/project-explorer\";\n\nexport function WorkShowcase() {\n  return <ProjectExplorer />;\n}\n```"
+  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/project-explorer\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { ProjectExplorer } from \"@/components/project-explorer\";\n\nexport function WorkShowcase() {\n  return <ProjectExplorer />;\n}\n```"
 }

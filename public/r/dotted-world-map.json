@@ -28,5 +28,5 @@
       "type": "registry:ui"
     }
   ],
-  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json\n```\n\n## Usage\n\n```tsx\nimport { DottedWorldMap } from \"@/components/ui/dotted-world-map\";\n\nconst points = [\n  { name: \"London\", lat: 51.5074, lng: -0.1278, value: 0.9, radius: 12 },\n  { name: \"Tokyo\", lat: 35.6762, lng: 139.6503, value: 0.8, radius: 12 },\n  { name: \"New York\", lat: 40.7128, lng: -74.006, value: 0.95, radius: 13 },\n];\n\nexport function VisitorsMap() {\n  return <DottedWorldMap points={points} />;\n}\n```"
+  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/dotted-world-map\n```\n\nFirst time? Register the `@akoder` namespace in your `components.json`:\n\n```json\n\"registries\": {\n  \"@akoder\": \"https://akoder.xyz/r/{name}.json\"\n}\n```\n```\n\n## Usage\n\n```tsx\nimport { DottedWorldMap } from \"@/components/ui/dotted-world-map\";\n\nconst points = [\n  { name: \"London\", lat: 51.5074, lng: -0.1278, value: 0.9, radius: 12 },\n  { name: \"Tokyo\", lat: 35.6762, lng: 139.6503, value: 0.8, radius: 12 },\n  { name: \"New York\", lat: 40.7128, lng: -74.006, value: 0.95, radius: 13 },\n];\n\nexport function VisitorsMap() {\n  return <DottedWorldMap points={points} />;\n}\n```"
 }
