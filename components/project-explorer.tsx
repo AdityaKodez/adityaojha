@@ -1,19 +1,77 @@
 "use client";
 
-import { projectsConfig, projectsSectionConfig } from "@/config/projects";
-import type { Project, ProjectStatus } from "@/config/types";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, FolderClosedIcon, FolderOpenIcon } from "lucide-react";
 import {
-    AnimatePresence,
-    motion,
-    useMotionValue,
-    useReducedMotion,
-    useSpring,
+  ArrowUpRight,
+  FolderClosedIcon,
+  FolderOpenIcon,
+  ImageIcon,
+} from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useSpring,
 } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+
+export type ProjectStatus = "building" | "new" | "shipped";
+
+export interface ProjectExplorerItem {
+  id: string;
+  title: string;
+  year: number;
+  description?: string;
+  category?: string;
+  status?: ProjectStatus;
+  href?: string;
+  liveUrl?: string;
+  githubUrl?: string;
+  image?: string;
+  imageAlt?: string;
+  showImage?: boolean;
+  enabled?: boolean;
+  order?: number;
+}
+
+const defaultSampleProjects: ProjectExplorerItem[] = [
+  {
+    id: "zeno",
+    title: "Zeno — AI Assistant for PostgreSQL",
+    year: 2025,
+    status: "building",
+    category: "ai-tool",
+    href: "https://zeno.example.com",
+    image: "/zeno.png",
+  },
+  {
+    id: "gridly",
+    title: "Gridly — Modern UI Component Library",
+    year: 2025,
+    status: "new",
+    category: "design-system",
+    href: "https://gridly.example.com",
+  },
+  {
+    id: "rixel",
+    title: "Rixel — High Performance Pixel Canvas",
+    year: 2024,
+    status: "shipped",
+    category: "webgl",
+    href: "https://rixel.example.com",
+    image: "/rixel.png",
+  },
+  {
+    id: "aura",
+    title: "Aura — Ambient Audio Workspace",
+    year: 2024,
+    status: "shipped",
+    category: "audio",
+    href: "https://aura.example.com",
+  },
+];
 
 const HOVER_QUERY = "(hover: hover) and (pointer: fine)";
 
@@ -25,22 +83,6 @@ function subscribeHoverCapability(callback: () => void) {
 
 const getHoverSnapshot = () => window.matchMedia(HOVER_QUERY).matches;
 const getServerSnapshot = () => false;
-
-const enabledProjects = projectsConfig
-  .filter((item) => item.enabled !== false)
-  .sort((a, b) => a.order - b.order);
-
-const projectsByYear = enabledProjects
-  .reduce<{ year: number; projects: Project[] }[]>((groups, project) => {
-    const group = groups.find((g) => g.year === project.year);
-    if (group) {
-      group.projects.push(project);
-    } else {
-      groups.push({ year: project.year, projects: [project] });
-    }
-    return groups;
-  }, [])
-  .sort((a, b) => b.year - a.year);
 
 const folderColors = [
   {
@@ -74,21 +116,22 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-60 motion-reduce:animate-none" />
           <span className="relative inline-flex size-1.5 rounded-full bg-blue-500" />
         </span>
-        Building&hellip;
+        building&hellip;
       </span>
     );
   }
 
   return (
     <span className="inline-flex shrink-0 items-center rounded-sm bg-amber-500/10 px-1.5 py-0.5 font-pixel text-[10px] leading-none text-amber-600 dark:text-amber-400">
-      New
+      new
     </span>
   );
 }
 
 interface PreviewHandlers {
-  onPreviewStart: (project: Project, anchor?: DOMRect) => void;
+  onPreviewStart: (project: ProjectExplorerItem, anchor?: DOMRect) => void;
   onPreviewEnd: () => void;
+  showHoverPreview: boolean;
 }
 
 function WorkRow({
@@ -96,10 +139,16 @@ function WorkRow({
   index,
   onPreviewStart,
   onPreviewEnd,
-}: { project: Project; index: number } & PreviewHandlers) {
+  showHoverPreview,
+}: { project: ProjectExplorerItem; index: number } & PreviewHandlers) {
   const [name, subtitle] = project.title.split(" — ");
-  const href = project.liveUrl ?? `/project/${project.id}`;
-  const isExternal = Boolean(project.liveUrl);
+  const href = project.href ?? project.liveUrl ?? (project.id ? `/project/${project.id}` : "#");
+  const isExternal = Boolean(
+    project.liveUrl ||
+      (project.href &&
+        (project.href.startsWith("http://") ||
+          project.href.startsWith("https://"))),
+  );
 
   return (
     <motion.li
@@ -109,22 +158,26 @@ function WorkRow({
       transition={{ duration: 0.24, delay: index * 0.045 }}
       className="relative"
     >
-      <span
-        aria-hidden="true"
-        className="absolute -left-px top-1/2 w-3 border-b border-dashed border-muted-foreground/30"
-      />
       <Link
         href={href}
         {...(isExternal
           ? { target: "_blank", rel: "noopener noreferrer" }
           : {})}
-        onMouseEnter={() => onPreviewStart(project)}
-        onMouseLeave={onPreviewEnd}
-        onFocus={(event) =>
-          onPreviewStart(project, event.currentTarget.getBoundingClientRect())
+        onMouseEnter={
+          showHoverPreview ? () => onPreviewStart(project) : undefined
         }
-        onBlur={onPreviewEnd}
-        className="group micro-transition flex min-h-11 items-center gap-2 rounded-sm py-2 pl-6 pr-3 hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 border-b border-dashed"
+        onMouseLeave={showHoverPreview ? onPreviewEnd : undefined}
+        onFocus={
+          showHoverPreview
+            ? (event) =>
+                onPreviewStart(
+                  project,
+                  event.currentTarget.getBoundingClientRect(),
+                )
+            : undefined
+        }
+        onBlur={showHoverPreview ? onPreviewEnd : undefined}
+        className="group micro-transition flex min-h-11 items-center gap-2 rounded-sm px-3 py-2 hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20"
       >
         <span className="min-w-0 flex-1 truncate text-sm font-medium transition-colors group-hover:text-primary group-focus-visible:text-primary">
           {subtitle ? (
@@ -139,12 +192,14 @@ function WorkRow({
           )}
         </span>
 
-        <StatusBadge status={project.status} />
+        {project.status ? <StatusBadge status={project.status} /> : null}
 
-        <span className="ml-auto hidden shrink-0 font-mono text-xs text-muted-foreground/70 sm:block">
-          {"// "}
-          {project.category}
-        </span>
+        {project.category ? (
+          <span className="ml-auto hidden shrink-0 font-mono text-xs text-muted-foreground/70 sm:block">
+            {"// "}
+            {project.category}
+          </span>
+        ) : null}
 
         <ArrowUpRight
           aria-hidden="true"
@@ -155,13 +210,54 @@ function WorkRow({
   );
 }
 
+export type ProjectExplorerProps = {
+  /** The list of projects to display. If omitted, sample projects will be shown. */
+  projects?: ProjectExplorerItem[];
+  /** Section heading text. Default: "Featured Projects". */
+  title?: string;
+  /** Hide the section label when the explorer lives inside an already-labelled surface.
+   *  Also drops the section's top rule. */
+  showHeading?: boolean;
+  /** Choose whether every year or only the most recent year starts expanded. */
+  defaultOpen?: "all" | "latest";
+  /** Enable or disable the floating cursor hover image preview card. Default: true */
+  showHoverPreview?: boolean;
+  /** Additional classes for the container section */
+  className?: string;
+};
 
-export function ZenoProject() {
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+export function ProjectExplorer({
+  projects = defaultSampleProjects,
+  title = "Featured Projects",
+  showHeading = true,
+  defaultOpen = "all",
+  showHoverPreview = true,
+  className,
+}: ProjectExplorerProps) {
+  const [activeProject, setActiveProject] = useState<ProjectExplorerItem | null>(null);
+
+  const projectsByYear = useMemo(() => {
+    const enabledProjects = projects
+      .filter((item) => item.enabled !== false)
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+    return enabledProjects
+      .reduce<{ year: number; projects: ProjectExplorerItem[] }[]>((groups, project) => {
+        const group = groups.find((g) => g.year === project.year);
+        if (group) {
+          group.projects.push(project);
+        } else {
+          groups.push({ year: project.year, projects: [project] });
+        }
+        return groups;
+      }, [])
+      .sort((a, b) => b.year - a.year);
+  }, [projects]);
+
   const [openYears, setOpenYears] = useState<Record<number, boolean>>(() => {
     const initial: Record<number, boolean> = {};
-    projectsByYear.forEach((group) => {
-      initial[group.year] = true;
+    projectsByYear.forEach((group, index) => {
+      initial[group.year] = defaultOpen === "all" || index === 0;
     });
     return initial;
   });
@@ -180,10 +276,8 @@ export function ZenoProject() {
   );
   const prefersReducedMotion = useReducedMotion();
 
-  const cursorX = useMotionValue(0);
-  const cursorY = useMotionValue(0);
-  const springX = useSpring(cursorX, { stiffness: 260, damping: 26, mass: 0.6 });
-  const springY = useSpring(cursorY, { stiffness: 260, damping: 26, mass: 0.6 });
+  const springX = useSpring(0, { stiffness: 260, damping: 26, mass: 0.6 });
+  const springY = useSpring(0, { stiffness: 260, damping: 26, mass: 0.6 });
 
   useEffect(() => {
     const hide = () => setActiveProject(null);
@@ -193,9 +287,10 @@ export function ZenoProject() {
 
   const handleMouseMove = useCallback(
     (event: React.MouseEvent) => {
+      if (!showHoverPreview) return;
       const flip = event.clientX > window.innerWidth - PREVIEW_WIDTH - 48;
-      cursorX.set(event.clientX + (flip ? -(PREVIEW_WIDTH + 24) : 24));
-      cursorY.set(
+      springX.set(event.clientX + (flip ? -(PREVIEW_WIDTH + 24) : 24));
+      springY.set(
         Math.max(
           16,
           Math.min(
@@ -205,18 +300,19 @@ export function ZenoProject() {
         ),
       );
     },
-    [cursorX, cursorY],
+    [springX, springY, showHoverPreview],
   );
 
   const handlePreviewStart = useCallback(
-    (project: Project, anchor?: DOMRect) => {
+    (project: ProjectExplorerItem, anchor?: DOMRect) => {
+      if (!showHoverPreview) return;
       setActiveProject(project);
       if (anchor) {
         const flip = anchor.right > window.innerWidth - PREVIEW_WIDTH - 48;
-        cursorX.set(
+        springX.set(
           flip ? anchor.left - PREVIEW_WIDTH - 16 : anchor.right + 16,
         );
-        cursorY.set(
+        springY.set(
           Math.max(
             16,
             Math.min(anchor.top, window.innerHeight - PREVIEW_HEIGHT - 24),
@@ -224,24 +320,33 @@ export function ZenoProject() {
         );
       }
     },
-    [cursorX, cursorY],
+    [springX, springY, showHoverPreview],
   );
 
   const handlePreviewEnd = useCallback(() => setActiveProject(null), []);
 
-  const showPreview = canHover && !prefersReducedMotion && activeProject;
+  const showPreview = showHoverPreview && canHover && !prefersReducedMotion && Boolean(activeProject);
+
+  const hasImage = Boolean(
+    activeProject?.image && activeProject?.showImage !== false,
+  );
 
   return (
-    <section id="projects" className="border-t border-dashed pt-6">
-      <motion.h2
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.2 }}
-        className="no-js-visible section-heading mb-3"
-      >
-        {projectsSectionConfig.title}
-      </motion.h2>
+    <section
+      id="projects"
+      className={cn(showHeading && "border-t border-dashed", "pt-6", className)}
+    >
+      {showHeading ? (
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.2 }}
+          className="no-js-visible section-heading mb-3"
+        >
+          {title}
+        </motion.h2>
+      ) : null}
 
       <div
         className="flex flex-col gap-5 px-4 sm:px-6"
@@ -258,13 +363,12 @@ export function ZenoProject() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-
             >
               <button
                 type="button"
                 onClick={() => toggleYear(group.year)}
                 aria-expanded={isOpen}
-                className="group mb-1 flex items-center gap-2 rounded-sm px-1 py-0.5 font-pixel text-sm hover:bg-muted/30 focus-visible:bg-muted/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 transition-colors cursor-pointer select-none "
+                className="group mb-1 flex items-center gap-2 rounded-sm px-1 py-0.5 font-pixel text-sm hover:bg-muted/30 focus-visible:bg-muted/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 transition-colors cursor-pointer select-none"
               >
                 <FolderIcon
                   aria-hidden="true"
@@ -287,7 +391,7 @@ export function ZenoProject() {
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="ml-2 border-l border-dashed border-muted-foreground/30 overflow-hidden "
+                    className="ml-2 overflow-hidden"
                   >
                     {group.projects.map((project, index) => (
                       <WorkRow
@@ -296,6 +400,7 @@ export function ZenoProject() {
                         index={index}
                         onPreviewStart={handlePreviewStart}
                         onPreviewEnd={handlePreviewEnd}
+                        showHoverPreview={showHoverPreview}
                       />
                     ))}
                   </motion.ul>
@@ -307,7 +412,7 @@ export function ZenoProject() {
       </div>
 
       <AnimatePresence>
-        {showPreview ? (
+        {showPreview && activeProject ? (
           <motion.div
             key={activeProject.id}
             aria-hidden="true"
@@ -319,14 +424,20 @@ export function ZenoProject() {
             className="pointer-events-none fixed left-0 top-0 z-50 w-[300px]"
           >
             <div className="overflow-hidden rounded-md border bg-background shadow-xl shadow-black/10">
-              <Image
-                src={activeProject.image}
-                alt=""
-                width={600}
-                height={338}
-                className="aspect-video w-full object-cover"
-              />
-              <div className="border-t border-dashed px-3 py-1.5 font-mono text-[11px] text-muted-foreground">
+              {hasImage ? (
+                <Image
+                  src={activeProject.image!}
+                  alt={activeProject.imageAlt ?? ""}
+                  width={600}
+                  height={338}
+                  className="aspect-video w-full object-cover"
+                />
+              ) : (
+                <div className="flex aspect-video w-full flex-col items-center justify-center gap-1.5 bg-muted/40 text-muted-foreground">
+                  <ImageIcon className="size-8 stroke-[1.25] text-muted-foreground/60" />
+                </div>
+              )}
+              <div className="border-t px-3 py-1.5 font-mono text-[11px] text-muted-foreground">
                 {activeProject.title}
               </div>
             </div>
@@ -336,3 +447,5 @@ export function ZenoProject() {
     </section>
   );
 }
+
+export default ProjectExplorer;

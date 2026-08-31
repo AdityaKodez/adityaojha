@@ -89,7 +89,7 @@
   --sidebar-ring: oklch(0.708 0 0);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
-  --heatmap-level-0: oklch(0.97 0.014 254.604);
+  --heatmap-level-0: oklch(0.92 0 0);
   --heatmap-level-1: oklch(0.882 0.057 254.128);
   --heatmap-level-2: oklch(0.707 0.165 254.624);
   --heatmap-level-3: oklch(0.488 0.243 264.376);
@@ -128,7 +128,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-  --heatmap-level-0: oklch(0.245 0.02 254.604);
+  --heatmap-level-0: oklch(0.28 0 0);
   --heatmap-level-1: oklch(0.379 0.08 254.128);
   --heatmap-level-2: oklch(0.488 0.14 254.624);
   --heatmap-level-3: oklch(0.627 0.18 264.376);
@@ -192,34 +192,126 @@
       repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255,255,255,0.01) 10px, rgba(255,255,255,0.01) 11px);
   }
 
+  /* -------------------------------------------------------------------------
+     Preview box (app/components/[id]/preview-box.tsx)
+
+     Both panes stay mounted in one grid cell for the lifetime of the box.
+     Toggling a tab only flips a `data-active` attribute, so the demo subtree
+     is never torn down and rebuilt, and the box height — resolved once from
+     the in-flow preview pane — never changes. That is what kills the tab
+     switch jank: no remount, no collapse frame, no CLS.
+  ------------------------------------------------------------------------- */
+  .preview-box {
+    /* Reflow and paint stay inside the box: resizing the demo or scrolling the
+       code pane can't invalidate the layout of the surrounding document. */
+    contain: layout paint style;
+  }
+
+  .preview-body {
+    --preview-min-h: clamp(240px, 42vh, 420px);
+    /* Ceiling — tall demos scroll inside the pane instead of stretching the
+       box, so every component gets a similar-sized stage. */
+    --preview-max-h: clamp(420px, 62vh, 560px);
+    display: grid;
+    grid-template-areas: "pane";
+    /* Floor for small previews — the ceiling lives on the panes via
+       max-height, where tall previews scroll inside instead of stretching. */
+    min-height: var(--preview-min-h);
+  }
+
+  /* `svh` (not `vh`) so mobile URL-bar collapse can't resize the box. */
+  @supports (height: 1svh) {
+    .preview-body {
+      --preview-min-h: clamp(240px, 42svh, 420px);
+      --preview-max-h: clamp(420px, 62svh, 560px);
+    }
+  }
+
+  .preview-pane {
+    grid-area: pane;
+    /* Long lines in the code pane must not widen the single grid track. */
+    min-width: 0;
+    /* Ceiling — content taller than this scrolls inside the pane. */
+    max-height: var(--preview-max-h);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* Only opacity/transform animate, so the fade stays on the compositor.
+       `visibility` is delayed to the end of the fade — it drops the hidden
+       pane from the tab order and the a11y tree without interrupting it. */
+    transition:
+      opacity var(--motion-duration-fast) var(--motion-ease-standard),
+      transform var(--motion-duration-fast) var(--motion-ease-standard),
+      visibility 0s linear var(--motion-duration-fast);
+  }
+
+  .preview-pane[data-active="true"] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    /* No delay on the way in — the pane must appear before it fades. */
+    transition-delay: 0s;
+  }
+
+  .preview-pane[data-active="false"] {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    pointer-events: none;
+  }
+
+  /* Out of flow on purpose: the code pane's full scrollHeight must not feed
+     back into the shared row height, or the box would jump every time a
+     longer file is shown. `inset: 0` makes it inherit whatever height the
+     preview pane resolved. */
+  .preview-pane--code {
+    position: absolute;
+    inset: 0;
+    overflow: auto;
+    /* Scroll chaining inside the code pane never scrolls the page behind it. */
+    overscroll-behavior: contain;
+    contain: layout paint;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .preview-pane {
+      transition: none;
+    }
+  }
+
 }
 
 /* Shiki / rehype-pretty-code token theming — driven by the project's class-based dark mode. */
-code[data-theme*=" "] {
+/* `.shiki` covers raw codeToHtml output (e.g. the PreviewBox code tab);      */
+/* `code[data-theme*=" "]` covers rehype-pretty-code output in markdown docs. */
+code[data-theme*=" "],
+pre.shiki {
   background-color: transparent !important;
 }
-code[data-theme*=" "] span {
+code[data-theme*=" "] span,
+.shiki span {
   color: var(--shiki-light);
   font-style: var(--shiki-light-font-style);
   font-weight: var(--shiki-light-font-weight);
   text-decoration: var(--shiki-light-text-decoration);
 }
-.dark code[data-theme*=" "] span {
+.dark code[data-theme*=" "] span,
+.dark .shiki span {
   color: var(--shiki-dark);
   font-style: var(--shiki-dark-font-style);
   font-weight: var(--shiki-dark-font-weight);
   text-decoration: var(--shiki-dark-text-decoration);
 }
 [data-rehype-pretty-code-figure] {
-  margin: 1rem 0;
+  margin: 1.25rem 0;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background-color: color-mix(in oklab, var(--muted) 35%, transparent);
+  overflow: hidden;
 }
 [data-rehype-pretty-code-figure] pre {
   background-color: transparent;
   padding: 1rem;
   overflow-x: auto;
-  border-radius: calc(var(--radius) - 4px);
-  font-size: 0.78rem;
-  line-height: 1.55;
 }
 [data-rehype-pretty-code-figure] code {
   display: grid;
@@ -248,6 +340,234 @@ code[data-theme*=" "] span {
   padding: 0.05rem 0.25rem;
 }
 
+/* ---------------------------------------------------------------------------
+   Markdown / docs typography
+   The typography plugin ships blog-defaults that fight the rest of the site:
+   h1 at weight 800 and 2.25em, inline code at weight 600, backticks rendered
+   around every `code` span, 16px body against a 14px site. Everything below
+   remaps `.prose` onto the portfolio scale — DM Sans 14px body, 500 headings,
+   600 emphasis, Geist Mono code — and maps the prose color slots onto the
+   project's theme tokens so they track light/dark on their own.
+   Written unlayered on purpose: unlayered declarations outrank the plugin's
+   layered `.prose` and `prose-invert` rules regardless of specificity.
+--------------------------------------------------------------------------- */
+.prose {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--muted-foreground);
+  --tw-prose-links: var(--primary);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-bullets: var(--muted-foreground);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--muted-foreground);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-captions: var(--muted-foreground);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-pre-code: var(--foreground);
+  --tw-prose-pre-bg: transparent;
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+
+  max-width: none;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+/* Headings: medium, tight, sized to the site scale. No 800 anywhere. */
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--tw-prose-headings);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.prose h1 {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  margin: 0 0 0.75rem;
+}
+.prose h2 {
+  font-size: 1.125rem;
+  line-height: 1.35;
+  margin: 2rem 0 0.75rem;
+}
+/* Top-level sections get the same dashed rule the rest of the site uses. */
+.prose h2:not(:first-child) {
+  border-top: 1px dashed var(--border);
+  padding-top: 1.25rem;
+}
+.prose h3 {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 1.5rem 0 0.5rem;
+}
+.prose h4 {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  margin: 1.25rem 0 0.5rem;
+}
+.prose :where(h5, h6) {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 1rem 0 0.5rem;
+}
+.prose :where(h1, h2, h3, h4, h5, h6) strong {
+  font-weight: 600;
+}
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose > :last-child {
+  margin-bottom: 0;
+}
+
+/* Body / lists */
+.prose p {
+  margin: 0.875rem 0;
+}
+.prose :where(ul, ol) {
+  margin: 0.875rem 0;
+  padding-inline-start: 1.25rem;
+}
+.prose li {
+  margin: 0.25rem 0;
+}
+.prose li::marker {
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+.prose li > :where(ul, ol) {
+  margin: 0.25rem 0;
+}
+.prose hr {
+  margin: 2rem 0;
+  border-top: 1px dashed var(--border);
+}
+.prose img,
+.prose video {
+  margin: 1.25rem 0;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid var(--border);
+}
+.prose figcaption {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+/* Emphasis + links */
+.prose strong {
+  font-weight: 600;
+  color: var(--tw-prose-bold);
+}
+.prose a {
+  color: var(--tw-prose-links);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.prose blockquote {
+  font-weight: 400;
+  font-style: normal;
+  color: var(--tw-prose-quotes);
+  border-inline-start: 2px solid var(--border);
+  padding-inline-start: 1rem;
+  margin: 1.25rem 0;
+}
+/* Drop the typographic quote marks the plugin injects. */
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none;
+}
+
+/* Code: Geist Mono, regular weight, no injected backticks. */
+.prose :where(code, kbd, pre, samp) {
+  font-family: var(--font-geist-mono);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+}
+.prose :not(pre) > code {
+  font-size: 0.8125rem;
+  color: var(--tw-prose-code);
+  background-color: color-mix(in oklab, var(--muted-foreground) 10%, transparent);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 4px);
+  padding: 0.0625rem 0.25rem;
+}
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none;
+}
+.prose :where(h1, h2, h3, h4) code {
+  font-size: 0.9em;
+}
+.prose pre {
+  color: var(--tw-prose-pre-code);
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  /* 12.5px — same size as the PreviewBox code tab. */
+  font-size: 0.78125rem;
+  line-height: 1.625;
+  margin: 0;
+  overflow-x: auto;
+}
+.prose pre code {
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 400;
+}
+.prose kbd {
+  font-size: 0.75rem;
+  color: var(--tw-prose-kbd, var(--foreground));
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 4px);
+  padding: 0.0625rem 0.25rem;
+  box-shadow: none;
+}
+
+/* Tables — boxed like the code blocks (see [data-rehype-pretty-code-figure]).
+   `border-collapse: separate` keeps the rounded corners clean, which means the
+   row separators have to live on the cells: row/group borders are ignored in
+   the separate borders model. */
+.prose table {
+  width: 100%;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background-color: color-mix(in oklab, var(--muted) 35%, transparent);
+}
+/* Fallback spacing for tables rendered without the scroll wrapper. */
+.prose > table {
+  margin: 1.25rem 0;
+}
+.prose :where(thead th, tbody td) {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.prose thead th {
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--tw-prose-headings);
+  background-color: color-mix(in oklab, var(--muted-foreground) 6%, transparent);
+  border-bottom: 1px solid var(--border);
+}
+.prose tbody td {
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+.prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+
 @keyframes wave {
   0% { transform: rotate(0deg); }
   10% { transform: rotate(14deg); }
@@ -257,6 +577,27 @@ code[data-theme*=" "] span {
   50% { transform: rotate(10deg); }
   60% { transform: rotate(0deg); }
   100% { transform: rotate(0deg); }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* Firefox */

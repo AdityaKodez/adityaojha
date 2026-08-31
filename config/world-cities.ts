@@ -1,71 +1,170 @@
-// Inlined demo dataset — capitals + major tech hubs.
-// `value` is a normalized intensity (0..1) used to pick the dot's color from the scale.
-export type WorldPoint = { name: string; lat: number; lng: number; value: number };
+import type { WorldPoint } from "@/components/ui/dotted-world-map";
 
-export const worldCities: WorldPoint[] = [
-  // North America
-  { name: "San Francisco", lat: 37.7749, lng: -122.4194, value: 0.95 },
-  { name: "New York", lat: 40.7128, lng: -74.006, value: 0.9 },
-  { name: "Seattle", lat: 47.6062, lng: -122.3321, value: 0.85 },
-  { name: "Toronto", lat: 43.6532, lng: -79.3832, value: 0.7 },
-  { name: "Austin", lat: 30.2672, lng: -97.7431, value: 0.65 },
-  { name: "Mexico City", lat: 19.4326, lng: -99.1332, value: 0.55 },
-  { name: "Vancouver", lat: 49.2827, lng: -123.1207, value: 0.6 },
+// `WorldPoint` now lives with the component so it ships through the shadcn
+// registry as a single self-contained file. Re-exported for existing importers.
+export type { WorldPoint };
 
-  // South America
-  { name: "São Paulo", lat: -23.5505, lng: -46.6333, value: 0.75 },
-  { name: "Buenos Aires", lat: -34.6037, lng: -58.3816, value: 0.5 },
-  { name: "Lima", lat: -12.0464, lng: -77.0428, value: 0.4 },
-  { name: "Bogotá", lat: 4.711, lng: -74.0721, value: 0.35 },
-  { name: "Santiago", lat: -33.4489, lng: -70.6693, value: 0.35 },
+// Heat source data for the demo map. Values are illustrative rather than live census data.
 
-  // Europe
-  { name: "London", lat: 51.5074, lng: -0.1278, value: 0.95 },
-  { name: "Berlin", lat: 52.52, lng: 13.405, value: 0.85 },
-  { name: "Amsterdam", lat: 52.3676, lng: 4.9041, value: 0.8 },
-  { name: "Paris", lat: 48.8566, lng: 2.3522, value: 0.85 },
-  { name: "Stockholm", lat: 59.3293, lng: 18.0686, value: 0.7 },
-  { name: "Madrid", lat: 40.4168, lng: -3.7038, value: 0.6 },
-  { name: "Lisbon", lat: 38.7223, lng: -9.1393, value: 0.55 },
-  { name: "Warsaw", lat: 52.2297, lng: 21.0122, value: 0.6 },
-  { name: "Zurich", lat: 47.3769, lng: 8.5417, value: 0.65 },
-  { name: "Dublin", lat: 53.3498, lng: -6.2603, value: 0.6 },
-  { name: "Helsinki", lat: 60.1699, lng: 24.9384, value: 0.5 },
-  { name: "Rome", lat: 41.9028, lng: 12.4964, value: 0.55 },
+export const worldPopulationHeatSources: WorldPoint[] = [
+  { name: "Ganges Plain", lat: 25, lng: 85, value: 0.98, radius: 18 },
+  { name: "Bangladesh", lat: 23, lng: 90, value: 0.94, radius: 11 },
+  { name: "Eastern China", lat: 31, lng: 118, value: 0.88, radius: 19 },
+  { name: "Java", lat: -7, lng: 110, value: 0.86, radius: 12 },
+  { name: "Japan", lat: 36, lng: 139, value: 0.75, radius: 10 },
+  { name: "Pakistan", lat: 30, lng: 70, value: 0.72, radius: 17 },
+  { name: "Southeast Asia", lat: 15, lng: 103, value: 0.65, radius: 18 },
+  { name: "Western Europe", lat: 50, lng: 8, value: 0.66, radius: 21 },
+  { name: "Nile Delta", lat: 30, lng: 31, value: 0.7, radius: 10 },
+  { name: "Nigeria", lat: 8, lng: 7, value: 0.58, radius: 17 },
+  { name: "Eastern United States", lat: 39, lng: -78, value: 0.52, radius: 22 },
+  { name: "Central Mexico", lat: 20, lng: -100, value: 0.46, radius: 14 },
+  { name: "Southeastern Brazil", lat: -23, lng: -46, value: 0.44, radius: 15 },
+  { name: "Andes", lat: -12, lng: -77, value: 0.3, radius: 13 },
+  { name: "Great Lakes", lat: 43, lng: -82, value: 0.35, radius: 18 },
+  { name: "Southern Africa", lat: -26, lng: 28, value: 0.3, radius: 14 },
+];
 
-  // Africa
-  { name: "Cape Town", lat: -33.9249, lng: 18.4241, value: 0.5 },
-  { name: "Johannesburg", lat: -26.2041, lng: 28.0473, value: 0.45 },
-  { name: "Lagos", lat: 6.5244, lng: 3.3792, value: 0.55 },
-  { name: "Cairo", lat: 30.0444, lng: 31.2357, value: 0.45 },
-  { name: "Nairobi", lat: -1.2921, lng: 36.8219, value: 0.35 },
-  { name: "Casablanca", lat: 33.5731, lng: -7.5898, value: 0.3 },
+// Edge regions, weighted by share of served traffic. Latency lives in the tooltip.
+export const edgeRegionTrafficSources: WorldPoint[] = [
+  {
+    name: "Ashburn",
+    lat: 39.04,
+    lng: -77.49,
+    value: 0.95,
+    radius: 15,
+    tooltip: "Ashburn — 32% of traffic, p50 18 ms",
+  },
+  {
+    name: "Frankfurt",
+    lat: 50.11,
+    lng: 8.68,
+    value: 0.82,
+    radius: 14,
+    tooltip: "Frankfurt — 21% of traffic, p50 22 ms",
+  },
+  {
+    name: "Singapore",
+    lat: 1.35,
+    lng: 103.82,
+    value: 0.7,
+    radius: 13,
+    tooltip: "Singapore — 14% of traffic, p50 41 ms",
+  },
+  {
+    name: "Oregon",
+    lat: 45.8,
+    lng: -119.7,
+    value: 0.58,
+    radius: 16,
+    tooltip: "Oregon — 11% of traffic, p50 27 ms",
+  },
+  {
+    name: "Mumbai",
+    lat: 19.08,
+    lng: 72.88,
+    value: 0.52,
+    radius: 13,
+    tooltip: "Mumbai — 9% of traffic, p50 46 ms",
+  },
+  {
+    name: "São Paulo",
+    lat: -23.55,
+    lng: -46.63,
+    value: 0.36,
+    radius: 14,
+    tooltip: "São Paulo — 6% of traffic, p50 58 ms",
+  },
+  {
+    name: "Sydney",
+    lat: -33.87,
+    lng: 151.21,
+    value: 0.28,
+    radius: 12,
+    tooltip: "Sydney — 4% of traffic, p50 63 ms",
+  },
+  {
+    name: "Cape Town",
+    lat: -33.92,
+    lng: 18.42,
+    value: 0.18,
+    radius: 11,
+    tooltip: "Cape Town — 3% of traffic, p50 74 ms",
+  },
+];
 
-  // Middle East
-  { name: "Dubai", lat: 25.2048, lng: 55.2708, value: 0.75 },
-  { name: "Tel Aviv", lat: 32.0853, lng: 34.7818, value: 0.85 },
-  { name: "Istanbul", lat: 41.0082, lng: 28.9784, value: 0.65 },
-
-  // Asia
-  { name: "Bangalore", lat: 12.9716, lng: 77.5946, value: 0.95 },
-  { name: "Tokyo", lat: 35.6762, lng: 139.6503, value: 0.9 },
-  { name: "Singapore", lat: 1.3521, lng: 103.8198, value: 0.85 },
-  { name: "Seoul", lat: 37.5665, lng: 126.978, value: 0.85 },
-  { name: "Mumbai", lat: 19.076, lng: 72.8777, value: 0.8 },
-  { name: "Delhi", lat: 28.6139, lng: 77.209, value: 0.7 },
-  { name: "Beijing", lat: 39.9042, lng: 116.4074, value: 0.75 },
-  { name: "Shanghai", lat: 31.2304, lng: 121.4737, value: 0.8 },
-  { name: "Shenzhen", lat: 22.5431, lng: 114.0579, value: 0.85 },
-  { name: "Hong Kong", lat: 22.3193, lng: 114.1694, value: 0.8 },
-  { name: "Jakarta", lat: -6.2088, lng: 106.8456, value: 0.6 },
-  { name: "Bangkok", lat: 13.7563, lng: 100.5018, value: 0.55 },
-  { name: "Manila", lat: 14.5995, lng: 120.9842, value: 0.4 },
-  { name: "Kuala Lumpur", lat: 3.139, lng: 101.6869, value: 0.5 },
-  { name: "Hanoi", lat: 21.0285, lng: 105.8542, value: 0.4 },
-  { name: "Karachi", lat: 24.8607, lng: 67.0011, value: 0.45 },
-
-  // Oceania
-  { name: "Sydney", lat: -33.8688, lng: 151.2093, value: 0.7 },
-  { name: "Melbourne", lat: -37.8136, lng: 144.9631, value: 0.65 },
-  { name: "Auckland", lat: -36.8485, lng: 174.7633, value: 0.45 },
+// Commit activity across contributor hubs — illustrative, not live data.
+export const contributorActivitySources: WorldPoint[] = [
+  {
+    name: "Bengaluru",
+    lat: 12.97,
+    lng: 77.59,
+    value: 0.95,
+    radius: 12,
+    tooltip: "Bengaluru — 412 commits this month",
+  },
+  {
+    name: "San Francisco",
+    lat: 37.77,
+    lng: -122.42,
+    value: 0.86,
+    radius: 12,
+    tooltip: "San Francisco — 358 commits this month",
+  },
+  {
+    name: "London",
+    lat: 51.51,
+    lng: -0.13,
+    value: 0.72,
+    radius: 11,
+    tooltip: "London — 241 commits this month",
+  },
+  {
+    name: "Berlin",
+    lat: 52.52,
+    lng: 13.4,
+    value: 0.68,
+    radius: 11,
+    tooltip: "Berlin — 226 commits this month",
+  },
+  {
+    name: "Seoul",
+    lat: 37.57,
+    lng: 126.98,
+    value: 0.55,
+    radius: 10,
+    tooltip: "Seoul — 168 commits this month",
+  },
+  {
+    name: "Toronto",
+    lat: 43.65,
+    lng: -79.38,
+    value: 0.42,
+    radius: 11,
+    tooltip: "Toronto — 121 commits this month",
+  },
+  {
+    name: "São Paulo",
+    lat: -23.55,
+    lng: -46.63,
+    value: 0.34,
+    radius: 12,
+    tooltip: "São Paulo — 96 commits this month",
+  },
+  {
+    name: "Lagos",
+    lat: 6.52,
+    lng: 3.38,
+    value: 0.26,
+    radius: 11,
+    tooltip: "Lagos — 71 commits this month",
+  },
+  {
+    name: "Nairobi",
+    lat: -1.29,
+    lng: 36.82,
+    value: 0.16,
+    radius: 10,
+    tooltip: "Nairobi — 43 commits this month",
+  },
 ];

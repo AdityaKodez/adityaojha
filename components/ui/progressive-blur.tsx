@@ -2,8 +2,6 @@
 
 import React from "react"
 
-import { cn } from "@/lib/utils"
-
 export interface ProgressiveBlurProps {
   className?: string
   height?: string
@@ -23,15 +21,17 @@ export function ProgressiveBlur({
 
   return (
     <div
-      className={cn(
+      className={[
         "gradient-blur pointer-events-none absolute inset-x-0 z-10",
         className,
         position === "top"
           ? "top-0"
           : position === "bottom"
             ? "bottom-0"
-            : "inset-y-0"
-      )}
+            : "inset-y-0",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={{
         height: position === "both" ? "100%" : height,
       }}

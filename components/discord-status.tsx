@@ -54,22 +54,22 @@ const statusConfig: Record<
 > = {
   online: {
     icon: Circle,
-    label: "Online",
+    label: "online",
     iconClassName: "text-green-500 fill-green-500",
   },
   idle: {
     icon: Moon,
-    label: "Chilling",
+    label: "chilling",
     iconClassName: "text-yellow-400 fill-yellow-400",
   },
   dnd: {
     icon: Focus,
-    label: "Deep Work",
+    label: "deep work",
     iconClassName: "text-red-500",
   },
   offline: {
     icon: Moon,
-    label: "Sleeping",
+    label: "sleeping",
     iconClassName: "text-muted-foreground",
   },
 };
@@ -146,7 +146,7 @@ function TooltipBody({ data }: { data: LanyardData }) {
             href={`https://open.spotify.com/track/${spotify.track_id}`}
             target="_blank"
             rel="noopener noreferrer"
-            title="Play on Spotify"
+            title="play on spotify"
             className="w-full mt-2"
             prefetch="auto"
           >
@@ -203,10 +203,10 @@ function TooltipBody({ data }: { data: LanyardData }) {
 
   // ── Fallback ──
   if (data.discord_status === "offline") {
-    return <p>Currently offline</p>;
+    return <p>currently offline</p>;
   }
 
-  return <p>No activity right now.</p>;
+  return <p>no activity right now.</p>;
 }
 
 export function DiscordStatus() {

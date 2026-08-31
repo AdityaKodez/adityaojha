@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "github-map",
+  "type": "registry:ui",
+  "title": "GitHub Heatmap",
+  "description": "An interactive 52-week contribution activity graph with date-fns interval calculation, theme-aware level colors, and date tooltips.",
+  "author": "Aditya Ojha <https://akoder.xyz>",
+  "categories": [
+    "visualization",
+    "calendar",
+    "github",
+    "chart"
+  ],
+  "dependencies": [
+    "date-fns",
+    "motion",
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "tooltip"
+  ],
+  "meta": {
+    "docs": "https://akoder.xyz/components/github-map",
+    "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/github-map.tsx"
+  },
+  "files": [
+    {
+      "path": "components/ui/github-map.tsx",
+      "content": "\"use client\";\r\n\r\nimport {\r\n  addDays,\r\n  eachDayOfInterval,\r\n  endOfWeek,\r\n  format,\r\n  isSameDay,\r\n  isWithinInterval,\r\n  startOfWeek,\r\n  subMonths,\r\n} from \"date-fns\";\r\nimport { motion } from \"motion/react\";\r\nimport { useMemo } from \"react\";\r\nimport { Tooltip, TooltipContent, TooltipTrigger } from \"./tooltip\";\r\n\r\ninterface ContributionDay {\r\n  date: string; // ISO date string (e.g., \"2025-09-13\")\r\n  count: number;\r\n}\r\n\r\ninterface GitHubCalendarProps {\r\n  data: ContributionDay[]; // Contribution data\r\n  colors?: string[]; // Custom color scale (default: shadcn blue)\r\n}\r\n\r\nconst GitHubCalendar = ({\r\n  data,\r\n  // Theme vars with literal fallbacks so the component renders outside this\r\n  // repo too (consumers won't have --heatmap-level-* defined).\r\n  colors = [\r\n    \"var(--heatmap-level-0, oklch(0.92 0 0))\",\r\n    \"var(--heatmap-level-1, oklch(0.882 0.057 254.128))\",\r\n    \"var(--heatmap-level-2, oklch(0.707 0.165 254.624))\",\r\n    \"var(--heatmap-level-3, oklch(0.488 0.243 264.376))\",\r\n    \"var(--heatmap-level-4, oklch(0.379 0.146 265.522))\",\r\n  ],\r\n}: GitHubCalendarProps) => {\r\n  const today = new Date();\r\n  const startDate = subMonths(today, 12); // One year back\r\n  const endDate = today;\r\n\r\n  const weeks = Math.ceil(\r\n    (endDate.getTime() - startDate.getTime()) / (7 * 24 * 60 * 60 * 1000),\r\n  );\r\n\r\n  // Process data prop\r\n  const contributions = useMemo(() => {\r\n    return data.filter((d) =>\r\n      isWithinInterval(new Date(d.date), {\r\n        start: startDate,\r\n        end: endDate,\r\n      }),\r\n    );\r\n  }, [data, startDate, endDate]);\r\n\r\n  // Get color based on contribution count\r\n  const getColor = (count: number) => {\r\n    if (count === 0) return colors[0];\r\n    if (count === 1) return colors[1];\r\n    if (count === 2) return colors[2];\r\n    if (count === 3) return colors[3];\r\n    return colors[4] || colors[colors.length - 1];\r\n  };\r\n\r\n  // Render weeks\r\n  const renderWeeks = () => {\r\n    const weeksArray = [];\r\n    let currentWeekStart = startOfWeek(startDate, { weekStartsOn: 0 });\r\n\r\n    for (let i = 0; i < weeks; i++) {\r\n      const weekDays = eachDayOfInterval({\r\n        start: currentWeekStart,\r\n        end: endOfWeek(currentWeekStart, { weekStartsOn: 0 }),\r\n      });\r\n\r\n      weeksArray.push(\r\n        <div key={i} className=\"flex flex-col gap-1\">\r\n          {weekDays.map((day, index) => {\r\n            const contribution = contributions.find((c) =>\r\n              isSameDay(new Date(c.date), day),\r\n            );\r\n            const color = contribution\r\n              ? getColor(contribution.count)\r\n              : colors[0];\r\n\r\n            return (\r\n              <Tooltip key={index}>\r\n                <TooltipTrigger asChild>\r\n                  <div\r\n                    className={`w-3 h-3 rounded-xs`}\r\n                    style={{ backgroundColor: color }}\r\n                    title={`${format(day, \"PPP\")}: ${contribution?.count || 0} contributions`}\r\n                  />\r\n                </TooltipTrigger>\r\n                <TooltipContent>\r\n                  <p>\r\n                    {format(day, \"PPP\")}: {contribution?.count || 0}{\" \"}\r\n                    contributions\r\n                  </p>\r\n                </TooltipContent>\r\n              </Tooltip>\r\n            );\r\n          })}\r\n        </div>,\r\n      );\r\n      currentWeekStart = addDays(currentWeekStart, 7);\r\n    }\r\n\r\n    return weeksArray;\r\n  };\r\n\r\n  // Render month labels with proper alignment and solving the 30-day drift\r\n  const renderMonthLabels = () => {\r\n    const monthLabels: { name: string; weekIndex: number }[] = [];\r\n    let currentWeekStart = startOfWeek(startDate, { weekStartsOn: 0 });\r\n\r\n    for (let i = 0; i < weeks; i++) {\r\n      const monthName = format(currentWeekStart, \"MMM\");\r\n      if (\r\n        monthLabels.length === 0 ||\r\n        (monthLabels[monthLabels.length - 1].name !== monthName &&\r\n          i - monthLabels[monthLabels.length - 1].weekIndex >= 3)\r\n      ) {\r\n        monthLabels.push({ name: monthName, weekIndex: i });\r\n      }\r\n      currentWeekStart = addDays(currentWeekStart, 7);\r\n    }\r\n\r\n    return monthLabels.map((m, i) => (\r\n      <span\r\n        key={i}\r\n        className=\"text-xs text-muted-foreground absolute whitespace-nowrap\"\r\n        style={{\r\n          left: `calc(${m.weekIndex} * (0.75rem + 0.125rem))`,\r\n        }}\r\n      >\r\n        {m.name}\r\n      </span>\r\n    ));\r\n  };\r\n\r\n  return (\r\n    <motion.div\r\n      initial={{ opacity: 0, y: 16 }}\r\n      whileInView={{ opacity: 1, y: 0 }}\r\n      viewport={{ once: true }}\r\n      transition={{ duration: 0.3 }}\r\n      className=\"no-js-visible p-2 overflow-x-auto overflow-y-hidden no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden\"\r\n    >\r\n      <div className=\"flex w-max\">\r\n        <div className=\"relative\">\r\n          <div className=\"relative h-4 w-full mb-2\">{renderMonthLabels()}</div>\r\n          <div className=\"flex gap-0.5\">{renderWeeks()}</div>\r\n        </div>\r\n      </div>\r\n      <div className=\"mt-2 justify-center flex gap-1 text-[10px] text-gray-400 items-center\">\r\n        <span>less</span>\r\n\r\n        {colors.map((color, index) => (\r\n          <div\r\n            key={index}\r\n            className=\"w-2 h-2 rounded-[1px]\"\r\n            style={{ backgroundColor: color }}\r\n          />\r\n        ))}\r\n        <span>more</span>\r\n      </div>\r\n    </motion.div>\r\n  );\r\n};\r\n\r\nexport { GitHubCalendar };\r\n",
+      "type": "registry:ui"
+    }
+  ],
+  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/github-map.json\n```\n\n## Usage\n\n```tsx\nimport { GitHubCalendar } from \"@/components/ui/github-map\";\n\nexport function ActivityGraph() {\n  return <GitHubCalendar data={[{ date: \"2025-01-01\", count: 4 }]} />;\n}\n```"
+}

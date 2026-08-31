@@ -1,0 +1,309 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "akoder",
+  "homepage": "https://akoder.xyz",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "dotted-world-map",
+      "type": "registry:ui",
+      "title": "Dotted World Map",
+      "description": "A dependency-free SVG world map drawn with dots, tinted by heat value. Ships with interactive markers, tooltips, and a GitHub-style legend.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "visualization",
+        "map",
+        "chart",
+        "svg"
+      ],
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "tooltip"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/dotted-world-map",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/dotted-world-map.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/dotted-world-map.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json\n```\n\n## Usage\n\n```tsx\nimport { DottedWorldMap } from \"@/components/ui/dotted-world-map\";\n\nconst points = [\n  { name: \"London\", lat: 51.5074, lng: -0.1278, value: 0.9, radius: 12 },\n  { name: \"Tokyo\", lat: 35.6762, lng: 139.6503, value: 0.8, radius: 12 },\n  { name: \"New York\", lat: 40.7128, lng: -74.006, value: 0.95, radius: 13 },\n];\n\nexport function VisitorsMap() {\n  return <DottedWorldMap points={points} />;\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "copy-command-block",
+      "type": "registry:ui",
+      "title": "Copy Command Block",
+      "description": "A multi-package manager terminal command box with tab switcher (npm, pnpm, yarn, bun), persistent storage, copy feedback animation, and blueprint styling.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "developer-tools",
+        "terminal",
+        "copy",
+        "tabs"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "motion",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "tooltip"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/copy-command-block",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/copy-command-block.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/copy-command-block.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/copy-command-block.json\n```\n\n## Usage\n\n```tsx\nimport { CopyCommandBlock } from \"@/components/ui/copy-command-block\";\n\nexport function Command() {\n  return <CopyCommandBlock commands={{ npm: \"npm i motion\", pnpm: \"pnpm add motion\" }} />;\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "github-map",
+      "type": "registry:ui",
+      "title": "GitHub Heatmap",
+      "description": "An interactive 52-week contribution activity graph with date-fns interval calculation, theme-aware level colors, and date tooltips.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "visualization",
+        "calendar",
+        "github",
+        "chart"
+      ],
+      "dependencies": [
+        "date-fns",
+        "motion",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "tooltip"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/github-map",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/github-map.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/github-map.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/github-map.json\n```\n\n## Usage\n\n```tsx\nimport { GitHubCalendar } from \"@/components/ui/github-map\";\n\nexport function ActivityGraph() {\n  return <GitHubCalendar data={[{ date: \"2025-01-01\", count: 4 }]} />;\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "project-explorer",
+      "type": "registry:ui",
+      "title": "Interactive Project Explorer",
+      "description": "An IDE-style project showcase with collapsible year folders, status badges, and floating cursor image hover previews.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "portfolio",
+        "projects",
+        "showcase",
+        "motion"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/project-explorer",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/project-explorer.tsx"
+      },
+      "files": [
+        {
+          "path": "components/project-explorer.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/project-explorer.json\n```\n\n## Usage\n\n```tsx\nimport { ProjectExplorer } from \"@/components/project-explorer\";\n\nexport function WorkShowcase() {\n  return <ProjectExplorer />;\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "progressive-blur",
+      "type": "registry:ui",
+      "title": "Progressive Blur",
+      "description": "Multi-layered gradient backdrop blur overlay with exponential Gaussian steps and directional masking for sticky navbars and cards.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "effects",
+        "blur",
+        "backdrop-filter",
+        "overlay"
+      ],
+      "dependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/progressive-blur",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/progressive-blur.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/progressive-blur.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/progressive-blur.json\n```\n\n## Usage\n\n```tsx\nimport { ProgressiveBlur } from \"@/components/ui/progressive-blur\";\n\nexport function HeaderOverlay() {\n  return <ProgressiveBlur position=\"top\" height=\"80px\" />;\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "infinite-slider",
+      "type": "registry:ui",
+      "title": "Infinite Slider",
+      "description": "A continuous looping marquee slider powered by Motion and React Use Measure with custom gap, speed, direction, and hover deceleration.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "motion",
+        "marquee",
+        "slider",
+        "animation"
+      ],
+      "dependencies": [
+        "motion",
+        "react-use-measure"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/infinite-slider",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/motion-primitives/infinite-slider.tsx"
+      },
+      "files": [
+        {
+          "path": "components/motion-primitives/infinite-slider.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/infinite-slider.json\n```\n\n## Usage\n\n```tsx\nimport { InfiniteSlider } from \"@/components/motion-primitives/infinite-slider\";\n\nexport function TechMarquee() {\n  return (\n    <InfiniteSlider gap={16} speed={60}>\n      <span>React</span>\n      <span>Next.js</span>\n      <span>TypeScript</span>\n    </InfiniteSlider>\n  );\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Fluid Carousel",
+      "description": "Accessible touch-swipeable slide carousel with directional spring animations, keyboard arrow navigation, and pagination indicators.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "carousel",
+        "slider",
+        "motion",
+        "interactive"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/carousel",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/carousel.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/carousel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/carousel.json\n```\n\n## Usage\n\n```tsx\nimport { Carousel } from \"@/components/ui/carousel\";\n\nexport function SlideShow() {\n  return (\n    <Carousel\n      items={[\n        { id: \"1\", title: \"Slide 1\", content: <div>Content 1</div> },\n        { id: \"2\", title: \"Slide 2\", content: <div>Content 2</div> },\n      ]}\n    />\n  );\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "mode-toggler",
+      "type": "registry:ui",
+      "title": "Mode Toggler",
+      "description": "A minimal Sun / Moon theme toggle button built on next-themes. Supports an optional click sound, composable className, and dynamic aria-label.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "theming",
+        "toggle",
+        "dark-mode",
+        "accessibility"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "next-themes"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/mode-toggler",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/mode-toggler.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/mode-toggler.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/mode-toggler.json\n```\n\n## Usage\n\n```tsx\nimport { ModeToggler } from \"@/components/ui/mode-toggler\";\n\nexport function Header() {\n  return (\n    <header className=\"flex items-center justify-between px-4 h-12\">\n      <span>my app</span>\n      <ModeToggler />\n    </header>\n  );\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "interactive-skill-cloud",
+      "type": "registry:ui",
+      "title": "Interactive Skill Cloud",
+      "description": "A draggable physics pill cloud powered by matter.js — pills rain down, pile at the bottom, and collide; grab one and fling it.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "skills",
+        "tags",
+        "physics",
+        "interactive"
+      ],
+      "dependencies": [
+        "matter-js"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/interactive-skill-cloud",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/interactive-skill-cloud.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/interactive-skill-cloud.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/interactive-skill-cloud.json\n```\n\n## Usage\n\n```tsx\nimport { InteractiveSkillCloud } from \"@/components/ui/interactive-skill-cloud\";\nimport { Code2, Zap } from \"lucide-react\";\n\nconst items = [\n  { id: \"react\", name: \"React\", icon: <Code2 className=\"size-4\" /> },\n  { id: \"zap\", name: \"tRPC\", icon: <Zap className=\"size-4\" /> },\n];\n\nexport function TechStack() {\n  return <InteractiveSkillCloud items={items} height={360} />;\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "contact-channels",
+      "type": "registry:ui",
+      "title": "Contact Channels",
+      "description": "A hairline grid of contact cells with copy-to-clipboard actions, single-key shortcuts, tooltips, and blueprint hover styling.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "contact",
+        "social",
+        "copy",
+        "grid"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "motion",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "tooltip"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/contact-channels",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/contact-channels.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/contact-channels.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/contact-channels.json\n```\n\n## Usage\n\n```tsx\nimport { ContactChannels } from \"@/components/ui/contact-channels\";\nimport { Github, Mail } from \"lucide-react\";\n\nconst channels = [\n  { id: \"github\", platform: \"github\", handle: \"@octocat\", href: \"https://github.com\", action: \"external\", icon: <Github className=\"size-4\" /> },\n  { id: \"email\", platform: \"email\", handle: \"hi@example.com\", action: \"copy\", copyValue: \"hi@example.com\", shortcutKey: \"e\", icon: <Mail className=\"size-4\" /> },\n];\n\nexport function Contact() {\n  return <ContactChannels items={channels} columns={2} />;\n}\n```"
+    }
+  ]
+}

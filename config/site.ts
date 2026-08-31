@@ -97,6 +97,7 @@ export const siteConfig: PortfolioConfig = {
   },
   sectionOrder: [
     "projects",
+    "components",
     "skills",
     "about",
     "github",
@@ -107,6 +108,7 @@ export const siteConfig: PortfolioConfig = {
   sectionFlags: {
     socials: true,
     skills: true,
+    components: true,
     about: true,
     testimonials: true,
     projects: true,
@@ -122,10 +124,10 @@ export const siteConfig: PortfolioConfig = {
     imageSrc: "/images/brand-background.png",
     imageAlt: "Halftone skyline glowing in blue, teal, and orange",
     openSourceUrl: "https://github.com/AdityaKodez/adityaojha",
-    openSourceTooltip: "This project is open source !",
-    themeToggleLabel: "Toggle theme",
+    openSourceTooltip: "this project is open source !",
+    themeToggleLabel: "toggle theme",
     themeShortcut: "D",
-    themeTooltip: "Toggle theme",
+    themeTooltip: "toggle theme",
     switchAudioSrc: "/switch.mp3",
   },
   about: {

@@ -4,6 +4,7 @@ import type { ComponentType, SVGProps } from "react";
 export type SectionId =
   | "socials"
   | "skills"
+  | "components"
   | "about"
   | "testimonials"
   | "projects"
@@ -253,11 +254,23 @@ export interface Certification {
   icon?: LinkCardIcon;
 }
 
+export type ComponentIcon =
+  | "globe"
+  | "terminal"
+  | "git"
+  | "folder"
+  | "blur"
+  | "slider"
+  | "carousel"
+  | "theme"
+  | "pills"
+  | "channels";
+
 export interface ComponentDoc {
   id: string;
   title: string;
   description: string;
-  icon: "globe";
+  icon: ComponentIcon;
   /** Path (relative to project root) of the tsx file used as the live preview. */
   demoPath: string;
   /** Path (relative to project root) of the markdown docs rendered below the preview. */

@@ -99,7 +99,7 @@ export function CTA() {
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{copiedField === channel.id ? "Copied!" : channel.tooltipDefault}</p>
+                    <p>{copiedField === channel.id ? "copied!" : channel.tooltipDefault}</p>
                   </TooltipContent>
                 </Tooltip>
               );

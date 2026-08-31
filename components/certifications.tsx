@@ -79,7 +79,7 @@ export function Certifications() {
             size="sm"
             className="flex items-center gap-2 font-pixel text-xs text-muted-foreground hover:text-foreground"
           >
-            {showAll ? "Show less" : `View all ${items.length} certifications`}
+            {showAll ? "show less" : `view all ${items.length} certifications`}
             <ArrowDownCircleIcon
               className={cn(
                 "size-3.5 transition-transform",

@@ -11,9 +11,11 @@ import Social from "@/components/social";
 import { Testimonials } from "@/components/testimonials";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { GitHubCalendar } from "@/components/ui/github-map";
-import { ZenoProject } from "@/components/zeno-project";
+import { ProjectExplorer } from "@/components/project-explorer";
 import { Bookmarks } from "@/components/bookmarks";
 import { Certifications } from "@/components/certifications";
+import { ComponentHighlights } from "@/components/component-highlights";
+import { projectsConfig, projectsSectionConfig } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
 import { fetchGithubData } from "@/lib/github";
@@ -25,7 +27,13 @@ const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   skills: <Skills />,
   about: <About />,
   testimonials: <Testimonials />,
-  projects: <ZenoProject />,
+  projects: (
+    <ProjectExplorer
+      projects={projectsConfig}
+      title={projectsSectionConfig.title}
+    />
+  ),
+  components: <ComponentHighlights />,
   bookmarks: <Bookmarks />,
   certifications: <Certifications />,
   experience: <Experience />,
@@ -45,7 +53,7 @@ export default async function Home() {
     <>
       <main
         id="main-content"
-        className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-[env(safe-area-inset-top)]"
+        className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-8"
       >
         <div className="bg-background">
           <Hero />
@@ -57,9 +65,13 @@ export default async function Home() {
 
           const content =
             sectionId === "github" ? (
-              <Suspense key="github" fallback={<GitSkeleton />}>
-                <GitHubCalendar data={contributionData} />
-              </Suspense>
+              // The section rule lives here: GitHubCalendar is a bare registry
+              // component, so it ships without the home page's dashed divider.
+              <div key="github" className="border-t border-dashed">
+                <Suspense fallback={<GitSkeleton />}>
+                  <GitHubCalendar data={contributionData} />
+                </Suspense>
+              </div>
             ) : (
               staticSections[sectionId]
             );

@@ -26,12 +26,14 @@ interface GitHubCalendarProps {
 
 const GitHubCalendar = ({
   data,
+  // Theme vars with literal fallbacks so the component renders outside this
+  // repo too (consumers won't have --heatmap-level-* defined).
   colors = [
-    "var(--heatmap-level-0)",
-    "var(--heatmap-level-1)",
-    "var(--heatmap-level-2)",
-    "var(--heatmap-level-3)",
-    "var(--heatmap-level-4)",
+    "var(--heatmap-level-0, oklch(0.92 0 0))",
+    "var(--heatmap-level-1, oklch(0.882 0.057 254.128))",
+    "var(--heatmap-level-2, oklch(0.707 0.165 254.624))",
+    "var(--heatmap-level-3, oklch(0.488 0.243 264.376))",
+    "var(--heatmap-level-4, oklch(0.379 0.146 265.522))",
   ],
 }: GitHubCalendarProps) => {
   const today = new Date();
@@ -144,7 +146,7 @@ const GitHubCalendar = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
-      className="no-js-visible p-2 border-y border-dashed overflow-x-auto overflow-y-hidden"
+      className="no-js-visible p-2 overflow-x-auto overflow-y-hidden no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       <div className="flex w-max">
         <div className="relative">
@@ -153,7 +155,7 @@ const GitHubCalendar = ({
         </div>
       </div>
       <div className="mt-2 justify-center flex gap-1 text-[10px] text-gray-400 items-center">
-        <span>Less</span>
+        <span>less</span>
 
         {colors.map((color, index) => (
           <div
@@ -162,7 +164,7 @@ const GitHubCalendar = ({
             style={{ backgroundColor: color }}
           />
         ))}
-        <span>More</span>
+        <span>more</span>
       </div>
     </motion.div>
   );

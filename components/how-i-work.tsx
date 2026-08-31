@@ -1,7 +1,6 @@
 "use client";
 
 import { siteConfig } from "@/config/site";
-import { motion } from "motion/react";
 import { Signature } from "./signature";
 import { AccordionSection } from "./ui/accordion-section";
 

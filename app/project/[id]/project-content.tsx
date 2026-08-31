@@ -1,5 +1,6 @@
 "use client";
 
+import { markdownComponents } from "@/components/markdown-components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Project } from "@/config/types";
@@ -9,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   Tooltip,
   TooltipContent,
@@ -116,7 +118,7 @@ export function ProjectContent({ project }: { project: Project }) {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Visit Live Site</p>
+                    <p>visit live site</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -159,7 +161,12 @@ export function ProjectContent({ project }: { project: Project }) {
             className="prose prose-neutral dark:prose-invert max-w-none py-4"
           >
             {typeof project.content === "string" ? (
-              <ReactMarkdown>{project.content}</ReactMarkdown>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={markdownComponents}
+              >
+                {project.content}
+              </ReactMarkdown>
             ) : (
               project.content
             )}

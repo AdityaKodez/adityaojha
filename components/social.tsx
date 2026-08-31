@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRightIcon, Check, Coffee, Copy } from "lucide-react";
+import { ArrowRightIcon, Check, Copy } from "lucide-react";
 import { socialSectionConfig, socialsConfig } from "@/config/socials";
 import type { SocialIcon, SocialLink } from "@/config/types";
 import Peerlist from "@/public/peerlist";
@@ -161,7 +161,7 @@ const Social = () => {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    {copied[social.id] ? "Copied!" : social.tooltipDefault}
+                    {copied[social.id] ? "copied!" : social.tooltipDefault}
                     {social.shortcutKey ? <Kbd>{social.shortcutKey}</Kbd> : null}
                   </p>
                 </TooltipContent>

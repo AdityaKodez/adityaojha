@@ -28,12 +28,12 @@ export function Bookmarks() {
     { label: string; itemLabel: string; items: LearningItem[] }
   > = {
     certifications: {
-      label: "Certificates",
+      label: "certificates",
       itemLabel: "certificates",
       items: certificationItems,
     },
     bookmarks: {
-      label: "Bookmarks",
+      label: "bookmarks",
       itemLabel: "bookmarks",
       items: bookmarkItems,
     },
@@ -165,8 +165,8 @@ export function Bookmarks() {
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground font-pixel text-xs"
               >
                 {showAll
-                  ? "Show less"
-                  : `View all ${activeItems.length} ${collections[activeCollection].itemLabel}`}
+                  ? "show less"
+                  : `view all ${activeItems.length} ${collections[activeCollection].itemLabel}`}
                 <ArrowDownCircleIcon
                   className={cn(
                     "size-3.5 transition-transform",

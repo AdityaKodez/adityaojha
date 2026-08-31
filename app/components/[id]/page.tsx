@@ -1,4 +1,3 @@
-import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -6,11 +5,34 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import rehypePrettyCode from "rehype-pretty-code";
 import { MarkdownAsync } from "react-markdown";
+import remarkGfm from "remark-gfm";
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { InstallCommand } from "@/components/copy-block";
+import { markdownComponents } from "@/components/markdown-components";
 import { findComponent, getEnabledComponents } from "@/config/components";
+import {
+  getAddCommands,
+  getNamespacedAddCommand,
+} from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
 import { DottedWorldMapDemo } from "./demos/dotted-world-map-demo";
+import { CopyCommandBlockDemo } from "./demos/copy-command-block-demo";
+import { GitHubMapDemo } from "./demos/github-map-demo";
+import { ProjectExplorerDemo } from "./demos/project-explorer-demo";
+import { CarouselDemo } from "./demos/carousel-demo";
+import { ModeTogglerDemo } from "./demos/mode-toggler-demo";
+import { InteractiveSkillCloudDemo } from "./demos/interactive-skill-cloud-demo";
+import { ContactChannelsDemo } from "./demos/contact-channels-demo";
+import { ComponentExamples } from "./demos/examples";
 import { PreviewBox } from "./preview-box";
 
 export async function generateStaticParams() {
@@ -56,15 +78,17 @@ export default async function ComponentDetailPage({
   const root = process.cwd();
 
   // Demo source (raw + syntax-highlighted HTML).
-  const demoSourcePath = path.join(root, component.demoPath);
+  const demoSourcePath = path.join(/*turbopackIgnore: true*/ root, component.demoPath);
   const [demoRaw, docsMd] = await Promise.all([
     readFile(demoSourcePath, "utf8"),
-    readFile(path.join(root, component.docPath), "utf8"),
+    readFile(path.join(/*turbopackIgnore: true*/ root, component.docPath), "utf8"),
   ]);
   const highlighted = await highlightCode(demoRaw, "tsx");
 
   // MarkdownAsync is async-only — await it here so the JSX tree can render the element directly.
   const renderedDocs = await MarkdownAsync({
+    remarkPlugins: [remarkGfm],
+    components: markdownComponents,
     rehypePlugins: [
       [
         rehypePrettyCode,
@@ -84,17 +108,23 @@ export default async function ComponentDetailPage({
   return (
     <main
       id={`component-${component.id}`}
-      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-[env(safe-area-inset-top)] pb-12"
+      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-14 pb-12"
     >
-      {/* Back link */}
-      <div className="px-6 pt-6">
-        <Link
-          href="/components"
-          className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" />
-          All components
-        </Link>
+      {/* Breadcrumb */}
+      <div className="px-6 pt-4 border-t border-dashed">
+        <Breadcrumb>
+          <BreadcrumbList className="text-xs">
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/components">Components</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{component.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
 
       {/* Title bar */}
@@ -102,12 +132,12 @@ export default async function ComponentDetailPage({
 
       {/* Description */}
       <div className="px-6 mt-3">
-        <p className="text-md text-muted-foreground leading-relaxed">
+        <p className="text-base text-muted-foreground leading-relaxed">
           {component.description}
         </p>
       </div>
 
-      {/* Preview / Code box — the demo component is rendered lazily by the page body. */}
+      {/* Preview / Code box */}
       <PreviewBox
         ariaLabel={`${component.title} preview`}
         preview={<ComponentDemo id={component.id} />}
@@ -115,23 +145,63 @@ export default async function ComponentDetailPage({
         rawCode={demoRaw}
       />
 
-      {/* Docs below */}
+      {/* Installation — registry CLI command */}
+      <section className="border-t border-dashed px-6 py-6">
+        <h2 className="text-base font-medium tracking-tight">Installation</h2>
+        <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+          {component.title} is published as a shadcn registry item. The CLI
+          drops the file into your project, installs its dependencies, and adds
+          any primitives it relies on.
+        </p>
+        <InstallCommand
+          className="mt-4"
+          commands={getAddCommands(component.id)}
+        />
+        <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+          Install often? Register the namespace once in{" "}
+          <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
+            components.json
+          </code>{" "}
+          and use the shorter form{" "}
+          <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
+            {getNamespacedAddCommand(component.id)}
+          </code>
+          .
+        </p>
+      </section>
+
+      {/* Docs — usage, props, notes. */}
       <div className="border-t border-dashed prose prose-neutral dark:prose-invert max-w-none px-6 py-6 [&_a]:text-primary [&_code]:text-foreground [&_table]:w-full">
         {renderedDocs}
       </div>
+
+      {/* Examples carousel */}
+      <ComponentExamples id={component.id} />
     </main>
   );
 }
 
 /**
  * Server component that picks the right demo based on the registry id.
- * Statically imports every demo so the bundler can include them all; the
- * switch is cheap because each demo is a leaf component.
  */
 function ComponentDemo({ id }: { id: string }) {
   switch (id) {
     case "dotted-world-map":
       return <DottedWorldMapDemo />;
+    case "copy-command-block":
+      return <CopyCommandBlockDemo />;
+    case "github-map":
+      return <GitHubMapDemo />;
+    case "project-explorer":
+      return <ProjectExplorerDemo />;
+    case "carousel":
+      return <CarouselDemo />;
+    case "mode-toggler":
+      return <ModeTogglerDemo />;
+    case "interactive-skill-cloud":
+      return <InteractiveSkillCloudDemo />;
+    case "contact-channels":
+      return <ContactChannelsDemo />;
     default:
       return (
         <div className="text-sm text-muted-foreground">
