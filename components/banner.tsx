@@ -12,7 +12,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Kbd } from "./ui/kbd";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
-export function Banner() {
+  export function Banner() {
   const { setTheme, resolvedTheme } = useTheme();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [starCount, setStarCount] = useState<string | null>(null);
@@ -51,7 +51,8 @@ export function Banner() {
 
   const playAudio = () => {
     if (audioRef.current) {
-      audioRef.current.play();
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
     }
   };
 
@@ -61,29 +62,6 @@ export function Banner() {
       setTheme(resolvedTheme === "dark" ? "light" : "dark");
     }, 200);
   }, [resolvedTheme, setTheme]);
-
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    const handleGlobalKeyDown = (e: KeyboardEvent) => {
-      if (
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement ||
-        (e.target as HTMLElement).isContentEditable
-      ) {
-        return;
-      }
-
-      if (
-        e.key.toLowerCase() === siteConfig.banner.themeShortcut.toLowerCase()
-      ) {
-        e.preventDefault();
-        buttonRef.current?.click();
-      }
-    };
-
-    window.addEventListener("keydown", handleGlobalKeyDown);
-    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
-  }, []);
 
   return (
     <motion.div
@@ -129,7 +107,6 @@ export function Banner() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                ref={buttonRef}
                 variant="ghost"
                 size="icon"
                 className="h-8 w-8 cursor-pointer rounded-none border-0 text-white/70 hover:text-white hover:bg-white/10"
@@ -157,7 +134,7 @@ export function Banner() {
       <audio
         ref={audioRef}
         src={siteConfig.banner.switchAudioSrc}
-        preload="auto"
+        preload="none"
       />
     </motion.div>
   );

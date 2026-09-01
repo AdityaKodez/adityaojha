@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
@@ -426,33 +427,42 @@ export function DottedWorldMap({
   const height = rows * spacing;
   const colorScale = colors.length > 0 ? colors : DEFAULT_COLORS;
   const lowColor = baseColor ?? colorScale[0] ?? "currentColor";
-  const heatPaths = computeHeatPaths({
-    cols,
-    rows,
-    spacing,
-    dotRadius,
-    points,
-    colorCount: colorScale.length,
-  });
 
-  const markers = showMarkers
-    ? points
-        .filter((point) => point.value >= 0.02)
-        .map((point) => {
-          const x = ((point.lng + 180) / 360) * width;
-          const y = ((90 - point.lat) / 180) * height;
-          const clamped = Math.min(1, Math.max(0, point.value));
-          const colorIndex = Math.min(
-            colorScale.length - 1,
-            Math.round(clamped * (colorScale.length - 1)),
-          );
-          const markerColor = colorScale[colorIndex] ?? lowColor;
-          const label =
-            point.tooltip ??
-            `${point.name} · activity ${Math.round(clamped * 100)}/100`;
-          return { point, x, y, markerColor, label };
-        })
-    : [];
+  const heatPaths = useMemo(
+    () =>
+      computeHeatPaths({
+        cols,
+        rows,
+        spacing,
+        dotRadius,
+        points,
+        colorCount: colorScale.length,
+      }),
+    [cols, rows, spacing, dotRadius, points, colorScale.length],
+  );
+
+  const markers = useMemo(
+    () =>
+      showMarkers
+        ? points
+            .filter((point) => point.value >= 0.02)
+            .map((point) => {
+              const x = ((point.lng + 180) / 360) * width;
+              const y = ((90 - point.lat) / 180) * height;
+              const clamped = Math.min(1, Math.max(0, point.value));
+              const colorIndex = Math.min(
+                colorScale.length - 1,
+                Math.round(clamped * (colorScale.length - 1)),
+              );
+              const markerColor = colorScale[colorIndex] ?? lowColor;
+              const label =
+                point.tooltip ??
+                `${point.name} · activity ${Math.round(clamped * 100)}/100`;
+              return { point, x, y, markerColor, label };
+            })
+        : [],
+    [showMarkers, points, width, height, colorScale, lowColor],
+  );
 
   return (
     <div className="flex w-full flex-col gap-2">

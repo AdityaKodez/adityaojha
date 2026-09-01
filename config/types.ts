@@ -87,7 +87,6 @@ export interface HeroConfig {
 export interface AboutConfig {
   title: string;
   body: string;
-  emphasizedPhrases: [string, string];
 }
 
 export type SkillCategory =
@@ -264,7 +263,8 @@ export type ComponentIcon =
   | "carousel"
   | "theme"
   | "pills"
-  | "channels";
+  | "channels"
+  | "rail";
 
 export interface ComponentDoc {
   id: string;

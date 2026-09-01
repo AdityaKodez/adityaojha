@@ -227,14 +227,26 @@ function PhysicsLayer({
       }
     };
 
+    // Cache DOM pill elements for fast 60fps transform updates
+    const pillElementMap = new Map<string, HTMLElement>();
+    for (const { body } of pills) {
+      const el = container.querySelector<HTMLElement>(
+        `[data-pill="${body.label}"]`,
+      );
+      if (el) pillElementMap.set(body.label, el);
+    }
+
     // Move the DOM pills to match their bodies every engine tick.
     const syncPills = () => {
       uprightPills();
       for (const { body, dims } of pills) {
-        const el = container.querySelector<HTMLElement>(
-          `[data-pill="${body.label}"]`,
-        );
+        const el =
+          pillElementMap.get(body.label) ??
+          container.querySelector<HTMLElement>(`[data-pill="${body.label}"]`);
         if (!el) continue;
+        if (!pillElementMap.has(body.label)) {
+          pillElementMap.set(body.label, el);
+        }
         // Translate center of DOM pill to body.position and apply rotation
         el.style.transform = `translate3d(${body.position.x - dims.width / 2}px, ${body.position.y - dims.height / 2}px, 0) rotate(${body.angle}rad)`;
       }

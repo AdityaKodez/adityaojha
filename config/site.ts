@@ -85,7 +85,7 @@ export const siteConfig: PortfolioConfig = {
     fullName: "Aditya Ojha",
     firstName: "Aditya",
     avatar: {
-      src: "/profile.png",
+      src: "/profile.avif",
       alt: "@akcll",
       fallback: "AK",
     },
@@ -133,7 +133,6 @@ export const siteConfig: PortfolioConfig = {
   about: {
     title: "Building is how I learn",
     body: "I build SaaS products end to end: from the first rough idea to product flows, data models, deployment, and the uncomfortable moment real people use them. I share the decisions, mistakes, and lessons because the process is more useful than a polished launch announcement. Right now, I am focused on shipping small, useful software and becoming a sharper product engineer with every release.",
-    emphasizedPhrases: ["end to end", "share the decisions"],
   },
   services: {
     title: "What I build best",

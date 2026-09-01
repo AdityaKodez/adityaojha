@@ -1,58 +1,12 @@
 "use client";
 
-import { useMemo, type ReactNode } from "react";
+import { useMemo } from "react";
 import { motion } from "motion/react";
 import { siteConfig } from "@/config/site";
-
-function renderHighlightedText(text: string, phrases: string[]): ReactNode[] {
-  let nodes: ReactNode[] = [text];
-
-  phrases.forEach((phrase, phraseIndex) => {
-    nodes = nodes.flatMap((node, nodeIndex) => {
-      if (typeof node !== "string" || !phrase) {
-        return [node];
-      }
-
-      const parts = node.split(phrase);
-      if (parts.length === 1) {
-        return [node];
-      }
-
-      const result: ReactNode[] = [];
-
-      parts.forEach((part, partIndex) => {
-        if (part) {
-          result.push(part);
-        }
-
-        if (partIndex < parts.length - 1) {
-          result.push(
-            <span
-              key={`phrase-${phraseIndex}-${nodeIndex}-${partIndex}`}
-              className="rounded-sm bg-primary/50 px-1 text-foreground"
-            >
-              {phrase}
-            </span>,
-          );
-        }
-      });
-
-      return result;
-    });
-  });
-
-  return nodes;
-}
+import { splitSentences } from "@/lib/sentences";
 
 export const About = () => {
-  const [firstPhrase, secondPhrase] = siteConfig.about.emphasizedPhrases;
-
-  const sentences = useMemo(
-    () => siteConfig.about.body.split(/(?<=\\.)\\s+/).filter(Boolean),
-    [],
-  );
-
-  const highlightPhrases = [firstPhrase, secondPhrase].filter(Boolean);
+  const sentences = useMemo(() => splitSentences(siteConfig.about.body), []);
 
   return (
     <motion.section
@@ -75,7 +29,7 @@ export const About = () => {
               transition={{ duration: 0.24, delay: index * 0.06 }}
               className="micro-transition group relative text-base leading-8 text-muted-foreground hover:text-foreground focus-within:text-foreground"
             >
-              {renderHighlightedText(sentence, highlightPhrases)}
+              {sentence}
             </motion.p>
           ))}
         </div>

@@ -21,6 +21,7 @@ export function AccordionSection({
   id,
 }: AccordionSectionProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+  const contentId = id ? `${id}-content` : undefined;
 
   return (
     <motion.section
@@ -35,6 +36,7 @@ export function AccordionSection({
         onClick={() => setIsExpanded(!isExpanded)}
         className="group w-full flex items-center justify-between no-js-visible section-heading hover:bg-muted/40 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring mb-3"
         aria-expanded={isExpanded}
+        aria-controls={contentId}
       >
         <span>{title}</span>
         <motion.div
@@ -49,6 +51,9 @@ export function AccordionSection({
       <AnimatePresence initial={false}>
         {isExpanded && (
           <motion.div
+            id={contentId}
+            role="region"
+            aria-label={title}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

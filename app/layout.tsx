@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistPixelGrid } from "geist/font/pixel";
 import { Metadata, Viewport } from "next";
-import { DM_Sans, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { DM_Sans, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +23,7 @@ export const viewport: Viewport = {
 const DmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
 });
 
 const instrumentSerif = Instrument_Serif({
@@ -30,16 +31,13 @@ const instrumentSerif = Instrument_Serif({
   weight: ["400"],
   style: ["normal", "italic"],
   variable: "--font-serif",
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -97,27 +95,42 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: siteConfig.personal.fullName,
-  url: siteConfig.meta.url,
-  jobTitle: "Product Engineer and SaaS Builder",
-  description: siteConfig.meta.description,
-  knowsAbout: [
-    "Next.js",
-    "TypeScript",
-    "React",
-    "Prisma",
-    "Tailwind CSS",
-    "Node.js",
-    "PostgreSQL",
-    "AWS",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.meta.url}/#website`,
+      url: siteConfig.meta.url,
+      name: siteConfig.meta.title,
+      description: siteConfig.meta.description,
+      publisher: {
+        "@id": `${siteConfig.meta.url}/#person`,
+      },
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteConfig.meta.url}/#person`,
+      name: siteConfig.personal.fullName,
+      url: siteConfig.meta.url,
+      jobTitle: "Product Engineer and SaaS Builder",
+      description: siteConfig.meta.description,
+      knowsAbout: [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Prisma",
+        "Tailwind CSS",
+        "Node.js",
+        "PostgreSQL",
+        "AWS",
+      ],
+      sameAs: [
+        "https://github.com/AdityaKodez",
+        "https://x.com/AdiKodez",
+        "https://linkedin.com/in/adityakodez",
+      ],
+      image: `${siteConfig.meta.url}/profile.avif`,
+    },
   ],
-  sameAs: [
-    "https://github.com/AdityaKodez",
-    "https://x.com/AdiKodez",
-    "https://linkedin.com/in/adityakodez",
-  ],
-  image: `${siteConfig.meta.url}/profile.png`,
 };
 
 export default function RootLayout({
@@ -143,7 +156,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistMono.variable} antialiased`}
       >
         <noscript>
           <style>{`.no-js-visible { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; stroke-dasharray: none !important; }`}</style>

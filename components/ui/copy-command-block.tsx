@@ -155,6 +155,7 @@ export function CopyCommandBlock({
               <button
                 key={pm}
                 type="button"
+                aria-pressed={isActive}
                 onClick={() => selectPm(pm)}
                 className={cn(
                   "flex items-center gap-1.5 rounded-sm px-2 py-0.5 font-mono text-[11px] tracking-wider transition-colors",

@@ -5,8 +5,6 @@ import {
   eachDayOfInterval,
   endOfWeek,
   format,
-  isSameDay,
-  isWithinInterval,
   startOfWeek,
   subMonths,
 } from "date-fns";
@@ -15,13 +13,26 @@ import { useMemo } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
 interface ContributionDay {
-  date: string; // ISO date string (e.g., "2025-09-13")
+  date: string;
   count: number;
 }
 
 interface GitHubCalendarProps {
-  data: ContributionDay[]; // Contribution data
-  colors?: string[]; // Custom color scale (default: shadcn blue)
+  data: ContributionDay[];
+  colors?: string[];
+}
+
+/** Parse a bare YYYY-MM-DD date as a local calendar date. */
+export function parseLocalDate(iso: string): Date {
+  const [year, month, day] = iso.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+/** Index contributions by ISO date for constant-time calendar cell lookup. */
+export function indexByDate<T extends { date: string }>(
+  data: T[],
+): Map<string, T> {
+  return new Map(data.map((entry) => [entry.date, entry]));
 }
 
 const GitHubCalendar = ({
@@ -36,23 +47,15 @@ const GitHubCalendar = ({
     "var(--heatmap-level-4, oklch(0.379 0.146 265.522))",
   ],
 }: GitHubCalendarProps) => {
-  const today = new Date();
-  const startDate = subMonths(today, 12); // One year back
-  const endDate = today;
+  const { startDate, endDate } = useMemo(() => {
+    const end = new Date();
+    return { startDate: subMonths(end, 12), endDate: end };
+  }, []);
 
   const weeks = Math.ceil(
     (endDate.getTime() - startDate.getTime()) / (7 * 24 * 60 * 60 * 1000),
   );
-
-  // Process data prop
-  const contributions = useMemo(() => {
-    return data.filter((d) =>
-      isWithinInterval(new Date(d.date), {
-        start: startDate,
-        end: endDate,
-      }),
-    );
-  }, [data, startDate, endDate]);
+  const contributionsByDate = useMemo(() => indexByDate(data), [data]);
 
   // Get color based on contribution count
   const getColor = (count: number) => {
@@ -77,26 +80,23 @@ const GitHubCalendar = ({
       weeksArray.push(
         <div key={i} className="flex flex-col gap-1">
           {weekDays.map((day, index) => {
-            const contribution = contributions.find((c) =>
-              isSameDay(new Date(c.date), day),
+            const contribution = contributionsByDate.get(
+              format(day, "yyyy-MM-dd"),
             );
-            const color = contribution
-              ? getColor(contribution.count)
-              : colors[0];
+            const count = contribution?.count ?? 0;
 
             return (
               <Tooltip key={index}>
                 <TooltipTrigger asChild>
                   <div
-                    className={`w-3 h-3 rounded-xs`}
-                    style={{ backgroundColor: color }}
-                    title={`${format(day, "PPP")}: ${contribution?.count || 0} contributions`}
+                    className="w-3 h-3 rounded-xs"
+                    style={{ backgroundColor: getColor(count) }}
+                    title={`${format(day, "PPP")}: ${count} contributions`}
                   />
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    {format(day, "PPP")}: {contribution?.count || 0}{" "}
-                    contributions
+                    {format(day, "PPP")}: {count} contributions
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -127,15 +127,15 @@ const GitHubCalendar = ({
       currentWeekStart = addDays(currentWeekStart, 7);
     }
 
-    return monthLabels.map((m, i) => (
+    return monthLabels.map((month, index) => (
       <span
-        key={i}
+        key={index}
         className="text-xs text-muted-foreground absolute whitespace-nowrap"
         style={{
-          left: `calc(${m.weekIndex} * (0.75rem + 0.125rem))`,
+          left: `calc(${month.weekIndex} * (0.75rem + 0.125rem))`,
         }}
       >
-        {m.name}
+        {month.name}
       </span>
     ));
   };

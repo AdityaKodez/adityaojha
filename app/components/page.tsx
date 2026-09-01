@@ -12,10 +12,22 @@ export const metadata: Metadata = {
   title: "components",
   description:
     "A growing set of reusable building blocks — lightweight, themable, and easy to drop into any project.",
+  alternates: {
+    canonical: "/components",
+  },
+  openGraph: {
+    title: "components — aditya ojha",
+    description:
+      "A growing set of reusable building blocks — lightweight, themable, and easy to drop into any project.",
+    url: "/components",
+  },
 };
 
 export default function ComponentsPage() {
   const components = getEnabledComponents();
+  // An odd count leaves a gap in the two-column grid — fill it with a
+  // placeholder cell so the hairline grid still reads as complete.
+  const needsFiller = components.length % 2 === 1;
 
   return (
     <main
@@ -39,6 +51,7 @@ export default function ComponentsPage() {
             ids={components.map((c) => c.id)}
           />
         </section>
+        <h2 className="sr-only">Available Components</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2">
           {components.map((c, index) => {
             const Icon = getComponentIcon(c.icon);
@@ -48,7 +61,8 @@ export default function ComponentsPage() {
                 href={`/components/${c.id}`}
                 className={cn(
                   "group relative flex items-stretch",
-                  index < components.length - 1 && "border-b sm:border-b-0"
+                  (index < components.length - 1 || needsFiller) &&
+                    "border-b sm:border-b-0"
                 )}
               >
                 <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5 transition-colors hover:bg-muted/10">
@@ -70,6 +84,40 @@ export default function ComponentsPage() {
               </Link>
             );
           })}
+
+          {needsFiller ? (
+            <div
+              aria-hidden
+              className="relative flex select-none items-stretch"
+            >
+              <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5">
+                <div className="relative flex size-10 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground/50">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className="h-4 w-4"
+                  >
+                    <path d="M12 6v12" />
+                    <path d="M6 12h12" />
+                  </svg>
+                  <div className="pointer-events-none absolute inset-0 rounded-sm border border-dashed border-muted-foreground/20" />
+                </div>
+                <div className="flex min-w-0 grow flex-col">
+                  <h3 className="truncate text-sm font-medium tracking-tight text-muted-foreground/60">
+                    something new is on the bench
+                  </h3>
+                  <p className="mt-1 line-clamp-2 text-xs text-muted-foreground/50">
+                    the next block lands in this slot. it is being drawn,
+                    measured, and argued with.
+                  </p>
+                </div>
+              </div>
+              <div className="pointer-events-none absolute inset-0 border border-dashed border-muted-foreground/15" />
+            </div>
+          ) : null}
         </div>
       </section>
 

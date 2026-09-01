@@ -644,8 +644,8 @@ code[data-theme*=" "] span,
   position: absolute;
   top: -40px;
   left: 0;
-  background: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background: var(--primary);
+  color: var(--primary-foreground);
   padding: 8px 16px;
   z-index: 100;
   transition: top 0.2s ease;

@@ -47,6 +47,7 @@ next-env.d.ts
 
 # agent workspace
 .workbuddy-ai/
+/.agents/
 
 # local scratch from registry install tests / debug dumps
 .tmp-registry-consumer-*/

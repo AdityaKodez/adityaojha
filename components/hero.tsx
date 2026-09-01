@@ -152,7 +152,7 @@ export function Hero() {
         </div>
       </div>
 
-      <audio src="/vibration.mp3" ref={vibrateAudio} loop preload="auto" />
+      <audio src="/vibration.mp3" ref={vibrateAudio} loop preload="none" />
     </motion.section>
   );
 }

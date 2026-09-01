@@ -292,6 +292,31 @@ const ContactChannelsIcon = ({
   </svg>
 );
 
+const SectionRailIcon = ({
+  size = 24,
+  color = "currentColor",
+  ...props
+}: ComponentIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M4 3v18" strokeDasharray="2 3" strokeOpacity="0.45" />
+    <path d="M4 6h14" />
+    <path d="M4 10h10" strokeOpacity="0.7" />
+    <path d="M4 14h7" strokeOpacity="0.5" />
+    <path d="M4 18h4" strokeOpacity="0.3" />
+  </svg>
+);
+
 export {
   DottedWorldMapIcon,
   CopyCommandBlockIcon,
@@ -303,6 +328,7 @@ export {
   ModeTogglerIcon,
   StackPillsIcon,
   ContactChannelsIcon,
+  SectionRailIcon,
 };
 
 /** Maps a `ComponentDoc.icon` key onto its icon component. */
@@ -326,6 +352,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return StackPillsIcon;
     case "channels":
       return ContactChannelsIcon;
+    case "rail":
+      return SectionRailIcon;
     case "globe":
     default:
       return DottedWorldMapIcon;

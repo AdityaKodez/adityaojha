@@ -17,11 +17,11 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
+      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https://i.scdn.co https://cdn.discordapp.com https://wsrv.nl",
       "font-src 'self' data:",
-      "connect-src 'self' https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+      "connect-src 'self' https://api.github.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
       "frame-ancestors 'self'",
       "base-uri 'self'",
       "form-action 'self'",
@@ -31,11 +31,15 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { hostname: "i.scdn.co" },
       { hostname: "cdn.discordapp.com" },
       { hostname: "wsrv.nl" },
     ],
+  },
+  experimental: {
+    optimizePackageImports: ["lucide-react", "react-icons", "date-fns"],
   },
   async headers() {
     return [

@@ -8,9 +8,21 @@ const RATE_LIMIT = 30; // requests
 const RATE_WINDOW_MS = 60_000; // per minute
 
 const buckets = new Map<string, { tokens: number; updatedAt: number }>();
+const MAX_BUCKETS = 5000;
+const BUCKET_TTL_MS = 300_000; // 5 minutes
+
+function cleanupOldBuckets(now: number) {
+  if (buckets.size < MAX_BUCKETS) return;
+  for (const [ip, b] of buckets.entries()) {
+    if (now - b.updatedAt > BUCKET_TTL_MS) {
+      buckets.delete(ip);
+    }
+  }
+}
 
 function allowRequest(ip: string): boolean {
   const now = Date.now();
+  cleanupOldBuckets(now);
   const refillPerMs = RATE_LIMIT / RATE_WINDOW_MS;
 
   const bucket = buckets.get(ip);

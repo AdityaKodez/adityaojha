@@ -3,10 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import rehypePrettyCode from "rehype-pretty-code";
 import { MarkdownAsync } from "react-markdown";
+import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 
+import { getComponentIcon } from "@/components/component-icons";
+import { CopyBlock, InstallCommand } from "@/components/copy-block";
+import { markdownComponents } from "@/components/markdown-components";
+import { SectionRail, type RailItem } from "@/components/section-rail";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,8 +19,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { CopyBlock, InstallCommand } from "@/components/copy-block";
-import { markdownComponents } from "@/components/markdown-components";
 import { findComponent, getEnabledComponents } from "@/config/components";
 import {
   getAddCommands,
@@ -25,15 +27,18 @@ import {
 } from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
-import { DottedWorldMapDemo } from "./demos/dotted-world-map-demo";
-import { CopyCommandBlockDemo } from "./demos/copy-command-block-demo";
-import { GitHubMapDemo } from "./demos/github-map-demo";
-import { ProjectExplorerDemo } from "./demos/project-explorer-demo";
 import { CarouselDemo } from "./demos/carousel-demo";
-import { ModeTogglerDemo } from "./demos/mode-toggler-demo";
-import { InteractiveSkillCloudDemo } from "./demos/interactive-skill-cloud-demo";
 import { ContactChannelsDemo } from "./demos/contact-channels-demo";
+import { CopyCommandBlockDemo } from "./demos/copy-command-block-demo";
+import { DottedWorldMapDemo } from "./demos/dotted-world-map-demo";
 import { ComponentExamples } from "./demos/examples";
+import { GitHubMapDemo } from "./demos/github-map-demo";
+import { InfiniteSliderDemo } from "./demos/infinite-slider-demo";
+import { InteractiveSkillCloudDemo } from "./demos/interactive-skill-cloud-demo";
+import { ModeTogglerDemo } from "./demos/mode-toggler-demo";
+import { ProgressiveBlurDemo } from "./demos/progressive-blur-demo";
+import { ProjectExplorerDemo } from "./demos/project-explorer-demo";
+import { SectionRailDemo } from "./demos/section-rail-demo";
 import { PreviewBox } from "./preview-box";
 
 export async function generateStaticParams() {
@@ -58,9 +63,16 @@ export async function generateMetadata({
     openGraph: {
       type: "article",
       url,
-      title: component.title,
+      title: `${component.title} — aditya ojha`,
       description: component.description,
       siteName: siteConfig.meta.shortTitle,
+      images: [siteConfig.meta.ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: component.title,
+      description: component.description,
+      images: [siteConfig.meta.ogImage.url],
     },
   };
 }
@@ -106,7 +118,25 @@ export default async function ComponentDetailPage({
     children: docsMd,
   });
 
+  const railItems: RailItem[] = [
+    ...getEnabledComponents().map((c) => {
+      const Icon = getComponentIcon(c.icon);
+      return {
+        id: c.id,
+        label: c.title,
+        href: `/components/${c.id}`,
+        card: {
+          title: c.title,
+          description: c.description,
+          icon: <Icon className="h-4 w-4" />,
+        },
+      };
+    }),
+  ];
+
   return (
+    <>
+    <SectionRail items={railItems} activeId={component.id} />
     <main
       id={`component-${component.id}`}
       className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-14 pb-12"
@@ -184,6 +214,7 @@ export default async function ComponentDetailPage({
       {/* Examples carousel */}
       <ComponentExamples id={component.id} />
     </main>
+    </>
   );
 }
 
@@ -202,12 +233,18 @@ function ComponentDemo({ id }: { id: string }) {
       return <ProjectExplorerDemo />;
     case "carousel":
       return <CarouselDemo />;
+    case "infinite-slider":
+      return <InfiniteSliderDemo />;
     case "mode-toggler":
       return <ModeTogglerDemo />;
+    case "progressive-blur":
+      return <ProgressiveBlurDemo />;
     case "interactive-skill-cloud":
       return <InteractiveSkillCloudDemo />;
     case "contact-channels":
       return <ContactChannelsDemo />;
+    case "section-rail":
+      return <SectionRailDemo />;
     default:
       return (
         <div className="text-sm text-muted-foreground">

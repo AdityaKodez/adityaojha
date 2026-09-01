@@ -119,6 +119,17 @@ export const componentRegistry: ComponentDoc[] = [
     order: 10,
     enabled: true,
   },
+  {
+    id: "section-rail",
+    title: "Section Rail",
+    description:
+      "A responsive section navigation rail with scroll tracking, smooth anchor jumps, link mode, and optional rich hover previews.",
+    icon: "rail",
+    demoPath: "app/components/[id]/demos/section-rail-demo.tsx",
+    docPath: "content/components/section-rail.md",
+    order: 11,
+    enabled: true,
+  },
 ];
 
 export function findComponent(id: string): ComponentDoc | undefined {

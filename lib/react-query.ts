@@ -134,12 +134,12 @@ export function useQuery<T>(
     const hasNoData = typeof state.data === "undefined";
 
     if (hasNoData || isStale) {
-      void fetchQuery(key, queryFn);
+      void fetchQuery(key, queryFn).catch(() => {});
     }
 
     const intervalId = refetchInterval
       ? window.setInterval(() => {
-          void fetchQuery(key, queryFn);
+          void fetchQuery(key, queryFn).catch(() => {});
         }, refetchInterval)
       : undefined;
 
@@ -152,7 +152,7 @@ export function useQuery<T>(
       const staleOnFocus = Date.now() - latest.updatedAt > staleTime;
 
       if (staleOnFocus) {
-        void fetchQuery(key, queryFn);
+        void fetchQuery(key, queryFn).catch(() => {});
       }
     };
 

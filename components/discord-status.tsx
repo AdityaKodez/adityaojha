@@ -223,18 +223,18 @@ export function DiscordStatus() {
 
   if (isLoading) {
     return (
-      <Badge variant="outline" className="gap-1.5">
+      <Badge variant="ghost" className="gap-1.5 cursor-default text-muted-foreground">
         <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
-        <span className="text-muted-foreground">Syncing...</span>
+        <span className="font-sans">Syncing...</span>
       </Badge>
     );
   }
 
   if (error || !data) {
     return (
-      <Badge variant="outline" className="gap-1.5">
+      <Badge variant="ghost" className="gap-1.5 cursor-default text-muted-foreground">
         <CircleOff className="h-3 w-3 text-muted-foreground" />
-        <span className="text-muted-foreground">Offline</span>
+        <span className="font-sans">Offline</span>
       </Badge>
     );
   }
@@ -245,8 +245,13 @@ export function DiscordStatus() {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div>
-          <Badge variant="ghost" className="gap-1.5 cursor-default">
+        <div
+          tabIndex={0}
+          role="button"
+          aria-label={`Discord status: ${config.label}`}
+          className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 rounded-sm inline-flex"
+        >
+          <Badge variant="ghost" className="gap-1.5 cursor-pointer">
             <StatusIcon className={`h-3 w-3 ${config.iconClassName}`} />
             <span className="font-sans">{config.label}</span>
           </Badge>
