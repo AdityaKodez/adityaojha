@@ -182,10 +182,10 @@ function WorkRow({
         <span className="min-w-0 flex-1 truncate text-sm font-medium transition-colors group-hover:text-primary group-focus-visible:text-primary">
           {subtitle ? (
             <>
-              <span className="font-medium text-foreground group-hover:text-primary group-focus-visible:text-primary">
+              <span className="hidden font-medium text-foreground group-hover:text-primary group-focus-visible:text-primary md:inline">
                 {name}
               </span>
-              <span className="hidden font-normal text-muted-foreground md:inline md:ml-4">
+              <span className="inline font-normal text-muted-foreground md:ml-4">
                 {subtitle}
               </span>
             </>
