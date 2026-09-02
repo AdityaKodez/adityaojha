@@ -9,8 +9,9 @@ import remarkGfm from "remark-gfm";
 
 import { getComponentIcon } from "@/components/component-icons";
 import { CopyBlock, InstallCommand } from "@/components/copy-block";
+import { HomeSectionRail } from "@/components/home-section-rail";
 import { markdownComponents } from "@/components/markdown-components";
-import { SectionRail, type RailItem } from "@/components/section-rail";
+import type { RailItem } from "@/components/section-rail";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -136,7 +137,7 @@ export default async function ComponentDetailPage({
 
   return (
     <>
-    <SectionRail items={railItems} activeId={component.id} />
+    <HomeSectionRail items={railItems} activeId={component.id} />
     <main
       id={`component-${component.id}`}
       className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-14 pb-12"
@@ -170,6 +171,7 @@ export default async function ComponentDetailPage({
 
       {/* Preview / Code box */}
       <PreviewBox
+        componentId={component.id}
         ariaLabel={`${component.title} preview`}
         preview={<ComponentDemo id={component.id} />}
         codeHtml={highlighted}
@@ -186,6 +188,8 @@ export default async function ComponentDetailPage({
         </p>
         <InstallCommand
           className="mt-4"
+          componentId={component.id}
+          location="component_detail_page"
           commands={getAddCommands(component.id)}
         />
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">

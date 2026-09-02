@@ -8,8 +8,8 @@ import { Footer } from "@/components/footer";
 import { GitHubSection } from "@/components/github-section";
 import { Hero } from "@/components/hero";
 import { HowIWork } from "@/components/how-i-work";
-import { ProjectExplorer } from "@/components/project-explorer";
-import { SectionRail } from "@/components/section-rail";
+import { HomeProjectExplorer } from "@/components/home-project-explorer";
+import { HomeSectionRail } from "@/components/home-section-rail";
 import { Services } from "@/components/services";
 import { GitSkeleton } from "@/components/skeletons/github-skeleton";
 import { Skills } from "@/components/skills";
@@ -28,7 +28,7 @@ const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   about: <About />,
   testimonials: <Testimonials />,
   projects: (
-    <ProjectExplorer
+    <HomeProjectExplorer
       projects={projectsConfig}
       title={projectsSectionConfig.title}
     />
@@ -89,7 +89,7 @@ export default function Home() {
         <Footer />
       </main>
 
-      <SectionRail
+      <HomeSectionRail
         items={[
           { id: "hero", label: "top" },
           ...visibleSections.map((id) => ({ id, label: id })),

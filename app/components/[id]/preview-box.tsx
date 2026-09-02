@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import { Check, Copy } from "lucide-react";
 import {
   type ReactNode,
@@ -32,6 +33,8 @@ export type PreviewBoxProps = {
   rawCode: string;
   /** Optional title shown above the box (only used for accessibility). */
   ariaLabel?: string;
+  /** Component identifier for analytics attribution. */
+  componentId?: string;
 };
 
 export function PreviewBox({
@@ -39,6 +42,7 @@ export function PreviewBox({
   codeHtml,
   rawCode,
   ariaLabel,
+  componentId = "unknown",
 }: PreviewBoxProps) {
   const [activeTab, setActiveTab] = useState<Tab>("preview");
   const [copied, setCopied] = useState(false);
@@ -54,7 +58,11 @@ export function PreviewBox({
   const selectTab = useCallback((tab: Tab) => {
     setActiveTab(tab);
     if (tab === "code") setCodeMounted(true);
-  }, []);
+    trackEvent("component_tab_switched", {
+      component_id: componentId,
+      tab,
+    });
+  }, [componentId]);
 
   const handleCopy = useCallback(() => {
     if (typeof navigator === "undefined") return;
@@ -62,6 +70,9 @@ export function PreviewBox({
       .writeText(rawCode)
       .then(() => {
         setCopied(true);
+        trackEvent("component_demo_source_copied", {
+          component_id: componentId,
+        });
         window.clearTimeout(copyResetTimer.current);
         copyResetTimer.current = window.setTimeout(() => setCopied(false), 2000);
       })
@@ -70,7 +81,7 @@ export function PreviewBox({
         // to the idle icon instead of leaving an unhandled rejection behind.
         setCopied(false);
       });
-  }, [rawCode]);
+  }, [rawCode, componentId]);
 
   return (
     <div

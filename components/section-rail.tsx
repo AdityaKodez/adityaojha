@@ -37,6 +37,8 @@ export type SectionRailProps = {
   variant?: "viewport" | "contained";
   /** Scroll area that owns the target sections in contained mode. */
   scrollRootRef?: RefObject<HTMLElement | null>;
+  /** Optional callback fired when a section rail item is clicked. */
+  onSectionClick?: (targetSectionId: string, currentSectionId?: string) => void;
   className?: string;
 };
 
@@ -47,6 +49,7 @@ export function SectionRail({
   activeId,
   variant = "viewport",
   scrollRootRef,
+  onSectionClick,
   className,
 }: SectionRailProps) {
   const [tracked, setTracked] = useState(() => items[0]?.id ?? "");
@@ -132,6 +135,8 @@ export function SectionRail({
     const scrollRoot = scrollRootRef?.current ?? null;
     const element = document.getElementById(id);
     if (!element || (scrollRoot && !scrollRoot.contains(element))) return;
+
+    onSectionClick?.(id, active);
 
     setTracked(id);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

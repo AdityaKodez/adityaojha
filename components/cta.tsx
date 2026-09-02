@@ -2,6 +2,7 @@
 
 import { siteConfig } from "@/config/site";
 import type { SocialIcon, SocialLink } from "@/config/types";
+import { trackEvent } from "@/lib/analytics";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
 import { Check, Copy } from "lucide-react";
@@ -34,6 +35,12 @@ export function CTA() {
       return;
     }
     navigator.clipboard.writeText(channel.copyValue);
+    trackEvent("social_handle_copied", {
+      platform: channel.platform,
+      handle: channel.handle,
+      method: "click",
+      location: "contact_section",
+    });
     setCopiedField(channel.id);
     setTimeout(() => setCopiedField(null), 2000);
   };
@@ -56,6 +63,13 @@ export function CTA() {
               href="https://x.com/AdiKodez"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                trackEvent("social_link_clicked", {
+                  platform: "x",
+                  url: "https://x.com/AdiKodez",
+                  location: "contact_section",
+                });
+              }}
             >
               <X data-icon="inline-start" />
               Follow @AdiKodez
@@ -108,7 +122,19 @@ export function CTA() {
             return (
               <Tooltip key={channel.id}>
                 <TooltipTrigger asChild>
-                  <Link href={channel.href ?? "#"} target="_blank" rel="noopener noreferrer" className="focus-visible:outline-none">
+                  <Link
+                    href={channel.href ?? "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      trackEvent("social_link_clicked", {
+                        platform: channel.platform,
+                        url: channel.href ?? "",
+                        location: "contact_section",
+                      });
+                    }}
+                    className="focus-visible:outline-none"
+                  >
                     {content}
                   </Link>
                 </TooltipTrigger>

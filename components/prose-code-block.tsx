@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import { Check, Copy } from "lucide-react";
 import { useCallback, useRef, useState, type ReactNode } from "react";
+import { trackEvent } from "@/lib/analytics";
 import {
   Tooltip,
   TooltipContent,
@@ -26,6 +27,9 @@ export function ProseCodeBlock({ children }: { children: ReactNode }) {
       .writeText(text)
       .then(() => {
         setCopied(true);
+        trackEvent("prose_code_copied", {
+          page_path: typeof window !== "undefined" ? window.location.pathname : undefined,
+        });
         window.clearTimeout(resetRef.current);
         resetRef.current = window.setTimeout(() => setCopied(false), 2000);
       })

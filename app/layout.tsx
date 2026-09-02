@@ -1,3 +1,4 @@
+import { PostHogProvider } from "@/components/posthog-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -163,8 +164,10 @@ export default function RootLayout({
         </noscript>
         <ThemeProvider>
           <TooltipProvider>
-            <SiteHeader />
-            {children}
+            <PostHogProvider>
+              <SiteHeader />
+              {children}
+            </PostHogProvider>
           </TooltipProvider>
         </ThemeProvider>
         <Analytics />

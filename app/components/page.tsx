@@ -142,6 +142,7 @@ export default function ComponentsPage() {
         <CopyBlock
           className="mt-4"
           value={getRegistrySetupSnippet()}
+          location="components_index"
           copyLabel="copy registry config"
         />
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">

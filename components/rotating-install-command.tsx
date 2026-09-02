@@ -14,6 +14,7 @@ import {
   type PackageManager,
   getAddCommands,
 } from "@/config/registry";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/use-copy";
 import { PM_ICONS } from "@/components/pm-icons";
@@ -64,6 +65,24 @@ export function RotatingInstallCommand({
 
   if (safeIds.length === 0) return null;
 
+  const handleManagerChange = (pm: PackageManager) => {
+    setManager(pm);
+    trackEvent("package_manager_changed", {
+      selected_manager: pm,
+      component_id: currentId,
+    });
+  };
+
+  const handleCopy = () => {
+    void copy(command);
+    trackEvent("registry_command_copied", {
+      component_id: currentId,
+      package_manager: manager,
+      command,
+      location: "rotating_install_bar",
+    });
+  };
+
   return (
     <div
       className={cn("relative", className)}
@@ -82,7 +101,7 @@ export function RotatingInstallCommand({
             <button
               key={pm}
               type="button"
-              onClick={() => setManager(pm)}
+              onClick={() => handleManagerChange(pm)}
               aria-pressed={isActive}
               className={cn(
                 "flex items-center gap-1.5 rounded-sm px-2 py-1 font-mono text-[10px] tracking-wider micro-transition",
@@ -139,7 +158,7 @@ export function RotatingInstallCommand({
             <TooltipTrigger asChild>
               <button
                 type="button"
-                onClick={() => void copy(command)}
+                onClick={handleCopy}
                 aria-label="copy command"
                 className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >

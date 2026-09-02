@@ -2,6 +2,7 @@
 
 import { siteConfig } from "@/config/site";
 import type { Bookmark, Certification } from "@/config/types";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { ArrowDownCircleIcon, ArrowRightIcon } from "lucide-react";
 import { motion } from "motion/react";
@@ -57,6 +58,9 @@ export function Bookmarks() {
   function handleCollectionChange(collection: CollectionId) {
     setActiveCollection(collection);
     setShowAll(false);
+    trackEvent("bookmarks_tab_switched", {
+      tab: collection,
+    });
   }
 
   return (
@@ -115,6 +119,14 @@ export function Bookmarks() {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => {
+                      trackEvent("bookmark_clicked", {
+                        item_id: item.id,
+                        title: item.title,
+                        domain: item.domain,
+                        collection: activeCollection,
+                      });
+                    }}
                     className="flex h-full items-stretch px-4 py-5 transition-colors hover:bg-muted/10"
                   >
                     <div className="relative z-10 flex min-w-0 flex-1 items-center gap-4">
@@ -159,7 +171,14 @@ export function Bookmarks() {
               className="flex justify-center border-y py-2"
             >
               <Button
-                onClick={() => setShowAll(!showAll)}
+                onClick={() => {
+                  const nextShowAll = !showAll;
+                  setShowAll(nextShowAll);
+                  trackEvent("bookmarks_expanded_toggled", {
+                    collection: activeCollection,
+                    expanded: nextShowAll,
+                  });
+                }}
                 variant="ghost"
                 size="sm"
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground font-pixel text-xs"

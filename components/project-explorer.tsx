@@ -132,6 +132,7 @@ interface PreviewHandlers {
   onPreviewStart: (project: ProjectExplorerItem, anchor?: DOMRect) => void;
   onPreviewEnd: () => void;
   showHoverPreview: boolean;
+  onProjectClick?: (project: ProjectExplorerItem, targetType: "case_study" | "external_url", url: string) => void;
 }
 
 function WorkRow({
@@ -140,6 +141,7 @@ function WorkRow({
   onPreviewStart,
   onPreviewEnd,
   showHoverPreview,
+  onProjectClick,
 }: { project: ProjectExplorerItem; index: number } & PreviewHandlers) {
   const [name, subtitle] = project.title.split(" — ");
   const href = project.href ?? project.liveUrl ?? (project.id ? `/project/${project.id}` : "#");
@@ -149,6 +151,10 @@ function WorkRow({
         (project.href.startsWith("http://") ||
           project.href.startsWith("https://"))),
   );
+
+  const handleClick = () => {
+    onProjectClick?.(project, isExternal ? "external_url" : "case_study", href);
+  };
 
   return (
     <motion.li
@@ -160,6 +166,7 @@ function WorkRow({
     >
       <Link
         href={href}
+        onClick={handleClick}
         {...(isExternal
           ? { target: "_blank", rel: "noopener noreferrer" }
           : {})}
@@ -224,6 +231,10 @@ export type ProjectExplorerProps = {
   defaultOpen?: "all" | "latest";
   /** Enable or disable the floating cursor hover image preview card. Default: true */
   showHoverPreview?: boolean;
+  /** Optional callback fired when a project link is clicked. */
+  onProjectClick?: (project: ProjectExplorerItem, targetType: "case_study" | "external_url", url: string) => void;
+  /** Optional callback fired when a year folder is expanded or collapsed. */
+  onYearToggle?: (year: number, action: "expand" | "collapse") => void;
   /** Additional classes for the container section */
   className?: string;
 };
@@ -234,6 +245,8 @@ export function ProjectExplorer({
   showHeading = true,
   defaultOpen = "all",
   showHoverPreview = true,
+  onProjectClick,
+  onYearToggle,
   className,
 }: ProjectExplorerProps) {
   const [activeProject, setActiveProject] = useState<ProjectExplorerItem | null>(null);
@@ -265,11 +278,15 @@ export function ProjectExplorer({
   });
 
   const toggleYear = useCallback((year: number) => {
-    setOpenYears((prev) => ({
-      ...prev,
-      [year]: !prev[year],
-    }));
-  }, []);
+    setOpenYears((prev) => {
+      const willBeOpen = !prev[year];
+      onYearToggle?.(year, willBeOpen ? "expand" : "collapse");
+      return {
+        ...prev,
+        [year]: willBeOpen,
+      };
+    });
+  }, [onYearToggle]);
 
   const canHover = useSyncExternalStore(
     subscribeHoverCapability,
@@ -403,6 +420,7 @@ export function ProjectExplorer({
                         onPreviewStart={handlePreviewStart}
                         onPreviewEnd={handlePreviewEnd}
                         showHoverPreview={showHoverPreview}
+                        onProjectClick={onProjectClick}
                       />
                     ))}
                   </motion.ul>

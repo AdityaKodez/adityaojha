@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/site";
+import { trackEvent } from "@/lib/analytics";
 import OpenSrc from "@/public/stacks/open-src";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -27,10 +28,15 @@ export function HeaderActions() {
     }
   };
 
-  const toggleTheme = useCallback(() => {
+  const toggleTheme = useCallback((method: "button" | "shortcut_key" = "button") => {
     playThemeAudio();
+    const nextTheme = resolvedTheme === "dark" ? "light" : "dark";
+    trackEvent("theme_toggled", {
+      theme: nextTheme,
+      method,
+    });
     setTimeout(() => {
-      setTheme(resolvedTheme === "dark" ? "light" : "dark");
+      setTheme(nextTheme);
     }, 200);
   }, [resolvedTheme, setTheme]);
 
@@ -48,13 +54,13 @@ export function HeaderActions() {
         e.key.toLowerCase() === siteConfig.banner.themeShortcut.toLowerCase()
       ) {
         e.preventDefault();
-        buttonRef.current?.click();
+        toggleTheme("shortcut_key");
       }
     };
 
     window.addEventListener("keydown", handleGlobalKeyDown);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
-  }, []);
+  }, [toggleTheme]);
 
   useEffect(() => {
     try {
@@ -108,6 +114,12 @@ export function HeaderActions() {
               href={siteConfig.banner.openSourceUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                trackEvent("github_repo_clicked", {
+                  repo_url: siteConfig.banner.openSourceUrl,
+                  star_count: starCount,
+                });
+              }}
               className="flex h-8 items-center justify-center gap-1.5 px-2.5 text-xs text-muted-foreground transition-colors hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
               <OpenSrc size="18" />
@@ -130,7 +142,7 @@ export function HeaderActions() {
               variant="ghost"
               size="icon"
               className="h-8 w-8 cursor-pointer rounded-none border-0 text-muted-foreground transition-colors hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              onClick={toggleTheme}
+              onClick={() => toggleTheme("button")}
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform duration-300 dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform duration-300 dark:rotate-0 dark:scale-100" />

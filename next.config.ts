@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
   {
@@ -17,11 +19,11 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://va.vercel-scripts.com https://us-assets.i.posthog.com https://eu-assets.i.posthog.com`,
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://i.scdn.co https://cdn.discordapp.com https://wsrv.nl",
+      "img-src 'self' data: blob: https://i.scdn.co https://cdn.discordapp.com https://wsrv.nl https://us.i.posthog.com https://eu.i.posthog.com",
       "font-src 'self' data:",
-      "connect-src 'self' https://api.github.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+      "connect-src 'self' https://api.github.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://us.i.posthog.com https://us-assets.i.posthog.com https://eu.i.posthog.com https://eu-assets.i.posthog.com",
       "frame-ancestors 'self'",
       "base-uri 'self'",
       "form-action 'self'",

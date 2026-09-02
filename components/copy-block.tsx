@@ -13,6 +13,7 @@ import {
   PACKAGE_MANAGERS,
   type PackageManager,
 } from "@/config/registry";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { useCopy, type CopyStatus } from "@/lib/use-copy";
 import { PM_ICONS } from "@/components/pm-icons";
@@ -123,6 +124,7 @@ export type CopyBlockProps = {
   display?: ReactNode;
   className?: string;
   copyLabel?: string;
+  location?: string;
 };
 
 /** A single copyable snippet — used for non-command content like JSON config. */
@@ -131,8 +133,19 @@ export function CopyBlock({
   display,
   className,
   copyLabel = "copy",
+  location = "component_doc",
 }: CopyBlockProps) {
   const { status, copy } = useCopy();
+
+  const handleCopy = () => {
+    void copy(value);
+    if (value.includes("@akoder") || value.includes("registries")) {
+      trackEvent("registry_setup_snippet_copied", {
+        namespace: "@akoder",
+        location,
+      });
+    }
+  };
 
   return (
     <CodeShell
@@ -142,7 +155,7 @@ export function CopyBlock({
           <TooltipTrigger asChild>
             <button
               type="button"
-              onClick={() => void copy(value)}
+              onClick={handleCopy}
               aria-label={copyLabel}
               className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
@@ -170,17 +183,43 @@ export type InstallCommandProps = {
   /** One command per package manager. Keys drive the tab order. */
   commands: Record<PackageManager, string>;
   className?: string;
+  componentId?: string;
+  location?: string;
 };
 
 /**
  * Package-manager aware install block. The selected manager is persisted in
  * localStorage, so every install block on the site stays in sync.
  */
-export function InstallCommand({ commands, className }: InstallCommandProps) {
+export function InstallCommand({
+  commands,
+  className,
+  componentId,
+  location = "component_doc",
+}: InstallCommandProps) {
   const manager = usePackageManager();
   const { status, copy } = useCopy();
 
   const command = commands[manager] ?? commands.npm;
+
+  const handleCopy = () => {
+    void copy(command);
+    const parsedId = componentId ?? command.split("@akoder/")[1]?.split(" ")[0] ?? "unknown";
+    trackEvent("registry_command_copied", {
+      component_id: parsedId,
+      package_manager: manager,
+      command,
+      location,
+    });
+  };
+
+  const handleManagerChange = (pm: PackageManager) => {
+    writeManager(pm);
+    trackEvent("package_manager_changed", {
+      selected_manager: pm,
+      component_id: componentId,
+    });
+  };
 
   return (
     <div className={cn("relative", className)}>
@@ -193,7 +232,7 @@ export function InstallCommand({ commands, className }: InstallCommandProps) {
             <button
               key={pm}
               type="button"
-              onClick={() => writeManager(pm)}
+              onClick={() => handleManagerChange(pm)}
               aria-pressed={isActive}
               className={cn(
                 "flex items-center gap-1.5 rounded-sm px-2 py-1 font-mono text-[10px] tracking-wider micro-transition",
@@ -228,7 +267,7 @@ export function InstallCommand({ commands, className }: InstallCommandProps) {
             <TooltipTrigger asChild>
               <button
                 type="button"
-                onClick={() => void copy(command)}
+                onClick={handleCopy}
                 aria-label="copy install command"
                 className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >

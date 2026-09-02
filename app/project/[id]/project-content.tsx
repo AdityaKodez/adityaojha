@@ -4,6 +4,7 @@ import { markdownComponents } from "@/components/markdown-components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Project } from "@/config/types";
+import { trackEvent } from "@/lib/analytics";
 import { BarChart3, ArrowLeft, ForwardIcon, Users } from "lucide-react";
 import { motion, Variants } from "motion/react";
 import Image from "next/image";
@@ -112,7 +113,17 @@ export function ProjectContent({ project }: { project: Project }) {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button asChild>
-                      <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      <Link
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => {
+                          trackEvent("project_live_preview_clicked", {
+                            project_id: project.id,
+                            live_url: project.liveUrl!,
+                          });
+                        }}
+                      >
                         Live Preview <ForwardIcon className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
@@ -126,7 +137,17 @@ export function ProjectContent({ project }: { project: Project }) {
 
             {project.githubUrl && (
               <Button asChild variant="outline">
-                <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                <Link
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    trackEvent("project_source_code_clicked", {
+                      project_id: project.id,
+                      github_url: project.githubUrl!,
+                    });
+                  }}
+                >
                   <FaGithub className="mr-2 h-4 w-4" />
                   Source Code
                 </Link>

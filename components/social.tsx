@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ArrowRightIcon, Check, Copy } from "lucide-react";
 import { socialSectionConfig, socialsConfig } from "@/config/socials";
 import type { SocialIcon, SocialLink } from "@/config/types";
+import { trackEvent } from "@/lib/analytics";
 import Peerlist from "@/public/peerlist";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
@@ -56,12 +57,18 @@ const Social = () => {
     [],
   );
 
-  const handleCopy = (social: SocialLink) => {
+  const handleCopy = (social: SocialLink, method: "click" | "shortcut_key" = "click") => {
     if (!social.copyValue) {
       return;
     }
 
     navigator.clipboard.writeText(social.copyValue);
+    trackEvent("social_handle_copied", {
+      platform: social.platform,
+      handle: social.handle,
+      method,
+      location: "social_section",
+    });
     setCopied((prev) => ({ ...prev, [social.id]: true }));
     setTimeout(() => {
       setCopied((prev) => ({ ...prev, [social.id]: false }));
@@ -87,7 +94,7 @@ const Social = () => {
       }
 
       e.preventDefault();
-      handleCopy(target);
+      handleCopy(target, "shortcut_key");
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -153,7 +160,7 @@ const Social = () => {
               <Tooltip key={social.id}>
                 <TooltipTrigger asChild>
                   <button
-                    onClick={() => handleCopy(social)}
+                    onClick={() => handleCopy(social, "click")}
                     className="group micro-press block w-full text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 focus-visible:ring-offset-0"
                   >
                     {cellContent}
@@ -176,6 +183,13 @@ const Social = () => {
                   href={social.href ?? "#"}
                   target={social.action === "external" ? "_blank" : undefined}
                   rel={social.action === "external" ? "noopener noreferrer" : undefined}
+                  onClick={() => {
+                    trackEvent("social_link_clicked", {
+                      platform: social.platform,
+                      url: social.href ?? "",
+                      location: "social_section",
+                    });
+                  }}
                   className="group micro-press block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 focus-visible:ring-offset-0"
                 >
                   {cellContent}

@@ -5,6 +5,7 @@ import { WritingUnderline } from "./writing-underline";
 import DiscordStatus from "./discord-status";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
+import { trackEvent } from "@/lib/analytics";
 import { Globe2Icon } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
@@ -23,13 +24,14 @@ export function Hero() {
     heroConfig.descriptionHighlight,
   );
 
-  const handleWaveAudio = (play: boolean) => {
+  const handleWaveAudio = (play: boolean, interactionType: "hover" | "touch" = "hover") => {
     const audio = vibrateAudio.current;
     if (!audio) {
       return;
     }
 
     if (play) {
+      trackEvent("hero_wave_hovered", { interaction_type: interactionType });
       audio.currentTime = 0;
       audio.playbackRate = 1;
       audio.volume = 0.6;
@@ -69,12 +71,12 @@ export function Hero() {
               className="inline-block text-2xl hover:animate-wave"
               onMouseEnter={() => {
                 vibrate();
-                handleWaveAudio(true);
+                handleWaveAudio(true, "hover");
               }}
               onMouseLeave={() => handleWaveAudio(false)}
-              onFocus={() => handleWaveAudio(true)}
+              onFocus={() => handleWaveAudio(true, "hover")}
               onBlur={() => handleWaveAudio(false)}
-              onTouchStart={() => handleWaveAudio(true)}
+              onTouchStart={() => handleWaveAudio(true, "touch")}
               onTouchEnd={() => handleWaveAudio(false)}
               style={{ transformOrigin: "70% 70%" }}
             >
