@@ -10,6 +10,41 @@ export const componentsSectionConfig = {
 
 export const componentRegistry: ComponentDoc[] = [
   {
+    id: "progress-bars",
+    title: "Progress Bars",
+    description:
+      "A minimal textured bar chart with vertical and horizontal layouts, shipping a line fill and a dot matrix fill. Each item needs only a value, with an optional label and tooltip.",
+    icon: "bars",
+    demoPath: "app/components/[id]/demos/progress-bars-demo.tsx",
+    docPath: "content/components/progress-bars.md",
+    order: 1,
+    enabled: true,
+    new: true,
+  },
+  {
+    id: "section-rail",
+    title: "Section Rail",
+    description:
+      "A responsive section navigation rail with scroll tracking, smooth anchor jumps, link mode, and optional rich hover previews.",
+    icon: "rail",
+    demoPath: "app/components/[id]/demos/section-rail-demo.tsx",
+    docPath: "content/components/section-rail.md",
+    order: 2,
+    enabled: true,
+    new: true,
+  },
+  {
+    id: "project-explorer",
+    title: "Interactive Project Explorer",
+    description:
+      "An IDE-style project explorer with collapsible year folders, status badges, and floating cursor image previews.",
+    icon: "folder",
+    demoPath: "app/components/[id]/demos/project-explorer-demo.tsx",
+    docPath: "content/components/project-explorer.md",
+    order: 3,
+    enabled: true,
+  },
+  {
     id: "dotted-world-map",
     title: "Dotted World Map",
     description:
@@ -17,7 +52,7 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "globe",
     demoPath: "app/components/[id]/demos/dotted-world-map-demo.tsx",
     docPath: "content/components/dotted-world-map.md",
-    order: 1,
+    order: 4,
     enabled: true,
   },
   {
@@ -28,73 +63,7 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "terminal",
     demoPath: "app/components/[id]/demos/copy-command-block-demo.tsx",
     docPath: "content/components/copy-command-block.md",
-    order: 2,
-    enabled: true,
-  },
-  {
-    id: "github-map",
-    title: "GitHub Heatmap",
-    description:
-      "An interactive 52-week contribution activity graph with date-fns interval calculation, theme-aware level colors, and date tooltips.",
-    icon: "git",
-    demoPath: "app/components/[id]/demos/github-map-demo.tsx",
-    docPath: "content/components/github-map.md",
-    order: 3,
-    enabled: true,
-  },
-  {
-    id: "project-explorer",
-    title: "Interactive Project Explorer",
-    description:
-      "An IDE-style project explorer with collapsible year folders, status badges, and floating cursor image previews.",
-    icon: "folder",
-    demoPath: "app/components/[id]/demos/project-explorer-demo.tsx",
-    docPath: "content/components/project-explorer.md",
-    order: 4,
-    enabled: true,
-  },
-  {
-    id: "progressive-blur",
-    title: "Progressive Blur",
-    description:
-      "Multi-layered gradient backdrop blur overlay with exponential Gaussian steps and directional masking for sticky navbars and cards.",
-    icon: "blur",
-    demoPath: "app/components/[id]/demos/progressive-blur-demo.tsx",
-    docPath: "content/components/progressive-blur.md",
     order: 5,
-    enabled: false,
-  },
-  {
-    id: "infinite-slider",
-    title: "Infinite Slider",
-    description:
-      "A continuous looping marquee slider powered by Motion and React Use Measure with custom gap, speed, direction, and hover deceleration.",
-    icon: "slider",
-    demoPath: "app/components/[id]/demos/infinite-slider-demo.tsx",
-    docPath: "content/components/infinite-slider.md",
-    order: 6,
-    enabled: false,
-  },
-  {
-    id: "carousel",
-    title: "Fluid Carousel",
-    description:
-      "Accessible touch-swipeable slide carousel with directional spring animations, keyboard arrow navigation, and pagination indicators.",
-    icon: "carousel",
-    demoPath: "app/components/[id]/demos/carousel-demo.tsx",
-    docPath: "content/components/carousel.md",
-    order: 7,
-    enabled: true,
-  },
-  {
-    id: "mode-toggler",
-    title: "Mode Toggler",
-    description:
-      "A minimal Sun ↔ Moon theme toggle button built on next-themes. Supports an optional click sound, composable className, and dynamic aria-label.",
-    icon: "theme",
-    demoPath: "app/components/[id]/demos/mode-toggler-demo.tsx",
-    docPath: "content/components/mode-toggler.md",
-    order: 8,
     enabled: true,
   },
   {
@@ -105,7 +74,29 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "pills",
     demoPath: "app/components/[id]/demos/interactive-skill-cloud-demo.tsx",
     docPath: "content/components/interactive-skill-cloud.md",
-    order: 9,
+    order: 6,
+    enabled: true,
+  },
+  {
+    id: "github-map",
+    title: "GitHub Heatmap",
+    description:
+      "An interactive 52-week contribution activity graph with date-fns interval calculation, theme-aware level colors, and date tooltips.",
+    icon: "git",
+    demoPath: "app/components/[id]/demos/github-map-demo.tsx",
+    docPath: "content/components/github-map.md",
+    order: 7,
+    enabled: true,
+  },
+  {
+    id: "carousel",
+    title: "Fluid Carousel",
+    description:
+      "Accessible touch-swipeable slide carousel with directional spring animations, keyboard arrow navigation, and pagination indicators.",
+    icon: "carousel",
+    demoPath: "app/components/[id]/demos/carousel-demo.tsx",
+    docPath: "content/components/carousel.md",
+    order: 8,
     enabled: true,
   },
   {
@@ -116,19 +107,41 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "channels",
     demoPath: "app/components/[id]/demos/contact-channels-demo.tsx",
     docPath: "content/components/contact-channels.md",
+    order: 9,
+    enabled: true,
+  },
+  {
+    id: "mode-toggler",
+    title: "Mode Toggler",
+    description:
+      "A minimal Sun ↔ Moon theme toggle button built on next-themes. Supports an optional click sound, composable className, and dynamic aria-label.",
+    icon: "theme",
+    demoPath: "app/components/[id]/demos/mode-toggler-demo.tsx",
+    docPath: "content/components/mode-toggler.md",
     order: 10,
     enabled: true,
   },
   {
-    id: "section-rail",
-    title: "Section Rail",
+    id: "progressive-blur",
+    title: "Progressive Blur",
     description:
-      "A responsive section navigation rail with scroll tracking, smooth anchor jumps, link mode, and optional rich hover previews.",
-    icon: "rail",
-    demoPath: "app/components/[id]/demos/section-rail-demo.tsx",
-    docPath: "content/components/section-rail.md",
+      "Multi-layered gradient backdrop blur overlay with exponential Gaussian steps and directional masking for sticky navbars and cards.",
+    icon: "blur",
+    demoPath: "app/components/[id]/demos/progressive-blur-demo.tsx",
+    docPath: "content/components/progressive-blur.md",
     order: 11,
-    enabled: true,
+    enabled: false,
+  },
+  {
+    id: "infinite-slider",
+    title: "Infinite Slider",
+    description:
+      "A continuous looping marquee slider powered by Motion and React Use Measure with custom gap, speed, direction, and hover deceleration.",
+    icon: "slider",
+    demoPath: "app/components/[id]/demos/infinite-slider-demo.tsx",
+    docPath: "content/components/infinite-slider.md",
+    order: 12,
+    enabled: false,
   },
 ];
 

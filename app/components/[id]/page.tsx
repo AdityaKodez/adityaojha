@@ -39,6 +39,7 @@ import { InteractiveSkillCloudDemo } from "./demos/interactive-skill-cloud-demo"
 import { ModeTogglerDemo } from "./demos/mode-toggler-demo";
 import { ProgressiveBlurDemo } from "./demos/progressive-blur-demo";
 import { ProjectExplorerDemo } from "./demos/project-explorer-demo";
+import { ProgressBarsDemo } from "./demos/progress-bars-demo";
 import { SectionRailDemo } from "./demos/section-rail-demo";
 import { PreviewBox } from "./preview-box";
 
@@ -129,7 +130,17 @@ export default async function ComponentDetailPage({
         card: {
           title: c.title,
           description: c.description,
-          icon: <Icon className="h-4 w-4" />,
+          icon: (
+            <span className="relative inline-flex">
+              <Icon className="h-4 w-4" />
+              {c.new && (
+                <span
+                  className="absolute -top-1.5 -right-1.5 size-2 rounded-full bg-sky-500 ring-2 ring-background"
+                  aria-label="new component"
+                />
+              )}
+            </span>
+          ),
         },
       };
     }),
@@ -193,7 +204,7 @@ export default async function ComponentDetailPage({
           commands={getAddCommands(component.id)}
         />
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          First time? Register the{" "}
+          Or register the{" "}
           <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
             {registryConfig.namespace}
           </code>{" "}
@@ -201,7 +212,7 @@ export default async function ComponentDetailPage({
           <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
             components.json
           </code>{" "}
-          and every component installs by name.
+          to install by name:
         </p>
         <CopyBlock
           className="mt-2"
@@ -249,6 +260,8 @@ function ComponentDemo({ id }: { id: string }) {
       return <ContactChannelsDemo />;
     case "section-rail":
       return <SectionRailDemo />;
+    case "progress-bars":
+      return <ProgressBarsDemo />;
     default:
       return (
         <div className="text-sm text-muted-foreground">

@@ -31,18 +31,22 @@ export function CTA() {
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
   const copyValue = (channel: SocialLink) => {
-    if (!channel.copyValue) {
+    if (!channel.copyValue || typeof navigator === "undefined") {
       return;
     }
-    navigator.clipboard.writeText(channel.copyValue);
-    trackEvent("social_handle_copied", {
-      platform: channel.platform,
-      handle: channel.handle,
-      method: "click",
-      location: "contact_section",
-    });
-    setCopiedField(channel.id);
-    setTimeout(() => setCopiedField(null), 2000);
+    navigator.clipboard
+      .writeText(channel.copyValue)
+      .then(() => {
+        trackEvent("social_handle_copied", {
+          platform: channel.platform,
+          handle: channel.handle,
+          method: "click",
+          location: "contact_section",
+        });
+        setCopiedField(channel.id);
+        setTimeout(() => setCopiedField(null), 2000);
+      })
+      .catch(() => {});
   };
 
   return (
@@ -50,8 +54,8 @@ export function CTA() {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="no-js-visible border-t border-b-2 border-dashed [border-bottom-style:solid] pt-6 pb-6"
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      className="no-js-visible border-t border-dashed pt-6 pb-6"
       id="contact"
     >
       <h2 className="section-heading mb-3">{siteConfig.contact.title}</h2>
@@ -72,7 +76,7 @@ export function CTA() {
               }}
             >
               <X data-icon="inline-start" />
-              Follow @AdiKodez
+              follow @AdiKodez
             </Link>
           </Button>
         </div>

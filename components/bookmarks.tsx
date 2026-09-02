@@ -82,7 +82,7 @@ export function Bookmarks() {
                   disabled={isDisabled}
                   onClick={() => handleCollectionChange(collectionId)}
                   className={cn(
-                    "rounded-sm px-3 py-1 text-xs font-pixel uppercase tracking-wider transition-colors",
+                    "rounded-sm px-3 py-1 text-xs font-pixel tracking-wider transition-colors",
                     index > 0 && "ml-1",
                     isActive
                       ? "bg-muted text-foreground"
@@ -145,7 +145,7 @@ export function Bookmarks() {
                         <h3 className="truncate text-sm font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
                           {item.title}
                         </h3>
-                        <p className="truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground/60">
+                        <p className="truncate font-mono text-[10px] tracking-wider text-muted-foreground/60">
                           {item.domain}
                           {"date" in item && item.date ? ` • ${item.date}` : ""}
                         </p>
@@ -168,7 +168,7 @@ export function Bookmarks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.2 }}
-              className="flex justify-center border-y py-2"
+              className="flex justify-center border-t border-dashed py-2"
             >
               <Button
                 onClick={() => {

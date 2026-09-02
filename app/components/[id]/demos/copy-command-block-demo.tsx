@@ -7,21 +7,21 @@ export function CopyCommandBlockDemo() {
     <div className="w-full max-w-lg space-y-6">
       <div className="space-y-2">
         <span className="text-xs font-mono text-muted-foreground">
-          Multi-Package Manager Install Command:
+          multi-package manager install command:
         </span>
         <CopyCommandBlock
           commands={{
-            npm: "npx shadcn@latest add @akoder/dotted-world-map",
-            pnpm: "pnpm dlx shadcn@latest add @akoder/dotted-world-map",
-            yarn: "yarn dlx shadcn@latest add @akoder/dotted-world-map",
-            bun: "bunx --bun shadcn@latest add @akoder/dotted-world-map",
+            npm: "npx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
+            pnpm: "pnpm dlx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
+            yarn: "yarn dlx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
+            bun: "bunx --bun shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
           }}
         />
       </div>
 
       <div className="space-y-2">
         <span className="text-xs font-mono text-muted-foreground">
-          Single Standalone Command:
+          single standalone command:
         </span>
         <CopyCommandBlock command="git clone https://github.com/AdityaKodez/adityaojha.git" />
       </div>

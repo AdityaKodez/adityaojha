@@ -69,6 +69,12 @@ export default function ComponentsPage() {
                   <div className="relative flex size-10 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground transition-colors group-hover:text-foreground">
                     <Icon className="h-4 w-4" />
                     <div className="pointer-events-none absolute inset-0 rounded-sm ring-1 ring-inset ring-muted-foreground/5" />
+                    {c.new && (
+                      <span
+                        className="absolute -top-1 -right-1 size-2 rounded-full bg-sky-500 ring-2 ring-background"
+                        aria-label="new component"
+                      />
+                    )}
                   </div>
                   <div className="flex min-w-0 grow flex-col">
                     <h3 className="truncate text-sm font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
@@ -128,16 +134,16 @@ export default function ComponentsPage() {
           Install with the shadcn CLI
         </h2>
         <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-          Every component here is published as a registry item. Register{" "}
+          Every component here is published as a registry item. Run the direct
+          URL install command or register{" "}
           <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
             {registryConfig.namespace}
           </code>{" "}
           once in your{" "}
           <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
             components.json
-          </code>
-          , then install by name — the CLI handles files, dependencies, and
-          registry dependencies.
+          </code>{" "}
+          to install by name.
         </p>
         <CopyBlock
           className="mt-4"

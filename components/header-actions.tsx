@@ -63,6 +63,7 @@ export function HeaderActions() {
   }, [toggleTheme]);
 
   useEffect(() => {
+    const controller = new AbortController();
     try {
       const path = new URL(siteConfig.banner.openSourceUrl).pathname
         .split("/")
@@ -75,6 +76,7 @@ export function HeaderActions() {
         try {
           const response = await fetch(
             `https://api.github.com/repos/${owner}/${repo}`,
+            { signal: controller.signal },
           );
           if (!response.ok) return;
 
@@ -96,6 +98,8 @@ export function HeaderActions() {
     } catch {
       // silently fail if URL parsing fails
     }
+
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {

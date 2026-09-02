@@ -62,13 +62,13 @@ function subscribeToManager(onStoreChange: () => void) {
   };
 }
 
-function writeManager(next: PackageManager) {
+export function writeManager(next: PackageManager) {
   window.localStorage.setItem(STORAGE_KEY, next);
   managerCache = next;
   managerListeners.forEach((listener) => listener());
 }
 
-function usePackageManager(): PackageManager {
+export function usePackageManager(): PackageManager {
   return useSyncExternalStore(
     subscribeToManager,
     getManagerSnapshot,
@@ -204,7 +204,11 @@ export function InstallCommand({
 
   const handleCopy = () => {
     void copy(command);
-    const parsedId = componentId ?? command.split("@akoder/")[1]?.split(" ")[0] ?? "unknown";
+    const parsedId =
+      componentId ??
+      command.match(/\/r\/([a-zA-Z0-9_-]+)\.json/)?.[1] ??
+      command.split("@akoder/")[1]?.split(" ")[0] ??
+      "unknown";
     trackEvent("registry_command_copied", {
       component_id: parsedId,
       package_manager: manager,

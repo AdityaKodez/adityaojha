@@ -17,9 +17,9 @@ import {
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/use-copy";
+import { usePackageManager, writeManager } from "@/components/copy-block";
 import { PM_ICONS } from "@/components/pm-icons";
 
-const DEFAULT_MANAGER: PackageManager = "npm";
 const ROTATION_INTERVAL_MS = 2400;
 
 export type RotatingInstallCommandProps = {
@@ -46,7 +46,7 @@ export function RotatingInstallCommand({
 }: RotatingInstallCommandProps) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [manager, setManager] = useState<PackageManager>(DEFAULT_MANAGER);
+  const manager = usePackageManager();
   const { status, copy } = useCopy();
   const reduced = useReducedMotion();
 
@@ -66,7 +66,7 @@ export function RotatingInstallCommand({
   if (safeIds.length === 0) return null;
 
   const handleManagerChange = (pm: PackageManager) => {
-    setManager(pm);
+    writeManager(pm);
     trackEvent("package_manager_changed", {
       selected_manager: pm,
       component_id: currentId,

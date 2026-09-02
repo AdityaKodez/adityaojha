@@ -19,6 +19,7 @@ const entryTransition = {
 export function Hero() {
   const { vibrate } = useHaptic();
   const vibrateAudio = useRef<HTMLAudioElement>(null);
+  const lastWaveTrackRef = useRef<number>(0);
 
   const [beforeHighlight, afterHighlight] = heroConfig.description.split(
     heroConfig.descriptionHighlight,
@@ -31,7 +32,11 @@ export function Hero() {
     }
 
     if (play) {
-      trackEvent("hero_wave_hovered", { interaction_type: interactionType });
+      const now = Date.now();
+      if (now - lastWaveTrackRef.current > 5000) {
+        trackEvent("hero_wave_hovered", { interaction_type: interactionType });
+        lastWaveTrackRef.current = now;
+      }
       audio.currentTime = 0;
       audio.playbackRate = 1;
       audio.volume = 0.6;
@@ -83,13 +88,13 @@ export function Hero() {
               {typeof heroConfig.waveEmoji === "string" ? (
                 heroConfig.waveEmoji
               ) : (
-                <heroConfig.waveEmoji className="dark:fill-orange-300 fill-orange-200" />
+                <heroConfig.waveEmoji className="fill-current" />
               )}
             </span>
           </motion.p>
 
           <motion.h1
-            className="no-js-visible text-xl font-bold leading-[1.05] tracking-tight text-balance max-sm:text-2xl"
+            className="no-js-visible text-lg sm:text-xl md:text-2xl font-semibold leading-[1.05] tracking-tight text-balance"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...entryTransition, delay: 0.18 }}

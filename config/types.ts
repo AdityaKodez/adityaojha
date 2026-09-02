@@ -264,7 +264,8 @@ export type ComponentIcon =
   | "theme"
   | "pills"
   | "channels"
-  | "rail";
+  | "rail"
+  | "bars";
 
 export interface ComponentDoc {
   id: string;
@@ -277,6 +278,8 @@ export interface ComponentDoc {
   docPath: string;
   order: number;
   enabled?: boolean;
+  /** Display a new component indicator dot on cards and teasers. */
+  new?: boolean;
 }
 
 export interface PortfolioConfig {

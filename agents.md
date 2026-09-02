@@ -94,7 +94,7 @@ component.
 | `config/experience.ts` | `experienceSectionConfig` + `experienceConfig` |
 | `config/testimonials.ts` | `testimonialsConfig` |
 | `config/components.ts` | `componentsSectionConfig` (home teaser), `componentRegistry` plus `findComponent()` and `getEnabledComponents()` |
-| `config/registry.ts` | Registry helpers — `getAddCommands()` (namespaced `@akoder/<id>` per package manager), `getRegistrySetupSnippet()` |
+| `config/registry.ts` | Registry helpers — `getAddCommands()` (direct URL `https://akoder.xyz/r/<id>.json` per package manager), `getRegistrySetupSnippet()` |
 | `config/world-cities.ts` | City coordinates used by the dotted world map |
 
 Pattern to copy: every domain exports a section config object (heading text) and
@@ -145,7 +145,7 @@ The home page is a loop, not a hand-written layout.
   `sectionFlags` entry is false, so reordering or hiding a section is a config
   change only.
 - Every non-GitHub section has an entry in the `staticSections` map in
-  `app/page.tsx`, keyed by `SectionId`.
+  `app/page.tsx`, keyed by `SectionId` .
 - `github` is special: it is server-fetched, wrapped in React Suspense with
   `components/skeletons/github-skeleton.tsx`, and only rendered when
   `GITHUB_TOKEN` is present.
@@ -299,9 +299,9 @@ nothing is registered with shadcn itself.
 2. `scripts/build-registry.mjs` reads the catalog, inlines each file's source,
    and writes `public/r/registry.json` plus one `public/r/<name>.json` per
    item. It runs on `prebuild`, so Vercel always ships fresh JSON.
-3. Consumers register the `@akoder` namespace in their `components.json` and
-   install with `npx shadcn add @akoder/<name>`. The direct
-   `https://akoder.xyz/r/<name>.json` URL still works without setup.
+3. Consumers install directly with `npx shadcn add https://akoder.xyz/r/<name>.json`,
+   or register the `@akoder` namespace in their `components.json` and install with
+   `npx shadcn add @akoder/<name>`.
 
 Rules:
 
@@ -318,7 +318,7 @@ Rules:
   design language consumers are installing. Avoid uppercase shouting there as well.
 - Current items: dotted-world-map, copy-command-block, github-map,
   project-explorer, progressive-blur, infinite-slider, carousel, mode-toggler,
-  interactive-skill-cloud, contact-channels.
+  interactive-skill-cloud, contact-channels, section-rail, progress-bars.
 
 ## 15. Component showcase
 

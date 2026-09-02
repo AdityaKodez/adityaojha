@@ -1,6 +1,7 @@
 import { Carousel, type CarouselItem } from "@/components/ui/carousel";
 import { DottedWorldMap } from "@/components/ui/dotted-world-map";
 import { CopyCommandBlock } from "@/components/ui/copy-command-block";
+import { ProgressBars } from "@/components/ui/progress-bars";
 import { ProjectExplorer } from "@/components/project-explorer";
 import { projectsConfig } from "@/config/projects";
 import {
@@ -11,6 +12,7 @@ import {
 
 import { weeklyVisitors } from "./dotted-world-map-demo";
 import { GitHubCalendarExample } from "./github-map-demo";
+import { DotProgressExample, ProgressBarsCapacityExample } from "./progress-bars-demo";
 
 const GITHUB_GREENS = ["#a7f3d0", "#6ee7b7", "#34d399", "#10b981", "#047857"];
 const VIOLET_RAMP = ["#ddd6fe", "#c4b5fd", "#a78bfa", "#8b5cf6", "#6d28d9"];
@@ -100,7 +102,7 @@ function copyCommandBlockExamples(): CarouselItem[] {
   return [
     {
       id: "single-git",
-      title: "Standalone Git Command",
+      title: "Standalone git command",
       description: "Single-line shell command without tabs.",
       content: (
         <div className="w-full max-w-md">
@@ -110,16 +112,16 @@ function copyCommandBlockExamples(): CarouselItem[] {
     },
     {
       id: "shadcn-add",
-      title: "Universal Shadcn Add",
+      title: "Universal shadcn add",
       description: "Dynamic runner resolver for npm, pnpm, yarn, and bun.",
       content: (
         <div className="w-full max-w-md">
           <CopyCommandBlock
             commands={{
-              npm: "npx shadcn@latest add @akoder/dotted-world-map",
-              pnpm: "pnpm dlx shadcn@latest add @akoder/dotted-world-map",
-              yarn: "yarn dlx shadcn@latest add @akoder/dotted-world-map",
-              bun: "bunx --bun shadcn@latest add @akoder/dotted-world-map",
+              npm: "npx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
+              pnpm: "pnpm dlx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
+              yarn: "yarn dlx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
+              bun: "bunx --bun shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
             }}
           />
         </div>
@@ -132,25 +134,25 @@ function githubMapExamples(): CarouselItem[] {
   return [
     {
       id: "github-greens",
-      title: "GitHub Classic Emerald",
+      title: "Classic emerald",
       description: "Traditional 5-tier GitHub green heat scale.",
       content: <GitHubCalendarExample colors={GITHUB_GREENS} />,
     },
     {
       id: "github-violet",
-      title: "Amethyst Violet Ramp",
+      title: "Amethyst violet ramp",
       description: "Vibrant purple gradient for dark theme accents.",
       content: <GitHubCalendarExample colors={VIOLET_RAMP} />,
     },
     {
       id: "github-amber",
-      title: "Sunset Amber Heat",
+      title: "Sunset amber heat",
       description: "Warm golden glow for high-energy activity milestones.",
       content: <GitHubCalendarExample colors={AMBER_RAMP} />,
     },
     {
       id: "github-blue",
-      title: "Sky Cyan Gradient",
+      title: "Sky cyan gradient",
       description: "Cool blue hues for modern dashboard layouts.",
       content: <GitHubCalendarExample colors={BLUE_RAMP} />,
     },
@@ -161,7 +163,7 @@ function projectExplorerExamples(): CarouselItem[] {
   return [
     {
       id: "project-explorer-latest",
-      title: "Latest Work First",
+      title: "Latest work first",
       description:
         "Start with the most recent folder open when the explorer sits inside a compact project panel.",
       content: (
@@ -176,7 +178,7 @@ function projectExplorerExamples(): CarouselItem[] {
     },
     {
       id: "project-explorer-no-preview",
-      title: "No Hover Preview",
+      title: "No hover preview",
       description:
         "Disable floating cursor preview cards for a minimal, fast, text-focused project list.",
       content: (
@@ -192,7 +194,7 @@ function projectExplorerExamples(): CarouselItem[] {
     },
     {
       id: "project-explorer-archive",
-      title: "Full Project Archive",
+      title: "Full project archive",
       description:
         "Open every year up front when browsing across a portfolio matters more than initial density.",
       content: (
@@ -212,11 +214,11 @@ function carouselExamples(): CarouselItem[] {
   return [
     {
       id: "carousel-onboarding",
-      title: "Onboarding Steps",
+      title: "Onboarding steps",
       description: "A concise sequence for setup flows where each task needs room for one decision.",
       content: (
         <div className="w-full max-w-md rounded-md border bg-card p-4">
-          <span className="font-mono text-[10px] text-muted-foreground">STEP 02 / 03</span>
+          <span className="font-mono text-[10px] text-muted-foreground">step 02 / 03</span>
           <p className="mt-2 text-sm font-medium">Connect your repository</p>
           <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
             Pick the codebase to scan. You can change access later from workspace settings.
@@ -229,7 +231,7 @@ function carouselExamples(): CarouselItem[] {
     },
     {
       id: "carousel-release-notes",
-      title: "Release Notes",
+      title: "Release notes",
       description: "A practical way to keep related changes readable without turning a changelog into a long wall of text.",
       content: (
         <div className="w-full max-w-md divide-y divide-dashed overflow-hidden rounded-md border bg-card">
@@ -248,7 +250,7 @@ function carouselExamples(): CarouselItem[] {
     },
     {
       id: "carousel-customer-stories",
-      title: "Customer Stories",
+      title: "Customer stories",
       description: "Give each quote enough breathing room while preserving a controlled browsing rhythm.",
       content: (
         <figure className="w-full max-w-md rounded-md border border-primary/20 bg-primary/5 p-4">
@@ -264,6 +266,41 @@ function carouselExamples(): CarouselItem[] {
   ];
 }
 
+function progressBarsExamples(): CarouselItem[] {
+  const milestones = [
+    { id: "research", label: "research", value: 86 },
+    { id: "prototype", label: "prototype", value: 62 },
+    { id: "release", label: "release", value: 34 },
+  ];
+
+  return [
+    {
+      id: "progress-bars-horizontal",
+      title: "Compact rows",
+      description: "A horizontal layout keeps status lists easy to scan in dense surfaces.",
+      content: <ProgressBars items={milestones} orientation="horizontal" />,
+    },
+    {
+      id: "progress-bars-dots",
+      title: "Dot fill",
+      description: "The same bars filled with a matrix of dots rather than etched rules.",
+      content: <DotProgressExample />,
+    },
+    {
+      id: "progress-bars-without-scale",
+      title: "Unscaled vertical rhythm",
+      description: "Hide the axis when relative progress matters more than exact chart reading.",
+      content: <ProgressBars items={milestones} showScale={false} height={180} />,
+    },
+    {
+      id: "progress-bars-capacity",
+      title: "Capacity allocation",
+      description: "Use a different maximum and formatter for hours, seats, credits, or any bounded unit.",
+      content: <ProgressBarsCapacityExample />,
+    },
+  ];
+}
+
 /** Examples per component id. Add an entry here when a component ships examples. */
 const exampleRegistry: Record<string, () => CarouselItem[]> = {
   "dotted-world-map": dottedWorldMapExamples,
@@ -271,6 +308,7 @@ const exampleRegistry: Record<string, () => CarouselItem[]> = {
   "github-map": githubMapExamples,
   "project-explorer": projectExplorerExamples,
   "carousel": carouselExamples,
+  "progress-bars": progressBarsExamples,
 };
 
 /**
@@ -290,7 +328,7 @@ export function ComponentExamples({ id }: { id: string }) {
     >
       <div className="mb-6 space-y-1 px-6">
         <h2 id="component-examples" className="text-sm font-medium">
-          Examples
+          examples
         </h2>
         <p className="text-sm text-muted-foreground">
           Explore different presets, palettes, and configurations.
