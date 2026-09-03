@@ -280,6 +280,8 @@ export interface ComponentDoc {
   enabled?: boolean;
   /** Display a new component indicator dot on cards and teasers. */
   new?: boolean;
+  /** Responsive column span in the card view grid (1 or 2). Defaults to 1. */
+  colSpan?: 1 | 2;
 }
 
 export interface PortfolioConfig {

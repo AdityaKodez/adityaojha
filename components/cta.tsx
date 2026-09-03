@@ -56,7 +56,6 @@ export function CTA() {
       viewport={{ once: true }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="no-js-visible border-t border-dashed pt-6 pb-6"
-      id="contact"
     >
       <h2 className="section-heading mb-3">{siteConfig.contact.title}</h2>
       <div>

@@ -14,12 +14,13 @@ import Link from "next/link";
  *
  * Lives at the layout level so the brand logo (left) and actions (right) —
  * GitHub star pill + theme toggle — appear on `/`, `/project/[id]`, and
- * `/components/[id]`. The `max-w-3xl mx-auto` keeps it aligned with the
- * centered main column.
+ * `/components/[id]`. The width comes from `--frame-max-w` so the header stays
+ * aligned with the centered main column even on routes that widen it, like
+ * `/components` in card view.
  */
 export function SiteHeader() {
   return (
-    <header className="sticky top-3 sm:top-4 z-40 mx-auto -mb-8 flex max-w-3xl items-center justify-between px-6 pointer-events-none">
+    <header className="sticky top-3 sm:top-4 z-40 mx-auto -mb-8 flex w-full max-w-[var(--frame-max-w)] items-center justify-between px-6 pointer-events-none">
       <Tooltip>
         <TooltipTrigger asChild>
           <Link

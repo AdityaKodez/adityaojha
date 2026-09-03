@@ -100,7 +100,7 @@ export function Skills() {
               transition={{ duration: 0.2, delay: groupIndex * 0.04 }}
               className={cn("flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-6 px-6 py-3.5 border-b", groupIndex === 3 ? "border-none" : "")}
             >
-              <span className="shrink-0 w-36 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              <span className="shrink-0 w-36 font-mono text-xs tracking-wider text-muted-foreground">
                 {`0${groupIndex + 1}`.padStart(2, "0") + " " + category.label}
               </span>
 

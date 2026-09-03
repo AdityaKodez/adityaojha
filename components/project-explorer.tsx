@@ -235,6 +235,8 @@ export type ProjectExplorerProps = {
   onProjectClick?: (project: ProjectExplorerItem, targetType: "case_study" | "external_url", url: string) => void;
   /** Optional callback fired when a year folder is expanded or collapsed. */
   onYearToggle?: (year: number, action: "expand" | "collapse") => void;
+  /** Optional DOM id for the section container */
+  id?: string;
   /** Additional classes for the container section */
   className?: string;
 };
@@ -245,6 +247,7 @@ export function ProjectExplorer({
   showHeading = true,
   defaultOpen = "all",
   showHoverPreview = true,
+  id,
   onProjectClick,
   onYearToggle,
   className,
@@ -352,7 +355,7 @@ export function ProjectExplorer({
 
   return (
     <section
-      id="projects"
+      id={id}
       className={cn(showHeading && "border-t border-dashed", "pt-6", className)}
     >
       {showHeading ? (

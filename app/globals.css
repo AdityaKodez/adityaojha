@@ -52,6 +52,10 @@
 }
 
 :root {
+  /* Width of the centered site frame. The sticky header and the route `<main>`
+     both read it, so a route can widen the column without the header drifting
+     out of alignment. `/components` switches it in card view. */
+  --frame-max-w: 48rem;
   --motion-duration-fast: 180ms;
   --motion-duration-base: 220ms;
   --motion-duration-slow: 280ms;
@@ -94,6 +98,10 @@
   --heatmap-level-2: oklch(0.707 0.165 254.624);
   --heatmap-level-3: oklch(0.488 0.243 264.376);
   --heatmap-level-4: oklch(0.379 0.146 265.522);
+}
+
+html[data-frame="wide"] {
+  --frame-max-w: 72rem;
 }
 
 .dark {
@@ -224,6 +232,23 @@
     .preview-body {
       --preview-min-h: clamp(240px, 42svh, 420px);
       --preview-max-h: clamp(420px, 62svh, 560px);
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     Catalog card previews (components/components-catalog.tsx)
+
+     A floor so a single-control demo still reads as a stage next to a taller
+     neighbour. No ceiling on purpose: the card already clips horizontal bleed,
+     and cutting a demo off vertically looks like a bug rather than a boundary.
+  ------------------------------------------------------------------------- */
+  .catalog-card-body {
+    min-height: clamp(180px, 24vh, 260px);
+  }
+
+  @supports (height: 1svh) {
+    .catalog-card-body {
+      min-height: clamp(180px, 24svh, 260px);
     }
   }
 

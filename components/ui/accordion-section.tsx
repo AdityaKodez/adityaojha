@@ -32,21 +32,24 @@ export function AccordionSection({
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className={cn("pt-6 border-t border-dashed", className)}
     >
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="group w-full flex items-center justify-between no-js-visible section-heading hover:bg-muted/40 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring mb-3"
-        aria-expanded={isExpanded}
-        aria-controls={contentId}
-      >
-        <span>{title}</span>
-        <motion.div
-          initial={false}
-          animate={{ rotate: isExpanded ? 45 : 0 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      <h2>
+        <button
+          type="button"
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="group w-full flex items-center justify-between no-js-visible section-heading hover:bg-muted/40 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring mb-3"
+          aria-expanded={isExpanded}
+          aria-controls={contentId}
         >
-          <Plus className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
-        </motion.div>
-      </button>
+          <span>{title}</span>
+          <motion.div
+            initial={false}
+            animate={{ rotate: isExpanded ? 45 : 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          >
+            <Plus className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+          </motion.div>
+        </button>
+      </h2>
 
       <AnimatePresence initial={false}>
         {isExpanded && (

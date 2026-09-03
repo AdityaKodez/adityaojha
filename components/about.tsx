@@ -15,7 +15,6 @@ export const About = () => {
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="no-js-visible border-t border-dashed pt-6"
-      id="about"
     >
       <h2 className="section-heading mb-3">{siteConfig.about.title}</h2>
       <div className="px-2">

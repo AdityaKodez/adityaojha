@@ -17,9 +17,10 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "bars",
     demoPath: "app/components/[id]/demos/progress-bars-demo.tsx",
     docPath: "content/components/progress-bars.md",
-    order: 1,
+    order: 2,
     enabled: true,
     new: true,
+    colSpan: 2,
   },
   {
     id: "section-rail",
@@ -29,9 +30,11 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "rail",
     demoPath: "app/components/[id]/demos/section-rail-demo.tsx",
     docPath: "content/components/section-rail.md",
-    order: 2,
+    order: 3,
     enabled: true,
     new: true,
+    // The demo pairs a rail with a prose column — it needs the full row width.
+    colSpan: 2,
   },
   {
     id: "project-explorer",
@@ -41,8 +44,9 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "folder",
     demoPath: "app/components/[id]/demos/project-explorer-demo.tsx",
     docPath: "content/components/project-explorer.md",
-    order: 3,
+    order: 4,
     enabled: true,
+    colSpan: 2,
   },
   {
     id: "dotted-world-map",
@@ -52,8 +56,9 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "globe",
     demoPath: "app/components/[id]/demos/dotted-world-map-demo.tsx",
     docPath: "content/components/dotted-world-map.md",
-    order: 4,
+    order: 5,
     enabled: true,
+    colSpan: 2,
   },
   {
     id: "copy-command-block",
@@ -63,7 +68,7 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "terminal",
     demoPath: "app/components/[id]/demos/copy-command-block-demo.tsx",
     docPath: "content/components/copy-command-block.md",
-    order: 5,
+    order: 6,
     enabled: true,
   },
   {
@@ -74,7 +79,7 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "pills",
     demoPath: "app/components/[id]/demos/interactive-skill-cloud-demo.tsx",
     docPath: "content/components/interactive-skill-cloud.md",
-    order: 6,
+    order: 7,
     enabled: true,
   },
   {
@@ -85,8 +90,9 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "git",
     demoPath: "app/components/[id]/demos/github-map-demo.tsx",
     docPath: "content/components/github-map.md",
-    order: 7,
+    order: 8,
     enabled: true,
+    colSpan: 2,
   },
   {
     id: "carousel",
@@ -96,7 +102,7 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "carousel",
     demoPath: "app/components/[id]/demos/carousel-demo.tsx",
     docPath: "content/components/carousel.md",
-    order: 8,
+    order: 9,
     enabled: true,
   },
   {
@@ -107,7 +113,7 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "channels",
     demoPath: "app/components/[id]/demos/contact-channels-demo.tsx",
     docPath: "content/components/contact-channels.md",
-    order: 9,
+    order: 10,
     enabled: true,
   },
   {
@@ -118,7 +124,7 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "theme",
     demoPath: "app/components/[id]/demos/mode-toggler-demo.tsx",
     docPath: "content/components/mode-toggler.md",
-    order: 10,
+    order: 11,
     enabled: true,
   },
   {
@@ -129,7 +135,7 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "blur",
     demoPath: "app/components/[id]/demos/progressive-blur-demo.tsx",
     docPath: "content/components/progressive-blur.md",
-    order: 11,
+    order: 12,
     enabled: false,
   },
   {
@@ -140,7 +146,7 @@ export const componentRegistry: ComponentDoc[] = [
     icon: "slider",
     demoPath: "app/components/[id]/demos/infinite-slider-demo.tsx",
     docPath: "content/components/infinite-slider.md",
-    order: 12,
+    order: 13,
     enabled: false,
   },
 ];

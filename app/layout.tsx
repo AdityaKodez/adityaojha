@@ -90,7 +90,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: siteConfig.meta.googleVerification,
+    google: siteConfig.meta.googleVerification || undefined,
   },
 };
 
@@ -129,7 +129,7 @@ const jsonLd = {
         "https://x.com/AdiKodez",
         "https://linkedin.com/in/adityakodez",
       ],
-      image: `${siteConfig.meta.url}/profile.avif`,
+      image: `${siteConfig.meta.url}/profile.png`,
     },
   ],
 };

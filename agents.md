@@ -64,7 +64,7 @@ There is no typecheck script; run `npx tsc --noEmit` directly.
 | Path | Contents |
 | --- | --- |
 | `app/` | Routes — `page.tsx` (home), `components/` and `components/[id]/` (showcase), `project/[id]/` (case studies), `api/discord-status/route.ts`; plus `layout.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `not-found.tsx` |
-| `components/` | One file per home section — `hero.tsx`, `about.tsx`, `skills.tsx`, `social.tsx`, `bookmarks.tsx`, `certifications.tsx`, `component-highlights.tsx`, `project-explorer.tsx`, `experience.tsx`, `testimonials.tsx`, `services.tsx`, `how-i-work.tsx`, `cta.tsx`, `footer.tsx`, `banner.tsx` |
+| `components/` | One file per home section — `hero.tsx`, `about.tsx`, `skills.tsx`, `social.tsx`, `bookmarks.tsx`, `certifications.tsx`, `component-highlights.tsx`, `project-explorer.tsx`, `experience.tsx`, `testimonials.tsx`, `services.tsx`, `how-i-work.tsx`, `cta.tsx`, `footer.tsx` |
 | `components/ui/` | Vendored shadcn and Radix primitives; source of most registry items |
 | `components/motion-primitives/` | Motion-heavy building blocks |
 | `components/skeletons/` | Loading placeholders |

@@ -28,19 +28,8 @@ import {
 } from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
-import { CarouselDemo } from "./demos/carousel-demo";
-import { ContactChannelsDemo } from "./demos/contact-channels-demo";
-import { CopyCommandBlockDemo } from "./demos/copy-command-block-demo";
-import { DottedWorldMapDemo } from "./demos/dotted-world-map-demo";
+import { ComponentDemo } from "@/components/component-demo";
 import { ComponentExamples } from "./demos/examples";
-import { GitHubMapDemo } from "./demos/github-map-demo";
-import { InfiniteSliderDemo } from "./demos/infinite-slider-demo";
-import { InteractiveSkillCloudDemo } from "./demos/interactive-skill-cloud-demo";
-import { ModeTogglerDemo } from "./demos/mode-toggler-demo";
-import { ProgressiveBlurDemo } from "./demos/progressive-blur-demo";
-import { ProjectExplorerDemo } from "./demos/project-explorer-demo";
-import { ProgressBarsDemo } from "./demos/progress-bars-demo";
-import { SectionRailDemo } from "./demos/section-rail-demo";
 import { PreviewBox } from "./preview-box";
 
 export async function generateStaticParams() {
@@ -233,40 +222,3 @@ export default async function ComponentDetailPage({
   );
 }
 
-/**
- * Server component that picks the right demo based on the registry id.
- */
-function ComponentDemo({ id }: { id: string }) {
-  switch (id) {
-    case "dotted-world-map":
-      return <DottedWorldMapDemo />;
-    case "copy-command-block":
-      return <CopyCommandBlockDemo />;
-    case "github-map":
-      return <GitHubMapDemo />;
-    case "project-explorer":
-      return <ProjectExplorerDemo />;
-    case "carousel":
-      return <CarouselDemo />;
-    case "infinite-slider":
-      return <InfiniteSliderDemo />;
-    case "mode-toggler":
-      return <ModeTogglerDemo />;
-    case "progressive-blur":
-      return <ProgressiveBlurDemo />;
-    case "interactive-skill-cloud":
-      return <InteractiveSkillCloudDemo />;
-    case "contact-channels":
-      return <ContactChannelsDemo />;
-    case "section-rail":
-      return <SectionRailDemo />;
-    case "progress-bars":
-      return <ProgressBarsDemo />;
-    default:
-      return (
-        <div className="text-sm text-muted-foreground">
-          No demo registered for &ldquo;{id}&rdquo;.
-        </div>
-      );
-  }
-}
