@@ -43,7 +43,7 @@ export const siteConfig: PortfolioConfig = {
     twitterCreator: "@AdiKodez",
     icon: "/favicon.svg",
     appleIcon: "/apple-touch-icon.png",
-    googleVerification: "google-site-verification-code",
+    googleVerification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? "",
     manifest: {
       name: "Aditya Ojha — Building SaaS in Public",
       short_name: "Aditya",
@@ -74,6 +74,7 @@ export const siteConfig: PortfolioConfig = {
       rules: {
         userAgent: "*",
         allow: "/",
+        disallow: ["/api/"],
       },
       sitemap: "https://akoder.xyz/sitemap.xml",
     },

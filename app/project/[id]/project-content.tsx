@@ -55,7 +55,7 @@ export function ProjectContent({ project }: { project: Project }) {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="relative min-h-screen max-w-3xl mx-auto md:pb-16 border border-dashed overflow-hidden pt-6"
+      className="relative min-h-screen max-w-3xl mx-auto md:pb-16 border-x border-b-2 overflow-x-clip pt-6"
     >
       <motion.div variants={itemVariants} className="border-b px-6 pb-6 mb-6">
         <Button
@@ -68,7 +68,7 @@ export function ProjectContent({ project }: { project: Project }) {
             Back to Home
           </Link>
         </Button>
-        <h1 className="text-2xl font-bold tracking-tight md:text-3xl mt-2">
+        <h1 className="text-2xl font-semibold tracking-tight md:text-3xl mt-2">
           {project.title}
         </h1>
       </motion.div>

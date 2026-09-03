@@ -4,21 +4,23 @@ import { siteConfig } from "@/config/site";
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const defaultDate = new Date("2026-03-01T00:00:00Z");
+
   const baseEntries = siteConfig.meta.sitemap.map((item) => ({
     ...item,
-    lastModified: new Date(),
+    lastModified: defaultDate,
   }));
 
   const componentEntries: MetadataRoute.Sitemap = [
     {
       url: `${siteConfig.meta.url}/components`,
-      lastModified: new Date(),
+      lastModified: defaultDate,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     ...getEnabledComponents().map((c) => ({
       url: `${siteConfig.meta.url}/components/${c.id}`,
-      lastModified: new Date(),
+      lastModified: defaultDate,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
@@ -28,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((p) => p.enabled !== false)
     .map((p) => ({
       url: `${siteConfig.meta.url}/project/${p.id}`,
-      lastModified: new Date(),
+      lastModified: new Date(`${p.year}-01-01T00:00:00Z`),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     }));

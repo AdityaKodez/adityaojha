@@ -1,12 +1,10 @@
 import { getEnabledComponents } from "@/config/components";
 import { registryConfig, getRegistrySetupSnippet } from "@/config/registry";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { CopyBlock } from "@/components/copy-block";
 import { RotatingInstallCommand } from "@/components/rotating-install-command";
-import { getComponentIcon } from "@/components/component-icons";
+import { ComponentsCatalog } from "@/components/components-catalog";
+import { ComponentsShell } from "@/components/components-shell";
 import { Metadata } from "next";
-
 
 export const metadata: Metadata = {
   title: "components",
@@ -21,19 +19,19 @@ export const metadata: Metadata = {
       "A growing set of reusable building blocks — lightweight, themable, and easy to drop into any project.",
     url: "/components",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "components — aditya ojha",
+    description:
+      "A growing set of reusable building blocks — lightweight, themable, and easy to drop into any project.",
+  },
 };
 
 export default function ComponentsPage() {
   const components = getEnabledComponents();
-  // An odd count leaves a gap in the two-column grid — fill it with a
-  // placeholder cell so the hairline grid still reads as complete.
-  const needsFiller = components.length % 2 === 1;
 
   return (
-    <main
-      id="components"
-      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-[env(safe-area-inset-top)]"
-    >
+    <ComponentsShell>
       <section className="border-t border-dashed pt-14">
         <div>
           <p className="px-6 py-2 text-xs">
@@ -52,84 +50,12 @@ export default function ComponentsPage() {
           />
         </section>
         <h2 className="sr-only">Available Components</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2">
-          {components.map((c, index) => {
-            const Icon = getComponentIcon(c.icon);
-            return (
-              <Link
-                key={c.id}
-                href={`/components/${c.id}`}
-                className={cn(
-                  "group relative flex items-stretch",
-                  (index < components.length - 1 || needsFiller) &&
-                    "border-b sm:border-b-0"
-                )}
-              >
-                <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5 transition-colors hover:bg-muted/10">
-                  <div className="relative flex size-10 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground transition-colors group-hover:text-foreground">
-                    <Icon className="h-4 w-4" />
-                    <div className="pointer-events-none absolute inset-0 rounded-sm ring-1 ring-inset ring-muted-foreground/5" />
-                    {c.new && (
-                      <span
-                        className="absolute -top-1 -right-1 size-2 rounded-full bg-sky-500 ring-2 ring-background"
-                        aria-label="new component"
-                      />
-                    )}
-                  </div>
-                  <div className="flex min-w-0 grow flex-col">
-                    <h3 className="truncate text-sm font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
-                      {c.title}
-                    </h3>
-                    <p className="line-clamp-2 text-xs text-muted-foreground/80 mt-1">
-                      {c.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5" />
-                <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-50 transition-opacity group-hover:opacity-100" />
-              </Link>
-            );
-          })}
-
-          {needsFiller ? (
-            <div
-              aria-hidden
-              className="relative flex select-none items-stretch"
-            >
-              <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5">
-                <div className="relative flex size-10 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground/50">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    className="h-4 w-4"
-                  >
-                    <path d="M12 6v12" />
-                    <path d="M6 12h12" />
-                  </svg>
-                  <div className="pointer-events-none absolute inset-0 rounded-sm border border-dashed border-muted-foreground/20" />
-                </div>
-                <div className="flex min-w-0 grow flex-col">
-                  <h3 className="truncate text-sm font-medium tracking-tight text-muted-foreground/60">
-                    something new is on the bench
-                  </h3>
-                  <p className="mt-1 line-clamp-2 text-xs text-muted-foreground/50">
-                    the next block lands in this slot. it is being drawn,
-                    measured, and argued with.
-                  </p>
-                </div>
-              </div>
-              <div className="pointer-events-none absolute inset-0 border border-dashed border-muted-foreground/15" />
-            </div>
-          ) : null}
-        </div>
+        <ComponentsCatalog components={components} />
       </section>
 
-
-      {/* Registry — one-time setup so components install by name. */}
-      <section className="border-t border-dashed px-6 py-6">
+      {/* Registry — one-time setup so components install by name. The rule spans
+          the frame, the copy stays at a readable measure when the frame widens. */}
+      <section className="border-t border-dashed px-6 py-6 [&>*]:max-w-3xl">
         <h2 className="text-base font-medium tracking-tight">
           Install with the shadcn CLI
         </h2>
@@ -156,6 +82,6 @@ export default function ComponentsPage() {
           and bun.
         </p>
       </section>
-    </main>
+    </ComponentsShell>
   );
 }
