@@ -4,7 +4,8 @@ import { siteConfig } from "@/config/site";
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const defaultDate = new Date("2026-03-01T00:00:00Z");
+const defaultDate = new Date();
+
 
   const baseEntries = siteConfig.meta.sitemap.map((item) => ({
     ...item,
