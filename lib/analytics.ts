@@ -94,9 +94,6 @@ export function trackEvent<K extends keyof EventMap>(
 ): void {
   if (typeof window === "undefined") return;
   try {
-    if (process.env.NODE_ENV === "development") {
-      console.log(`[PostHog Event] ${eventName}`, properties);
-    }
     posthog.capture(eventName, properties);
   } catch (err) {
     if (process.env.NODE_ENV === "development") {

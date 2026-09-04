@@ -5,6 +5,7 @@ import { ComponentHighlights } from "@/components/component-highlights";
 import { CTA } from "@/components/cta";
 import { Experience } from "@/components/experience";
 import { Footer } from "@/components/footer";
+import { FrameGutters } from "@/components/frame-gutters";
 import { GitHubSection } from "@/components/github-section";
 import { Hero } from "@/components/hero";
 import { HowIWork } from "@/components/how-i-work";
@@ -51,6 +52,8 @@ export default function Home() {
 
   return (
     <>
+      <FrameGutters />
+
       <main
         id="main-content"
         className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-8"
