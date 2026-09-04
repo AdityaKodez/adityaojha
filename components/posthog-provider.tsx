@@ -17,12 +17,6 @@ if (typeof window !== "undefined") {
       capture_pageview: false, // Handled manually by PostHogPageView for App Router accuracy
       capture_pageleave: true,
       autocapture: true,
-      loaded: (ph) => {
-        if (process.env.NODE_ENV === "development") {
-          ph.debug();
-          console.log("[PostHog] Initialized in debug mode.");
-        }
-      },
     });
   } else if (process.env.NODE_ENV === "development") {
     console.warn(

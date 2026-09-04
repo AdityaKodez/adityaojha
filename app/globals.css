@@ -201,6 +201,41 @@ html[data-frame="wide"] {
   }
 
   /* -------------------------------------------------------------------------
+     Frame gutters (components/frame-gutters.tsx)
+
+     Dot-grid decoration for the dead space either side of the centered column
+     on wide viewports. Drawn entirely with background gradients — no borders,
+     so the gutters never double up on an edge the frame already owns (§10).
+     Colors come from theme tokens so both themes track on their own.
+  ------------------------------------------------------------------------- */
+  .frame-gutter-dots {
+    background-image: radial-gradient(
+      color-mix(in oklab, var(--muted-foreground) 24%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 14px 14px;
+  }
+
+  /* The same grid in the accent color, revealed only inside a soft circle
+     around the pointer. Origin and size have to match `.frame-gutter-dots`
+     exactly, or the lit dots drift off the muted ones underneath.
+     `--gutter-x/y` are written per band by components/frame-gutters.tsx. */
+  .frame-gutter-dots-lit {
+    background-image: radial-gradient(
+      color-mix(in oklab, var(--primary) 75%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 14px 14px;
+    opacity: var(--gutter-lit, 0);
+    mask-image: radial-gradient(
+      circle 7.5rem at var(--gutter-x, -50%) var(--gutter-y, -50%),
+      black,
+      transparent 70%
+    );
+    transition: opacity var(--motion-duration-slow) var(--motion-ease-standard);
+  }
+
+  /* -------------------------------------------------------------------------
      Preview box (app/components/[id]/preview-box.tsx)
 
      Both panes stay mounted in one grid cell for the lifetime of the box.
