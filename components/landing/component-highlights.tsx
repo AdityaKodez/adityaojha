@@ -1,6 +1,6 @@
 "use client";
 
-import { getComponentIcon } from "@/components/component-icons";
+import { getComponentIcon } from "@/components/showcase/component-icons";
 import {
   componentsSectionConfig,
   getEnabledComponents,

@@ -309,7 +309,7 @@ export function ProjectExplorer({
 
   const handleMouseMove = useCallback(
     (event: React.MouseEvent) => {
-      if (!showHoverPreview) return;
+      if (!showHoverPreview || !activeProject) return;
       const flip = event.clientX > window.innerWidth - PREVIEW_WIDTH - 48;
       springX.set(event.clientX + (flip ? -(PREVIEW_WIDTH + 24) : 24));
       springY.set(
@@ -322,7 +322,7 @@ export function ProjectExplorer({
         ),
       );
     },
-    [springX, springY, showHoverPreview],
+    [springX, springY, showHoverPreview, activeProject],
   );
 
   const handlePreviewStart = useCallback(

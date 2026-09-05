@@ -265,7 +265,8 @@ export type ComponentIcon =
   | "pills"
   | "channels"
   | "rail"
-  | "bars";
+  | "bars"
+  | "command";
 
 export interface ComponentDoc {
   id: string;

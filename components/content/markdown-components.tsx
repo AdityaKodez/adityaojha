@@ -1,5 +1,5 @@
 import type { Components } from "react-markdown";
-import { ProseCodeBlock } from "@/components/prose-code-block";
+import { ProseCodeBlock } from "@/components/content/prose-code-block";
 
 /**
  * Element overrides shared by every markdown surface (`/components/[id]` docs

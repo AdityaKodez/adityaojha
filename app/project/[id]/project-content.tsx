@@ -1,6 +1,6 @@
 "use client";
 
-import { markdownComponents } from "@/components/markdown-components";
+import { markdownComponents } from "@/components/content/markdown-components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Project } from "@/config/types";

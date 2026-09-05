@@ -98,6 +98,8 @@
   --heatmap-level-2: oklch(0.707 0.165 254.624);
   --heatmap-level-3: oklch(0.488 0.243 264.376);
   --heatmap-level-4: oklch(0.379 0.146 265.522);
+  --scrollbar-thumb: oklch(0.87 0 0);
+  --scrollbar-thumb-hover: oklch(0.78 0 0);
 }
 
 html[data-frame="wide"] {
@@ -141,6 +143,8 @@ html[data-frame="wide"] {
   --heatmap-level-2: oklch(0.488 0.14 254.624);
   --heatmap-level-3: oklch(0.627 0.18 264.376);
   --heatmap-level-4: oklch(0.707 0.165 254.624);
+  --scrollbar-thumb: oklch(0.34 0 0);
+  --scrollbar-thumb-hover: oklch(0.45 0 0);
 }
 
 @layer base {
@@ -169,14 +173,12 @@ html[data-frame="wide"] {
     transition-property: transform, background-color, border-color, color, opacity, box-shadow;
     transition-duration: var(--motion-duration-base);
     transition-timing-function: var(--motion-ease-standard);
-    will-change: transform;
   }
 
   .micro-transition-slow {
     transition-property: transform, background-color, border-color, color, opacity, box-shadow;
     transition-duration: var(--motion-duration-slow);
     transition-timing-function: var(--motion-ease-smooth);
-    will-change: transform;
   }
 
   .micro-press {

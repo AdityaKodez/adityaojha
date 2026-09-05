@@ -51,8 +51,9 @@ function SkillChip({ skill, idx }: { skill: SkillItem; idx: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, delay: 0.05 + idx * 0.025 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.2, delay: Math.min(idx * 0.02, 0.2) }}
       className={chipClasses}
       aria-label={skill.name}
     >
@@ -69,8 +70,9 @@ export function Skills() {
   return (
     <motion.section
       initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, delay: 0.15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.2 }}
       className="border-t border-dashed pt-6"
     >
       <motion.h2

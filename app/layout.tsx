@@ -1,6 +1,6 @@
-import { PostHogProvider } from "@/components/posthog-provider";
-import { ThemeProvider } from "@/components/theme-provider";
-import { SiteHeader } from "@/components/site-header";
+import { PostHogProvider } from "@/components/shared/posthog-provider";
+import { ThemeProvider } from "@/components/shared/theme-provider";
+import { SiteHeader } from "@/components/shared/site-header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/site";
 import { Analytics } from "@vercel/analytics/next";

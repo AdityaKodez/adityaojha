@@ -6,8 +6,8 @@ import { ArrowDownCircleIcon, ArrowRightIcon } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { AccordionSection } from "./ui/accordion-section";
+import { Button } from "@/components/ui/button";
+import { AccordionSection } from "@/components/ui/accordion-section";
 
 export function Certifications() {
   const { title, items } = siteConfig.certifications;

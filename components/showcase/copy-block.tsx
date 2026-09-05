@@ -16,7 +16,7 @@ import {
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { useCopy, type CopyStatus } from "@/lib/use-copy";
-import { PM_ICONS } from "@/components/pm-icons";
+import { PM_ICONS } from "@/components/showcase/pm-icons";
 
 const STORAGE_KEY = "akoder:package-manager";
 const DEFAULT_MANAGER: PackageManager = "npm";

@@ -30,9 +30,7 @@ import {
   Tv,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useState, type ComponentProps } from "react";
-import { FaSpotify } from "react-icons/fa";
 
 const fetchDiscordStatus = async (): Promise<LanyardData> => {
   const response = await fetch("/api/discord-status");
@@ -65,12 +63,12 @@ const statusConfig: Record<
   dnd: {
     icon: Focus,
     label: "deep work",
-    iconClassName: "text-red-500",
+    iconClassName: "text-red-500 fill-red-500",
   },
   offline: {
     icon: Moon,
     label: "sleeping",
-    iconClassName: "text-muted-foreground",
+    iconClassName: "text-muted-foreground fill-muted-foreground",
   },
 };
 
@@ -113,6 +111,44 @@ function SafeImage({
   );
 }
 
+/** Small label + icon confirming what the user is doing */
+function ActivityKindLabel({
+  icon: Icon,
+  label,
+  className,
+}: {
+  icon: typeof Activity;
+  label: string;
+  className?: string;
+}) {
+  return (
+    <div className={`flex items-center gap-1 text-[11px] ${className ?? ""}`}>
+      <Icon className="h-3 w-3" />
+      <span>{label}</span>
+    </div>
+  );
+}
+
+/** Human label for an activity type */
+function activityKindLabel(activity: LanyardData["activities"][number]) {
+  const isCoding = activity.name in knownAppIcons;
+  if (isCoding) return "coding";
+  switch (activity.type) {
+    case ActivityType.PLAYING:
+      return "playing";
+    case ActivityType.STREAMING:
+      return "streaming";
+    case ActivityType.LISTENING:
+      return "listening";
+    case ActivityType.WATCHING:
+      return "watching";
+    case ActivityType.COMPETING:
+      return "competing";
+    default:
+      return "activity";
+  }
+}
+
 function TooltipBody({ data }: { data: LanyardData }) {
   const spotify = data.listening_to_spotify ? data.spotify : null;
   const activity = getPrimaryActivity(data);
@@ -120,7 +156,12 @@ function TooltipBody({ data }: { data: LanyardData }) {
   // ── Spotify ──
   if (spotify) {
     return (
-      <div className="flex items-center flex-col gap-1 max-w-65">
+      <div className="flex items-start flex-col gap-1 max-w-65">
+        <ActivityKindLabel
+          icon={Music}
+          label="listening"
+          className="text-green-400 self-end"
+        />
         <div className="flex items-center gap-2.5 max-w-65 ">
           <SafeImage
             src={spotify.album_art_url}
@@ -141,25 +182,6 @@ function TooltipBody({ data }: { data: LanyardData }) {
             </p>
           </div>
         </div>
-        {spotify.track_id && (
-          <Link
-            href={`https://open.spotify.com/track/${spotify.track_id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            title="play on spotify"
-            className="w-full mt-2"
-            prefetch="auto"
-          >
-            <Button
-              variant="secondary"
-              size={"lg"}
-              className="w-full rounded-sm"
-            >
-              <FaSpotify className="mr-2 text-green-600" />
-              Listen on Spotify
-            </Button>
-          </Link>
-        )}
       </div>
     );
   }
@@ -187,6 +209,11 @@ function TooltipBody({ data }: { data: LanyardData }) {
           />
         </Button>
         <div className="min-w-0">
+          <ActivityKindLabel
+            icon={FallbackIcon}
+            label={activityKindLabel(activity)}
+            className="text-muted-foreground mb-0.5"
+          />
           <p className="font-medium truncate">{activity.name}</p>
           {activity.details && (
             <p className="text-[11px] opacity-70 truncate">
@@ -223,19 +250,31 @@ export function DiscordStatus() {
 
   if (isLoading) {
     return (
-      <Badge variant="ghost" className="gap-1.5 cursor-default text-muted-foreground">
-        <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
-        <span className="font-sans">Syncing...</span>
+      <Badge variant="ghost" className="rounded-lg h-6 px-2 cursor-default text-muted-foreground">
+        <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
       </Badge>
     );
   }
 
   if (error || !data) {
     return (
-      <Badge variant="ghost" className="gap-1.5 cursor-default text-muted-foreground">
-        <CircleOff className="h-3 w-3 text-muted-foreground" />
-        <span className="font-sans">Offline</span>
-      </Badge>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div
+            tabIndex={0}
+            role="button"
+            aria-label="discord status: offline"
+            className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 rounded-sm inline-flex"
+          >
+            <Badge variant="ghost" className="rounded-lg h-6 px-2 cursor-default text-muted-foreground">
+              <CircleOff className="h-3.5 w-3.5 text-muted-foreground" />
+            </Badge>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="bottom" className="p-2.5">
+          <p className="text-xs text-muted-foreground">offline</p>
+        </TooltipContent>
+      </Tooltip>
     );
   }
 
@@ -251,9 +290,8 @@ export function DiscordStatus() {
           aria-label={`Discord status: ${config.label}`}
           className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 rounded-sm inline-flex"
         >
-          <Badge variant="ghost" className="gap-1.5 cursor-pointer">
-            <StatusIcon className={`h-3 w-3 ${config.iconClassName}`} />
-            <span className="font-sans">{config.label}</span>
+          <Badge variant="secondary" className="rounded-lg h-6 px-2 cursor-pointer">
+            <StatusIcon className={`h-3.5 w-3.5 ${config.iconClassName}`} />
           </Badge>
         </div>
       </TooltipTrigger>

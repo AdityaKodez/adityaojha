@@ -49,19 +49,36 @@ function getAnimationServerSnapshot() {
   return false;
 }
 
+let sharedCtx: CanvasRenderingContext2D | null = null;
+const measureCache = new Map<string, { width: number; height: number }>();
+
 /** Width a pill needs for its icon + label, in px. */
 function measureName(name: string): { width: number; height: number } {
-  const ctx = document.createElement("canvas").getContext("2d");
-  if (!ctx) {
+  const cached = measureCache.get(name);
+  if (cached) return cached;
+
+  if (typeof document === "undefined") {
     return { width: 140, height: 34 };
   }
-  ctx.font = `600 12px ${FONT_STACK}`;
-  const textWidth = Math.ceil(ctx.measureText(name).width);
-  return {
+
+  if (!sharedCtx) {
+    const canvas = document.createElement("canvas");
+    sharedCtx = canvas.getContext("2d");
+  }
+
+  if (!sharedCtx) {
+    return { width: 140, height: 34 };
+  }
+
+  sharedCtx.font = `600 12px ${FONT_STACK}`;
+  const textWidth = Math.ceil(sharedCtx.measureText(name).width);
+  const result = {
     // 16px icon + 12px gap + label + 2 * 12px padding
     width: Math.max(56, 16 + 12 + textWidth + 24),
     height: 34,
   };
+  measureCache.set(name, result);
+  return result;
 }
 
 function spawnPosition(width: number, height: number, falling: boolean) {
@@ -267,13 +284,42 @@ function PhysicsLayer({
     ro.observe(container);
 
     const runner = Matter.Runner.create();
-    Matter.Runner.run(runner, engine);
+    let isRunning = false;
+
+    const startRunner = () => {
+      if (!isRunning) {
+        Matter.Runner.run(runner, engine);
+        isRunning = true;
+      }
+    };
+
+    const stopRunner = () => {
+      if (isRunning) {
+        Matter.Runner.stop(runner);
+        isRunning = false;
+      }
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry?.isIntersecting) {
+          startRunner();
+        } else {
+          stopRunner();
+        }
+      },
+      { rootMargin: "100px" },
+    );
+    io.observe(container);
+
     Matter.Events.on(engine, "afterUpdate", syncPills);
 
     return () => {
+      io.disconnect();
       ro.disconnect();
       Matter.Events.off(engine, "afterUpdate", syncPills);
-      Matter.Runner.stop(runner);
+      stopRunner();
       Matter.Composite.clear(engine.world, false);
       Matter.Engine.clear(engine);
     };

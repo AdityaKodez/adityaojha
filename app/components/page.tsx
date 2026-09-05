@@ -1,9 +1,9 @@
+import { ComponentsCatalog } from "@/components/showcase/components-catalog";
+import { ComponentsShell } from "@/components/showcase/components-shell";
+import { CopyBlock } from "@/components/showcase/copy-block";
+import { RotatingInstallCommand } from "@/components/showcase/rotating-install-command";
 import { getEnabledComponents } from "@/config/components";
-import { registryConfig, getRegistrySetupSnippet } from "@/config/registry";
-import { CopyBlock } from "@/components/copy-block";
-import { RotatingInstallCommand } from "@/components/rotating-install-command";
-import { ComponentsCatalog } from "@/components/components-catalog";
-import { ComponentsShell } from "@/components/components-shell";
+import { getRegistrySetupSnippet, registryConfig } from "@/config/registry";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -55,7 +55,7 @@ export default function ComponentsPage() {
 
       {/* Registry — one-time setup so components install by name. The rule spans
           the frame, the copy stays at a readable measure when the frame widens. */}
-      <section className="border-t border-dashed px-6 py-6 [&>*]:max-w-3xl">
+      <section className="border-t border-dashed px-6 py-6 &>*:max-w-3xl">
         <h2 className="text-base font-medium tracking-tight">
           Install with the shadcn CLI
         </h2>

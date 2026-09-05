@@ -10,8 +10,12 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
-import { Button } from "./ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
 
 const contactChannels = siteConfig.contact.channels
   .filter((item) => item.enabled !== false)

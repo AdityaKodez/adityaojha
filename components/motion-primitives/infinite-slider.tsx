@@ -1,7 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { useMotionValue, animate, motion, useReducedMotion } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useMotionValue, animate, motion, useReducedMotion, useInView } from 'motion/react';
+import { useState, useEffect, useRef } from 'react';
 import useMeasure from 'react-use-measure';
 
 export type InfiniteSliderProps = {
@@ -23,6 +23,8 @@ export function InfiniteSlider({
   reverse = false,
   className,
 }: InfiniteSliderProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: '80px' });
   const [currentSpeed, setCurrentSpeed] = useState(speed);
   const [ref, { width, height }] = useMeasure();
   const translation = useMotionValue(0);
@@ -31,13 +33,15 @@ export function InfiniteSlider({
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      translation.set(0);
+    const size = direction === 'horizontal' ? width : height;
+    if (prefersReducedMotion || !isInView || size === 0) {
+      if (prefersReducedMotion) {
+        translation.set(0);
+      }
       return;
     }
 
     let controls;
-    const size = direction === 'horizontal' ? width : height;
     const contentSize = size + gap;
     const from = reverse ? -contentSize / 2 : 0;
     const to = reverse ? 0 : -contentSize / 2;
@@ -82,6 +86,7 @@ export function InfiniteSlider({
     direction,
     reverse,
     prefersReducedMotion,
+    isInView,
   ]);
 
   const hoverProps = speedOnHover
@@ -98,7 +103,7 @@ export function InfiniteSlider({
     : {};
 
   return (
-    <div className={cn('overflow-hidden', className)}>
+    <div ref={containerRef} className={cn('overflow-hidden', className)}>
       <motion.div
         className='flex w-max'
         style={{

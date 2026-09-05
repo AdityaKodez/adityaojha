@@ -7,19 +7,29 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import dynamic from "next/dynamic";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
 import OpenSrc from "@/public/stacks/open-src";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Search, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+const SiteCommandPalette = dynamic(
+  () =>
+    import("@/components/shared/site-command-palette").then(
+      (mod) => mod.SiteCommandPalette,
+    ),
+  { ssr: false },
+);
 
 export function HeaderActions() {
   const { setTheme, resolvedTheme } = useTheme();
   const themeAudioRef = useRef<HTMLAudioElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [starCount, setStarCount] = useState<string | null>(null);
+  const [paletteOpen, setPaletteOpen] = useState(false);
 
   const playThemeAudio = () => {
     if (themeAudioRef.current) {
@@ -35,9 +45,7 @@ export function HeaderActions() {
       theme: nextTheme,
       method,
     });
-    setTimeout(() => {
-      setTheme(nextTheme);
-    }, 200);
+    setTheme(nextTheme);
   }, [resolvedTheme, setTheme]);
 
   useEffect(() => {
@@ -47,6 +55,12 @@ export function HeaderActions() {
         e.target instanceof HTMLTextAreaElement ||
         (e.target as HTMLElement).isContentEditable
       ) {
+        return;
+      }
+
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setPaletteOpen((prev) => !prev);
         return;
       }
 
@@ -114,6 +128,28 @@ export function HeaderActions() {
       <div className="pointer-events-auto flex items-center overflow-hidden rounded-md border border-border/60 bg-background/60 backdrop-blur-md divide-x divide-border/60 shadow-xs transition-colors hover:border-border">
         <Tooltip>
           <TooltipTrigger asChild>
+            <button
+              type="button"
+              aria-label="open command palette"
+              onClick={() => setPaletteOpen(true)}
+              className="flex h-8 items-center justify-center gap-1.5 px-2.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            >
+              <Search className="h-4 w-4" />
+              <span className="max-sm:hidden flex items-center gap-1">
+                <Kbd>⌘</Kbd>
+                <Kbd>K</Kbd>
+              </span>
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="flex items-center gap-1">
+              command palette <Kbd>⌘</Kbd> <Kbd>K</Kbd>
+            </p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
             <Link
               href={siteConfig.banner.openSourceUrl}
               target="_blank"
@@ -167,8 +203,10 @@ export function HeaderActions() {
       <audio
         ref={themeAudioRef}
         src={siteConfig.banner.switchAudioSrc}
-        preload="none"
+        preload="auto"
       />
+
+      <SiteCommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
     </>
   );
 }

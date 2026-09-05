@@ -64,7 +64,7 @@ There is no typecheck script; run `npx tsc --noEmit` directly.
 | Path | Contents |
 | --- | --- |
 | `app/` | Routes — `page.tsx` (home), `components/` and `components/[id]/` (showcase), `project/[id]/` (case studies), `api/discord-status/route.ts`; plus `layout.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `not-found.tsx` |
-| `components/` | One file per home section — `hero.tsx`, `about.tsx`, `skills.tsx`, `social.tsx`, `bookmarks.tsx`, `certifications.tsx`, `component-highlights.tsx`, `project-explorer.tsx`, `experience.tsx`, `testimonials.tsx`, `services.tsx`, `how-i-work.tsx`, `cta.tsx`, `footer.tsx` |
+| `components/` | Subdivided into `landing/` (one file per home section — hero, about, skills, etc.), `showcase/` (catalog, shell, preview), `content/` (markdown overrides, prose blocks), `shared/` (header, footer, theme provider, logo), `ui/`, `motion-primitives/`, `skeletons/` |
 | `components/ui/` | Vendored shadcn and Radix primitives; source of most registry items |
 | `components/motion-primitives/` | Motion-heavy building blocks |
 | `components/skeletons/` | Loading placeholders |
@@ -276,7 +276,7 @@ Two surfaces render Markdown and they must stay in sync.
 | Component docs at `/components/[id]` | `MarkdownAsync` from `next-mdx-remote`, server-rendered | `app/components/[id]/page.tsx` |
 | Project case studies | `react-markdown`, client-rendered | `app/project/[id]/project-content.tsx` |
 
-- Both pass the shared override map from `components/markdown-components.tsx`.
+- Both pass the shared override map from `components/content/markdown-components.tsx`.
   Never inline a second set of overrides.
 - All `.prose` styling lives in one **unlayered** block of `app/globals.css`. It
   has to stay unlayered: the typography plugin registers its rules through
@@ -318,7 +318,8 @@ Rules:
   design language consumers are installing. Avoid uppercase shouting there as well.
 - Current items: dotted-world-map, copy-command-block, github-map,
   project-explorer, progressive-blur, infinite-slider, carousel, mode-toggler,
-  interactive-skill-cloud, contact-channels, section-rail, progress-bars.
+  interactive-skill-cloud, contact-channels, section-rail, progress-bars,
+  command-palette.
 
 ## 15. Component showcase
 
@@ -327,7 +328,7 @@ Rules:
   returns enabled entries sorted by `order`.
 - Each entry points at a live demo under `app/components/[id]/demos/` and a
   Markdown doc under `content/components/`.
-- `getComponentIcon(name)` in `components/component-icons.tsx` maps an
+- `getComponentIcon(name)` in `components/showcase/component-icons.tsx` maps an
   `icon` key onto its icon component. Both the showcase and the home teaser use
   it — do not write a second switch.
 - Set `enabled: false` to hide an entry without deleting it.

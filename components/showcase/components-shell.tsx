@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { useComponentsView } from "@/components/components-view";
+import { useComponentsView } from "@/components/showcase/components-view";
 
 /**
  * Frame for the /components route.

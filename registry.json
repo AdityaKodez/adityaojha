@@ -5,6 +5,40 @@
   "items": [
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "command-palette",
+      "type": "registry:ui",
+      "title": "Command Palette",
+      "description": "A keyboard-first ⌘K palette with grouped actions, drill-down pages, recent items, and directional motion — built on cmdk inside a self-contained dialog shell.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "navigation",
+        "search",
+        "dialog",
+        "keyboard"
+      ],
+      "dependencies": [
+        "cmdk",
+        "lucide-react",
+        "motion",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "kbd"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/command-palette",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/command-palette.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/command-palette.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/command-palette.json\n```\n\n## Usage\n\n```tsx\nimport { CommandPalette } from \"@/components/ui/command-palette\";\n\nexport function AppShell() {\n  const [open, setOpen] = useState(false);\n\n  return (\n    <>\n      <button onClick={() => setOpen(true)}>open palette</button>\n      <CommandPalette open={open} onOpenChange={setOpen} recents />\n    </>\n  );\n}\n```\n\nPass `groups` for top-level actions, `pages` plus `page` ids on items for drill-down navigation, and ⌘K / Ctrl+K toggles the palette by default. Recents persist per `storageKey` when `recents` is on."
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "dotted-world-map",
       "type": "registry:ui",
       "title": "Dotted World Map",

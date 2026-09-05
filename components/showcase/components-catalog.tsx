@@ -4,9 +4,9 @@ import Link from "next/link";
 import { LayoutGrid, List } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ComponentDoc } from "@/config/types";
-import { getComponentIcon } from "@/components/component-icons";
-import { ComponentDemo } from "@/components/component-demo";
-import { useComponentsView } from "@/components/components-view";
+import { getComponentIcon } from "@/components/showcase/component-icons";
+import { ComponentDemo } from "@/components/showcase/component-demo";
+import { useComponentsView } from "@/components/showcase/components-view";
 import {
   Tooltip,
   TooltipContent,

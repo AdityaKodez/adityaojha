@@ -2,7 +2,7 @@
 
 import { siteConfig } from "@/config/site";
 import { Signature } from "./signature";
-import { AccordionSection } from "./ui/accordion-section";
+import { AccordionSection } from "@/components/ui/accordion-section";
 
 export function HowIWork() {
   return (

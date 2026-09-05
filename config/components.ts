@@ -10,6 +10,18 @@ export const componentsSectionConfig = {
 
 export const componentRegistry: ComponentDoc[] = [
   {
+    id: "command-palette",
+    title: "Command Palette",
+    description:
+      "A keyboard-first ⌘K palette with grouped actions, drill-down pages, recent items, and directional motion — built on cmdk inside a self-contained dialog shell.",
+    icon: "command",
+    demoPath: "app/components/[id]/demos/command-palette-demo.tsx",
+    docPath: "content/components/command-palette.md",
+    order: 1,
+    enabled: true,
+    new: true,
+  },
+  {
     id: "progress-bars",
     title: "Progress Bars",
     description:

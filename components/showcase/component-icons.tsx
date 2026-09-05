@@ -342,6 +342,36 @@ const SectionRailIcon = ({
   </svg>
 );
 
+const CommandPaletteIcon = ({
+  size = 24,
+  color = "currentColor",
+  ...props
+}: ComponentIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" />
+    <path d="M2.5 9.5h19" strokeDasharray="2.5 2.5" strokeOpacity="0.55" />
+    <path d="M5.5 6.75h.01" strokeOpacity="0.7" />
+    <path d="M8 6.75h.01" strokeOpacity="0.7" />
+    {/* command glyph, scaled into the list area below the dashed header */}
+    <path
+      d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"
+      transform="translate(12 14.75) scale(0.36) translate(-12 -12)"
+      strokeWidth={5}
+    />
+  </svg>
+);
+
 export {
   DottedWorldMapIcon,
   CopyCommandBlockIcon,
@@ -355,6 +385,7 @@ export {
   ContactChannelsIcon,
   ProgressBarsIcon,
   SectionRailIcon,
+  CommandPaletteIcon,
 };
 
 /** Maps a `ComponentDoc.icon` key onto its icon component. */
@@ -382,6 +413,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return SectionRailIcon;
     case "bars":
       return ProgressBarsIcon;
+    case "command":
+      return CommandPaletteIcon;
     case "globe":
     default:
       return DottedWorldMapIcon;

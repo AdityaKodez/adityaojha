@@ -17,8 +17,8 @@ import {
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/use-copy";
-import { usePackageManager, writeManager } from "@/components/copy-block";
-import { PM_ICONS } from "@/components/pm-icons";
+import { usePackageManager, writeManager } from "@/components/showcase/copy-block";
+import { PM_ICONS } from "@/components/showcase/pm-icons";
 
 const ROTATION_INTERVAL_MS = 2400;
 

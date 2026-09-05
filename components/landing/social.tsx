@@ -11,9 +11,13 @@ import { trackEvent } from "@/lib/analytics";
 import Peerlist from "@/public/peerlist";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
-import { Kbd } from "./ui/kbd";
+import { Kbd } from "@/components/ui/kbd";
 import { FaReddit } from "react-icons/fa";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const sortedSocials = socialsConfig
   .filter((item) => item.enabled !== false)
@@ -104,8 +108,9 @@ const Social = () => {
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.22, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
       className="no-js-visible border-t border-dashed pt-6"
     >
       <h2 className="section-heading">{socialSectionConfig.title}</h2>
@@ -117,8 +122,9 @@ const Social = () => {
           const cellContent = (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.22, delay: 0.5 + idx * 0.045 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.22, delay: Math.min(idx * 0.03, 0.2), ease: [0.22, 1, 0.36, 1] }}
               className="micro-transition relative no-js-visible flex items-center gap-3 overflow-hidden p-4 max-sm:border-r-0 group-hover:bg-muted/10 group-focus-visible:bg-muted/10 "
             >
               <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-45 micro-transition group-hover:opacity-100 group-focus-visible:opacity-100" />

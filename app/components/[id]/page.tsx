@@ -7,10 +7,10 @@ import { MarkdownAsync } from "react-markdown";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 
-import { getComponentIcon } from "@/components/component-icons";
-import { CopyBlock, InstallCommand } from "@/components/copy-block";
-import { HomeSectionRail } from "@/components/home-section-rail";
-import { markdownComponents } from "@/components/markdown-components";
+import { getComponentIcon } from "@/components/showcase/component-icons";
+import { CopyBlock, InstallCommand } from "@/components/showcase/copy-block";
+import { HomeSectionRail } from "@/components/landing/home-section-rail";
+import { markdownComponents } from "@/components/content/markdown-components";
 import type { RailItem } from "@/components/section-rail";
 import {
   Breadcrumb,
@@ -28,7 +28,7 @@ import {
 } from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
-import { ComponentDemo } from "@/components/component-demo";
+import { ComponentDemo } from "@/components/showcase/component-demo";
 import { ComponentExamples } from "./demos/examples";
 import { PreviewBox } from "./preview-box";
 

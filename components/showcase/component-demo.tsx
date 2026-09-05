@@ -1,6 +1,7 @@
 "use client";
 
 import { CarouselDemo } from "@/app/components/[id]/demos/carousel-demo";
+import { CommandPaletteDemo } from "@/app/components/[id]/demos/command-palette-demo";
 import { ContactChannelsDemo } from "@/app/components/[id]/demos/contact-channels-demo";
 import { CopyCommandBlockDemo } from "@/app/components/[id]/demos/copy-command-block-demo";
 import { DottedWorldMapDemo } from "@/app/components/[id]/demos/dotted-world-map-demo";
@@ -39,6 +40,8 @@ export function ComponentDemo({ id }: { id: string }) {
       return <SectionRailDemo />;
     case "progress-bars":
       return <ProgressBarsDemo />;
+    case "command-palette":
+      return <CommandPaletteDemo />;
     default:
       return (
         <div className="text-sm text-muted-foreground">

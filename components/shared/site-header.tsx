@@ -1,7 +1,7 @@
 "use client";
 
-import { HeaderActions } from "@/components/header-actions";
-import { Logo } from "@/components/logo";
+import { HeaderActions } from "@/components/shared/header-actions";
+import { Logo } from "@/components/shared/logo";
 import {
   Tooltip,
   TooltipContent,
