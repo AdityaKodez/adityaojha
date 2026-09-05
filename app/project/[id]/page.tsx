@@ -72,11 +72,18 @@ export default async function ProjectPage({
   params: Promise<{ id: string }>;
 }) {
   const resolvedParams = await params;
-  const project = projectsConfig.find((p) => p.id === resolvedParams.id);
+  const enabled = [...projectsConfig]
+    .filter((p) => p.enabled !== false)
+    .sort((a, b) => a.order - b.order);
+  const index = enabled.findIndex((p) => p.id === resolvedParams.id);
+  const project = enabled[index];
 
   if (!project) {
     notFound();
   }
 
-  return <ProjectContent project={project} />;
+  const prev = index > 0 ? enabled[index - 1] : undefined;
+  const next = index < enabled.length - 1 ? enabled[index + 1] : undefined;
+
+  return <ProjectContent project={project} prev={prev} next={next} />;
 }

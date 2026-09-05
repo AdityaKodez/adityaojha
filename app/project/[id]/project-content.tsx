@@ -2,11 +2,24 @@
 
 import { markdownComponents } from "@/components/content/markdown-components";
 import { Badge } from "@/components/ui/badge";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { projectsSectionConfig } from "@/config/projects";
 import type { Project } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
-import { BarChart3, ArrowLeft, ForwardIcon, Users } from "lucide-react";
-import { motion, Variants } from "motion/react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ForwardIcon,
+} from "lucide-react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
@@ -24,64 +37,124 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
+      staggerChildren: 0.08,
+      delayChildren: 0.05,
     },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const imageVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.98, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: "easeOut" },
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
-export function ProjectContent({ project }: { project: Project }) {
+function StatusBadge({ status }: { status: Project["status"] }) {
+  if (status === "shipped") return null;
+
+  if (status === "building") {
+    return (
+      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-blue-500/10 px-1.5 py-0.5 font-pixel text-[10px] leading-none text-blue-600 dark:text-blue-400">
+        <span className="relative flex size-1.5">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-60 motion-reduce:animate-none" />
+          <span className="relative inline-flex size-1.5 rounded-full bg-blue-500" />
+        </span>
+        building&hellip;
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex shrink-0 items-center rounded-sm bg-amber-500/10 px-1.5 py-0.5 font-pixel text-[10px] leading-none text-amber-600 dark:text-amber-400">
+      new
+    </span>
+  );
+}
+
+type ProjectNav = Pick<Project, "id" | "title">;
+
+export function ProjectContent({
+  project,
+  prev,
+  next,
+}: {
+  project: Project;
+  prev?: ProjectNav;
+  next?: ProjectNav;
+}) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.main
+      id="main-content"
       variants={containerVariants}
-      initial="hidden"
+      initial={shouldReduceMotion ? "visible" : "hidden"}
       animate="visible"
-      className="relative min-h-screen max-w-3xl mx-auto md:pb-16 border-x border-b-2 overflow-x-clip pt-6"
+      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-14 pb-12"
     >
-      <motion.div variants={itemVariants} className="border-b px-6 pb-6 mb-6">
-        <Button
-          asChild
-          variant="link"
-          className="-ml-4 text-muted-foreground hover:text-foreground mb-8"
-        >
-          <Link href="/">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
-          </Link>
-        </Button>
-        <h1 className="text-2xl font-semibold tracking-tight md:text-3xl mt-2">
-          {project.title}
-        </h1>
+      {/* Breadcrumb */}
+      <motion.div variants={itemVariants} className="px-6 pt-4 border-t border-dashed">
+        <Breadcrumb>
+          <BreadcrumbList className="text-xs">
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/#projects">
+                  {projectsSectionConfig.title.toLowerCase()}
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem className="min-w-0">
+              <BreadcrumbPage className="truncate max-w-[40ch]">
+                {project.title}
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </motion.div>
 
-      <motion.div variants={itemVariants} className="px-6 mb-8">
-        <p className="text-lg text-muted-foreground leading-relaxed">
+      {/* Title bar */}
+      <motion.h1 variants={itemVariants} className="section-heading text-balance">
+        {project.title}
+      </motion.h1>
+
+      {/* Meta */}
+      <motion.div
+        variants={itemVariants}
+        className="px-6 flex flex-wrap items-center gap-x-3 gap-y-2"
+      >
+        <p className="font-mono text-xs text-muted-foreground">
+          <span className="tabular-nums">{project.year}</span>
+          <span aria-hidden="true" className="mx-2 text-muted-foreground/50">
+            {"//"}
+          </span>
+          {project.category}
+        </p>
+        <StatusBadge status={project.status} />
+      </motion.div>
+
+      {/* Description */}
+      <motion.div variants={itemVariants} className="px-6">
+        <p className="text-base text-muted-foreground leading-relaxed text-pretty">
           {project.description}
         </p>
       </motion.div>
 
       <motion.div
         variants={imageVariants}
-        className="aspect-video relative bg-muted overflow-hidden"
+        className="aspect-video relative bg-muted overflow-hidden border-y"
       >
         <Image
           src={project.image}
@@ -91,96 +164,81 @@ export function ProjectContent({ project }: { project: Project }) {
           className="object-cover"
           priority
         />
-        <div className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15"
+        />
       </motion.div>
 
-      <div className="px-6 mt-4 space-y-8">
-        <motion.div
+      <motion.div
+        variants={itemVariants}
+        className="px-6 flex flex-wrap items-center justify-between gap-4"
+      >
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <Badge key={tag} variant="secondary" className="text-xs">
+              {tag}
+            </Badge>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          {project.liveUrl && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button asChild>
+                    <Link
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        trackEvent("project_live_preview_clicked", {
+                          project_id: project.id,
+                          live_url: project.liveUrl!,
+                        });
+                      }}
+                    >
+                      Live Preview{" "}
+                      <ForwardIcon aria-hidden="true" className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>visit live site</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+
+          {project.githubUrl && (
+            <Button asChild variant="outline">
+              <Link
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent("project_source_code_clicked", {
+                    project_id: project.id,
+                    github_url: project.githubUrl!,
+                  });
+                }}
+              >
+                <FaGithub aria-hidden="true" className="mr-2 h-4 w-4" />
+                Source Code
+              </Link>
+            </Button>
+          )}
+        </div>
+      </motion.div>
+
+      {project.content && (
+        <motion.section
           variants={itemVariants}
-          className="flex flex-wrap items-center justify-between gap-4 mt-8"
+          aria-label="case study"
+          className="border-t border-dashed px-6 py-6"
         >
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <Badge key={tag} variant="secondary" className="text-xs">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
-            {project.liveUrl && (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button asChild>
-                      <Link
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => {
-                          trackEvent("project_live_preview_clicked", {
-                            project_id: project.id,
-                            live_url: project.liveUrl!,
-                          });
-                        }}
-                      >
-                        Live Preview <ForwardIcon className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>visit live site</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )}
-
-            {project.githubUrl && (
-              <Button asChild variant="outline">
-                <Link
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    trackEvent("project_source_code_clicked", {
-                      project_id: project.id,
-                      github_url: project.githubUrl!,
-                    });
-                  }}
-                >
-                  <FaGithub className="mr-2 h-4 w-4" />
-                  Source Code
-                </Link>
-              </Button>
-            )}
-          </div>
-        </motion.div>
-
-        {project.metrics && project.metrics.length > 0 && (
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
-          >
-            {project.metrics.map((metric) => (
-              <div key={metric.label} className="space-y-2">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  {metric.icon === "users" ? (
-                    <Users className="h-4 w-4" />
-                  ) : (
-                    <BarChart3 className="h-4 w-4" />
-                  )}
-                  <p className="font-semibold text-sm">{metric.label}</p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        )}
-
-        {project.content && (
-          <motion.div
-            variants={itemVariants}
-            className="prose prose-neutral dark:prose-invert max-w-none py-4"
-          >
+          <div className="prose prose-neutral dark:prose-invert max-w-none">
             {typeof project.content === "string" ? (
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -191,9 +249,71 @@ export function ProjectContent({ project }: { project: Project }) {
             ) : (
               project.content
             )}
-          </motion.div>
-        )}
-      </div>
+          </div>
+        </motion.section>
+      )}
+
+      {/* Prev / next */}
+      <motion.nav
+        variants={itemVariants}
+        aria-label="more projects"
+        className="border-t border-dashed px-6 py-6 flex items-start justify-between gap-4"
+      >
+        <div className="min-w-0 flex-1">
+          {prev ? (
+            <Link
+              href={`/project/${prev.id}`}
+              className="group inline-flex min-w-0 max-w-full flex-col gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            >
+              <span className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground">
+                <ArrowLeft
+                  aria-hidden="true"
+                  className="h-3 w-3 transition-transform group-hover:-translate-x-0.5"
+                />
+                prev
+              </span>
+              <span className="truncate text-sm font-medium group-hover:text-primary group-hover:underline group-hover:underline-offset-4">
+                {prev.title}
+              </span>
+            </Link>
+          ) : (
+            <Link
+              href="/#projects"
+              className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            >
+              <ArrowLeft aria-hidden="true" className="h-3 w-3" />
+              all work
+            </Link>
+          )}
+        </div>
+        <div className="min-w-0 flex-1 text-right">
+          {next ? (
+            <Link
+              href={`/project/${next.id}`}
+              className="group inline-flex min-w-0 max-w-full flex-col items-end gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            >
+              <span className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground">
+                next
+                <ArrowRight
+                  aria-hidden="true"
+                  className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
+                />
+              </span>
+              <span className="truncate text-sm font-medium group-hover:text-primary group-hover:underline group-hover:underline-offset-4">
+                {next.title}
+              </span>
+            </Link>
+          ) : (
+            <Link
+              href="/#projects"
+              className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            >
+              all work
+              <ArrowRight aria-hidden="true" className="h-3 w-3" />
+            </Link>
+          )}
+        </div>
+      </motion.nav>
     </motion.main>
   );
 }
