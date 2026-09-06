@@ -5,6 +5,40 @@
   "items": [
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ask-ai",
+      "type": "registry:ui",
+      "title": "Ask AI",
+      "description": "A popover prompt launcher with an animated mascot trigger, one-click query links for major AI providers, and instant clipboard fallback.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "ai",
+        "assistant",
+        "popover",
+        "dialog",
+        "interactive"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "popover",
+        "tooltip"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/ask-ai",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/ask-ai.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/ask-ai.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/ask-ai.json\n```\n\n## Usage\n\n```tsx\nimport { AskAI } from \"@/components/ui/ask-ai\";\n\nexport function Hero() {\n  return (\n    <AskAI\n      prompt=\"Introduce this project and explain what makes it unique.\"\n      label=\"ask an ai\"\n    />\n  );\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "command-palette",
       "type": "registry:ui",
       "title": "Command Palette",

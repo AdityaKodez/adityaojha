@@ -1,5 +1,6 @@
 "use client";
 
+import { AskAIDemo } from "@/app/components/[id]/demos/ask-ai-demo";
 import { CarouselDemo } from "@/app/components/[id]/demos/carousel-demo";
 import { CommandPaletteDemo } from "@/app/components/[id]/demos/command-palette-demo";
 import { ContactChannelsDemo } from "@/app/components/[id]/demos/contact-channels-demo";
@@ -16,6 +17,8 @@ import { SectionRailDemo } from "@/app/components/[id]/demos/section-rail-demo";
 
 export function ComponentDemo({ id }: { id: string }) {
   switch (id) {
+    case "ask-ai":
+      return <AskAIDemo />;
     case "dotted-world-map":
       return <DottedWorldMapDemo />;
     case "copy-command-block":

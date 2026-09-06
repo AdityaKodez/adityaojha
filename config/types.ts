@@ -266,7 +266,8 @@ export type ComponentIcon =
   | "channels"
   | "rail"
   | "bars"
-  | "command";
+  | "command"
+  | "sparkles";
 
 export interface ComponentDoc {
   id: string;

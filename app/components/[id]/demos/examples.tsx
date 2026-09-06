@@ -1,4 +1,5 @@
 import { Carousel, type CarouselItem } from "@/components/ui/carousel";
+import { AskAI } from "@/components/ui/ask-ai";
 import { DottedWorldMap } from "@/components/ui/dotted-world-map";
 import { CopyCommandBlock } from "@/components/ui/copy-command-block";
 import { ProgressBars } from "@/components/ui/progress-bars";
@@ -301,8 +302,64 @@ function progressBarsExamples(): CarouselItem[] {
   ];
 }
 
+function askAiExamples(): CarouselItem[] {
+  return [
+    {
+      id: "portfolio-intro",
+      title: "Portfolio introduction",
+      description:
+        "Full-sized launcher with a prompt asking the AI to introduce your background, stack, and notable work.",
+      content: (
+        <div className="flex h-48 w-full items-center justify-center">
+          <AskAI
+            prompt="Hi! I'm on Aditya Ojha's portfolio (https://akoder.xyz). Based on this page, introduce him: what he builds, his stack, and what he is looking for."
+            title="ask an ai about me"
+            description="a fresh perspective, from your favorite assistant."
+            side="bottom"
+          />
+        </div>
+      ),
+    },
+    {
+      id: "compact-trigger",
+      title: "Compact trigger",
+      description:
+        "Tighter dimensions suitable for embedding in headers, toolbars, or floating navigation strips.",
+      content: (
+        <div className="flex h-48 w-full items-center justify-center">
+          <AskAI
+            size="compact"
+            prompt="summarize this repository's technical architecture and core design patterns."
+            label="ask ai"
+            title="repository overview"
+            side="bottom"
+          />
+        </div>
+      ),
+    },
+    {
+      id: "case-study-query",
+      title: "Project case study",
+      description:
+        "Contextual prompt tailored for deep-dive case studies and technical architecture reviews.",
+      content: (
+        <div className="flex h-48 w-full items-center justify-center">
+          <AskAI
+            prompt="analyze the architectural decisions and trade-offs made in this project. What are the key highlights?"
+            label="ask about this project"
+            title="deep dive"
+            description="get a comprehensive breakdown of the technical decisions."
+            side="bottom"
+          />
+        </div>
+      ),
+    },
+  ];
+}
+
 /** Examples per component id. Add an entry here when a component ships examples. */
 const exampleRegistry: Record<string, () => CarouselItem[]> = {
+  "ask-ai": askAiExamples,
   "dotted-world-map": dottedWorldMapExamples,
   "copy-command-block": copyCommandBlockExamples,
   "github-map": githubMapExamples,

@@ -372,6 +372,29 @@ const CommandPaletteIcon = ({
   </svg>
 );
 
+const SparklesIcon = ({
+  size = 24,
+  color = "currentColor",
+  ...props
+}: ComponentIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z" />
+    <circle cx="18.5" cy="5.5" r="1" fill={color} stroke="none" />
+    <circle cx="5.5" cy="18.5" r="1" fill={color} stroke="none" />
+  </svg>
+);
+
 export {
   DottedWorldMapIcon,
   CopyCommandBlockIcon,
@@ -386,6 +409,7 @@ export {
   ProgressBarsIcon,
   SectionRailIcon,
   CommandPaletteIcon,
+  SparklesIcon,
 };
 
 /** Maps a `ComponentDoc.icon` key onto its icon component. */
@@ -415,6 +439,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return ProgressBarsIcon;
     case "command":
       return CommandPaletteIcon;
+    case "sparkles":
+      return SparklesIcon;
     case "globe":
     default:
       return DottedWorldMapIcon;

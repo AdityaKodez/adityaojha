@@ -17,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "cn": "^0.2.5",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "geist": "^1.7.0",
