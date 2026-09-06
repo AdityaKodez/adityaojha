@@ -394,6 +394,9 @@ export function AskAI({
   function changeOpen(next: boolean) {
     setInternalOpen(next);
     onOpenChange?.(next);
+    if (next) {
+      setTooltipOpen(false);
+    }
     if (!next) {
       setFallbackPrompt(false);
     }
