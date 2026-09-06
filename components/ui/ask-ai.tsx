@@ -113,158 +113,11 @@ export function ClaudeIcon(props: IconProps) {
   );
 }
 
-export function GeminiIcon(props: IconProps) {
+export function GrokIcon(props: IconProps) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296 298" fill="none" {...props}>
-      <mask
-        id="gemini__a"
-        width="296"
-        height="298"
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <path
-          fill="#3186FF"
-          d="M141.201 4.886c2.282-6.17 11.042-6.071 13.184.148l5.985 17.37a184.004 184.004 0 0 0 111.257 113.049l19.304 6.997c6.143 2.227 6.156 10.91.02 13.155l-19.35 7.082a184.001 184.001 0 0 0-109.495 109.385l-7.573 20.629c-2.241 6.105-10.869 6.121-13.133.025l-7.908-21.296a184 184 0 0 0-109.02-108.658l-19.698-7.239c-6.102-2.243-6.118-10.867-.025-13.132l20.083-7.467A183.998 183.998 0 0 0 133.291 26.28l7.91-21.394Z"
-        />
-      </mask>
-      <g
-        mask="url(#gemini__a)"
-        className="opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
-      >
-        <g filter="url(#gemini__b)">
-          <ellipse cx="163" cy="149" fill="#3689FF" rx="196" ry="159" />
-        </g>
-        <g filter="url(#gemini__c)">
-          <ellipse cx="33.5" cy="142.5" fill="#F6C013" rx="68.5" ry="72.5" />
-        </g>
-        <g filter="url(#gemini__d)">
-          <ellipse cx="19.5" cy="148.5" fill="#F6C013" rx="68.5" ry="72.5" />
-        </g>
-        <g filter="url(#gemini__e)">
-          <path
-            fill="#FA4340"
-            d="M194 10.5C172 82.5 65.5 134.333 22.5 135L144-66l50 76.5Z"
-          />
-        </g>
-        <g filter="url(#gemini__f)">
-          <path
-            fill="#FA4340"
-            d="M190.5-12.5C168.5 59.5 62 111.333 19 112L140.5-89l50 76.5Z"
-          />
-        </g>
-        <g filter="url(#gemini__g)">
-          <path
-            fill="#14BB69"
-            d="M194.5 279.5C172.5 207.5 66 155.667 23 155l121.5 201 50-76.5Z"
-          />
-        </g>
-        <g filter="url(#gemini__h)">
-          <path
-            fill="#14BB69"
-            d="M196.5 320.5C174.5 248.5 68 196.667 25 196l121.5 201 50-76.5Z"
-          />
-        </g>
-      </g>
-      <path
-        className="fill-current transition-opacity duration-200 group-hover:opacity-0 group-focus-visible:opacity-0"
-        d="M141.201 4.886c2.282-6.17 11.042-6.071 13.184.148l5.985 17.37a184.004 184.004 0 0 0 111.257 113.049l19.304 6.997c6.143 2.227 6.156 10.91.02 13.155l-19.35 7.082a184.001 184.001 0 0 0-109.495 109.385l-7.573 20.629c-2.241 6.105-10.869 6.121-13.133.025l-7.908-21.296a184 184 0 0 0-109.02-108.658l-19.698-7.239c-6.102-2.243-6.118-10.867-.025-13.132l20.083-7.467A183.998 183.998 0 0 0 133.291 26.28l7.91-21.394Z"
-      />
-      <defs>
-        <filter
-          id="gemini__b"
-          width="464"
-          height="390"
-          x="-69"
-          y="-46"
-          colorInterpolationFilters="sRGB"
-          filterUnits="userSpaceOnUse"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur result="effect1_foregroundBlur_69_17998" stdDeviation="18" />
-        </filter>
-        <filter
-          id="gemini__c"
-          width="265"
-          height="273"
-          x="-99"
-          y="6"
-          colorInterpolationFilters="sRGB"
-          filterUnits="userSpaceOnUse"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur result="effect1_foregroundBlur_69_17998" stdDeviation="32" />
-        </filter>
-        <filter
-          id="gemini__d"
-          width="265"
-          height="273"
-          x="-113"
-          y="12"
-          colorInterpolationFilters="sRGB"
-          filterUnits="userSpaceOnUse"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur result="effect1_foregroundBlur_69_17998" stdDeviation="32" />
-        </filter>
-        <filter
-          id="gemini__e"
-          width="299.5"
-          height="329"
-          x="-41.5"
-          y="-130"
-          colorInterpolationFilters="sRGB"
-          filterUnits="userSpaceOnUse"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur result="effect1_foregroundBlur_69_17998" stdDeviation="32" />
-        </filter>
-        <filter
-          id="gemini__f"
-          width="299.5"
-          height="329"
-          x="-45"
-          y="-153"
-          colorInterpolationFilters="sRGB"
-          filterUnits="userSpaceOnUse"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur result="effect1_foregroundBlur_69_17998" stdDeviation="32" />
-        </filter>
-        <filter
-          id="gemini__g"
-          width="299.5"
-          height="329"
-          x="-41"
-          y="91"
-          colorInterpolationFilters="sRGB"
-          filterUnits="userSpaceOnUse"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur result="effect1_foregroundBlur_69_17998" stdDeviation="32" />
-        </filter>
-        <filter
-          id="gemini__h"
-          width="299.5"
-          height="329"
-          x="-39"
-          y="132"
-          colorInterpolationFilters="sRGB"
-          filterUnits="userSpaceOnUse"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur result="effect1_foregroundBlur_69_17998" stdDeviation="32" />
-        </filter>
-      </defs>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="currentColor" {...props}>
+      <path d="M395.479 633.828 735.91 381.105c16.689-12.39 40.544-7.557 48.496 11.687 41.854 101.493 23.155 223.461-60.118 307.204-83.272 83.743-199.137 102.108-305.041 60.281l-115.691 53.866c165.934 114.059 367.431 85.852 493.345-40.861 99.875-100.439 130.807-237.345 101.884-360.806l.262.263c-41.942-181.369 10.311-253.865 117.353-402.107 2.53-3.515 5.07-7.03 7.6-10.632L883.144 141.651v-.439L395.392 633.916" />
+      <path d="M325.226 695.251C206.128 580.84 226.662 403.776 328.285 301.668c75.146-75.571 198.264-106.414 305.741-61.072l115.428-53.602c-20.797-15.114-47.448-31.371-78.03-42.794-138.234-57.206-303.731-28.735-416.101 84.182C147.234 337.081 113.244 504.215 171.613 646.833c43.603 106.59-27.874 181.985-99.875 258.083C46.224 931.893 20.622 958.87 0 987.429l325.139-292.09" />
     </svg>
   );
 }
@@ -290,7 +143,7 @@ export function PerplexityIcon(props: IconProps) {
 export const aiProviderIcons = {
   chatgpt: OpenAIIcon,
   claude: ClaudeIcon,
-  gemini: GeminiIcon,
+  grok: GrokIcon,
   perplexity: PerplexityIcon,
 } as const;
 
@@ -318,10 +171,11 @@ export const defaultAIProviders: readonly AIProvider[] = [
     brandColor: "#D97757",
   },
   {
-    id: "gemini",
-    name: "Gemini",
-    url: "https://gemini.google.com/app",
-    brandColor: "#82C8E5",
+    id: "grok",
+    name: "Grok",
+    url: "https://grok.com/",
+    promptParam: "q",
+    brandColor: "var(--foreground)",
   },
   {
     id: "perplexity",
