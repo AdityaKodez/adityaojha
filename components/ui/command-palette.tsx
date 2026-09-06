@@ -407,6 +407,7 @@ export function CommandPalette({
             <DialogPrimitive.Content
               forceMount
               asChild
+              onPointerDownOutside={() => setOpen(false)}
               onEscapeKeyDown={(event) => {
                 // first escape clears the search, second backs out of page, third closes
                 if (query) {
