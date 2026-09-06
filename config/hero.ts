@@ -8,6 +8,6 @@ export const heroConfig: HeroConfig = {
   highlightedPhrases: ["SaaS products", "public"],
   headlineAfter: "and share what I learn.",
   description:
-    "Building Gridly, Zeno, and Root end to end — sharing product decisions, technical tradeoffs, mistakes, and lessons along the way.",
+    "Most days, I'm turning rough ideas into useful software, figuring out the messy parts, and sharing what I learn along the way.",
   descriptionHighlight: "sharing",
 };
