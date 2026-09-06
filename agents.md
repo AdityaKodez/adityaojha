@@ -5,15 +5,20 @@
 
 ## 1. House rules
 
-Three rules sit above everything else.
+Five rules sit above everything else.
 
 1. **UI copy avoids uppercase.** Avoid `ALL-CAPS` and shouting. Prefer
-   lowercase or natural sentence case where it reads better — never force
+   lowercase or natural sentence case where it reads better. Never force
    every string to lowercase. Scope and exceptions in [§11 UI copy](#11-ui-copy).
-2. **One border per edge.** Never put a border on top of a border that already
+2. **No em dashes.** Never use the em dash character (the long dash) in UI copy or documentation. Rewrite with a comma, colon, or period instead.
+3. **One border per edge.** Never put a border on top of a border that already
    exists. See [§10 Borders](#10-borders).
-3. **Scoped edits.** Change what was asked for. Unrelated files stay untouched,
+4. **Scoped edits.** Change what was asked for. Unrelated files stay untouched,
    including work already sitting dirty in the tree.
+5. **Ask before pushing.** At the end of every run, once the work is complete
+   and verified, use the AskUserQuestion tool to ask whether to push the
+   changes to GitHub. Only commit and push when the answer is yes. Never push
+   without asking first.
 
 Working style: finish the task, then report the result in a few lines. No
 preamble, no recaps, no process commentary. When a detail is missing, take the
@@ -33,7 +38,7 @@ database, no auth, no payments. All content is typed configuration.
 
 | Concern | Choice |
 | --- | --- |
-| Framework | Next.js 16 — App Router, React Server Components, Turbopack |
+| Framework | Next.js 16, App Router, React Server Components, Turbopack |
 | UI | React 19 |
 | Language | TypeScript 5, strict |
 | Styling | Tailwind 4 via `@tailwindcss/postcss`, plus `@tailwindcss/typography` and `tw-animate-css` |
@@ -63,38 +68,38 @@ There is no typecheck script; run `npx tsc --noEmit` directly.
 
 | Path | Contents |
 | --- | --- |
-| `app/` | Routes — `page.tsx` (home), `components/` and `components/[id]/` (showcase), `project/[id]/` (case studies), `api/discord-status/route.ts`; plus `layout.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `not-found.tsx` |
-| `components/` | Subdivided into `landing/` (one file per home section — hero, about, skills, etc.), `showcase/` (catalog, shell, preview), `content/` (markdown overrides, prose blocks), `shared/` (header, footer, theme provider, logo), `ui/`, `motion-primitives/`, `skeletons/` |
+| `app/` | Routes: `page.tsx` (home), `bookmarks/` and `certifications/` (collections), `components/` and `components/[id]/` (showcase), `project/[id]/` (case studies), `api/discord-status/route.ts`; plus `layout.tsx`, `error.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `not-found.tsx` |
+| `components/` | Subdivided into `landing/` (one file per home section, hero, about, skills, etc.), `showcase/` (catalog, shell, preview), `content/` (markdown overrides, prose blocks), `shared/` (header, footer, theme provider, logo), `ui/`, `motion-primitives/`, `skeletons/` |
 | `components/ui/` | Vendored shadcn and Radix primitives; source of most registry items |
 | `components/motion-primitives/` | Motion-heavy building blocks |
 | `components/skeletons/` | Loading placeholders |
-| `config/` | The data layer — one file per domain, plus `types.ts` |
+| `config/` | The data layer, one file per domain, plus `types.ts` |
 | `content/` | Markdown docs for the showcase |
 | `lib/` | `utils.ts` (the `cn` helper), `github.ts`, `discord-status.ts`, `highlight.ts`, `react-query.ts`, `fonts/` |
 | `public/` | Static assets; `public/r/` holds generated registry JSON |
 | `scripts/` | `build-registry.mjs` |
 | `plans/` | Private planning docs, gitignored |
 
-## 6. Data layer — the database
+## 6. Data layer: the database
 
 There is no runtime database and no server-side persistence. The "database" is
 the typed config layer in `config/`: plain TypeScript objects, checked by the
 compiler, imported directly by the components that need them. `config/` is the
-single source of truth for content — change content there, never inline in a
+single source of truth for content, change content there, never inline in a
 component.
 
 | File | Holds |
 | --- | --- |
 | `config/types.ts` | Every shared type, plus the `SectionId` union |
-| `config/site.ts` | The root `siteConfig` object — meta, personal info, section order, section flags, banner, about, services, workflow, contact |
-| `config/hero.ts` | `heroConfig` — hero copy |
+| `config/site.ts` | The root `siteConfig` object, meta, personal info, section order, section flags, banner, about, services, workflow, contact |
+| `config/hero.ts` | `heroConfig`, hero copy |
 | `config/skills.ts` | `skillsSectionConfig` + `skillsConfig` |
 | `config/socials.ts` | `socialSectionConfig` + `socialsConfig` |
 | `config/projects.ts` | `projectsSectionConfig` + `projectsConfig` |
 | `config/experience.ts` | `experienceSectionConfig` + `experienceConfig` |
 | `config/testimonials.ts` | `testimonialsConfig` |
 | `config/components.ts` | `componentsSectionConfig` (home teaser), `componentRegistry` plus `findComponent()` and `getEnabledComponents()` |
-| `config/registry.ts` | Registry helpers — `getAddCommands()` (direct URL `https://akoder.xyz/r/<id>.json` per package manager), `getRegistrySetupSnippet()` |
+| `config/registry.ts` | Registry helpers, `getAddCommands()` (direct URL `https://akoder.xyz/r/<id>.json` per package manager), `getRegistrySetupSnippet()` |
 | `config/world-cities.ts` | City coordinates used by the dotted world map |
 
 Pattern to copy: every domain exports a section config object (heading text) and
@@ -105,35 +110,35 @@ flag.
 
 All types live in `config/types.ts`.
 
-- **`SiteMetaConfig`** — `url`, `title`, `titleTemplate`, `shortTitle`,
+- **`SiteMetaConfig`**, `url`, `title`, `titleTemplate`, `shortTitle`,
   `description`, `keywords`, `authors`, `creator`, `publisher`,
   `classification`, `category`, `locale`, `ogImage`, `twitterCreator`, `icon`,
   `appleIcon`, `googleVerification`, `manifest`, `robots`, `sitemap`.
-- **`PersonalInfo`** — `fullName`, `firstName`, `avatar` (`src`, `alt`,
+- **`PersonalInfo`**, `fullName`, `firstName`, `avatar` (`src`, `alt`,
   `fallback`), `location` (`label`, `timezone`), `githubUsername`.
-- **`HeroConfig`** — `greeting`, `waveEmoji`, `headlineBefore`,
+- **`HeroConfig`**, `greeting`, `waveEmoji`, `headlineBefore`,
   `highlightedPhrases`, `headlineAfter`, `description`, `descriptionHighlight`.
-- **`AboutConfig`** — `title`, `body`, `emphasizedPhrases`.
-- **`SkillItem`** — `id`, `name`, `icon`, `category` (`language`, `frontend`,
+- **`AboutConfig`**, `title`, `body`, `emphasizedPhrases`.
+- **`SkillItem`**, `id`, `name`, `icon`, `category` (`language`, `frontend`,
   `backend`, `workflow-ai`), `order`, `enabled`.
-- **`SocialLink`** — `id`, `platform`, `handle`, `href`, `icon`, `order`,
+- **`SocialLink`**, `id`, `platform`, `handle`, `href`, `icon`, `order`,
   `enabled`, `action` (`copy`, `external`, `mailto`), `copyValue`,
   `shortcutKey`, `tooltipDefault`.
-- **`Testimonial`** — `id`, `name`, `role`, `content`, `avatar`, `image`,
+- **`Testimonial`**, `id`, `name`, `role`, `content`, `avatar`, `image`,
   `order`, `enabled`.
-- **`Project`** — `id`, `title`, `description`, `content`, `image`, `imageAlt`,
+- **`Project`**, `id`, `title`, `description`, `content`, `image`, `imageAlt`,
   `liveUrl`, `githubUrl`, `year`, `status` (`building`, `new`, `shipped`),
   `category`, `tags`, `metrics` (icon `users` or `chart`, plus `label`),
   `order`, `enabled`.
-- **`ExperienceItem`** — `id`, `role`, `company`, `period`, `summary`,
+- **`ExperienceItem`**, `id`, `role`, `company`, `period`, `summary`,
   `highlights`, `order`, `enabled`.
-- **`Bookmark` / `Certification`** — `id`, `url`, `title`, `domain`, `date`
+- **`Bookmark` / `Certification`**, `id`, `url`, `title`, `domain`, `date`
   (certifications only), `icon` component.
-- **`ComponentDoc`** — `id`, `title`, `description`, `icon`, `demoPath`,
+- **`ComponentDoc`**, `id`, `title`, `description`, `icon`, `demoPath`,
   `docPath`, `order`, `enabled`.
-- **`ContactConfig`** — `title`, `description`, `pricing` (label, value, note),
+- **`ContactConfig`**, `title`, `description`, `pricing` (label, value, note),
   `channels` (reuses `SocialLink`).
-- **`PortfolioConfig`** — `meta`, `personal`, `sectionOrder`, `sectionFlags`,
+- **`PortfolioConfig`**, `meta`, `personal`, `sectionOrder`, `sectionFlags`,
   `bookmarks`, `certifications`, `banner`, `about`, `services`, `workflow`,
   `contact`.
 
@@ -154,7 +159,7 @@ The home page is a loop, not a hand-written layout.
   workflow and contact exist but are flagged off.
 - `components` is a teaser, not the showcase: it previews
   `componentsSectionConfig.previewCount` registry entries and ends in a
-  `see all n components` link to `/components`. Keep it that way — the full
+  `see all n components` link to `/components`. Keep it that way, the full
   catalog lives on the route, not on the home page.
 
 To add a section:
@@ -165,12 +170,12 @@ To add a section:
 4. Add its flag and its position to `siteConfig`.
 
 Collapsible sections use `AccordionSection` in
-`components/ui/accordion-section.tsx` — it owns the heading, the expand
+`components/ui/accordion-section.tsx`, it owns the heading, the expand
 animation, and the dashed top rule. Do not hand-roll a second variant.
 
 ## 9. Design system
 
-- Colors come from semantic tokens only — `background`, `foreground`, `card`,
+- Colors come from semantic tokens only, `background`, `foreground`, `card`,
   `popover`, `muted`, `muted-foreground`, `primary`, `secondary`, `accent`,
   `destructive`, `border`, `input`, `ring`, and `chart-1` through `chart-5`.
   They are declared as raw custom properties on `:root` and `.dark`, then
@@ -181,8 +186,8 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 - Dark mode is class-based: `@custom-variant dark (&:is(.dark *))` plus
   `next-themes`, so `dark:` utilities follow the `.dark` class on `<html>`.
 - Motion tokens live in `app/globals.css` (`--motion-duration-base`,
-  `--motion-ease-standard`). Entrances are short — 0.3s with the ease
-  `[0.22, 1, 0.36, 1]` — and `whileInView` fires once rather than on every
+  `--motion-ease-standard`). Entrances are short, 0.3s with the ease
+  `[0.22, 1, 0.36, 1]`, and `whileInView` fires once rather than on every
   scroll pass.
 - Shared utility classes: `.section-heading`, `.micro-transition`, and the
   blueprint background used on card hover. Prefer these over repeating the
@@ -201,7 +206,7 @@ simple: **one border per edge, one mechanism per element.**
 - `.section-heading` in `app/globals.css` already declares
   `border-y border-dashed`. An element using that class must not also carry
   `border-t` or `border-b`.
-- Pick either `ring-1 ring-inset` or `border` — never both on the same element.
+- Pick either `ring-1 ring-inset` or `border`, never both on the same element.
   In this codebase cards and pills use `ring-1 ring-inset`; separators use
   `border`.
 - Inside `.prose`, blocks already get a radius. Do not wrap them in a second
@@ -214,11 +219,11 @@ simple: **one border per edge, one mechanism per element.**
 ## 11. UI copy
 
 **UI copy avoids uppercase.** Avoid `ALL-CAPS` and shouting. Prefer
-lowercase or natural sentence case where it reads better — never force
+lowercase or natural sentence case where it reads better, never force
 every string to lowercase.
 
 ```tsx
-// both are fine — just don't shout
+// both are fine, just don't shout
 const TAB_LABELS: Record<Tab, string> = {
   preview: "preview",
   code: "code",
@@ -242,7 +247,7 @@ Prefer lowercase for these where it fits the design, but sentence case is
 allowed when it improves readability. What to avoid is `ALL-CAPS`, `TITLE CASE`
 shouting, and inconsistent casing within the same surface.
 
-Deliberately **excluded** — leave these as authored:
+Deliberately **excluded**, leave these as authored:
 
 - **Proper nouns and brand names.** "GitHub", "Discord", "TypeScript",
   "Next.js", "React", "Visual Studio Code", city names, people's names.
@@ -250,10 +255,10 @@ Deliberately **excluded** — leave these as authored:
   descriptions, testimonials, bookmark titles, project copy.
 - **SEO and metadata.** `meta.title`, `titleTemplate`, OG image alt text,
   `generateMetadata` output, and the JSON-LD block in `app/layout.tsx`.
-- **Keyboard key identifiers.** `"ArrowRight"`, `"Home"`, `"End"` — these are
+- **Keyboard key identifiers.** `"ArrowRight"`, `"Home"`, `"End"`, these are
   DOM `KeyboardEvent.key` values and must match exactly.
 - **Console and thrown errors.** Internal diagnostics, not user-facing copy.
-- **Demo fixture data** under `app/components/[id]/demos/` — sample content that
+- **Demo fixture data** under `app/components/[id]/demos/`, sample content that
   exists to show a component working.
 
 ## 12. Typography
@@ -284,14 +289,14 @@ Two surfaces render Markdown and they must stay in sync.
   regardless of specificity.
 - Prose colors are mapped onto project tokens (`--foreground`,
   `--muted-foreground`, `--primary`, `--border`). That makes `prose-neutral`
-  and `dark:prose-invert` in markup effectively inert — do not rely on them.
+  and `dark:prose-invert` in markup effectively inert, do not rely on them.
 
 ## 14. Registry pipeline
 
 The site publishes its own shadcn registry. It is JSON served over HTTP;
 nothing is registered with shadcn itself.
 
-1. `registry.json` at the root is the catalog — name `akoder`, homepage
+1. `registry.json` at the root is the catalog, name `akoder`, homepage
    akoder.xyz, and an `items` array. Each item declares `name`, `type`,
    `title`, `description`, `dependencies` (npm packages),
    `registryDependencies` (shadcn items such as `tooltip`), `files`, and a
@@ -314,7 +319,7 @@ Rules:
   literal colors (hex/oklch) or use `var(--token, literal-fallback)` so they
   still render in projects that lack this site's tokens. Site-internal
   components still follow §9.
-- Keep UI copy inside published components lowercase too where it fits — it is part of the
+- Keep UI copy inside published components lowercase too where it fits, it is part of the
   design language consumers are installing. Avoid uppercase shouting there as well.
 - Current items: dotted-world-map, copy-command-block, github-map,
   project-explorer, progressive-blur, infinite-slider, carousel, mode-toggler,
@@ -330,22 +335,22 @@ Rules:
   Markdown doc under `content/components/`.
 - `getComponentIcon(name)` in `components/showcase/component-icons.tsx` maps an
   `icon` key onto its icon component. Both the showcase and the home teaser use
-  it — do not write a second switch.
+  it, do not write a second switch.
 - Set `enabled: false` to hide an entry without deleting it.
 - To add a component: write the doc file, write the demo file, add the catalog
-  entry, and — if it should be installable — add the file to `registry.json`.
+  entry, and, if it should be installable, add the file to `registry.json`.
 
 ## 16. Environment
 
 | Variable | Used by | Behaviour when missing |
 | --- | --- | --- |
-| `GITHUB_TOKEN` | `lib/github.ts`, `app/page.tsx` | The GitHub section is skipped entirely — by design, not a bug |
+| `GITHUB_TOKEN` | `lib/github.ts`, `app/page.tsx` | The GitHub section is skipped entirely, by design, not a bug |
 | `DISCORD_USER_ID` | `app/api/discord-status/route.ts` | Falls back to a hardcoded user id |
 
 Gotchas:
 
 - A dev server is normally already running on http://localhost:3000. Starting a
-  second one fails with "Another next dev server is already running" — reuse
+  second one fails with "Another next dev server is already running", reuse
   the existing one rather than switching ports.
 - `next build` cannot run in the sandbox: Turbopack's cleanup of
   `.next/turbopack` trips the bulk-delete guard. Validate with
