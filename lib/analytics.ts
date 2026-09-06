@@ -82,6 +82,10 @@ export type EventMap = {
   hero_wave_hovered: {
     interaction_type: "hover" | "touch";
   };
+  ask_ai_opened: {
+    location: string;
+    trigger_type: "bubble" | "pill";
+  };
 };
 
 /**

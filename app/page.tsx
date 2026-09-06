@@ -22,7 +22,7 @@ import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
 import type { ReactElement } from "react";
 import { Suspense } from "react";
-import { AskAI } from "@/components/ui/ask-ai";
+import { HomeAskAI } from "@/components/landing/home-ask-ai";
 
 const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   socials: <Social />,
@@ -109,16 +109,7 @@ export default function Home() {
 
       <div className="fixed bottom-6 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none px-4 sm:px-6 flex justify-end">
         <div className="pointer-events-auto">
-          <AskAI
-            blobOnly
-            size="default"
-            side="top"
-            align="end"
-            tooltip="ask an ai"
-            title="ask an ai about me"
-            description="a fresh perspective, from your favorite assistant."
-            prompt="Hi! I'm on Aditya Ojha's portfolio (https://akoder.xyz). Based on this page, introduce him: what he builds, his stack, and what he's looking for. Then suggest what I should ask him about next."
-          />
+          <HomeAskAI />
         </div>
       </div>
     </>
