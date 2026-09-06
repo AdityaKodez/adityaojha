@@ -592,10 +592,9 @@ code[data-theme*=" "] span,
   box-shadow: none;
 }
 
-/* Tables — boxed like the code blocks (see [data-rehype-pretty-code-figure]).
-   `border-collapse: separate` keeps the rounded corners clean, which means the
-   row separators have to live on the cells: row/group borders are ignored in
-   the separate borders model. */
+/* Tables — flat and hairline: a rule under the header and between rows, no
+   box, no fills. Cells sit flush with the text column, so the first column
+   carries no leading padding and the last none trailing. */
 .prose table {
   width: 100%;
   font-size: 0.8125rem;
@@ -603,23 +602,22 @@ code[data-theme*=" "] span,
   margin: 0;
   border-collapse: separate;
   border-spacing: 0;
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) - 2px);
-  background-color: color-mix(in oklab, var(--muted) 35%, transparent);
 }
 /* Fallback spacing for tables rendered without the scroll wrapper. */
 .prose > table {
   margin: 1.25rem 0;
 }
 .prose :where(thead th, tbody td) {
-  padding: 0.5rem 0.75rem;
+  padding: 0.875rem 0;
   text-align: left;
+}
+.prose :where(thead th, tbody td):not(:first-child) {
+  padding-left: 1.5rem;
 }
 .prose thead th {
   font-weight: 500;
   white-space: nowrap;
   color: var(--tw-prose-headings);
-  background-color: color-mix(in oklab, var(--muted-foreground) 6%, transparent);
   border-bottom: 1px solid var(--border);
 }
 .prose tbody td {
@@ -628,6 +626,88 @@ code[data-theme*=" "] span,
 }
 .prose tbody tr:last-child td {
   border-bottom: 0;
+}
+
+/* Prop names read as row labels, not code chips: capitalized, no chip box,
+   slightly larger than the surrounding meta. Display only, the underlying
+   identifier is untouched. */
+.prose table[data-props-table] td:first-child code {
+  text-transform: capitalize;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Small screens: props tables stack row-by-row so nothing squeezes into four
+   columns or scrolls sideways. Each row reads: prop, then type and default
+   sharing one justified line, then notes. The `_required_` marker swaps the
+   "Default" caption for "Required" via :has(). */
+@media (width < 40rem) {
+  .prose table[data-props-table],
+  .prose table[data-props-table] thead,
+  .prose table[data-props-table] tbody,
+  .prose table[data-props-table] tr,
+  .prose table[data-props-table] th,
+  .prose table[data-props-table] td {
+    display: block;
+  }
+  .prose table[data-props-table] thead {
+    display: none;
+  }
+  .prose table[data-props-table] tr {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 1.5rem;
+    padding: 0.875rem 0;
+  }
+  .prose table[data-props-table] tr:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+  }
+  .prose table[data-props-table] td {
+    padding: 0;
+    border-bottom: 0;
+  }
+  .prose table[data-props-table] td:nth-child(2)::before,
+  .prose table[data-props-table] td:nth-child(3)::before {
+    display: block;
+    font-family: var(--font-geist-mono);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    color: var(--muted-foreground);
+    margin-top: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+  .prose table[data-props-table] td:nth-child(2)::before {
+    content: "Type";
+  }
+  .prose table[data-props-table] td:nth-child(3)::before {
+    content: "Default";
+  }
+  .prose table[data-props-table] td:nth-child(3):has(> em)::before {
+    content: "Required";
+  }
+  .prose table[data-props-table] td:nth-child(3):has(> em) em {
+    display: none;
+  }
+  .prose table[data-props-table] td:first-child {
+    flex: 1 1 100%;
+  }
+  .prose table[data-props-table] td:nth-child(2) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .prose table[data-props-table] td:nth-child(3) {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: right;
+  }
+  .prose table[data-props-table] td:nth-child(4) {
+    flex: 1 1 100%;
+    margin-top: 0.5rem;
+  }
 }
 
 @keyframes wave {
