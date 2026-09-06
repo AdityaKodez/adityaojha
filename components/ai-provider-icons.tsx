@@ -1,7 +1,7 @@
 export {
   OpenAIIcon,
   ClaudeIcon,
-  GeminiIcon,
+  GrokIcon,
   PerplexityIcon,
   aiProviderIcons,
 } from "@/components/ui/ask-ai";

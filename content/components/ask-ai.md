@@ -52,7 +52,7 @@ export function FloatingAI() {
 
 - **Animated mascot.** Squishy organic blob animation with blinking eyes. When the popover opens, the mascot eyes track the direction of the popover card.
 - **Blob-only mode.** Set `blobOnly` to render a clean circular floating action button with only the mascot, paired with an accessible tooltip.
-- **Provider shortcuts.** Direct URL launcher for ChatGPT, Claude, Gemini, and Perplexity. Providers with query parameter support open with the prompt pre-filled; providers without URL parameters copy the prompt to the clipboard and open the provider app.
+- **Provider shortcuts.** Direct URL launcher for ChatGPT, Claude, Grok, and Perplexity. Prompts are passed to each provider through its supported query parameter.
 - **Clipboard fallback.** Dedicated copy button with copied confirmation feedback. If clipboard write access is blocked by the browser, an accessible textarea fallback appears so the user can manually copy the prompt.
 - **Accessible.** Built on Radix UI popover and tooltip primitives with complete keyboard navigation, focus management, and descriptive aria attributes.
 - **Two size presets.** Supports default (56px trigger height) for hero sections and callout banners, and compact (44px trigger height) for navbars and toolbars.
