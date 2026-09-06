@@ -132,7 +132,7 @@ export function HeaderActions() {
               type="button"
               aria-label="open command palette"
               onClick={() => setPaletteOpen(true)}
-              className="flex h-8 items-center justify-center gap-1.5 px-2.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="hidden h-8 items-center justify-center gap-1.5 px-2.5 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:flex"
             >
               <Search className="h-4 w-4" />
               <span className="max-sm:hidden flex items-center gap-1">
