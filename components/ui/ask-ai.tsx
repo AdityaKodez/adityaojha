@@ -175,7 +175,7 @@ export const defaultAIProviders: readonly AIProvider[] = [
     name: "Grok",
     url: "https://grok.com/",
     promptParam: "q",
-    brandColor: "#1D1D1F",
+    brandColor: "var(--foreground)",
   },
   {
     id: "perplexity",
