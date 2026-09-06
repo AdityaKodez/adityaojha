@@ -381,6 +381,7 @@ export function AskAI({
   style,
 }: AskAIProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [fallbackPrompt, setFallbackPrompt] = useState(false);
   const resetTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -445,7 +446,10 @@ export function AskAI({
     <TooltipProvider delayDuration={250}>
       <Popover open={isOpen} onOpenChange={changeOpen}>
         {tooltipText ? (
-          <Tooltip open={isOpen ? false : undefined}>
+          <Tooltip
+            open={isOpen ? false : tooltipOpen}
+            onOpenChange={(next) => setTooltipOpen(isOpen ? false : next)}
+          >
             <TooltipTrigger asChild>
               {triggerButton}
             </TooltipTrigger>
