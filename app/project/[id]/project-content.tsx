@@ -111,7 +111,7 @@ export function ProjectContent({
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link href="/#projects">
-                  {projectsSectionConfig.title.toLowerCase()}
+                  {projectsSectionConfig.title}
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
