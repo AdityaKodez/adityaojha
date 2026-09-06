@@ -1,7 +1,7 @@
 import type { SocialLink } from "@/config/types";
 
 export const socialSectionConfig = {
-  title: "Elsewhere",
+  title: "Socials",
 };
 
 export const socialsConfig: SocialLink[] = [

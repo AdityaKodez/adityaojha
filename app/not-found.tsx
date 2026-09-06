@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { PointerDots } from "@/components/shared/pointer-dots";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
-import { ArrowRightCircleIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -14,8 +15,9 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className="relative min-h-screen max-w-3xl mx-auto py-8 md:pt-16 space-y-8 border-x border-b-2 overflow-x-clip flex flex-col items-center justify-center text-center px-4">
-      <div className="space-y-4">
+    <main className="relative min-h-dvh max-w-3xl mx-auto py-8 md:pt-16 overflow-clip flex flex-col items-center justify-center text-center px-4">
+      <PointerDots />
+      <div className="relative space-y-4">
         <h1 className="text-8xl font-pixel text-primary font-medium tracking-tighter">
           404
         </h1>
@@ -28,13 +30,13 @@ export default function NotFound() {
       </div>
       <Button
         asChild
-        variant="default"
-        size="lg"
-        className="group hover:translate-y-1 transition-transform duration-800"
+        variant="outline"
+        size="sm"
+        className="group relative mt-6 text-muted-foreground hover:text-foreground"
       >
-        <Link href="/" className="flex gap-2 items-center">
+        <Link href="/" className="flex gap-1.5 items-center">
           Return Home
-          <ArrowRightCircleIcon className="size-4 group-hover:translate-x-1 transition-transform duration-300" />
+          <ArrowRightIcon className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
         </Link>
       </Button>
 

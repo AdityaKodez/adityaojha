@@ -97,6 +97,7 @@ export const siteConfig: PortfolioConfig = {
     githubUsername: "AdityaKodez",
   },
   sectionOrder: [
+    "socials",
     "projects",
     "components",
     "skills",
@@ -104,7 +105,6 @@ export const siteConfig: PortfolioConfig = {
     "github",
     "testimonials",
     "bookmarks",
-    "socials",
   ],
   sectionFlags: {
     socials: true,
