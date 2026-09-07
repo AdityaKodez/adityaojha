@@ -12,10 +12,57 @@ import {
   motion,
   useReducedMotion,
   useSpring,
+  type MotionProps,
 } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/**
+ * Blur-to-sharp entrance: opacity lands first, the rise settles on a
+ * critically damped spring (so the blur never overshoots into a negative
+ * radius), and the focus resolves last.
+ *
+ * Returns no motion props under `prefers-reduced-motion`, which leaves the
+ * element in its resting state.
+ */
+function useBlurReveal({
+  y = 8,
+  blur = 6,
+  delay = 0,
+  margin = "-40px",
+}: {
+  y?: number;
+  blur?: number;
+  delay?: number;
+  margin?: string;
+} = {}): Pick<MotionProps, "initial" | "whileInView" | "viewport" | "transition"> {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return {};
+  }
+
+  return {
+    initial: { opacity: 0, y, filter: `blur(${blur}px)` },
+    whileInView: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      // Clear the filter once it lands: a resting `blur(0px)` keeps the
+      // subtree on its own raster layer for nothing.
+      transitionEnd: { filter: "none" },
+    },
+    viewport: { once: true, margin },
+    transition: {
+      default: { type: "spring", stiffness: 420, damping: 34, mass: 0.7, delay },
+      opacity: { duration: 0.18, ease: EASE, delay },
+      filter: { duration: 0.32, ease: EASE, delay },
+    },
+  };
+}
 
 export type ProjectStatus = "building" | "new" | "shipped";
 
@@ -156,14 +203,15 @@ function WorkRow({
     onProjectClick?.(project, isExternal ? "external_url" : "case_study", href);
   };
 
+  // Capped so a long year group still finishes sharpening quickly.
+  const reveal = useBlurReveal({
+    y: 8,
+    blur: 5,
+    delay: Math.min(index * 0.04, 0.2),
+  });
+
   return (
-    <motion.li
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.24, delay: index * 0.045 }}
-      className="relative"
-    >
+    <motion.li {...reveal} className="relative">
       <Link
         href={href}
         onClick={handleClick}
@@ -353,6 +401,8 @@ export function ProjectExplorer({
     activeProject?.image && activeProject?.showImage !== false,
   );
 
+  const headingReveal = useBlurReveal({ y: 8, blur: 6, margin: "-100px" });
+
   return (
     <section
       id={id}
@@ -360,10 +410,7 @@ export function ProjectExplorer({
     >
       {showHeading ? (
         <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.2 }}
+          {...headingReveal}
           className="no-js-visible section-heading mb-3"
         >
           {title}

@@ -4,6 +4,7 @@ import { InfiniteSlider } from "@/components/motion-primitives/infinite-slider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { testimonialsConfig } from "@/config/testimonials";
+import { blurReveal } from "@/lib/motion";
 import { motion } from "motion/react";
 
 const enabledTestimonials = testimonialsConfig
@@ -13,7 +14,14 @@ const enabledTestimonials = testimonialsConfig
 export function Testimonials() {
   return (
     <section className="border-t border-dashed pt-8 overflow-hidden">
-         <h2 className="section-heading mb-3">Community</h2>
+      {/* Only the heading resolves: the slider below never stops moving, and
+          blurring a wide marquee is expensive for no visual gain. */}
+      <motion.h2
+        {...blurReveal({ y: 8, blur: 6, margin: "-80px" })}
+        className="no-js-visible section-heading mb-3"
+      >
+        Community
+      </motion.h2>
       <div className="relative px-6 ">
         <InfiniteSlider gap={0} speed={80} speedOnHover={30}>
           {enabledTestimonials.map((testimonial) => (

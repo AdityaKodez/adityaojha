@@ -5,9 +5,13 @@ import {
   componentsSectionConfig,
   getEnabledComponents,
 } from "@/config/components";
+import { blurReveal, revealDelay } from "@/lib/motion";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { BsArrowUpRightCircle } from "react-icons/bs";
+
+// Keeps the anchor itself as the grid cell, so the reveal adds no extra node.
+const MotionLink = motion.create(Link);
 
 export function ComponentHighlights() {
   const components = getEnabledComponents();
@@ -16,23 +20,22 @@ export function ComponentHighlights() {
   if (preview.length === 0) return null;
 
   return (
+    // The cards carry the blur, so the wrapper only rises.
     <motion.section
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      {...blurReveal({ y: 8, blur: 0, margin: "-80px" })}
       className="border-t border-dashed"
     >
       <h2 className="section-heading">{componentsSectionConfig.title}</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2">
-        {preview.map((component) => {
+        {preview.map((component, index) => {
           const Icon = getComponentIcon(component.icon);
 
           return (
-            <Link
+            <MotionLink
               key={component.id}
               href={`/components/${component.id}`}
+              {...blurReveal({ y: 8, blur: 5, delay: revealDelay(index, 0.04) })}
               className="group relative flex items-stretch"
             >
               <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5 transition-colors hover:bg-muted/10">
@@ -57,7 +60,7 @@ export function ComponentHighlights() {
               </div>
               <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5" />
               <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-50 transition-opacity group-hover:opacity-100" />
-            </Link>
+            </MotionLink>
           );
         })}
       </div>

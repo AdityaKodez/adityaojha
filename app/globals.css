@@ -779,6 +779,15 @@ code[data-theme*=" "] span,
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Entrance reveals (`lib/motion.ts`) are inline styles written by Motion, so
+     the rules above never reach them. Pin the resolved state instead: an
+     `!important` declaration outranks an inline style. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
 }
 
 /* Skip to content link */

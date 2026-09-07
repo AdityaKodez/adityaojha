@@ -1,6 +1,7 @@
 "use client";
 
 import { siteConfig } from "@/config/site";
+import { blurReveal, blurRevealOnMount, revealDelay } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { ArrowDownCircleIcon, ArrowRightIcon } from "lucide-react";
 import { motion } from "motion/react";
@@ -24,9 +25,11 @@ export function Certifications() {
         {displayedItems.map((item, index) => (
           <motion.div
             key={item.id}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2, delay: index * 0.05 }}
+            {...blurRevealOnMount({
+              y: 8,
+              blur: 5,
+              delay: revealDelay(index, 0.04),
+            })}
             className="group relative"
           >
             <Link
@@ -67,10 +70,7 @@ export function Certifications() {
 
       {items.length > 4 && (
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.2 }}
+          {...blurReveal({ y: 8, blur: 4, margin: "-100px" })}
           className="flex justify-center border-y py-2"
         >
           <Button

@@ -3,6 +3,7 @@
 import { siteConfig } from "@/config/site";
 import type { Bookmark, Certification } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
+import { blurReveal, blurRevealOnMount, revealDelay } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { ArrowDownCircleIcon, ArrowRightIcon } from "lucide-react";
 import { motion } from "motion/react";
@@ -110,9 +111,11 @@ export function Bookmarks() {
               return (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2, delay: index * 0.05 }}
+                  {...blurRevealOnMount({
+                    y: 8,
+                    blur: 5,
+                    delay: revealDelay(index, 0.04),
+                  })}
                   className="group relative"
                 >
                   <Link
@@ -164,10 +167,7 @@ export function Bookmarks() {
 
           {activeItems.length > DEFAULT_VISIBLE_ITEMS && (
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.2 }}
+              {...blurReveal({ y: 8, blur: 4, margin: "-100px" })}
               className="flex justify-center border-t border-dashed py-2"
             >
               <Button

@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { projectsSectionConfig } from "@/config/projects";
 import type { Project } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
+import { blurRevealVariants } from "@/lib/motion";
 import {
   ArrowLeft,
   ArrowRight,
@@ -37,29 +38,17 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.05,
+      staggerChildren: 0.05,
+      delayChildren: 0.04,
     },
   },
 };
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+const itemVariants = blurRevealVariants({ y: 12, blur: 5 });
 
-const imageVariants: Variants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+// A heavier starting blur on the cover reads like the image sharpening as it
+// loads, which is the one moment on this page worth drawing out.
+const imageVariants = blurRevealVariants({ y: 12, blur: 8 });
 
 function StatusBadge({ status }: { status: Project["status"] }) {
   if (status === "shipped") return null;
