@@ -100,14 +100,17 @@ export function PreviewBox({
     <div
       aria-label={ariaLabel}
       className={cn(
-        "preview-box relative mx-3 my-4 overflow-hidden rounded-xl border sm:mx-6",
+        "preview-box relative mx-3 my-4 overflow-hidden rounded-md border bg-muted/10 sm:mx-6",
       )}
     >
-      <div className="preview-box__glow pointer-events-none absolute inset-0" />
-      <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-foreground/5" />
+      {/* Blueprint overlay — decorative only, so its paint is fully isolated
+          from the box contents. */}
+      <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40 contain:strict" />
+      {/* Hairline ring */}
+      <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
 
       {/* Top bar */}
-      <div className="preview-box__toolbar relative flex items-center justify-between gap-2 border-b px-2 py-2 sm:px-3">
+      <div className="relative flex items-center justify-between gap-2 border-b bg-background/60 px-2 py-2 sm:px-3">
         {/* Tabs */}
         <div className="inline-flex rounded-sm border p-0.5">
           {TABS.map((tab) => (
@@ -173,17 +176,12 @@ export function PreviewBox({
       <div className="preview-body relative">
         <div
           data-active={activeTab === "preview"}
-          className="preview-pane preview-pane--stage px-3 py-3 sm:px-5 sm:py-5"
+          className="preview-pane flex px-4 py-6 sm:px-6 sm:py-8"
         >
-          <div className="preview-stage flex min-h-full w-full flex-col overflow-hidden rounded-lg border">
-            <div className="preview-stage__fold flex items-center justify-between border-b px-3 py-2">
-              <span className="font-pixel text-[10px] uppercase tracking-[0.18em] text-muted-foreground">preview</span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/60">lg</span>
-            </div>
-            <div className="flex min-h-0 flex-1 items-center justify-center px-3 py-6 sm:px-6 sm:py-8">
-              <div className="flex w-full justify-center">{preview}</div>
-            </div>
-          </div>
+          {/* m-auto centers small demos in both axes, but degrades to
+              top-aligned when the content overflows — flexbox centering
+              would clip the top of scrollable previews. */}
+          <div className="m-auto flex w-full justify-center">{preview}</div>
         </div>
 
         <div
