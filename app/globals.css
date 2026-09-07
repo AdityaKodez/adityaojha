@@ -250,6 +250,7 @@ html[data-frame="wide"] {
     /* Reflow and paint stay inside the box: resizing the demo or scrolling the
        code pane can't invalidate the layout of the surrounding document. */
     contain: layout paint style;
+    box-shadow: none;
   }
 
   .preview-body {
