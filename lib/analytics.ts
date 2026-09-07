@@ -18,6 +18,10 @@ export type EventMap = {
   component_demo_source_copied: {
     component_id: string;
   };
+  component_opened_in_v0: {
+    component_id: string;
+    registry_url: string;
+  };
   package_manager_changed: {
     selected_manager: string;
     component_id?: string;

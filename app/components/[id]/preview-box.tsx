@@ -2,7 +2,9 @@
 
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
+import { getItemUrl } from "@/config/registry";
 import { Check, Copy } from "lucide-react";
+import { SiV0 } from "react-icons/si";
 import {
   type ReactNode,
   useCallback,
@@ -64,6 +66,17 @@ export function PreviewBox({
     });
   }, [componentId]);
 
+  const handleOpenInV0 = useCallback(() => {
+    const registryUrl = getItemUrl(componentId);
+    const v0Url = `https://v0.app/chat/api/open?url=${encodeURIComponent(registryUrl)}`;
+
+    window.open(v0Url, "_blank", "noopener,noreferrer");
+    trackEvent("component_opened_in_v0", {
+      component_id: componentId,
+      registry_url: registryUrl,
+    });
+  }, [componentId]);
+
   const handleCopy = useCallback(() => {
     if (typeof navigator === "undefined") return;
     navigator.clipboard
@@ -120,6 +133,22 @@ export function PreviewBox({
 
         {/* Right icons */}
         <div className="flex items-center gap-1">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                onClick={handleOpenInV0}
+                aria-label="open component in v0"
+                className="flex h-7 items-center gap-1.5 rounded-sm px-2 text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              >
+                <SiV0 aria-hidden="true" className="h-3.5 w-3.5" />
+                <span className="hidden text-xs sm:inline">v0</span>
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>open in v0</p>
+            </TooltipContent>
+          </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <button
