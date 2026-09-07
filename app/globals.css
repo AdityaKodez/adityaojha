@@ -250,6 +250,31 @@ html[data-frame="wide"] {
     /* Reflow and paint stay inside the box: resizing the demo or scrolling the
        code pane can't invalidate the layout of the surrounding document. */
     contain: layout paint style;
+    background: color-mix(in oklab, var(--muted) 72%, var(--background));
+    box-shadow:
+      0 18px 42px color-mix(in oklab, var(--foreground) 6%, transparent),
+      inset 0 1px 0 color-mix(in oklab, var(--foreground) 8%, transparent);
+  }
+
+  .preview-box__glow {
+    background:
+      radial-gradient(circle at 50% -20%, color-mix(in oklab, var(--primary) 12%, transparent), transparent 58%),
+      linear-gradient(135deg, color-mix(in oklab, var(--foreground) 3%, transparent), transparent 42%);
+  }
+
+  .preview-box__toolbar {
+    background: color-mix(in oklab, var(--background) 78%, var(--muted));
+  }
+
+  .preview-stage {
+    background: color-mix(in oklab, var(--background) 58%, var(--muted));
+    box-shadow:
+      inset 0 1px 0 color-mix(in oklab, var(--foreground) 8%, transparent),
+      0 8px 24px color-mix(in oklab, var(--foreground) 5%, transparent);
+  }
+
+  .preview-stage__fold {
+    background: color-mix(in oklab, var(--muted) 54%, var(--background));
   }
 
   .preview-body {
