@@ -2,18 +2,6 @@ import type { Testimonial } from "@/config/types";
 
 export const testimonialsConfig: Testimonial[] = [
   {
-    id: "vishal",
-    name: "Vishal Sharma",
-    role: "Student",
-    content:
-      "Your portfolio UI looks good, well which tech stack and state management you have used ?",
-    avatar: "VS",
-    image: "/testimonial/vishal.png",
-    order: 1,
-    enabled: false,
-  },
-
-  {
     id: "natey",
     name: "natey_mac",
     role: "Redditor",
@@ -45,13 +33,75 @@ export const testimonialsConfig: Testimonial[] = [
     enabled: true,
   },
   {
+    id: "kraig",
+    name: "KraiG",
+    role: "Creative Designer",
+    content:
+      "Thanks! Lovely, what more can I say just build and build and build...",
+    avatar: "KG",
+    image: "/testimonial/kraig.jpg",
+    order: 4,
+    enabled: true,
+  },
+  {
+    id: "quby",
+    name: "Quby",
+    role: "Design Engineer",
+    content: "Very nice man",
+    avatar: "QB",
+    image: "/testimonial/quby.jpg",
+    order: 5,
+    enabled: true,
+  },
+  {
+    id: "rachit",
+    name: "Rachit Thakur",
+    role: "Designer & Builder",
+    content: "Looks cool bro",
+    avatar: "RT",
+    image: "/testimonial/rachit.jpg",
+    order: 6,
+    enabled: true,
+  },
+  {
+    id: "rohit",
+    name: "Rohit",
+    role: "Developer",
+    content: "Love the minimal vibe. Cool",
+    avatar: "RH",
+    image: "/testimonial/rohit.jpg",
+    order: 7,
+    enabled: true,
+  },
+  {
+    id: "gaurav",
+    name: "gauravii",
+    role: "Agency Builder",
+    content: "That looks good!",
+    avatar: "GV",
+    image: "/testimonial/gaurav.jpg",
+    order: 8,
+    enabled: true,
+  },
+  {
+    id: "vishal",
+    name: "Vishal Sharma",
+    role: "Student",
+    content:
+      "Your portfolio UI looks good, well which tech stack and state management you have used ?",
+    avatar: "VS",
+    image: "/testimonial/vishal.png",
+    order: 9,
+    enabled: false,
+  },
+  {
     id: "vivek",
     name: "Vivek Singh",
     role: "CoFounder at Digia",
     content: "Congrats on your launch. Looking forward",
     avatar: "VS",
     image: "/testimonial/vivek.png",
-    order: 4,
+    order: 10,
     enabled: false,
   },
   {
@@ -61,7 +111,7 @@ export const testimonialsConfig: Testimonial[] = [
     content: "Just took a look And i love it",
     avatar: "TL",
     image: "/testimonial/tolani.png",
-    order: 5,
+    order: 11,
     enabled: false,
   },
   {
@@ -71,7 +121,7 @@ export const testimonialsConfig: Testimonial[] = [
     content: "Cool bro",
     avatar: "SA",
     image: "/testimonial/sahil.png",
-    order: 6,
+    order: 12,
     enabled: false,
   },
 ];
