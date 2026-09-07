@@ -103,7 +103,7 @@ export default function Home() {
       <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none">
         <ProgressiveBlur
           position="bottom"
-          height="calc(100px + env(safe-area-inset-bottom))"
+          height="calc(80px + env(safe-area-inset-bottom))"
         />
       </div>
 

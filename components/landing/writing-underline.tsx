@@ -30,9 +30,9 @@ export function WritingUnderline({
           className="no-js-visible"
           viewport={{ once: true }}
           transition={{
-            duration: 0.8,
+            duration: 0.35,
             delay,
-            ease: "easeInOut",
+            ease: [0.22, 1, 0.36, 1],
           }}
         />
       </svg>

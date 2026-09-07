@@ -16,12 +16,12 @@ export default function ErrorBoundary({
   }, [error]);
 
   return (
-    <main className="relative min-h-[60vh] max-w-3xl mx-auto flex flex-col items-center justify-center px-6 text-center border-x border-b-2 overflow-x-clip py-16">
+    <main className="relative min-h-[60vh] max-w-3xl mx-auto flex flex-col items-center justify-center px-6 text-center overflow-x-clip py-16">
       <div className="space-y-3">
-        <p className="font-mono text-xs text-destructive">something went wrong</p>
-        <h1 className="text-xl font-medium tracking-tight">an error occurred</h1>
+        <p className="font-mono text-xs text-destructive">Something went wrong</p>
+        <h1 className="text-xl font-medium tracking-tight">An error occurred</h1>
         <p className="text-sm text-muted-foreground max-w-md">
-          {error.message || "an unexpected error occurred while loading this page."}
+          {error.message || "An unexpected error occurred while loading this page."}
         </p>
         <div className="pt-4">
           <Button

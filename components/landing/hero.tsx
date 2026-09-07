@@ -7,13 +7,41 @@ import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
 import { Globe2Icon } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, Variants } from "motion/react";
 import { useEffect, useRef } from "react";
 import { useHaptic } from "react-haptic";
 
 const entryTransition = {
-  duration: 0.24,
+  duration: 0.2,
   ease: [0.22, 1, 0.36, 1] as const,
+};
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.035,
+      delayChildren: 0,
+    },
+  },
+};
+const wordVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    filter: "blur(4px)",
+    y: 6,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring",
+      stiffness: 360,
+      damping: 28,
+      mass: 0.8,
+    },
+  },
 };
 
 export function Hero() {
@@ -66,12 +94,20 @@ export function Hero() {
       <div className="flex flex-col items-start gap-6">
         <div className="space-y-2">
           <motion.p
-            className="no-js-visible mb-4 flex items-center gap-2 text-lg font-mono font-semibold tracking-wide"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ...entryTransition, delay: 0.1 }}
+            className="no-js-visible mb-4 flex flex-wrap gap-x-1.5 gap-y-1 items-center text-lg font-mono font-semibold tracking-wide"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <span className="font-serif">{heroConfig.greeting}</span>
+            {heroConfig.greeting.split(" ").map((word, index) => (
+              <motion.span
+                key={index}
+                variants={wordVariants}
+                className="font-serif inline-block"
+              >
+                {word}
+              </motion.span>
+            ))}
             <span
               className="inline-block text-2xl hover:animate-wave"
               onMouseEnter={() => {
@@ -97,20 +133,20 @@ export function Hero() {
             className="no-js-visible text-lg sm:text-xl md:text-2xl font-semibold leading-[1.05] tracking-tight text-balance"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...entryTransition, delay: 0.18 }}
+            transition={{ ...entryTransition, delay: 0.08 }}
           >
             <span className="block">{heroConfig.headlineBefore}</span>
             <span className="underline decoration-border/50 underline-offset-4 sm:hidden">
               {heroConfig.highlightedPhrases[0]}
             </span>
             <span className="hidden sm:inline">
-              <WritingUnderline delay={0.8}>
+              <WritingUnderline delay={0.22}>
                 {heroConfig.highlightedPhrases[0]}
               </WritingUnderline>
             </span>{" "}
             <span className="whitespace-nowrap">
               in{" "}
-              <WritingUnderline delay={1.2}>
+              <WritingUnderline delay={0.36}>
                 {heroConfig.highlightedPhrases[1]}
               </WritingUnderline>
             </span>{" "}
@@ -121,7 +157,7 @@ export function Hero() {
             className="no-js-visible mt-4 text-sm text-muted-foreground max-sm:text-sm"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...entryTransition, delay: 0.24 }}
+            transition={{ ...entryTransition, delay: 0.14 }}
           >
             {afterHighlight === undefined ? (
               heroConfig.description
@@ -140,7 +176,7 @@ export function Hero() {
             className="no-js-visible mt-4 flex items-center gap-3 text-sm text-muted-foreground"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...entryTransition, delay: 0.32 }}
+            transition={{ ...entryTransition, delay: 0.2 }}
           >
             <Tooltip>
               <TooltipTrigger className="micro-transition flex items-center gap-1.5 rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20">

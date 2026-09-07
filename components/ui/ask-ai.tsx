@@ -53,7 +53,7 @@ export function AIMascot({
           ? "h-[22px] w-[22px] shadow-none"
           : size === "compact"
             ? "h-7 w-7 shadow-none"
-            : "h-10 w-10 rotate-[-7deg] shadow-[inset_0_2px_1px_color-mix(in_srgb,var(--primary-foreground)_19%,transparent),inset_0_-3px_2px_color-mix(in_srgb,var(--foreground)_12%,transparent),0_3px_6px_color-mix(in_srgb,var(--primary)_14%,transparent)] data-[awake=true]:rotate-6 data-[awake=true]:scale-[1.05]",
+            : "h-10 w-10 rotate-[-7deg] data-[awake=true]:rotate-6 data-[awake=true]:scale-[1.05]",
         className
       )}
     >
@@ -276,7 +276,7 @@ export function AskAI({
         "group inline-flex cursor-pointer items-center justify-center text-foreground transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         blobOnly
           ? cn(
-              "rounded-full bg-background/80 backdrop-blur-md ring-1 ring-inset ring-border/60 shadow-sm hover:bg-muted/50 hover:shadow-md",
+              "rounded-full bg-background/80 backdrop-blur-md ring-1 ring-inset ring-border/60 shadow-sm hover:shadow-md",
               size === "compact" ? "size-11" : "size-14"
             )
           : cn(
@@ -322,7 +322,7 @@ export function AskAI({
           align={align}
           sideOffset={16}
           autoFocus={false}
-          className="w-[330px] sm:w-96 max-w-[calc(100vw-24px)] gap-0 rounded-[20px] sm:rounded-[25px] bg-background p-4 sm:px-5 sm:pt-5 sm:pb-4 text-foreground shadow-xl ring-1 ring-inset ring-border/50"
+          className="w-82.5 sm:w-96 max-w-[calc(100vw-24px)] gap-0 rounded-4xl sm:rounded-[25px] bg-background p-4 sm:px-5 sm:pt-5 sm:pb-4 text-foreground shadow-xl ring-1 ring-inset ring-border/50"
         >
           <PopoverTitle className="text-sm sm:text-base font-medium tracking-tight">
             {title}
