@@ -69,13 +69,13 @@ There is no typecheck script; run `npx tsc --noEmit` directly.
 | Path | Contents |
 | --- | --- |
 | `app/` | Routes: `page.tsx` (home), `bookmarks/` and `certifications/` (collections), `components/` and `components/[id]/` (showcase), `project/[id]/` (case studies), `api/discord-status/route.ts`; plus `layout.tsx`, `error.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `not-found.tsx` |
-| `components/` | Subdivided into `landing/` (one file per home section, hero, about, skills, etc.), `showcase/` (catalog, shell, preview), `content/` (markdown overrides, prose blocks), `shared/` (header, footer, theme provider, logo), `ui/`, `motion-primitives/`, `skeletons/` |
+| `components/` | Subdivided into `landing/` (one file per home section, hero, about, skills, etc.), `showcase/` (catalog, shell, preview), `shared/` (header, footer, theme provider, logo), `ui/`, `motion-primitives/`, `skeletons/` |
 | `components/ui/` | Vendored shadcn and Radix primitives; source of most registry items |
 | `components/motion-primitives/` | Motion-heavy building blocks |
 | `components/skeletons/` | Loading placeholders |
 | `config/` | The data layer, one file per domain, plus `types.ts` |
 | `content/` | Markdown docs for the showcase |
-| `lib/` | `utils.ts` (the `cn` helper), `github.ts`, `discord-status.ts`, `highlight.ts`, `react-query.ts`, `fonts/` |
+| `lib/` | `utils.ts` (the `cn` helper), `github.ts`, `discord-status.ts`, `highlight.ts`, `markdown/` (shared Markdown rendering helpers), `react-query.ts`, `fonts/` |
 | `public/` | Static assets; `public/r/` holds generated registry JSON |
 | `scripts/` | `build-registry.mjs` |
 | `plans/` | Private planning docs, gitignored |
@@ -281,7 +281,7 @@ Two surfaces render Markdown and they must stay in sync.
 | Component docs at `/components/[id]` | `MarkdownAsync` from `next-mdx-remote`, server-rendered | `app/components/[id]/page.tsx` |
 | Project case studies | `react-markdown`, client-rendered | `app/project/[id]/project-content.tsx` |
 
-- Both pass the shared override map from `components/content/markdown-components.tsx`.
+- Both pass the shared override map from `lib/markdown/markdown-components.tsx`.
   Never inline a second set of overrides.
 - All `.prose` styling lives in one **unlayered** block of `app/globals.css`. It
   has to stay unlayered: the typography plugin registers its rules through

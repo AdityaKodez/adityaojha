@@ -1,6 +1,6 @@
 "use client";
 
-import { markdownComponents } from "@/components/content/markdown-components";
+import { markdownComponents } from "@/lib/markdown/markdown-components";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,

@@ -1,5 +1,5 @@
 import type { Components } from "react-markdown";
-import { ProseCodeBlock } from "@/components/content/prose-code-block";
+import { ProseCodeBlock } from "@/lib/markdown/prose-code-block";
 
 interface AstNode {
   type?: string;

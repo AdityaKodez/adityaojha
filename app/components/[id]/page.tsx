@@ -10,7 +10,7 @@ import remarkGfm from "remark-gfm";
 import { getComponentIcon } from "@/components/showcase/component-icons";
 import { CopyBlock, InstallCommand } from "@/components/showcase/copy-block";
 import { HomeSectionRail } from "@/components/landing/home-section-rail";
-import { markdownComponents } from "@/components/content/markdown-components";
+import { markdownComponents } from "@/lib/markdown/markdown-components";
 import type { RailItem } from "@/components/section-rail";
 import {
   Breadcrumb,
