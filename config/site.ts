@@ -92,7 +92,7 @@ export const siteConfig: PortfolioConfig = {
     },
     location: {
       label: "New Delhi, India",
-      timezone: "UTC +5:30",
+      timeZone: "Asia/Kolkata",
     },
     githubUsername: "AdityaKodez",
   },

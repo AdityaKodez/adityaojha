@@ -69,7 +69,7 @@ export interface PersonalInfo {
   };
   location: {
     label: string;
-    timezone: string;
+    timeZone: string;
   };
   githubUsername: string;
 }

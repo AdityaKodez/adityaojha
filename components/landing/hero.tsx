@@ -6,9 +6,9 @@ import DiscordStatus from "./discord-status";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
-import { Globe2Icon } from "lucide-react";
+import { RotatingGlobe } from "./rotating-globe";
 import { motion, Variants } from "motion/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHaptic } from "react-haptic";
 
 const entryTransition = {
@@ -44,10 +44,20 @@ const wordVariants: Variants = {
   },
 };
 
+const locationTimeFormatter = new Intl.DateTimeFormat("en-GB", {
+  timeZone: siteConfig.personal.location.timeZone,
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hourCycle: "h23",
+});
+
 export function Hero() {
   const { vibrate } = useHaptic();
   const vibrateAudio = useRef<HTMLAudioElement>(null);
   const lastWaveTrackRef = useRef<number>(0);
+  const [isLocationHovered, setIsLocationHovered] = useState(false);
+  const [locationTime, setLocationTime] = useState<string | null>(null);
 
   const [beforeHighlight, afterHighlight] = heroConfig.description.split(
     heroConfig.descriptionHighlight,
@@ -75,6 +85,17 @@ export function Hero() {
     audio.pause();
     audio.currentTime = 0;
   };
+
+  useEffect(() => {
+    const updateLocationTime = () => {
+      setLocationTime(locationTimeFormatter.format(new Date()));
+    };
+
+    updateLocationTime();
+    const intervalId = window.setInterval(updateLocationTime, 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     const vibrate = vibrateAudio.current;
@@ -179,14 +200,22 @@ export function Hero() {
             transition={{ ...entryTransition, delay: 0.2 }}
           >
             <Tooltip>
-              <TooltipTrigger className="micro-transition flex items-center gap-1.5 rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20">
-                <Globe2Icon className="h-4 w-4" />
+              <TooltipTrigger
+                className="micro-transition flex items-center gap-1.5 rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground"
+                onMouseEnter={() => setIsLocationHovered(true)}
+                onMouseLeave={() => setIsLocationHovered(false)}
+                onFocus={() => setIsLocationHovered(true)}
+                onBlur={() => setIsLocationHovered(false)}
+              >
+                <RotatingGlobe isHovered={isLocationHovered} />
                 <span className="font-sans">
                   {siteConfig.personal.location.label}
                 </span>
               </TooltipTrigger>
               <TooltipContent>
-                <span>{siteConfig.personal.location.timezone}</span>
+                <span className="font-pixel text-xs tracking-wider">
+                  {locationTime ?? "--:--:--"}
+                </span>
               </TooltipContent>
             </Tooltip>
 
