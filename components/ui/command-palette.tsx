@@ -400,6 +400,11 @@ export function CommandPalette({
                   duration: prefersReducedMotion ? 0 : 0.12,
                   ease: EASE,
                 }}
+                // Clicking the dimmed backdrop closes the palette. The overlay
+                // receives these clicks because the full-viewport positioner is
+                // pointer-events-none while the panel is pointer-events-auto, so
+                // Radix's outside-pointer detection never fires on the backdrop.
+                onClick={() => setOpen(false)}
                 className="fixed inset-0 z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs"
               />
             </DialogPrimitive.Overlay>
