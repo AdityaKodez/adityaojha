@@ -16,7 +16,8 @@ import { homeAskAIConfig as config } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
-const spring = { type: "spring", stiffness: 420, damping: 34, mass: 0.8 } as const;
+const spring = { type: "spring", stiffness: 280, damping: 28, mass: 0.72 } as const;
+const softSpring = { type: "spring", stiffness: 360, damping: 30, mass: 0.65 } as const;
 
 function ProviderPicker({
   provider,
@@ -123,10 +124,13 @@ export function HomeAskAI() {
         data-home-composer=""
         onSubmit={(event) => { event.preventDefault(); send(); }}
         initial={false}
-        animate={{ width: expanded ? "min(100%, 28rem)" : "3rem" }}
+        animate={{
+          width: expanded ? "min(100%, 28rem)" : "3rem",
+          scale: expanded ? 1 : 0.96,
+        }}
         transition={reduceMotion ? { duration: 0 } : spring}
         className={cn(
-          "pointer-events-auto flex min-w-0 items-center overflow-hidden rounded-full bg-background/90 p-1 shadow-lg ring-1 ring-inset ring-border/70 backdrop-blur-xl",
+          "home-ai-glass pointer-events-auto relative flex min-w-0 items-center overflow-hidden rounded-full p-1",
           expanded ? "gap-0.5" : "justify-center",
         )}
       >
@@ -148,7 +152,7 @@ export function HomeAskAI() {
               initial={{ opacity: 0, width: 0 }}
               animate={{ opacity: 1, width: "100%" }}
               exit={{ opacity: 0, width: 0 }}
-              transition={reduceMotion ? { duration: 0 } : { opacity: { duration: 0.12 }, width: spring }}
+              transition={reduceMotion ? { duration: 0 } : { opacity: { duration: 0.18 }, width: softSpring }}
               className="flex min-w-0 flex-1 items-center"
             >
               <textarea
