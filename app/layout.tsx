@@ -1,16 +1,15 @@
 import { PostHogProvider } from "@/components/shared/posthog-provider";
-import { ThemeProvider } from "@/components/shared/theme-provider";
 import { SiteHeader } from "@/components/shared/site-header";
+import { ThemeProvider } from "@/components/shared/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistPixelGrid } from "geist/font/pixel";
 import { Metadata, Viewport } from "next";
 import { DM_Sans, Geist_Mono, Instrument_Serif } from "next/font/google";
+import Script from 'next/script';
 import "./globals.css";
-import { cn } from "@/lib/utils";
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -171,7 +170,8 @@ export default function RootLayout({
           </TooltipProvider>
         </ThemeProvider>
         <Analytics />
-        <SpeedInsights />
+
+        <Script src="https://scripts.simpleanalyticscdn.com/latest.js"  />
       </body>
     </html>
   );
