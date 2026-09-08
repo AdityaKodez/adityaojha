@@ -7,6 +7,8 @@ import type { ComponentDoc } from "@/config/types";
 import { getComponentIcon } from "@/components/showcase/component-icons";
 import { ComponentDemo } from "@/components/showcase/component-demo";
 import { useComponentsView } from "@/components/showcase/components-view";
+import type { CatalogView } from "@/components/showcase/components-view";
+import { trackEvent } from "@/lib/analytics";
 import {
   Tooltip,
   TooltipContent,
@@ -43,6 +45,19 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
   const needsListFiller = components.length % 2 === 1;
   const needsCardFiller = cardGridHasTrailingGap(components);
 
+  // Persist the new view and, only when it actually changes, log the switch so
+  // the list-vs-cards preference can be analyzed post-hoc. Re-clicking the
+  // already-active view keeps the existing writeView behavior without noise.
+  const selectView = (next: CatalogView) => {
+    if (next !== view) {
+      trackEvent("components_view_switched", {
+        view: next,
+        previous_view: view,
+      });
+    }
+    setView(next);
+  };
+
   return (
     <div className="w-full">
       {/* View Switcher Toolbar */}
@@ -57,7 +72,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  onClick={() => setView("list")}
+                  onClick={() => selectView("list")}
                   aria-label="list view"
                   aria-pressed={view === "list"}
                   className={cn(
@@ -79,7 +94,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  onClick={() => setView("cards")}
+                  onClick={() => selectView("cards")}
                   aria-label="card view"
                   aria-pressed={view === "cards"}
                   className={cn(
