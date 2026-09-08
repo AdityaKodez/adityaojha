@@ -10,6 +10,7 @@ import { Metadata, Viewport } from "next";
 import { DM_Sans, Geist_Mono, Instrument_Serif } from "next/font/google";
 import Script from 'next/script';
 import "./globals.css";
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -90,6 +91,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: siteConfig.meta.googleVerification || undefined,
+    other: {
+      "sa-verify": "akoderxyziqhgzo",
+    },
   },
 };
 
