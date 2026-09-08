@@ -8,7 +8,10 @@ import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 
 import { getComponentIcon } from "@/components/showcase/component-icons";
-import { CopyBlock, InstallCommand } from "@/components/showcase/copy-block";
+import {
+  CopyBlock,
+  InstallCommand,
+} from "@/components/showcase/copy-block";
 import { HomeSectionRail } from "@/components/landing/home-section-rail";
 import { markdownComponents } from "@/lib/markdown/markdown-components";
 import type { RailItem } from "@/components/section-rail";
@@ -24,7 +27,6 @@ import { findComponent, getEnabledComponents } from "@/config/components";
 import {
   getAddCommands,
   getRegistrySetupSnippet,
-  registryConfig,
 } from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
@@ -192,16 +194,15 @@ export default async function ComponentDetailPage({
           location="component_detail_page"
           commands={getAddCommands(component.id)}
         />
-        <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          Or register the{" "}
-          <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
-            {registryConfig.namespace}
-          </code>{" "}
-          namespace once in{" "}
-          <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
-            components.json
-          </code>{" "}
-          to install by name:
+        <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+          Install directly from the URL above. To configure the registry once
+          and install components by name, use the setup snippet on the{" "}
+          <Link
+            href="/components"
+            className="text-foreground underline decoration-dashed underline-offset-4 transition-colors hover:text-primary"
+          >
+            components page
+          </Link>.
         </p>
         <CopyBlock
           className="mt-2"

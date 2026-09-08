@@ -203,14 +203,13 @@ export function InstallCommand({
   const { status, copy } = useCopy();
 
   const command = commands[manager] ?? commands.npm;
-
+  const parsedId =
+    componentId ??
+    command.match(/\/r\/([a-zA-Z0-9_-]+)\.json/)?.[1] ??
+    command.split("@akoder/")[1]?.split(" ")[0] ??
+    "unknown";
   const handleCopy = () => {
     void copy(command);
-    const parsedId =
-      componentId ??
-      command.match(/\/r\/([a-zA-Z0-9_-]+)\.json/)?.[1] ??
-      command.split("@akoder/")[1]?.split(" ")[0] ??
-      "unknown";
     trackEvent("registry_command_copied", {
       component_id: parsedId,
       package_manager: manager,
@@ -218,6 +217,7 @@ export function InstallCommand({
       location,
     });
   };
+
 
   const handleManagerChange = (pm: PackageManager) => {
     writeManager(pm);

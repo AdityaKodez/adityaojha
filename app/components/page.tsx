@@ -3,8 +3,8 @@ import { ComponentsShell } from "@/components/showcase/components-shell";
 import { CopyBlock } from "@/components/showcase/copy-block";
 import { RotatingInstallCommand } from "@/components/showcase/rotating-install-command";
 import { getEnabledComponents } from "@/config/components";
-import { getRegistrySetupSnippet, registryConfig } from "@/config/registry";
-import { Metadata } from "next";
+import { getRegistrySetupSnippet } from "@/config/registry";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "components",
@@ -55,31 +55,39 @@ export default function ComponentsPage() {
 
       {/* Registry — one-time setup so components install by name. The rule spans
           the frame, the copy stays at a readable measure when the frame widens. */}
-      <section className="border-t border-dashed px-6 py-6 &>*:max-w-3xl">
+      <section className="border-t border-dashed px-6 py-6 [&>*]:max-w-3xl">
         <h2 className="text-base font-medium tracking-tight">
           Install with the shadcn CLI
         </h2>
         <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-          Every component here is published as a registry item. Run the direct
-          URL install command or register{" "}
-          <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
-            {registryConfig.namespace}
-          </code>{" "}
-          once in your{" "}
+          Every component here is published as a registry item. Use the direct
+          command below for a one-off install, or add the registry once to your{" "}
           <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
             components.json
           </code>{" "}
           to install by name.
         </p>
+        <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="flex size-5 items-center justify-center rounded-full bg-muted font-mono text-[10px] text-foreground">
+            1
+          </span>
+          <span>add this under the top-level registry config</span>
+        </div>
         <CopyBlock
-          className="mt-4"
+          className="mt-2"
           value={getRegistrySetupSnippet()}
           location="components_index"
           copyLabel="copy registry config"
         />
+        <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="flex size-5 items-center justify-center rounded-full bg-muted font-mono text-[10px] text-foreground">
+            2
+          </span>
+          <span>the registry is ready for future installs by name</span>
+        </div>
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          Each component page shows the install command for npm, pnpm, yarn,
-          and bun.
+          The direct URL command remains available when you only need one item.
+          Choose npm, pnpm, yarn, or bun on any component page.
         </p>
       </section>
     </ComponentsShell>
