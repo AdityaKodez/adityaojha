@@ -128,6 +128,26 @@ export const testimonialsConfig: Testimonial[] = [
     order: 12,
     enabled: false,
   },
+  {
+    id: "kiyotaka",
+    name: "kiyota",
+    role: "Building @oxygenui",
+    content: "Thx, urs also look minimal with creative touch cool.",
+    avatar: "KI",
+    image: "/testimonial/kiyotaka.jpg",
+    order: 13,
+    enabled: true,
+  },
+  {
+    id: "arindam",
+    name: "arindam",
+    role: "founder @studio1hq",
+    content: "nice asthetics. liked the cute 'ask the ai' button.",
+    avatar: "AM",
+    image: "/testimonial/arindam.jpg",
+    order: 14,
+    enabled: true,
+  },
 ];
 
 /** Every testimonial in authored order. Used by the /testimonials page. */
