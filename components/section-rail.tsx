@@ -162,7 +162,7 @@ export function SectionRail({
     <nav
       aria-label="sections"
       className={cn(
-        "top-1/2 left-0 z-30 -translate-y-1/2 flex-col items-start gap-3",
+        "top-1/2 left-0 z-30 -translate-y-1/2 flex-col items-start gap-2",
         variant === "contained" ? "absolute flex" : "fixed hidden lg:flex",
         className
       )}
@@ -174,13 +174,19 @@ export function SectionRail({
       {items.map((item, index) => {
         const isActive = active === item.id;
         const distanceFromActive = Math.abs(activeIndex - index);
-        const dashClass = cn(
-          "block h-0.5 rounded-full transition-[width,background-color] duration-300 ease-out motion-reduce:transition-none",
+        // The dash stays 2px tall; a 14px row around it (offset by -my-1.5 so
+        // the visible gap is unchanged) is what you actually click.
+        const rowClass = cn(
+          "group -my-1.5 flex cursor-pointer items-center py-1.5 transition-[width] duration-300 ease-out",
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-          WAVE_WIDTHS[Math.min(distanceFromActive, WAVE_WIDTHS.length - 1)],
+          "motion-reduce:transition-none",
+          WAVE_WIDTHS[Math.min(distanceFromActive, WAVE_WIDTHS.length - 1)]
+        );
+        const dashClass = cn(
+          "block h-0.5 w-full rounded-full transition-colors duration-300 ease-out motion-reduce:transition-none",
           isActive
             ? "bg-foreground"
-            : "bg-muted-foreground/40 hover:bg-muted-foreground"
+            : "bg-muted-foreground/40 group-hover:bg-muted-foreground"
         );
         return (
           <Tooltip key={item.id}>
@@ -190,16 +196,20 @@ export function SectionRail({
                   href={item.href}
                   aria-label={item.label}
                   aria-current={isActive ? "page" : undefined}
-                  className={dashClass}
-                />
+                  className={rowClass}
+                >
+                  <span aria-hidden className={dashClass} />
+                </Link>
               ) : (
                 <button
                   type="button"
                   aria-label={item.label}
                   aria-current={isActive ? "location" : undefined}
                   onClick={() => scrollTo(item.id)}
-                  className={dashClass}
-                />
+                  className={rowClass}
+                >
+                  <span aria-hidden className={dashClass} />
+                </button>
               )}
             </TooltipTrigger>
             <TooltipContent
@@ -213,7 +223,7 @@ export function SectionRail({
             >
               {item.card ? (
                 <div className="text-left">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-1">
                     {item.card.icon ? (
                       <span className="flex size-7 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground ring-1 ring-inset ring-muted-foreground/10">
                         {item.card.icon}
