@@ -44,8 +44,18 @@ export function HomeAskAI() {
   }, []);
 
   useEffect(() => {
-    resizeTextarea();
-  }, [value, resizeTextarea]);
+    if (!expanded) return;
+    // The wrapper animates from max-w-0, so early measurements see a ~0px
+    // wide textarea that wraps and reports an inflated scrollHeight.
+    // Re-measure on every size change until the width transition settles.
+    const observer = new ResizeObserver(() => resizeTextarea());
+    if (textareaRef.current) observer.observe(textareaRef.current);
+    return () => observer.disconnect();
+  }, [expanded, resizeTextarea]);
+
+  useEffect(() => {
+    if (expanded) resizeTextarea();
+  }, [value, expanded, resizeTextarea]);
 
   useEffect(() => {
     if (expanded) textareaRef.current?.focus();
@@ -95,7 +105,7 @@ export function HomeAskAI() {
 
   return (
     <TooltipProvider delayDuration={250}>
-      <div className="flex items-end">
+      <div className="flex items-center">
         <Tooltip
           open={expanded || pickerOpen ? false : tooltipOpen}
           onOpenChange={(next) => setTooltipOpen(expanded ? false : next)}
@@ -106,7 +116,7 @@ export function HomeAskAI() {
               onClick={toggleExpanded}
               aria-expanded={expanded}
               aria-label={expanded ? "close composer" : "ask an ai"}
-              className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-background/80 shadow-sm ring-1 ring-inset ring-border/60 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
+              className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-background/80 shadow-sm ring-1 ring-inset ring-border/60 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
             >
               <AIMascot awake={expanded} gaze="up" size="compact" />
             </button>
@@ -125,7 +135,7 @@ export function HomeAskAI() {
               : "ms-0 max-w-0 opacity-0"
           )}
         >
-          <div className="flex items-end gap-1 rounded-[22px] bg-background/80 p-1.5 ps-3 shadow-lg ring-1 ring-inset ring-border/60 backdrop-blur-md">
+          <div className="flex items-center gap-0.5 rounded-full bg-background/80 p-1 ps-3.5 shadow-lg ring-1 ring-inset ring-border/60 backdrop-blur-md">
             <textarea
               ref={textareaRef}
               rows={1}
@@ -134,7 +144,7 @@ export function HomeAskAI() {
               onKeyDown={handleKeyDown}
               placeholder="ask an ai about aditya"
               aria-label="message for your ai assistant"
-              className="w-44 min-w-0 flex-1 resize-none self-center bg-transparent py-1.5 text-sm leading-relaxed text-foreground outline-none placeholder:text-muted-foreground sm:w-64"
+              className="w-44 min-w-0 flex-1 resize-none bg-transparent py-1 text-sm leading-normal text-foreground outline-none placeholder:text-muted-foreground sm:w-64"
             />
 
             <Popover open={pickerOpen} onOpenChange={setPickerOpen}>
