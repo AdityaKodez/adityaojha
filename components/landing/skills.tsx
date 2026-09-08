@@ -44,7 +44,7 @@ function SkillChip({ skill, idx }: { skill: SkillItem; idx: number }) {
   const Icon = skillIconMap[skill.icon];
 
   // Deliberately no hover:/focus-visible: styles here. These chips are labels,
-  // not controls — there is nothing to click and nothing to focus (a div with
+  // not controls: there is nothing to click and nothing to focus (a div with
   // no tabIndex can never receive focus, so a focus ring is unreachable CSS).
   // Styling them like interactive filter chips made users click them, which
   // PostHog then recorded as $dead_click. If these ever become filters or

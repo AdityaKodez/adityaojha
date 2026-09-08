@@ -28,11 +28,11 @@ export function Testimonials() {
             <motion.div
               key={testimonial.id}
               transition={{ duration: 0.2 }}
-              className="w-85 md:w-87.5 py-2.5 md:py-3 0"
+              className="w-85 md:w-87.5 py-2.5 md:py-3"
             >
               {/* Hover tint is intentional: it signals the marquee slowdown
                   (speedOnHover), not clickability. Deliberately no cursor-pointer
-                  here — these quotes have no source links, and advertising a
+                  here. These quotes have no source links, and advertising a
                   click that does nothing generates PostHog $dead_click events. */}
               <Card className="h-full bg-background hover:bg-muted/50 transition-colors rounded-none">
                 <CardContent className="p-3 flex flex-col gap-2 h-full">

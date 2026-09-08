@@ -316,8 +316,8 @@ export function DiscordStatus() {
     <Tooltip>
       <TooltipTrigger asChild>
         {/* A real <button> with a real handler. This previously advertised
-            itself as interactive three ways over — role="button", tabIndex={0}
-            and cursor-pointer — while having no onClick at all, and its only
+            itself as interactive three ways: role="button", tabIndex={0}
+            and cursor-pointer. It had no onClick at all, and its only
             behaviour was a hover/focus tooltip. Radix tooltips do not open on
             tap, so every mobile press on it was a guaranteed $dead_click, in
             the hero, on effectively every visit. */}
@@ -334,7 +334,7 @@ export function DiscordStatus() {
           <Badge variant="secondary" className="rounded-lg h-6 px-2">
             {/* The confirmation lives on the badge, not only in the tooltip.
                 A tooltip-only response would still read as dead on touch,
-                where the tooltip never opens — this icon swap mutates the DOM
+                where the tooltip never opens. This icon swap mutates the DOM
                 on every device. */}
             {copied ? (
               <Check className="h-3.5 w-3.5 text-green-500" />

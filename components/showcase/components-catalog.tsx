@@ -261,7 +261,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
                       demos here are live and interactive, so wrapping them
                       in a link would hijack their own clicks (and nest
                       interactive elements inside an anchor). At z-0 it
-                      collects only what the demo does not claim — the
+                      collects only what the demo does not claim: the
                       padding ring and the space above and below the demo.
 
                       aria-hidden + tabIndex={-1} because the tab title is
