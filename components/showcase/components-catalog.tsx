@@ -249,8 +249,32 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
 
                 {/* Live preview container — owns the card frame, so its top
                     rule is the tab baseline running out to the right edge. */}
-                <div className="catalog-card-body relative flex flex-1 items-center justify-center overflow-hidden rounded-tr-md rounded-b-md border bg-background p-3 sm:p-4 lg:p-6">
-                  <div className="flex w-full min-w-0 justify-center">
+                <div className="catalog-card-body relative flex flex-1 items-center justify-center overflow-hidden rounded-tr-md rounded-b-md border bg-background p-3 transition-colors group-hover:border-muted-foreground/20 sm:p-4 lg:p-6">
+                  {/* Stretched link. The body is the largest, most
+                      click-inviting surface on the card, but only the tab
+                      title above was ever a link, so clicks landing in the
+                      body's dead space went nowhere and PostHog logged them
+                      as $dead_click.
+
+                      This is a *sibling* of the demo at a lower z-index
+                      rather than a wrapper around it, which matters: the
+                      demos here are live and interactive, so wrapping them
+                      in a link would hijack their own clicks (and nest
+                      interactive elements inside an anchor). At z-0 it
+                      collects only what the demo does not claim: the
+                      padding ring and the space above and below the demo.
+
+                      aria-hidden + tabIndex={-1} because the tab title is
+                      already a keyboard-reachable link to this same href;
+                      this overlay is a pointer-only convenience and should
+                      not be announced or tabbed to twice. */}
+                  <Link
+                    href={`/components/${c.id}`}
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    className="absolute inset-0 z-0"
+                  />
+                  <div className="relative z-10 flex w-full min-w-0 justify-center">
                     <ComponentDemo id={c.id} />
                   </div>
                 </div>
