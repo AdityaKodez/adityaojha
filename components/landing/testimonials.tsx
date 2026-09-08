@@ -3,13 +3,17 @@
 import { InfiniteSlider } from "@/components/motion-primitives/infinite-slider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
-import { testimonialsConfig } from "@/config/testimonials";
+import {
+  getAllTestimonials,
+  getEnabledTestimonials,
+  testimonialsSectionConfig,
+} from "@/config/testimonials";
 import { blurReveal } from "@/lib/motion";
 import { motion } from "motion/react";
+import Link from "next/link";
+import { BsArrowUpRightCircle } from "react-icons/bs";
 
-const enabledTestimonials = testimonialsConfig
-  .filter((item) => item.enabled !== false)
-  .sort((a, b) => a.order - b.order);
+const enabledTestimonials = getEnabledTestimonials();
 
 export function Testimonials() {
   return (
@@ -67,6 +71,16 @@ export function Testimonials() {
             otherwise swallow interaction in the outer 32px on each side. */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background to-transparent z-10" />
+      </div>
+
+      <div className="flex justify-center items-center border-y py-4">
+        <Link
+          href="/testimonials"
+          className="flex items-center gap-2 font-pixel text-xs text-muted-foreground transition-colors hover:text-foreground"
+        >
+          {`${testimonialsSectionConfig.seeMoreLabel} ${getAllTestimonials().length} testimonials`}
+          <BsArrowUpRightCircle className="size-3.5" />
+        </Link>
       </div>
     </section>
   );

@@ -80,6 +80,11 @@ export const siteConfig: PortfolioConfig = {
     },
     sitemap: [
       { url: "https://akoder.xyz", changeFrequency: "monthly", priority: 1 },
+      {
+        url: "https://akoder.xyz/testimonials",
+        changeFrequency: "monthly",
+        priority: 0.6,
+      },
     ],
   },
   personal: {

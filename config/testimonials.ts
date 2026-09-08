@@ -1,5 +1,9 @@
 import type { Testimonial } from "@/config/types";
 
+export const testimonialsSectionConfig = {
+  seeMoreLabel: "view all",
+};
+
 export const testimonialsConfig: Testimonial[] = [
   {
     id: "natey",
@@ -125,3 +129,13 @@ export const testimonialsConfig: Testimonial[] = [
     enabled: false,
   },
 ];
+
+/** Every testimonial in authored order. Used by the /testimonials page. */
+export function getAllTestimonials(): Testimonial[] {
+  return [...testimonialsConfig].sort((a, b) => a.order - b.order);
+}
+
+/** Only the published ones. Used by the home page marquee. */
+export function getEnabledTestimonials(): Testimonial[] {
+  return getAllTestimonials().filter((item) => item.enabled !== false);
+}

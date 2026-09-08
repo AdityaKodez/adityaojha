@@ -68,7 +68,7 @@ There is no typecheck script; run `npx tsc --noEmit` directly.
 
 | Path | Contents |
 | --- | --- |
-| `app/` | Routes: `page.tsx` (home), `bookmarks/` and `certifications/` (collections), `components/` and `components/[id]/` (showcase), `project/[id]/` (case studies), `api/discord-status/route.ts`; plus `layout.tsx`, `error.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `not-found.tsx` |
+| `app/` | Routes: `page.tsx` (home), `components/` and `components/[id]/` (showcase), `project/[id]/` (case studies), `testimonials/` (all quotes, 2 col grid), `api/discord-status/route.ts`; plus `layout.tsx`, `error.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `not-found.tsx`. `bookmarks/` and `certifications/` are home sections only, not routes. |
 | `components/` | Subdivided into `landing/` (one file per home section, hero, about, skills, etc.), `showcase/` (catalog, shell, preview), `shared/` (header, footer, theme provider, logo), `ui/`, `motion-primitives/`, `skeletons/` |
 | `components/ui/` | Vendored shadcn and Radix primitives; source of most registry items |
 | `components/motion-primitives/` | Motion-heavy building blocks |
