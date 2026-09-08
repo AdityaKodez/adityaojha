@@ -41,7 +41,7 @@ export function ProseCodeBlock({ children }: { children: ReactNode }) {
       ref={wrapperRef}
       className="relative my-5 rounded-lg border bg-muted/10 p-0.5 group/prose-code"
     >
-      <div className="relative overflow-hidden rounded-md border bg-muted/10 [&_pre]:no-scrollbar [&_pre]:[scrollbar-width:none] [&_pre::-webkit-scrollbar]:hidden">
+      <div className="relative overflow-hidden border rounded-lg [&_pre]:no-scrollbar [&_pre]:[scrollbar-width:none] [&_pre::-webkit-scrollbar]:hidden">
         <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40" />
         <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
         <div className="relative min-w-0">
