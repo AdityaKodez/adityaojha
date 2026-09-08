@@ -30,8 +30,11 @@ export function Testimonials() {
               transition={{ duration: 0.2 }}
               className="w-85 md:w-87.5 py-2.5 md:py-3 0"
             >
-              <Card className="h-full bg-background hover:bg-muted/50 transition-colors cursor-pointer rounded-none
-              ">
+              {/* Hover tint is intentional: it signals the marquee slowdown
+                  (speedOnHover), not clickability. Deliberately no cursor-pointer
+                  here — these quotes have no source links, and advertising a
+                  click that does nothing generates PostHog $dead_click events. */}
+              <Card className="h-full bg-background hover:bg-muted/50 transition-colors rounded-none">
                 <CardContent className="p-3 flex flex-col gap-2 h-full">
                   <p className="text-sm text-muted-foreground leading-tight flex-1">
                     &quot;{testimonial.content}&quot;
@@ -60,8 +63,10 @@ export function Testimonials() {
             </motion.div>
           ))}
         </InfiniteSlider>
-        <div className="absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background to-transparent z-10" />
-        <div className="absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background to-transparent z-10" />
+        {/* pointer-events-none: these sit at z-10 above the slider and would
+            otherwise swallow interaction in the outer 32px on each side. */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background to-transparent z-10" />
       </div>
     </section>
   );
