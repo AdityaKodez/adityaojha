@@ -5,6 +5,18 @@ import BrandNextjs from "@/public/stacks/nextjs";
 import X from "@/public/x-icon";
 import { BookmarkCheckIcon } from "lucide-react";
 import { FaYoutube } from "react-icons/fa";
+export const homeAskAIConfig = {
+  basePrompt:
+    "Hi! I'm on Aditya Ojha's portfolio (https://akoder.xyz). Based on this page, introduce him: what he builds, his stack, and what he's looking for. Then suggest what I should ask him about next.",
+  defaultProvider: "chatgpt",
+  label: "ask an ai",
+  placeholder: "ask an ai about aditya",
+  inputLabel: "message for your ai assistant",
+  closeLabel: "close composer",
+  pickerLabel: "choose your assistant",
+  handoffHint: "opens in a new tab with your question and portfolio context",
+} as const;
+
 export const siteConfig: PortfolioConfig = {
   meta: {
     url: "https://akoder.xyz",

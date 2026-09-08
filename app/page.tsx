@@ -107,8 +107,8 @@ export default function Home() {
         />
       </div>
 
-      <div className="fixed bottom-6 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none px-4 sm:px-6 flex justify-end">
-        <div className="pointer-events-auto">
+      <div className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none px-4 sm:px-6 flex justify-end">
+        <div className="w-full max-w-md">
           <HomeAskAI />
         </div>
       </div>

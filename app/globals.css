@@ -147,6 +147,24 @@ html[data-frame="wide"] {
   --scrollbar-thumb-hover: oklch(0.45 0 0);
 }
 
+@keyframes home-ai-picker-in {
+  from { opacity: 0; transform: translateY(5px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes home-ai-picker-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(5px) scale(0.97); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-ai-picker { animation: none !important; }
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  [data-home-composer] { background: var(--background); backdrop-filter: none; }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -165,6 +183,86 @@ html[data-frame="wide"] {
 }
 
 @layer components {
+  .home-ai-input[data-slot="input-group"] {
+    height: auto;
+    align-items: flex-end;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .home-ai-input [data-slot="input-group-addon"] {
+    flex-shrink: 0;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .home-ai-icon-button {
+    display: flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    outline: none;
+    transition: color 150ms, background-color 150ms;
+    touch-action: manipulation;
+  }
+
+  .home-ai-icon-button:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
+
+  .home-ai-textarea-wrap {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+    max-height: 7.5rem;
+    overflow: hidden;
+  }
+
+  .home-ai-textarea-mirror,
+  .home-ai-input .home-ai-textarea {
+    grid-area: 1 / 1;
+    min-height: 0;
+    min-width: 0;
+    padding: 0.5rem;
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .home-ai-textarea-mirror {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .home-ai-input .home-ai-textarea {
+    height: 100%;
+    field-sizing: fixed;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    resize: none;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .home-ai-picker[data-state="open"] {
+    animation: home-ai-picker-in 200ms var(--motion-ease-standard);
+  }
+
+  .home-ai-picker[data-state="closed"] {
+    animation: home-ai-picker-out 140ms ease-in;
+  }
+
   .section-heading {
     @apply text-xl font-semibold border-y border-dashed bg-muted/20 px-6 py-2;
   }

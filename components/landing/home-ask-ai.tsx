@@ -1,6 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import { flushSync } from "react-dom";
+import { AnimatePresence, motion, useMotionValue, useReducedMotion } from "motion/react";
+import useMeasure from "react-use-measure";
+import { ToggleGroup } from "radix-ui";
 import { ArrowUp, Check } from "lucide-react";
 import {
   AIMascot,
@@ -10,215 +14,306 @@ import {
   type AIProvider,
 } from "@/components/ui/ask-ai";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  InputGroup,
+  InputGroupAddon,
+  InputGroupTextarea,
+} from "@/components/ui/input-group";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { homeAskAIConfig as config } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
-const BASE_PROMPT =
-  "Hi! I'm on Aditya Ojha's portfolio (https://akoder.xyz). Based on this page, introduce him: what he builds, his stack, and what he's looking for. Then suggest what I should ask him about next.";
+const COMPOSER_SPRING = { type: "spring", stiffness: 320, damping: 36, mass: 1 } as const;
+const COLLAPSED_SIZE = 48;
 
-const MAX_TEXTAREA_HEIGHT = 120;
+function ProviderPicker({
+  provider,
+  open,
+  onOpenChange,
+  onSelect,
+  onReturnToInput,
+}: {
+  provider: AIProvider;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSelect: (provider: AIProvider) => void;
+  onReturnToInput: () => void;
+}) {
+  const reduceMotion = useReducedMotion();
+  const returnToInput = useRef(false);
+  const labelId = useId();
+  const descriptionId = useId();
+  const ProviderIcon = aiProviderIcons[provider.id as keyof typeof aiProviderIcons];
+
+  return (
+    <Popover open={open} onOpenChange={onOpenChange}>
+      <PopoverTrigger asChild>
+        <motion.button
+          type="button"
+          aria-label={`assistant: ${provider.name}, change`}
+          title={`change assistant (${provider.name})`}
+          whileTap={reduceMotion ? undefined : { scale: 0.92 }}
+          className="home-ai-icon-button text-muted-foreground hover:bg-muted hover:text-foreground"
+        >
+          <AnimatePresence initial={false} mode="popLayout">
+            <motion.span
+              key={provider.id}
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: reduceMotion ? 0 : -5 }}
+              transition={{ duration: 0.15 }}
+              className="flex items-center justify-center"
+            >
+              {ProviderIcon && <ProviderIcon aria-hidden="true" className="size-5" />}
+            </motion.span>
+          </AnimatePresence>
+        </motion.button>
+      </PopoverTrigger>
+      <PopoverContent
+        side="top"
+        align="end"
+        sideOffset={10}
+        collisionPadding={16}
+        aria-labelledby={labelId}
+        aria-describedby={descriptionId}
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+          document.getElementById(`${labelId}-${provider.id}`)?.focus();
+        }}
+        onEscapeKeyDown={(event) => event.stopPropagation()}
+        onCloseAutoFocus={(event) => {
+          if (returnToInput.current) {
+            event.preventDefault();
+            returnToInput.current = false;
+            onReturnToInput();
+          }
+        }}
+        className="home-ai-picker w-60 rounded-3xl p-1.5"
+      >
+        <div className="px-3 pb-2 pt-2.5">
+          <h2 id={labelId} className="text-sm font-medium">{config.pickerLabel}</h2>
+        </div>
+        <ToggleGroup.Root
+          type="single"
+          orientation="vertical"
+          value={provider.id}
+          aria-labelledby={labelId}
+          className="flex flex-col gap-0.5"
+        >
+          {defaultAIProviders.map((item) => {
+            const Icon = aiProviderIcons[item.id as keyof typeof aiProviderIcons];
+            const selected = item.id === provider.id;
+            return (
+              <ToggleGroup.Item
+                key={item.id}
+                id={`${labelId}-${item.id}`}
+                value={item.id}
+                onClick={() => {
+                  returnToInput.current = true;
+                  onSelect(item);
+                  onOpenChange(false);
+                }}
+                className={cn(
+                  "flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm outline-none transition-colors duration-150 focus-visible:bg-muted focus-visible:text-foreground",
+                  selected
+                    ? "bg-muted text-foreground"
+                    : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+                )}
+              >
+                {Icon && <Icon aria-hidden="true" className="size-5 shrink-0" />}
+                <span className="flex-1 text-left">{item.name}</span>
+                {selected && <Check aria-hidden="true" className="size-4 text-primary" />}
+              </ToggleGroup.Item>
+            );
+          })}
+        </ToggleGroup.Root>
+        <p id={descriptionId} className="px-3 pb-2.5 pt-2 text-sm leading-relaxed text-muted-foreground">
+          {config.handoffHint}
+        </p>
+      </PopoverContent>
+    </Popover>
+  );
+}
 
 export function HomeAskAI() {
   const [expanded, setExpanded] = useState(false);
   const [value, setValue] = useState("");
-  const [provider, setProvider] = useState<AIProvider>(defaultAIProviders[0]);
+  const [provider, setProvider] = useState<AIProvider>(
+    defaultAIProviders.find((item) => item.id === config.defaultProvider) ?? defaultAIProviders[0],
+  );
   const [pickerOpen, setPickerOpen] = useState(false);
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [availableRef, available] = useMeasure();
+  const [rowRef, row] = useMeasure();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const resizeTextarea = useCallback(() => {
-    const el = textareaRef.current;
-    if (!el) return;
-    el.style.height = "0px";
-    el.style.height = `${Math.min(el.scrollHeight, MAX_TEXTAREA_HEIGHT)}px`;
-  }, []);
-
-  useEffect(() => {
-    if (!expanded) return;
-    // The wrapper animates from max-w-0, so early measurements see a ~0px
-    // wide textarea that wraps and reports an inflated scrollHeight.
-    // Re-measure on every size change until the width transition settles.
-    const observer = new ResizeObserver(() => resizeTextarea());
-    if (textareaRef.current) observer.observe(textareaRef.current);
-    return () => observer.disconnect();
-  }, [expanded, resizeTextarea]);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
+  const keyboardOffset = useMotionValue(0);
+  const inputId = useId();
+  const hintId = useId();
+  const composerWidth = available.width || 448;
+  const transition = reduceMotion ? { duration: 0 } : COMPOSER_SPRING;
 
   useEffect(() => {
-    if (expanded) resizeTextarea();
-  }, [value, expanded, resizeTextarea]);
+    const viewport = window.visualViewport;
+    if (!expanded || !viewport) {
+      keyboardOffset.set(0);
+      return;
+    }
+    const followKeyboard = () => {
+      keyboardOffset.set(-Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop));
+    };
+    followKeyboard();
+    viewport.addEventListener("resize", followKeyboard);
+    viewport.addEventListener("scroll", followKeyboard);
+    return () => {
+      viewport.removeEventListener("resize", followKeyboard);
+      viewport.removeEventListener("scroll", followKeyboard);
+    };
+  }, [expanded, keyboardOffset]);
 
-  useEffect(() => {
-    if (expanded) textareaRef.current?.focus();
-  }, [expanded]);
+  function focusInput() {
+    textareaRef.current?.focus({ preventScroll: true });
+  }
+
+  function collapse() {
+    setPickerOpen(false);
+    setExpanded(false);
+    triggerRef.current?.focus({ preventScroll: true });
+  }
 
   function toggleExpanded() {
-    setExpanded((prev) => {
-      const next = !prev;
-      if (next) {
-        trackEvent("ask_ai_opened", {
-          location: "home_floating",
-          trigger_type: "pill",
-        });
-      }
-      return next;
-    });
+    if (expanded) {
+      collapse();
+      return;
+    }
+    // Remove inert inside the tap so iOS can open its keyboard without waiting for the spring.
+    flushSync(() => setExpanded(true));
+    focusInput();
+    trackEvent("ask_ai_opened", { location: "home_floating", trigger_type: "pill" });
   }
 
   function send() {
     const message = value.trim();
-    if (!message) return;
-    const url = getProviderUrl(provider, `${BASE_PROMPT}\n\n${message}`);
+    if (!expanded || !message) return;
+    const url = getProviderUrl(provider, `${config.basePrompt}\n\nMy question:\n${message}`);
     window.open(url, "_blank", "noopener,noreferrer");
-    trackEvent("ask_ai_message_sent", {
-      location: "home_floating",
-      provider: provider.id,
-      message_length: message.length,
-    });
-    setValue("");
-    requestAnimationFrame(resizeTextarea);
   }
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (event.key === "Escape") {
-      setExpanded(false);
-      return;
-    }
-    if (event.key !== "Enter" || event.shiftKey) return;
-    // Enter may confirm CJK IME composition instead of sending
+  function handleKeyDown(event: KeyboardEvent<HTMLFormElement>) {
     if (event.nativeEvent.isComposing || event.keyCode === 229) return;
-    event.preventDefault();
-    send();
+    if (event.key === "Escape" && !pickerOpen) {
+      event.preventDefault();
+      collapse();
+    }
+    if (event.target === textareaRef.current && event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      send();
+    }
   }
-
-  const ProviderIcon =
-    aiProviderIcons[provider.id as keyof typeof aiProviderIcons];
 
   return (
-    <TooltipProvider delayDuration={250}>
-      <div className="flex items-center">
-        <Tooltip
-          open={expanded || pickerOpen ? false : tooltipOpen}
-          onOpenChange={(next) => setTooltipOpen(expanded ? false : next)}
-        >
-          <TooltipTrigger asChild>
-            <button
-              type="button"
-              onClick={toggleExpanded}
-              aria-expanded={expanded}
-              aria-label={expanded ? "close composer" : "ask an ai"}
-              className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-background/80 shadow-sm ring-1 ring-inset ring-border/60 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
-            >
-              <AIMascot awake={expanded} gaze="up" size="compact" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent side="left" className="text-xs">
-            ask an ai
-          </TooltipContent>
-        </Tooltip>
-
-        <div
-          inert={!expanded}
-          className={cn(
-            "overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
-            expanded
-              ? "ms-2 max-w-[min(26rem,calc(100vw-7.5rem))] opacity-100"
-              : "ms-0 max-w-0 opacity-0"
-          )}
-        >
-          <div className="flex items-center gap-0.5 rounded-full bg-background/80 p-1 ps-3.5 shadow-lg ring-1 ring-inset ring-border/60 backdrop-blur-md">
-            <textarea
-              ref={textareaRef}
-              rows={1}
-              value={value}
-              onChange={(event) => setValue(event.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="ask an ai about aditya"
-              aria-label="message for your ai assistant"
-              className="w-44 min-w-0 flex-1 resize-none bg-transparent py-1 text-sm leading-normal text-foreground outline-none placeholder:text-muted-foreground sm:w-64"
-            />
-
-            <Popover open={pickerOpen} onOpenChange={setPickerOpen}>
-              <PopoverTrigger asChild>
-                <button
-                  type="button"
-                  aria-label={`assistant: ${provider.name}, change`}
-                  className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground active:scale-[0.94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {ProviderIcon ? (
-                    <ProviderIcon aria-hidden="true" className="size-4" />
-                  ) : null}
-                </button>
-              </PopoverTrigger>
-              <PopoverContent
-                side="top"
-                align="end"
-                sideOffset={12}
-                className="w-44 gap-0.5 rounded-2xl bg-popover p-1.5 shadow-xl ring-1 ring-inset ring-border/50"
+    <motion.div
+      ref={availableRef}
+      style={{ y: keyboardOffset }}
+      className="pointer-events-none flex w-full justify-end font-sans"
+    >
+      <motion.form
+        aria-label={config.label}
+        data-home-composer=""
+        data-expanded={expanded}
+        initial={false}
+        animate={{
+          width: expanded ? composerWidth : COLLAPSED_SIZE,
+          height: expanded ? (row.height || 40) + 8 : COLLAPSED_SIZE,
+        }}
+        transition={transition}
+        onKeyDown={handleKeyDown}
+        onSubmit={(event) => { event.preventDefault(); send(); }}
+        className="pointer-events-auto flex shrink-0 items-end overflow-hidden rounded-[24px] bg-background/90 p-1 text-foreground shadow-lg ring-1 ring-inset ring-border/70 backdrop-blur-xl"
+      >
+        {/* The row keeps its final width while the shell reveals it. Text never wraps during the morph. */}
+        <div ref={rowRef} style={{ width: composerWidth - 8 }} className="shrink-0">
+          <InputGroup className="home-ai-input">
+            <InputGroupAddon align="inline-start">
+              <motion.button
+                ref={triggerRef}
+                type="button"
+                onClick={toggleExpanded}
+                aria-expanded={expanded}
+                aria-controls={inputId}
+                aria-label={expanded ? config.closeLabel : config.label}
+                title={expanded ? config.closeLabel : config.label}
+                whileTap={reduceMotion ? undefined : { scale: 0.9 }}
+                transition={COMPOSER_SPRING}
+                className="home-ai-icon-button text-foreground hover:bg-muted/60"
               >
-                <span className="px-2 pb-1 pt-0.5 font-mono text-[10px] text-muted-foreground">
-                  assistant
-                </span>
-                <div role="listbox" aria-label="choose assistant">
-                  {defaultAIProviders.map((item) => {
-                    const Icon =
-                      aiProviderIcons[
-                        item.id as keyof typeof aiProviderIcons
-                      ];
-                    const selected = item.id === provider.id;
-                    return (
-                      <button
-                        key={item.id}
-                        type="button"
-                        role="option"
-                        aria-selected={selected}
-                        onClick={() => {
-                          setProvider(item);
-                          setPickerOpen(false);
-                          textareaRef.current?.focus();
-                        }}
-                        className={cn(
-                          "flex w-full cursor-pointer items-center gap-2.5 rounded-xl px-2 py-1.5 text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                          selected
-                            ? "bg-muted text-foreground"
-                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                        )}
-                      >
-                        {Icon ? (
-                          <Icon aria-hidden="true" className="size-4 shrink-0" />
-                        ) : null}
-                        <span className="flex-1 text-left">{item.name}</span>
-                        {selected ? (
-                          <Check aria-hidden="true" className="size-3.5" />
-                        ) : null}
-                      </button>
-                    );
-                  })}
-                </div>
-              </PopoverContent>
-            </Popover>
-
-            <button
-              type="button"
-              onClick={send}
-              disabled={!value.trim()}
-              aria-label={`send to ${provider.name} (opens in a new tab)`}
-              className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary text-primary-foreground transition-all duration-150 hover:opacity-90 active:scale-90 disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
+                <motion.span
+                  initial={false}
+                  animate={{ scale: expanded ? 1 : 1.1 }}
+                  transition={transition}
+                  className="flex items-center justify-center"
+                >
+                  <AIMascot
+                    awake={expanded}
+                    size="compact"
+                    className="motion-reduce:animate-none motion-reduce:rounded-full motion-reduce:[&_*]:animate-none motion-reduce:[&_*]:transition-none"
+                  />
+                </motion.span>
+              </motion.button>
+            </InputGroupAddon>
+            <motion.div
+              inert={!expanded}
+              aria-hidden={!expanded}
+              initial={false}
+              animate={{ opacity: expanded ? 1 : 0 }}
+              transition={{ duration: reduceMotion ? 0.1 : 0.18 }}
+              className="flex min-w-0 flex-1 items-end"
             >
-              <ArrowUp aria-hidden="true" className="size-4" />
-            </button>
-          </div>
+              <div className="home-ai-textarea-wrap">
+                <span aria-hidden="true" className="home-ai-textarea-mirror">{value + "\u200b"}</span>
+                <InputGroupTextarea
+                  ref={textareaRef}
+                  id={inputId}
+                  name="message"
+                  rows={1}
+                  value={value}
+                  onChange={(event) => setValue(event.target.value)}
+                  placeholder={config.placeholder}
+                  aria-label={config.inputLabel}
+                  aria-describedby={hintId}
+                  enterKeyHint="send"
+                  autoComplete="off"
+                  className="home-ai-textarea"
+                />
+              </div>
+              <InputGroupAddon align="inline-end">
+                <ProviderPicker
+                  provider={provider}
+                  open={pickerOpen}
+                  onOpenChange={setPickerOpen}
+                  onSelect={setProvider}
+                  onReturnToInput={focusInput}
+                />
+                <motion.button
+                  type="submit"
+                  disabled={!value.trim()}
+                  aria-label={`send to ${provider.name} (opens in a new tab)`}
+                  whileTap={reduceMotion ? undefined : { scale: 0.9 }}
+                  className="home-ai-icon-button text-primary-foreground disabled:cursor-default"
+                >
+                  <span className={cn(
+                    "flex size-9 items-center justify-center rounded-full bg-primary transition-opacity duration-200",
+                    !value.trim() && "opacity-30",
+                  )}>
+                    <ArrowUp aria-hidden="true" className="size-5" strokeWidth={2} />
+                  </span>
+                </motion.button>
+              </InputGroupAddon>
+            </motion.div>
+          </InputGroup>
         </div>
-      </div>
-    </TooltipProvider>
+      </motion.form>
+      <span id={hintId} className="sr-only">{config.handoffHint}. Enter to send, Shift+Enter for a new line.</span>
+    </motion.div>
   );
 }
