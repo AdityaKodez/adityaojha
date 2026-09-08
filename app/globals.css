@@ -244,8 +244,10 @@ html[data-frame="wide"] {
   }
 
   .home-ai-input .home-ai-textarea {
-    height: 100%;
-    field-sizing: fixed;
+    height: auto !important;
+    min-height: 0 !important;
+    field-sizing: fixed !important;
+    padding-block: 0.5rem !important;
     border: 0;
     border-radius: 0;
     background: transparent;
