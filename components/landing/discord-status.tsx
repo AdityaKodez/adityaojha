@@ -14,9 +14,13 @@ import {
   type DiscordStatus as DiscordStatusType,
   type LanyardData,
 } from "@/lib/discord-status";
+import { socialsConfig } from "@/config/socials";
+import { trackEvent } from "@/lib/analytics";
 import { useQuery } from "@/lib/react-query";
+import { useCopy } from "@/lib/use-copy";
 import {
   Activity,
+  Check,
   Circle,
   CircleOff,
   Code,
@@ -41,6 +45,15 @@ const fetchDiscordStatus = async (): Promise<LanyardData> => {
 
   return response.json() as Promise<LanyardData>;
 };
+
+/**
+ * Discord exposes no public profile URL for a username, so the badge cannot
+ * link out the way the other socials do. The established convention in this
+ * codebase is to copy the handle instead (`action: "copy"` in socials config,
+ * mirrored in social.tsx and cta.tsx), so the badge reuses that same source of
+ * truth rather than hardcoding the username here.
+ */
+const discordSocial = socialsConfig.find((social) => social.id === "discord");
 
 const statusConfig: Record<
   DiscordStatusType,
@@ -248,6 +261,22 @@ export function DiscordStatus() {
     },
   );
 
+  const { status: copyStatus, copy } = useCopy();
+
+  const handleCopy = () => {
+    if (!discordSocial?.copyValue) {
+      return;
+    }
+
+    copy(discordSocial.copyValue);
+    trackEvent("social_handle_copied", {
+      platform: discordSocial.platform,
+      handle: discordSocial.handle,
+      method: "click",
+      location: "hero_discord_badge",
+    });
+  };
+
   if (isLoading) {
     return (
       <Badge variant="ghost" className="rounded-lg h-6 px-2 cursor-default text-muted-foreground">
@@ -260,16 +289,17 @@ export function DiscordStatus() {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <div
-            tabIndex={0}
-            role="button"
+          {/* No role="button"/tabIndex here. When the Lanyard fetch fails
+              there is nothing to copy and nothing to press, and the previous
+              markup announced a button while being completely inert. */}
+          <span
             aria-label="discord status: offline"
-            className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 rounded-sm inline-flex"
+            className="rounded-sm inline-flex"
           >
             <Badge variant="ghost" className="rounded-lg h-6 px-2 cursor-default text-muted-foreground">
               <CircleOff className="h-3.5 w-3.5 text-muted-foreground" />
             </Badge>
-          </div>
+          </span>
         </TooltipTrigger>
         <TooltipContent side="bottom" className="p-2.5">
           <p className="text-xs text-muted-foreground">offline</p>
@@ -280,24 +310,48 @@ export function DiscordStatus() {
 
   const config = statusConfig[data.discord_status];
   const StatusIcon = config.icon;
+  const copied = copyStatus === "copied";
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div
-          tabIndex={0}
-          role="button"
-          aria-label={`Discord status: ${config.label}`}
-          className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 rounded-sm inline-flex"
+        {/* A real <button> with a real handler. This previously advertised
+            itself as interactive three ways: role="button", tabIndex={0}
+            and cursor-pointer. It had no onClick at all, and its only
+            behaviour was a hover/focus tooltip. Radix tooltips do not open on
+            tap, so every mobile press on it was a guaranteed $dead_click, in
+            the hero, on effectively every visit. */}
+        <button
+          type="button"
+          onClick={handleCopy}
+          aria-label={
+            discordSocial?.copyValue
+              ? `Discord status: ${config.label}. Press to copy ${discordSocial.handle}`
+              : `Discord status: ${config.label}`
+          }
+          className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 rounded-sm inline-flex cursor-pointer"
         >
-          <Badge variant="secondary" className="rounded-lg h-6 px-2 cursor-pointer">
-            <StatusIcon className={`h-3.5 w-3.5 ${config.iconClassName}`} />
+          <Badge variant="secondary" className="rounded-lg h-6 px-2">
+            {/* The confirmation lives on the badge, not only in the tooltip.
+                A tooltip-only response would still read as dead on touch,
+                where the tooltip never opens. This icon swap mutates the DOM
+                on every device. */}
+            {copied ? (
+              <Check className="h-3.5 w-3.5 text-green-500" />
+            ) : (
+              <StatusIcon className={`h-3.5 w-3.5 ${config.iconClassName}`} />
+            )}
           </Badge>
-        </div>
+        </button>
       </TooltipTrigger>
       <TooltipContent side="bottom" className="p-2.5">
         <div className="space-y-1">
           <TooltipBody data={data} />
+          {discordSocial?.copyValue && (
+            <p className="text-[11px] text-muted-foreground">
+              {copied ? "copied" : `click to copy ${discordSocial.handle}`}
+            </p>
+          )}
         </div>
       </TooltipContent>
     </Tooltip>
