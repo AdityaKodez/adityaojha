@@ -115,7 +115,7 @@ export function PreviewBox({
                 onClick={() => selectTab(tab)}
                 aria-pressed={activeTab === tab}
                 className={cn(
-                  "px-3 py-1 text-sm capitalize tracking-wider transition-colors",
+                  "px-3 py-1 text-sm font-medium capitalize tracking-wider transition-colors",
                   activeTab === tab
                     ? "border-b-2 border-foreground text-foreground font-medium"
                     : "text-muted-foreground hover:text-foreground",
