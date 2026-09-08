@@ -86,6 +86,11 @@ export type EventMap = {
     location: string;
     trigger_type: "bubble" | "pill";
   };
+  ask_ai_message_sent: {
+    location: string;
+    provider: string;
+    message_length: number;
+  };
   components_view_switched: {
     view: "list" | "cards";
     previous_view: "list" | "cards";
