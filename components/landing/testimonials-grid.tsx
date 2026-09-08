@@ -28,7 +28,7 @@ export function TestimonialsGrid({
             blur: 5,
             delay: revealDelay(index, 0.04),
           })}
-          className="group relative flex flex-col p-3 transition-colors hover:bg-muted/10"
+          className="group relative flex flex-col px-4 py-5 transition-colors hover:bg-muted/10"
         >
           <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5" />
           <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-50 transition-opacity group-hover:opacity-100" />

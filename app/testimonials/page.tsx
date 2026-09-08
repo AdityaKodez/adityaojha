@@ -6,7 +6,7 @@ import { Metadata } from "next";
 const PAGE_URL = `${siteConfig.meta.url}/testimonials`;
 
 const PAGE_DESCRIPTION =
-  "Unedited, in their own words. From designers, developers, and founders who took a look at the work.";
+  "in their own words. From designers, developers, and founders who took a look at the work.";
 
 export const metadata: Metadata = {
   title: "testimonials",
@@ -95,7 +95,7 @@ export default function TestimonialsPage() {
   return (
     <main
       id="testimonials"
-      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto overflow-x-clip pt-14 pb-12"
+      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-14 pb-12"
     >
       <script
         type="application/ld+json"
