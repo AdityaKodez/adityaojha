@@ -400,10 +400,9 @@ export function CommandPalette({
                   duration: prefersReducedMotion ? 0 : 0.12,
                   ease: EASE,
                 }}
-                // Clicking the dimmed backdrop closes the palette. The overlay
-                // receives these clicks because the full-viewport positioner is
-                // pointer-events-none while the panel is pointer-events-auto, so
-                // Radix's outside-pointer detection never fires on the backdrop.
+                // Fallback for the non-modal case, where Radix leaves the
+                // positioner's `pointer-events: none` intact and backdrop
+                // clicks reach the overlay instead of the positioner.
                 onClick={() => setOpen(false)}
                 className="fixed inset-0 z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs"
               />
@@ -424,9 +423,19 @@ export function CommandPalette({
                 }
               }}
             >
-              {/* full-viewport positioner — centers the panel; pointer events pass
-                  through so clicks outside the panel still reach the overlay */}
-              <div className="pointer-events-none fixed inset-0 z-50 grid place-items-center p-4 max-sm:place-items-end max-sm:p-0">
+              {/* full-viewport positioner — centers the panel. This node *is*
+                  Radix's Content, and for a modal dialog DismissableLayer sets
+                  an inline `pointer-events: auto` on it, which overrides the
+                  `pointer-events-none` class below. So backdrop presses land
+                  here (not on the overlay) and count as "inside" Content, which
+                  is why onPointerDownOutside never fires. Close when the press
+                  hits the positioner itself rather than the panel. */}
+              <div
+                onPointerDown={(event) => {
+                  if (event.target === event.currentTarget) setOpen(false);
+                }}
+                className="pointer-events-none fixed inset-0 z-50 grid place-items-center p-4 max-sm:place-items-end max-sm:p-0"
+              >
               <motion.div
                 initial={{ opacity: 0, scale: 0.98, y: 4 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
