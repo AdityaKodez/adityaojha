@@ -86,6 +86,10 @@ export type EventMap = {
     location: string;
     trigger_type: "bubble" | "pill";
   };
+  components_view_switched: {
+    view: "list" | "cards";
+    previous_view: "list" | "cards";
+  };
 };
 
 /**
