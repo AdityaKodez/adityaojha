@@ -130,57 +130,59 @@ export function RotatingInstallCommand({
         })}
       </div>
 
-      <div className="group/copy relative overflow-hidden rounded-md border bg-muted/10">
-        <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40" />
-        <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
-        <div className="relative flex items-center gap-3 px-4 py-3">
-          <span className="flex select-none items-center gap-1.5 font-mono text-[12.5px] text-muted-foreground/60">
-            <Terminal className="size-3.5" />
-            <span>$</span>
-          </span>
-          <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.code
-                // Tabs changing also re-keys the swap so manual selection animates.
-                key={`${currentId}:${manager}`}
-                initial={reduced ? { opacity: 0 } : { opacity: 0, y: 3 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduced ? { opacity: 0 } : { opacity: 0, y: -3 }}
-                transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                className="block whitespace-pre font-mono text-[12.5px] leading-relaxed text-foreground"
-              >
-                {command}
-              </motion.code>
-            </AnimatePresence>
-          </div>
+      <div className="relative rounded-lg border bg-muted/10 p-0.5">
+        <div className="group/copy relative overflow-hidden rounded-md border bg-muted/10">
+          <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40" />
+          <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
+          <div className="relative flex items-center gap-3 px-4 py-3">
+            <span className="flex select-none items-center gap-1.5 font-mono text-[12.5px] text-muted-foreground/60">
+              <Terminal className="size-3.5" />
+              <span>$</span>
+            </span>
+            <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.code
+                  // Tabs changing also re-keys the swap so manual selection animates.
+                  key={`${currentId}:${manager}`}
+                  initial={reduced ? { opacity: 0 } : { opacity: 0, y: 3 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reduced ? { opacity: 0 } : { opacity: 0, y: -3 }}
+                  transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                  className="block whitespace-pre font-mono text-[12.5px] leading-relaxed text-foreground"
+                >
+                  {command}
+                </motion.code>
+              </AnimatePresence>
+            </div>
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={handleCopy}
-                aria-label="copy command"
-                className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              >
-                {status === "copied" ? (
-                  <Check className="size-3.5 text-green-500" />
-                ) : status === "error" ? (
-                  <X className="size-3.5 text-destructive" />
-                ) : (
-                  <Copy className="size-3.5" />
-                )}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                {status === "copied"
-                  ? "copied!"
-                  : status === "error"
-                    ? "copy failed"
-                    : "copy command"}
-              </p>
-            </TooltipContent>
-          </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  aria-label="copy command"
+                  className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  {status === "copied" ? (
+                    <Check className="size-3.5 text-green-500" />
+                  ) : status === "error" ? (
+                    <X className="size-3.5 text-destructive" />
+                  ) : (
+                    <Copy className="size-3.5" />
+                  )}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  {status === "copied"
+                    ? "copied!"
+                    : status === "error"
+                      ? "copy failed"
+                      : "copy command"}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </div>
       </div>
     </div>

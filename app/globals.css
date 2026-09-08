@@ -329,9 +329,13 @@ html[data-frame="wide"] {
     position: absolute;
     inset: 0;
     overflow: auto;
+    scrollbar-width: none !important;
     /* Scroll chaining inside the code pane never scrolls the page behind it. */
     overscroll-behavior: contain;
     contain: layout paint;
+  }
+  .preview-pane--code::-webkit-scrollbar {
+    display: none !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -364,16 +368,18 @@ code[data-theme*=" "] span,
   text-decoration: var(--shiki-dark-text-decoration);
 }
 [data-rehype-pretty-code-figure] {
-  margin: 1.25rem 0;
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) - 2px);
-  background-color: color-mix(in oklab, var(--muted) 35%, transparent);
-  overflow: hidden;
+  margin: 0;
+  border: 0;
+  background-color: transparent;
 }
 [data-rehype-pretty-code-figure] pre {
   background-color: transparent;
   padding: 1rem;
   overflow-x: auto;
+  scrollbar-width: none !important;
+}
+[data-rehype-pretty-code-figure] pre::-webkit-scrollbar {
+  display: none !important;
 }
 [data-rehype-pretty-code-figure] code {
   display: grid;
@@ -576,7 +582,12 @@ code[data-theme*=" "] span,
   font-size: 0.78125rem;
   line-height: 1.625;
   margin: 0;
+  padding: 1rem;
   overflow-x: auto;
+  scrollbar-width: none !important;
+}
+.prose pre::-webkit-scrollbar {
+  display: none !important;
 }
 .prose pre code {
   font-size: inherit;

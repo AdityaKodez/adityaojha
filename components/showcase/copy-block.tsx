@@ -88,7 +88,7 @@ function CopyIcon({ status }: CopyIconProps) {
   return <Copy className="size-3.5" />;
 }
 
-/** Shared chrome: dashed hairline box, mono code line, copy affordance. */
+/** Shared chrome: dual-border frame, mono code line, copy affordance. */
 function CodeShell({
   children,
   actions,
@@ -101,17 +101,19 @@ function CodeShell({
   return (
     <div
       className={cn(
-        "group/copy relative overflow-hidden rounded-md border bg-muted/10",
+        "relative rounded-lg border bg-muted/10 p-0.5",
         className,
       )}
     >
-      <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40" />
-      <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
-      <div className="relative flex items-center gap-3 px-4 py-3">
-        <code className="min-w-0 flex-1 overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-pre font-mono text-[12.5px] leading-relaxed text-foreground">
-          {children}
-        </code>
-        {actions}
+      <div className="group/copy relative overflow-hidden rounded-md border bg-muted/10">
+        <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40" />
+        <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
+        <div className="relative flex items-center gap-3 px-4 py-3">
+          <code className="min-w-0 flex-1 overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-pre font-mono text-[12.5px] leading-relaxed text-foreground">
+            {children}
+          </code>
+          {actions}
+        </div>
       </div>
     </div>
   );

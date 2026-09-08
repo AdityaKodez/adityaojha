@@ -37,27 +37,36 @@ export function ProseCodeBlock({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative group/prose-code">
-      {children}
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button
-            type="button"
-            onClick={handleCopy}
-            aria-label="copy code"
-            className="absolute top-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-sm text-muted-foreground opacity-0 group-hover/prose-code:opacity-100 transition-opacity hover:bg-muted/40 hover:text-foreground focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          >
-            {copied ? (
-              <Check className="h-3.5 w-3.5 text-green-500" />
-            ) : (
-              <Copy className="h-3.5 w-3.5" />
-            )}
-          </button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{copied ? "copied!" : "copy"}</p>
-        </TooltipContent>
-      </Tooltip>
+    <div
+      ref={wrapperRef}
+      className="relative my-5 rounded-lg border bg-muted/10 p-0.5 group/prose-code"
+    >
+      <div className="relative overflow-hidden rounded-md border bg-muted/10 [&_pre]:no-scrollbar [&_pre]:[scrollbar-width:none] [&_pre::-webkit-scrollbar]:hidden">
+        <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40" />
+        <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
+        <div className="relative min-w-0">
+          {children}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                onClick={handleCopy}
+                aria-label="copy code"
+                className="absolute top-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-sm text-muted-foreground opacity-0 group-hover/prose-code:opacity-100 transition-opacity hover:bg-muted/40 hover:text-foreground focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              >
+                {copied ? (
+                  <Check className="h-3.5 w-3.5 text-green-500" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5" />
+                )}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{copied ? "copied!" : "copy"}</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </div>
     </div>
   );
 }

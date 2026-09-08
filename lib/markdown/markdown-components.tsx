@@ -1,5 +1,6 @@
 import type { Components } from "react-markdown";
 import { ProseCodeBlock } from "@/lib/markdown/prose-code-block";
+import { cn } from "@/lib/utils";
 
 interface AstNode {
   type?: string;
@@ -58,9 +59,17 @@ export const markdownComponents: Components = {
       <table {...props} data-props-table={isPropsTable(node) ? "" : undefined} />
     </div>
   ),
-  pre: ({ node, children, ...props }) => (
+  pre: ({ node, children, className, ...props }) => (
     <ProseCodeBlock>
-      <pre {...props}>{children}</pre>
+      <pre
+        className={cn(
+          "no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </pre>
     </ProseCodeBlock>
   ),
 };

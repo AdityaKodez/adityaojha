@@ -35,6 +35,7 @@ export type PreviewBoxProps = {
   ariaLabel?: string;
   /** Component identifier for analytics attribution. */
   componentId?: string;
+  className?: string;
 };
 
 export function PreviewBox({
@@ -43,6 +44,7 @@ export function PreviewBox({
   rawCode,
   ariaLabel,
   componentId = "unknown",
+  className,
 }: PreviewBoxProps) {
   const [activeTab, setActiveTab] = useState<Tab>("preview");
   const [copied, setCopied] = useState(false);
@@ -87,84 +89,91 @@ export function PreviewBox({
     <div
       aria-label={ariaLabel}
       className={cn(
-        "preview-box relative mx-3 my-4 overflow-hidden rounded-md border bg-muted/10 sm:mx-6",
+        "relative mx-3 my-4 rounded-lg border bg-muted/10 p-0.5 sm:mx-6",
+        className,
       )}
     >
-      {/* Blueprint overlay — decorative only, so its paint is fully isolated
-          from the box contents. */}
-      <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40 contain:strict" />
-      {/* Hairline ring */}
-      <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
+      <div
+        className={cn(
+          "preview-box relative overflow-hidden rounded-md border bg-muted/50 p-2",
+        )}
+      >
+        {/* Blueprint overlay — decorative only, so its paint is fully isolated
+            from the box contents. */}
+        <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40 contain:strict" />
+        {/* Hairline ring */}
+        <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
 
-      {/* Top bar */}
-      <div className="relative flex items-center justify-between gap-2 border-b bg-background/60 px-2 py-2 sm:px-3">
-        {/* Tabs */}
-        <div className="inline-flex rounded-sm border p-0.5">
-          {TABS.map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => selectTab(tab)}
-              aria-pressed={activeTab === tab}
-              className={cn(
-                "rounded-sm px-3 py-1 text-xs font-pixel tracking-wider transition-colors",
-                activeTab === tab
-                  ? "bg-muted text-foreground"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {TAB_LABELS[tab]}
-            </button>
-          ))}
-        </div>
-
-        {/* Right icons */}
-        <div className="flex items-center gap-1">
-          <Tooltip>
-            <TooltipTrigger asChild>
+        {/* Top bar */}
+        <div className="relative flex items-center justify-between gap-2 px-2 pb-2 sm:px-3">
+          {/* Tabs */}
+          <div className="inline-flex p-0.5">
+            {TABS.map((tab) => (
               <button
+                key={tab}
                 type="button"
-                onClick={handleCopy}
-                aria-label="copy source to clipboard"
-                className="flex h-7 w-7 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground"
-              >
-                {copied ? (
-                  <Check className="h-3.5 w-3.5 text-green-500" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5" />
+                onClick={() => selectTab(tab)}
+                aria-pressed={activeTab === tab}
+                className={cn(
+                  "px-3 py-1 text-sm capitalize tracking-wider transition-colors",
+                  activeTab === tab
+                    ? "border-b-2 border-foreground text-foreground font-medium"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
+              >
+                {TAB_LABELS[tab]}
               </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{copied ? "copied!" : "copy source"}</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      </div>
+            ))}
+          </div>
 
-      {/* Body — one grid cell holds both panes, so the height is resolved once
-          from the preview and is identical on either tab. */}
-      <div className="preview-body relative">
-        <div
-          data-active={activeTab === "preview"}
-          className="preview-pane flex px-4 py-6 sm:px-6 sm:py-8"
-        >
-          {/* m-auto centers small demos in both axes, but degrades to
-              top-aligned when the content overflows — flexbox centering
-              would clip the top of scrollable previews. */}
-          <div className="m-auto flex w-full justify-center">{preview}</div>
+          {/* Right icons */}
+          <div className="flex items-center gap-1">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  aria-label="copy source to clipboard"
+                  className="flex h-7 w-7 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground"
+                >
+                  {copied ? (
+                    <Check className="h-3.5 w-3.5 text-green-500" />
+                  ) : (
+                    <Copy className="h-3.5 w-3.5" />
+                  )}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{copied ? "copied!" : "copy source"}</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </div>
 
-        <div
-          data-active={activeTab === "code"}
-          className="preview-pane preview-pane--code"
-        >
-          {codeMounted ? (
-            <div
-              className="px-3 py-3 font-mono text-[12.5px] leading-relaxed sm:px-4"
-              dangerouslySetInnerHTML={{ __html: codeHtml }}
-            />
-          ) : null}
+        {/* Body — one grid cell holds both panes, so the height is resolved once
+            from the preview and is identical on either tab. */}
+        <div className="preview-body relative overflow-hidden rounded-lg border bg-background shadow-xs">
+          <div
+            data-active={activeTab === "preview"}
+            className="preview-pane flex px-4 py-6 sm:px-6 sm:py-8"
+          >
+            {/* m-auto centers small demos in both axes, but degrades to
+                top-aligned when the content overflows — flexbox centering
+                would clip the top of scrollable previews. */}
+            <div className="m-auto flex w-full justify-center">{preview}</div>
+          </div>
+
+          <div
+            data-active={activeTab === "code"}
+            className="preview-pane preview-pane--code no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {codeMounted ? (
+              <div
+                className="px-3 py-3 font-mono text-[12.5px] leading-relaxed sm:px-4 no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                dangerouslySetInnerHTML={{ __html: codeHtml }}
+              />
+            ) : null}
+          </div>
         </div>
       </div>
     </div>
