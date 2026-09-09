@@ -10,6 +10,7 @@ import { GitHubMapDemo } from "@/app/components/[id]/demos/github-map-demo";
 import { InfiniteSliderDemo } from "@/app/components/[id]/demos/infinite-slider-demo";
 import { InteractiveSkillCloudDemo } from "@/app/components/[id]/demos/interactive-skill-cloud-demo";
 import { ModeTogglerDemo } from "@/app/components/[id]/demos/mode-toggler-demo";
+import { ModelPickerDemo } from "@/app/components/[id]/demos/model-picker-demo";
 import { ProgressiveBlurDemo } from "@/app/components/[id]/demos/progressive-blur-demo";
 import { ProjectExplorerDemo } from "@/app/components/[id]/demos/project-explorer-demo";
 import { ProgressBarsDemo } from "@/app/components/[id]/demos/progress-bars-demo";
@@ -19,6 +20,8 @@ export function ComponentDemo({ id }: { id: string }) {
   switch (id) {
     case "ask-ai":
       return <AskAIDemo />;
+    case "model-picker":
+      return <ModelPickerDemo />;
     case "dotted-world-map":
       return <DottedWorldMapDemo />;
     case "copy-command-block":

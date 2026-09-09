@@ -7,9 +7,9 @@
 
 Five rules sit above everything else.
 
-1. **UI copy avoids uppercase.** Avoid `ALL-CAPS` and shouting. Prefer
-   lowercase or natural sentence case where it reads better. Never force
-   every string to lowercase. Scope and exceptions in [§11 UI copy](#11-ui-copy).
+1. **UI copy uses sentence case.** Capitalize the first letter of labels,
+   buttons, headings, and empty states. Avoid `ALL-CAPS` shouting. Do not
+   force strings to lowercase. Scope and exceptions in [§11 UI copy](#11-ui-copy).
 2. **No em dashes.** Never use the em dash character (the long dash) in UI copy or documentation. Rewrite with a comma, colon, or period instead.
 3. **One border per edge.** Never put a border on top of a border that already
    exists. See [§10 Borders](#10-borders).
@@ -26,7 +26,7 @@ reasonable default, note the assumption, and keep moving.
 
 ## 2. What this is
 
-A single-page portfolio for Aditya Ojha (akoder.xyz) with a component showcase
+A portfolio for Aditya Ojha (akoder.xyz) with a component showcase
 at `/components` that doubles as a public shadcn registry. No backend, no
 database, no auth, no payments. All content is typed configuration.
 
@@ -218,34 +218,32 @@ simple: **one border per edge, one mechanism per element.**
 
 ## 11. UI copy
 
-**UI copy avoids uppercase.** Avoid `ALL-CAPS` and shouting. Prefer
-lowercase or natural sentence case where it reads better, never force
-every string to lowercase.
+**UI copy uses sentence case.** Capitalize the first letter of labels, buttons,
+headings, and empty states. Avoid `ALL-CAPS` shouting. Do not force strings
+to lowercase.
 
 ```tsx
-// both are fine, just don't shout
 const TAB_LABELS: Record<Tab, string> = {
-  preview: "preview",
-  code: "code",
+  preview: "Preview",
+  code: "Code",
 };
-// sentence case is also fine when it reads better
 const EMPTY_STATE = "No activity right now.";
 ```
 
 Guideline:
 
 - tab labels, segmented controls, and collection switchers
-- buttons and their state text (`copy` → `copied!` → `copy failed`)
+- buttons and their state text (`Copy` → `Copied!` → `Copy failed`)
 - tooltips, `aria-label`, `alt`, and `title` attributes
 - status pills and empty states
-- legends (heatmap `less` / `more`)
+- legends (heatmap `Less` / `More`)
 - page and section headings rendered from code
 - control labels and tooltips that live in `config/` (for example
-  `themeTooltip: "toggle theme"`)
+  `themeTooltip: "Toggle theme"`)
 
-Prefer lowercase for these where it fits the design, but sentence case is
-allowed when it improves readability. What to avoid is `ALL-CAPS`, `TITLE CASE`
-shouting, and inconsistent casing within the same surface.
+Sentence case is the default. Title Case is fine for proper nouns and product
+names. What to avoid is `ALL-CAPS` shouting and forcing every string to
+lowercase.
 
 Deliberately **excluded**, leave these as authored:
 
@@ -319,12 +317,12 @@ Rules:
   literal colors (hex/oklch) or use `var(--token, literal-fallback)` so they
   still render in projects that lack this site's tokens. Site-internal
   components still follow §9.
-- Keep UI copy inside published components lowercase too where it fits, it is part of the
+- Keep UI copy inside published components in sentence case too. It is part of the
   design language consumers are installing. Avoid uppercase shouting there as well.
 - Current items: dotted-world-map, copy-command-block, github-map,
   project-explorer, progressive-blur, infinite-slider, carousel, mode-toggler,
   interactive-skill-cloud, contact-channels, section-rail, progress-bars,
-  command-palette, ask-ai.
+  command-palette, ask-ai, model-picker.
 
 ## 15. Component showcase
 

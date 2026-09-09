@@ -39,6 +39,55 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "model-picker",
+      "type": "registry:ui",
+      "title": "Model Picker",
+      "description": "A chat-style model switcher. Provider icons on a side rail filter the list to models available from that provider.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "ai",
+        "chat",
+        "popover",
+        "select",
+        "interactive"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "popover",
+        "tooltip"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/model-picker",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/model-picker.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/model-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "public/ai/openai.svg",
+          "type": "registry:file",
+          "target": "public/ai/openai.svg"
+        },
+        {
+          "path": "public/ai/claude.svg",
+          "type": "registry:file",
+          "target": "public/ai/claude.svg"
+        },
+        {
+          "path": "public/ai/gemini.svg",
+          "type": "registry:file",
+          "target": "public/ai/gemini.svg"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/model-picker.json\n```\n\n## Usage\n\n```tsx\nimport { useState } from \"react\";\nimport { ModelPicker, defaultModelProviders } from \"@/components/ui/model-picker\";\n\nexport function ChatComposer() {\n  const [model, setModel] = useState(\"grok-4.6\");\n  return (\n    <ModelPicker\n      providers={defaultModelProviders}\n      value={model}\n      onValueChange={setModel}\n    />\n  );\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "command-palette",
       "type": "registry:ui",
       "title": "Command Palette",

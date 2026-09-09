@@ -1,5 +1,9 @@
 import { Carousel, type CarouselItem } from "@/components/ui/carousel";
 import { AskAI } from "@/components/ui/ask-ai";
+import {
+  defaultModelProviders,
+  ModelPicker,
+} from "@/components/ui/model-picker";
 import { DottedWorldMap } from "@/components/ui/dotted-world-map";
 import { CopyCommandBlock } from "@/components/ui/copy-command-block";
 import { ProgressBars } from "@/components/ui/progress-bars";
@@ -357,9 +361,61 @@ function askAiExamples(): CarouselItem[] {
   ];
 }
 
+function modelPickerExamples(): CarouselItem[] {
+  return [
+    {
+      id: "xai",
+      title: "xAI",
+      description: "Default selection on Grok 4. The rail starts on that provider.",
+      content: (
+        <div className="flex h-48 w-full items-center justify-center">
+          <ModelPicker
+            providers={defaultModelProviders}
+            defaultValue="grok-4.6"
+            side="bottom"
+            align="center"
+          />
+        </div>
+      ),
+    },
+    {
+      id: "anthropic",
+      title: "Anthropic",
+      description: "Same picker, opened onto Claude Sonnet 4.",
+      content: (
+        <div className="flex h-48 w-full items-center justify-center">
+          <ModelPicker
+            providers={defaultModelProviders}
+            defaultValue="claude-sonnet-5"
+            side="bottom"
+            align="center"
+          />
+        </div>
+      ),
+    },
+    {
+      id: "mixed-availability",
+      title: "Mixed availability",
+      description:
+        "OpenAI starts on GPT-5.6 Sol. Switch providers to compare reasoning and image chips.",
+      content: (
+        <div className="flex h-48 w-full items-center justify-center">
+          <ModelPicker
+            providers={defaultModelProviders}
+            defaultValue="gpt-5.6-sol"
+            side="bottom"
+            align="center"
+          />
+        </div>
+      ),
+    },
+  ];
+}
+
 /** Examples per component id. Add an entry here when a component ships examples. */
 const exampleRegistry: Record<string, () => CarouselItem[]> = {
   "ask-ai": askAiExamples,
+  "model-picker": modelPickerExamples,
   "dotted-world-map": dottedWorldMapExamples,
   "copy-command-block": copyCommandBlockExamples,
   "github-map": githubMapExamples,
