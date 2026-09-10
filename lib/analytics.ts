@@ -90,6 +90,12 @@ export type EventMap = {
     view: "list" | "cards";
     previous_view: "list" | "cards";
   };
+  vader_lightsaber_toggled: {
+    action: "ignite" | "extinguish";
+  };
+  campfire_toggled: {
+    action: "light" | "extinguish";
+  };
 };
 
 /**
