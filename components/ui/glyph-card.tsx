@@ -15,11 +15,30 @@ const DEFAULT_GLYPH_SIZE = 62;
  * `PLUS_ARM` is half the length of one, so the pair controls how dense and how
  * heavy the field reads. Smaller arms with a tighter tile give a finer grain.
  */
-const TILE = 2.6;
+const TILE = 2.1;
 const PLUS_ARM = 0.4;
 const PLUS_STROKE = 0.18;
 const PLUS_CENTER = TILE / 2;
 const PLUS_PATH = `M${PLUS_CENTER - PLUS_ARM} ${PLUS_CENTER}h${PLUS_ARM * 2}M${PLUS_CENTER} ${PLUS_CENTER - PLUS_ARM}v${PLUS_ARM * 2}`;
+
+/**
+ * Hover defocus for the resting field.
+ *
+ * The blur is applied to a `<g>` inside the SVG, so the radius is in user
+ * units, not CSS pixels: the field is a 100-unit viewBox stretched across the
+ * card, so one unit is roughly 3.8px on a 380px card and `FIELD_BLUR` reads as
+ * under 2px on screen.
+ *
+ * Blur averages pixels rather than moving them, so a mark thinner than the
+ * radius loses its peak and fades to nothing. At the resting stroke of 0.18
+ * units a defocused field does not go soft, it disappears. The stroke and the
+ * opacity therefore grow together with the blur, which is what keeps the haze
+ * visible instead of empty. Widen `FIELD_BLUR` and both have to follow.
+ */
+const FIELD_BLUR = 0.44;
+const PLUS_STROKE_DEFOCUSED = 0.34;
+const REST_OPACITY = 1;
+const REST_OPACITY_DEFOCUSED = 0.5;
 
 const FIELD_ORIGIN: CSSProperties = {
   transformBox: "view-box",
@@ -111,7 +130,7 @@ export function GlyphCard({
   /*
    * The glyph sits in a `glyphSize` box centered inside the 100x100 field, so
    * the inset is half the leftover space. Both masks share it, which is what
-   * keeps the pattern and the tint registered to the same shape.
+   * keeps the resting field and the hover field cut to the same shape.
    */
   const glyphInset = (FIELD_BOX - glyphSize) / 2;
 
@@ -136,14 +155,17 @@ export function GlyphCard({
       focusable="false"
       className="pointer-events-none absolute inset-0 z-0 block h-full w-full"
     >
-      <g>
+      <motion.g
+        animate={{ filter: isActive ? `blur(${FIELD_BLUR}px)` : "blur(0px)" }}
+        transition={focus}
+      >
         <rect
           width={FIELD_BOX}
           height={FIELD_BOX}
           fill={`url(#${restPatternId})`}
           mask={`url(#${outsideMaskId})`}
         />
-      </g>
+      </motion.g>
 
       <motion.g
         style={FIELD_ORIGIN}
@@ -168,6 +190,12 @@ export function GlyphCard({
           height={TILE}
           patternUnits="userSpaceOnUse"
         >
+          {/*
+            No filter here. A filter on this path runs inside the pattern tile,
+            which is only TILE units wide and clips its own content, so the blur
+            is thrown away at the tile edge and the field flattens to nothing.
+            The blur belongs on the group that paints the field, above.
+          */}
           <motion.path
             d={PLUS_PATH}
             fill="none"
@@ -177,7 +205,8 @@ export function GlyphCard({
             style={PLUS_ORIGIN}
             animate={{
               rotate: plusRotation,
-              opacity: isActive ? 0.38 : 1,
+              opacity: isActive ? REST_OPACITY_DEFOCUSED : REST_OPACITY,
+              strokeWidth: isActive ? PLUS_STROKE_DEFOCUSED : PLUS_STROKE,
             }}
             transition={focus}
           />
