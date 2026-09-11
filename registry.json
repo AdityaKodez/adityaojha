@@ -429,6 +429,36 @@
         }
       ],
       "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/progress-bars.json\n```\n\n## Usage\n\n```tsx\nimport { DotProgress, ProgressBars } from \"@/components/ui/progress-bars\";\n\nconst milestones = [\n  { id: \"design\", label: \"design\", value: 82 },\n  { id: \"build\", label: \"build\", value: 64 },\n  { id: \"launch\", label: \"launch\", value: 49 },\n];\n\nexport function ProjectProgress() {\n  return <ProgressBars items={milestones} />;\n}\n\n// Same props, dot matrix fill instead of etched rules.\nexport function ProjectDots() {\n  return <DotProgress items={milestones} orientation=\"horizontal\" />;\n}\n```"
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "glyph-card",
+      "type": "registry:ui",
+      "title": "Glyph Card",
+      "description": "A hairline card whose background resolves into tiny plus marks on hover, gathering inside the glyph. Draws itself from a single SVG path on a 24x24 grid.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "card",
+        "hover",
+        "svg",
+        "interactive"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/glyph-card",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/glyph-card.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/glyph-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/glyph-card.json\n```\n\n## Usage\n\n```tsx\nimport { GlyphCard } from \"@/components/ui/glyph-card\";\n\nconst NEXTJS_GLYPH =\n  \"M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z\";\n\nexport function Stack() {\n  return (\n    <GlyphCard\n      eyebrow=\"Framework\"\n      title=\"Next.js\"\n      subtitle=\"The React framework\"\n      href=\"https://nextjs.org\"\n      glyph={NEXTJS_GLYPH}\n    />\n  );\n}\n```\n\n`glyph` is SVG path data authored on a 24x24 grid. Omit `href` for a static card, pass `accent` to tint the artwork, and use `glyphOffset` in grid units when a mark is drawn off-center."
     }
   ]
 }

@@ -18,6 +18,11 @@ import {
 import { weeklyVisitors } from "./dotted-world-map-demo";
 import { GitHubCalendarExample } from "./github-map-demo";
 import { DotProgressExample, ProgressBarsCapacityExample } from "./progress-bars-demo";
+import {
+  GlyphCardAccentExample,
+  GlyphCardGlyphOffsetExample,
+  GlyphCardStaticExample,
+} from "./glyph-card-demo";
 
 const GITHUB_GREENS = ["#a7f3d0", "#6ee7b7", "#34d399", "#10b981", "#047857"];
 const VIOLET_RAMP = ["#ddd6fe", "#c4b5fd", "#a78bfa", "#8b5cf6", "#6d28d9"];
@@ -306,6 +311,47 @@ function progressBarsExamples(): CarouselItem[] {
   ];
 }
 
+function glyphCardExamples(): CarouselItem[] {
+  return [
+    {
+      id: "glyph-card-accents",
+      title: "Brand marks",
+      description:
+        "Each card drives its own accent, which tints the arrow, the plus marks, and the hover tint inside the glyph.",
+      content: (
+        <div className="w-full space-y-2">
+          <GlyphCardAccentExample />
+          <p className="text-xs text-muted-foreground">
+            The eyebrow pill is intentionally neutral so the accent stays the
+            only color on the card.
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "glyph-card-glyph-offset",
+      title: "Recentering an off-grid mark",
+      description:
+        "A mark drawn in the lower-right quadrant of the grid would render off-center. glyphOffset moves it back without rewriting the path.",
+      content: (
+        <div className="w-full space-y-2">
+          <GlyphCardGlyphOffsetExample />
+          <p className="text-xs text-muted-foreground">
+            Offsets are in grid units, the same units the path was authored in.
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "glyph-card-static",
+      title: "Static card",
+      description:
+        "Omit href and the card renders as a div rather than a link, for tabs, tags, or any surface that is not navigable.",
+      content: <GlyphCardStaticExample />,
+    },
+  ];
+}
+
 function askAiExamples(): CarouselItem[] {
   return [
     {
@@ -422,6 +468,7 @@ const exampleRegistry: Record<string, () => CarouselItem[]> = {
   "project-explorer": projectExplorerExamples,
   "carousel": carouselExamples,
   "progress-bars": progressBarsExamples,
+  "glyph-card": glyphCardExamples,
 };
 
 /**

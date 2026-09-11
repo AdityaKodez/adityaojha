@@ -268,7 +268,8 @@ export type ComponentIcon =
   | "bars"
   | "command"
   | "sparkles"
-  | "models";
+  | "models"
+  | "stack";
 
 export interface ComponentDoc {
   id: string;

@@ -15,6 +15,7 @@ import { ProgressiveBlurDemo } from "@/app/components/[id]/demos/progressive-blu
 import { ProjectExplorerDemo } from "@/app/components/[id]/demos/project-explorer-demo";
 import { ProgressBarsDemo } from "@/app/components/[id]/demos/progress-bars-demo";
 import { SectionRailDemo } from "@/app/components/[id]/demos/section-rail-demo";
+import { GlyphCardDemo } from "@/app/components/[id]/demos/glyph-card-demo";
 
 export function ComponentDemo({ id }: { id: string }) {
   switch (id) {
@@ -46,6 +47,8 @@ export function ComponentDemo({ id }: { id: string }) {
       return <SectionRailDemo />;
     case "progress-bars":
       return <ProgressBarsDemo />;
+    case "glyph-card":
+      return <GlyphCardDemo />;
     case "command-palette":
       return <CommandPaletteDemo />;
     default:

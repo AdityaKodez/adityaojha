@@ -317,6 +317,30 @@ const ProgressBarsIcon = ({
   </svg>
 );
 
+const GlyphCardIcon = ({
+  size = 24,
+  color = "currentColor",
+  ...props
+}: ComponentIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <rect x="2.5" y="3.5" width="19" height="17" rx="1.5" />
+    <path d="M9.2 12.4 12 9.4l2.8 3M12 9.4v6.1" strokeOpacity="0.75" />
+    <path d="M5.5 7.2h3.6" strokeOpacity="0.55" />
+    <path d="M19 17.6h-5.4" strokeOpacity="0.55" />
+  </svg>
+);
+
 const SectionRailIcon = ({
   size = 24,
   color = "currentColor",
@@ -466,6 +490,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return SectionRailIcon;
     case "bars":
       return ProgressBarsIcon;
+    case "stack":
+      return GlyphCardIcon;
     case "command":
       return CommandPaletteIcon;
     case "sparkles":

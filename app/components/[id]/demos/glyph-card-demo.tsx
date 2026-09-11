@@ -1,0 +1,107 @@
+"use client";
+
+import { GlyphCard } from "@/components/ui/glyph-card";
+
+/** Next.js, from Simple Icons (24x24 grid). */
+const NEXTJS_GLYPH =
+  "M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z";
+
+/** Tailwind CSS, from Simple Icons (24x24 grid). */
+const TAILWIND_GLYPH =
+  "M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z";
+
+/** GitHub, from Simple Icons (24x24 grid). */
+const GITHUB_GLYPH =
+  "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12";
+
+/**
+ * A monogram authored in the lower-right quadrant of the 24x24 grid. It relies
+ * on `glyphOffset` to recenter rather than being redrawn on the grid.
+ */
+const MONOGRAM_GLYPH = "M16 8 L22 24 L19 24 L16 14.5 L13 24 L10 24 Z";
+
+/**
+ * The monogram on its own. No accent, so the artwork falls back to the primary
+ * token and reads black on white.
+ */
+export function GlyphCardDemo() {
+  return (
+    <div className="flex w-full justify-center">
+      <div className="w-full max-w-xs">
+        <GlyphCard
+          eyebrow="Monogram"
+          title="Aditya"
+          subtitle="An off-center mark, recentered"
+          glyph={MONOGRAM_GLYPH}
+          glyphOffset={[-4, -4]}
+        />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Brand marks, each driving its own accent. The accent tints the arrow, the
+ * plus marks, and the hover tint inside the glyph.
+ */
+export function GlyphCardAccentExample() {
+  return (
+    <div className="grid w-full max-w-2xl gap-4 sm:grid-cols-2">
+      <GlyphCard
+        eyebrow="Styling"
+        title="Tailwind CSS"
+        subtitle="Utility-first CSS"
+        href="https://tailwindcss.com"
+        glyph={TAILWIND_GLYPH}
+        accent="#38BDF8"
+      />
+      <GlyphCard
+        eyebrow="Platform"
+        title="GitHub"
+        subtitle="Where the code lives"
+        href="https://github.com"
+        glyph={GITHUB_GLYPH}
+        accent="#6E7681"
+      />
+    </div>
+  );
+}
+
+/** The recentering case, isolated. */
+export function GlyphCardGlyphOffsetExample() {
+  return (
+    <div className="grid w-full max-w-2xl gap-4 sm:grid-cols-2">
+      <GlyphCard
+        eyebrow="Monogram"
+        title="Off-center mark"
+        subtitle="glyphOffset={[-4, -4]}"
+        glyph={MONOGRAM_GLYPH}
+        glyphOffset={[-4, -4]}
+      />
+      <GlyphCard
+        eyebrow="Monogram"
+        title="A larger glyph size"
+        subtitle="glyphSize={78}"
+        glyph={MONOGRAM_GLYPH}
+        glyphOffset={[-4, -4]}
+        glyphSize={78}
+      />
+    </div>
+  );
+}
+
+/** Static card, no link. */
+export function GlyphCardStaticExample() {
+  return (
+    <div className="flex w-full justify-center">
+      <div className="w-full max-w-xs">
+        <GlyphCard
+          eyebrow="Framework"
+          title="Next.js"
+          subtitle="A static card with no href"
+          glyph={NEXTJS_GLYPH}
+        />
+      </div>
+    </div>
+  );
+}
