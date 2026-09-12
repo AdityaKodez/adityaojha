@@ -348,6 +348,9 @@ Rules:
 | --- | --- | --- |
 | `GITHUB_TOKEN` | `lib/github.ts`, `app/page.tsx` | The GitHub section is skipped entirely, by design, not a bug |
 | `DISCORD_USER_ID` | `app/api/discord-status/route.ts` | Falls back to a hardcoded user id |
+| `VERCEL_TOKEN` | `app/api/visitor-count/route.ts` | The footer visitor counter stays hidden (the route returns null counts) |
+| `VERCEL_PROJECT_ID` | `app/api/visitor-count/route.ts` | Same as above; both vars are required to query the Web Analytics count endpoint |
+| `VERCEL_TEAM_ID` | `app/api/visitor-count/route.ts` | Optional, only needed when the project lives under a Vercel team |
 
 Gotchas:
 

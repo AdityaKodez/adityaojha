@@ -3,6 +3,8 @@
 /* the theme-aware secondary surface in both light and dark mode.      */
 /* ------------------------------------------------------------------ */
 
+import { VisitorCounter } from "@/components/landing/visitor-counter";
+
 const STEM = "text-[#98a265]";
 const BLOOM_PINK = "text-[#e06c9f]";
 const BLOOM_RED = "text-[#d9502b]";
@@ -132,7 +134,7 @@ const PLANTS: Plant[] = [
 
 export function Footer() {
   return (
-    <footer className="overflow-hidden border-t border-dashed bg-muted/20">
+    <footer className="overflow-hidden border-t pb-[calc(80px+env(safe-area-inset-bottom))]  border-dashed bg-muted/20">
       <div className="px-6 pb-6 pt-8 md:px-8">
         <p className="max-w-md font-serif text-xl italic leading-snug text-foreground md:text-2xl">
           The soul becomes dyed with the color of its thoughts.
@@ -170,6 +172,12 @@ export function Footer() {
             ))}
           </pre>
         ))}
+      </div>
+
+      {/* Clears the fixed ProgressiveBlur band (80px + safe area) rendered
+          by app/page.tsx so the counter is never blurred out. */}
+      <div className="border-y border-dashed px-6  py-4 md:px-8">
+        <VisitorCounter />
       </div>
     </footer>
   );
