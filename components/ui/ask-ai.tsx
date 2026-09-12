@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import { Check, Copy, ArrowUpRight } from "lucide-react";
 import {
   Popover,
@@ -206,6 +212,8 @@ export type AskAIProps = {
   tooltip?: string;
   /** Render only the mascot blob in a circular trigger without the label text. */
   blobOnly?: boolean;
+  /** Optional custom mascot node, rendered in place of the default blob. */
+  mascot?: ReactNode;
   providers?: readonly AIProvider[];
   size?: "default" | "compact";
   side?: "top" | "bottom" | "left" | "right";
@@ -224,6 +232,7 @@ export function AskAI({
   label = "Ask an AI",
   tooltip,
   blobOnly = false,
+  mascot,
   providers = defaultAIProviders,
   size = "default",
   side = "top",
@@ -276,8 +285,8 @@ export function AskAI({
         "group inline-flex cursor-pointer items-center justify-center text-foreground transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         blobOnly
           ? cn(
-              "rounded-full bg-background/80 backdrop-blur-md ring-1 ring-inset ring-border/60 shadow-sm hover:shadow-md",
-              size === "compact" ? "size-11" : "size-14"
+              "rounded-full bg-background/55 backdrop-blur-xl backdrop-saturate-150 shadow-sm hover:shadow-md",
+              size === "compact" ? "size-10" : "size-12"
             )
           : cn(
               "h-14 gap-4 rounded-full bg-muted/30 ps-5 pe-3 text-base font-medium tracking-tight data-[size=compact]:h-11 data-[size=compact]:gap-3 data-[size=compact]:rounded-[13px] data-[size=compact]:ps-3.5 data-[size=compact]:pe-[9px] data-[size=compact]:text-sm"
@@ -290,11 +299,13 @@ export function AskAI({
     >
       {!blobOnly && <span>{label}</span>}
       <span className="transition-transform duration-200 group-hover:-translate-y-0.5">
-        <AIMascot
-          awake={isOpen}
-          gaze={side === "top" ? "up" : side === "bottom" ? "down" : side}
-          size={size}
-        />
+        {mascot ?? (
+          <AIMascot
+            awake={isOpen}
+            gaze={side === "top" ? "up" : side === "bottom" ? "down" : side}
+            size={size}
+          />
+        )}
       </span>
     </PopoverTrigger>
   );
@@ -322,7 +333,7 @@ export function AskAI({
           align={align}
           sideOffset={16}
           autoFocus={false}
-          className="w-82.5 sm:w-96 max-w-[calc(100vw-24px)] gap-0 rounded-4xl sm:rounded-[25px] bg-background p-4 sm:px-5 sm:pt-5 sm:pb-4 text-foreground shadow-xl ring-1 ring-inset ring-border/50"
+          className="w-82.5 sm:w-96 max-w-[calc(100vw-24px)] gap-0 rounded-4xl sm:rounded-[25px] bg-background/80 backdrop-blur-xl backdrop-saturate-150 p-4 sm:px-5 sm:pt-5 sm:pb-4 text-foreground shadow-xl ring-1 ring-inset ring-border/50"
         >
           <PopoverTitle className="text-sm sm:text-base font-medium tracking-tight">
             {title}
