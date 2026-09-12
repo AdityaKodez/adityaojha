@@ -1,8 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion, type Transition } from "motion/react";
 import { Check, Copy, X } from "lucide-react";
-import { type ReactNode, useSyncExternalStore } from "react";
+import { type ReactNode, useId, useSyncExternalStore } from "react";
 
 import {
   Tooltip,
@@ -99,12 +99,10 @@ function CodeShell({
   className?: string;
 }) {
   return (
-    <div
-      className={cn(
-        "relative rounded-lg border bg-muted/10 p-0.5",
-        className,
-      )}
-    >
+    // Corner rounding is owned by the caller: a standalone block rounds all
+    // four corners, while the tabbed install block keeps its top-left square
+    // so the active tab can sit flush against it.
+    <div className={cn("relative border bg-muted/10 p-0.5", className)}>
       <div className="group/copy relative overflow-hidden rounded-md border bg-muted/10">
         <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40" />
         <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
@@ -151,7 +149,7 @@ export function CopyBlock({
 
   return (
     <CodeShell
-      className={className}
+      className={cn("rounded-lg", className)}
       actions={
         <Tooltip>
           <TooltipTrigger asChild>
@@ -201,6 +199,13 @@ export function InstallCommand({
 }: InstallCommandProps) {
   const manager = usePackageManager();
   const { status, copy } = useCopy();
+  const reducedMotion = useReducedMotion();
+  // Per-instance id: several install blocks can share a page, and a shared
+  // layoutId would make the pill fly between them.
+  const pillId = useId();
+  const pillTransition: Transition = reducedMotion
+    ? { duration: 0 }
+    : { type: "spring", stiffness: 420, damping: 34, mass: 0.7 };
 
   const command = commands[manager] ?? commands.npm;
   const parsedId =
@@ -229,8 +234,8 @@ export function InstallCommand({
 
   return (
     <div className={cn("relative", className)}>
-      {/* Package manager tabs */}
-      <div className="mb-2 flex items-center gap-1">
+      {/* Package manager tabs — the active background slides between tabs. */}
+      <div className="flex w-fit items-center gap-1 rounded-t-lg border bg-muted">
         {PACKAGE_MANAGERS.map((pm) => {
           const Icon = PM_ICONS[pm];
           const isActive = manager === pm;
@@ -241,33 +246,51 @@ export function InstallCommand({
               onClick={() => handleManagerChange(pm)}
               aria-pressed={isActive}
               className={cn(
-                "flex items-center gap-1.5 rounded-sm px-2 py-1 font-mono text-[10px] tracking-wider micro-transition",
+                "relative flex items-center gap-1.5 rounded-t-lg px-2 py-1 font-mono text-[10px] tracking-wider micro-transition",
                 isActive
-                  ? "bg-muted text-foreground"
+                  ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
-              <AnimatePresence mode="wait" initial={false}>
-                {isActive && Icon && (
+              {isActive && (
+                <motion.span
+                  layoutId={`pm-tab-pill-${pillId}`}
+                  initial={false}
+                  transition={pillTransition}
+                  className="absolute inset-0 rounded-t-lg bg-background"
+                  aria-hidden="true"
+                />
+              )}
+              <Icon className="relative z-10 size-3 shrink-0" />
+              <AnimatePresence initial={false}>
+                {isActive && (
                   <motion.span
-                    key={pm}
-                    initial={{ opacity: 0, scale: 0.6 }}
+                    key="label"
+                    initial={
+                      reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.6 }
+                    }
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.6 }}
-                    transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex items-center"
+                    exit={
+                      reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.6 }
+                    }
+                    transition={
+                      reducedMotion
+                        ? { duration: 0 }
+                        : { duration: 0.15, ease: [0.22, 1, 0.36, 1] }
+                    }
+                    className="relative z-10 origin-left whitespace-nowrap"
                   >
-                    <Icon className="size-3 shrink-0" />
+                    {pm}
                   </motion.span>
                 )}
               </AnimatePresence>
-              {pm}
             </button>
           );
         })}
       </div>
 
       <CodeShell
+        className="rounded-tl-none rounded-b-lg rounded-r-lg"
         actions={
           <Tooltip>
             <TooltipTrigger asChild>
