@@ -8,7 +8,8 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { AccordionSection } from "@/components/ui/accordion-section";
+
+const DEFAULT_VISIBLE_ITEMS = 4;
 
 export function Certifications() {
   const { title, items } = siteConfig.certifications;
@@ -16,10 +17,16 @@ export function Certifications() {
 
   if (!items || items.length === 0) return null;
 
-  const displayedItems = showAll ? items : items.slice(0, 4);
+  const displayedItems = showAll ? items : items.slice(0, DEFAULT_VISIBLE_ITEMS);
 
   return (
-    <AccordionSection id="certifications" title={title}>
+    <section id="certifications" className="border-t border-dashed pt-8">
+      <motion.h2
+        {...reveal({ y: 8, margin: "-80px" })}
+        className="no-js-visible section-heading mb-3"
+      >
+        {title}
+      </motion.h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2">
         {displayedItems.map((item, index) => (
@@ -52,8 +59,9 @@ export function Certifications() {
                   <h3 className="truncate text-sm font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
                     {item.title}
                   </h3>
-                  <p className="truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground/60">
-                    {item.domain} {item.date && `• ${item.date}`}
+                  <p className="truncate font-mono text-[10px] tracking-wider text-muted-foreground/60">
+                    {item.domain}
+                    {item.date ? ` • ${item.date}` : ""}
                   </p>
                 </div>
 
@@ -67,10 +75,10 @@ export function Certifications() {
         ))}
       </div>
 
-      {items.length > 4 && (
+      {items.length > DEFAULT_VISIBLE_ITEMS && (
         <motion.div
           {...reveal({ y: 8, margin: "-100px" })}
-          className="flex justify-center border-y py-2"
+          className="flex justify-center border-t border-dashed py-2"
         >
           <Button
             onClick={() => setShowAll(!showAll)}
@@ -88,6 +96,6 @@ export function Certifications() {
           </Button>
         </motion.div>
       )}
-    </AccordionSection>
+    </section>
   );
 }

@@ -110,6 +110,7 @@ export const siteConfig: PortfolioConfig = {
     "github",
     "testimonials",
     "bookmarks",
+    "certifications",
   ],
   sectionFlags: {
     socials: true,
@@ -119,7 +120,7 @@ export const siteConfig: PortfolioConfig = {
     testimonials: true,
     projects: true,
     bookmarks: true,
-    certifications: false,
+    certifications: true,
     experience: false,
     services: false,
     workflow: false,
@@ -194,7 +195,7 @@ export const siteConfig: PortfolioConfig = {
     ),
   },
   bookmarks: {
-    title: "Learning",
+    title: "Bookmarks",
 
     items: [
       {
@@ -257,7 +258,7 @@ export const siteConfig: PortfolioConfig = {
     ],
   },
   certifications: {
-    title: "Learning Foundations",
+    title: "Certificates",
     items: [
       {
         id: "certificate-1",

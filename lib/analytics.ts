@@ -93,17 +93,12 @@ export type EventMap = {
     url: string;
     location?: string;
   };
-  bookmarks_tab_switched: {
-    tab: "certifications" | "bookmarks";
-  };
   bookmark_clicked: {
     item_id: string;
     title: string;
     domain: string;
-    collection: "certifications" | "bookmarks";
   };
   bookmarks_expanded_toggled: {
-    collection: "certifications" | "bookmarks";
     expanded: boolean;
   };
   prose_code_copied: {
