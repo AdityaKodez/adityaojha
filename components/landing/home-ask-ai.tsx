@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AskAI } from "@/components/ui/ask-ai";
-import DaisyBlob from "@/components/landing/daisy-space-mono";
+import BitBlob from "@/components/landing/bit";
 import { trackEvent } from "@/lib/analytics";
 
 export function HomeAskAI() {
@@ -14,7 +14,7 @@ export function HomeAskAI() {
       size="default"
       side="top"
       align="end"
-      tooltip="ask an ai"
+      tooltip="ask bit"
       title="ask an ai about me"
       description="a fresh perspective, from your favorite assistant."
       prompt="Hi! I'm on Aditya Ojha's portfolio (https://akoder.xyz). Based on this page, introduce him: what he builds, his stack, and what he's looking for. Then suggest what I should ask him about next."
@@ -29,7 +29,7 @@ export function HomeAskAI() {
         }
       }}
       mascot={
-        <DaisyBlob
+        <BitBlob
           awake={open}
           gaze="up"
           className={`h-10 w-10 transition-transform duration-[440ms] ease-[cubic-bezier(.22,1.5,.5,1)] ${
