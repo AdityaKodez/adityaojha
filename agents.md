@@ -186,9 +186,13 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 - Dark mode is class-based: `@custom-variant dark (&:is(.dark *))` plus
   `next-themes`, so `dark:` utilities follow the `.dark` class on `<html>`.
 - Motion tokens live in `app/globals.css` (`--motion-duration-base`,
-  `--motion-ease-standard`). Entrances are short, 0.3s with the ease
-  `[0.22, 1, 0.36, 1]`, and `whileInView` fires once rather than on every
-  scroll pass.
+  `--motion-ease-standard`). Entrances are the shared reveal helpers in
+  `lib/motion.ts` (`reveal`, `revealOnMount`, `revealVariants`): a 0.18s
+  opacity with the ease `[0.22, 1, 0.36, 1]` plus a settle spring on `y`. Only
+  `opacity` and `transform` are animated, never `filter` (animated blur forces
+  a repaint of the whole subtree per frame), and `whileInView` fires once
+  rather than on every scroll pass. The hero greeting words are the one
+  deliberate exception and keep their blur-to-sharp resolve.
 - Shared utility classes: `.section-heading`, `.micro-transition`, and the
   blueprint background used on card hover. Prefer these over repeating the
   utility stack.
