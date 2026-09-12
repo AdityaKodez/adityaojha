@@ -1,4 +1,38 @@
-import posthog from "posthog-js";
+import type posthog from "posthog-js";
+
+type PostHog = typeof posthog;
+
+let posthogClient: Promise<PostHog | null> | null = null;
+
+/**
+ * Lazily loads and initializes PostHog the first time it is needed, so its
+ * bundle never competes with hydration. Resolves to null when no key is
+ * configured or the load fails; callers must treat it as optional.
+ */
+export function getPostHog(): Promise<PostHog | null> {
+  if (typeof window === "undefined") return Promise.resolve(null);
+
+  const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+  if (!posthogKey) return Promise.resolve(null);
+
+  if (!posthogClient) {
+    posthogClient = import("posthog-js")
+      .then((mod) => {
+        mod.default.init(posthogKey, {
+          api_host:
+            process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
+          person_profiles: "identified_only",
+          capture_pageview: false, // Handled manually by PostHogPageView for App Router accuracy
+          capture_pageleave: true,
+          autocapture: true,
+        });
+        return mod.default;
+      })
+      .catch(() => null);
+  }
+
+  return posthogClient;
+}
 
 export type EventMap = {
   registry_command_copied: {
@@ -100,18 +134,19 @@ export type EventMap = {
 
 /**
  * Type-safe wrapper for capturing analytics events via PostHog.
- * Gracefully no-ops in non-browser environments or when PostHog is disabled.
+ * Gracefully no-ops in non-browser environments, before PostHog has loaded,
+ * or when PostHog is disabled.
  */
 export function trackEvent<K extends keyof EventMap>(
   eventName: K,
   properties: EventMap[K]
 ): void {
   if (typeof window === "undefined") return;
-  try {
-    posthog.capture(eventName, properties);
-  } catch (err) {
-    if (process.env.NODE_ENV === "development") {
-      console.error(`[PostHog Event Error] ${eventName}:`, err);
-    }
-  }
+  getPostHog()
+    .then((client) => client?.capture(eventName, properties))
+    .catch((err) => {
+      if (process.env.NODE_ENV === "development") {
+        console.error(`[PostHog Event Error] ${eventName}:`, err);
+      }
+    });
 }

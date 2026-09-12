@@ -14,7 +14,7 @@ import TailwindIcon from "@/public/stacks/tailwind";
 import TrpcIcon from "@/public/stacks/trcp";
 import TSIcon from "@/public/stacks/ts";
 import JSIcon from "@/public/stacks/js";
-import { blurReveal, revealDelay } from "@/lib/motion";
+import { reveal, revealDelay } from "@/lib/motion";
 import { motion } from "motion/react";
 import type { ComponentType } from "react";
 import { BsClaude } from "react-icons/bs";
@@ -54,7 +54,7 @@ function SkillChip({ skill, idx }: { skill: SkillItem; idx: number }) {
 
   return (
     <motion.div
-      {...blurReveal({ y: 6, blur: 4, delay: revealDelay(idx, 0.025) })}
+      {...reveal({ y: 6, delay: revealDelay(idx, 0.025) })}
       className={chipClasses}
       aria-label={skill.name}
     >
@@ -69,13 +69,13 @@ export function Skills() {
   const categories = skillsSectionConfig.categories;
 
   return (
-    // Rows and chips carry the blur, so the wrapper only rises.
+    // Rows and chips stagger in, so the wrapper only rises.
     <motion.section
-      {...blurReveal({ y: 8, blur: 0 })}
+      {...reveal({ y: 8 })}
       className="border-t border-dashed pt-6"
     >
       <motion.h2
-        {...blurReveal({ y: 8, blur: 6, margin: "-100px" })}
+        {...reveal({ y: 8, margin: "-100px" })}
         className="no-js-visible section-heading"
       >
         {skillsSectionConfig.title}
@@ -92,9 +92,8 @@ export function Skills() {
           return (
             <motion.div
               key={category.id}
-              {...blurReveal({
+              {...reveal({
                 y: 8,
-                blur: 0,
                 delay: revealDelay(groupIndex, 0.04),
               })}
               className={cn("flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-6 px-6 py-3.5 border-b", groupIndex === 3 ? "border-none" : "")}

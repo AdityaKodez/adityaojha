@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { Testimonial } from "@/config/types";
-import { blurReveal, revealDelay } from "@/lib/motion";
+import { reveal, revealDelay } from "@/lib/motion";
 import { motion } from "motion/react";
 
 /**
@@ -23,9 +23,8 @@ export function TestimonialsGrid({
       {testimonials.map((testimonial, index) => (
         <motion.figure
           key={testimonial.id}
-          {...blurReveal({
+          {...reveal({
             y: 8,
-            blur: 5,
             delay: revealDelay(index, 0.04),
           })}
           className="group relative flex flex-col px-4 py-5 transition-colors hover:bg-muted/10"

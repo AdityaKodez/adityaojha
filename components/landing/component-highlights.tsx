@@ -5,7 +5,7 @@ import {
   componentsSectionConfig,
   getEnabledComponents,
 } from "@/config/components";
-import { blurReveal, revealDelay } from "@/lib/motion";
+import { reveal, revealDelay } from "@/lib/motion";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { BsArrowUpRightCircle } from "react-icons/bs";
@@ -20,9 +20,9 @@ export function ComponentHighlights() {
   if (preview.length === 0) return null;
 
   return (
-    // The cards carry the blur, so the wrapper only rises.
+    // The cards stagger in, so the wrapper only rises.
     <motion.section
-      {...blurReveal({ y: 8, blur: 0, margin: "-80px" })}
+      {...reveal({ y: 8, margin: "-80px" })}
       className="border-t border-dashed"
     >
       <h2 className="section-heading">{componentsSectionConfig.title}</h2>
@@ -35,7 +35,7 @@ export function ComponentHighlights() {
             <MotionLink
               key={component.id}
               href={`/components/${component.id}`}
-              {...blurReveal({ y: 8, blur: 5, delay: revealDelay(index, 0.04) })}
+              {...reveal({ y: 8, delay: revealDelay(index, 0.04) })}
               className="group relative flex items-stretch"
             >
               <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5 transition-colors hover:bg-muted/10">

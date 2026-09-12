@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { projectsSectionConfig } from "@/config/projects";
 import type { Project } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
-import { blurRevealVariants } from "@/lib/motion";
+import { revealVariants } from "@/lib/motion";
 import {
   ArrowLeft,
   ArrowRight,
@@ -44,11 +44,7 @@ const containerVariants: Variants = {
   },
 };
 
-const itemVariants = blurRevealVariants({ y: 12, blur: 5 });
-
-// A heavier starting blur on the cover reads like the image sharpening as it
-// loads, which is the one moment on this page worth drawing out.
-const imageVariants = blurRevealVariants({ y: 12, blur: 8 });
+const itemVariants = revealVariants({ y: 12 });
 
 function StatusBadge({ status }: { status: Project["status"] }) {
   if (status === "shipped") return null;
@@ -142,7 +138,7 @@ export function ProjectContent({
       </motion.div>
 
       <motion.div
-        variants={imageVariants}
+        variants={itemVariants}
         className="aspect-video relative bg-muted overflow-hidden border-y"
       >
         <Image

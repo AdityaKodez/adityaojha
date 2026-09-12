@@ -8,7 +8,7 @@ import { ArrowRightIcon, Check, Copy } from "lucide-react";
 import { socialSectionConfig, socialsConfig } from "@/config/socials";
 import type { SocialIcon, SocialLink } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
-import { blurReveal, revealDelay } from "@/lib/motion";
+import { reveal, revealDelay } from "@/lib/motion";
 import Peerlist from "@/public/peerlist";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
@@ -107,9 +107,9 @@ const Social = () => {
   }, [copyEnabled]);
 
   return (
-    // The cells carry the blur, so the wrapper only rises.
+    // The cells stagger in, so the wrapper only rises.
     <motion.section
-      {...blurReveal({ y: 16, blur: 0 })}
+      {...reveal({ y: 16 })}
       className="no-js-visible border-t border-dashed pt-6"
     >
       <h2 className="section-heading">{socialSectionConfig.title}</h2>
@@ -120,7 +120,7 @@ const Social = () => {
 
           const cellContent = (
             <motion.div
-              {...blurReveal({ y: 8, blur: 5, delay: revealDelay(idx, 0.035) })}
+              {...reveal({ y: 8, delay: revealDelay(idx, 0.035) })}
               className="micro-transition relative no-js-visible flex items-center gap-3 overflow-hidden p-4 max-sm:border-r-0 group-hover:bg-muted/10 group-focus-visible:bg-muted/10 "
             >
               <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-45 micro-transition group-hover:opacity-100 group-focus-visible:opacity-100" />

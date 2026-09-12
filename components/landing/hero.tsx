@@ -106,10 +106,13 @@ export function Hero() {
   }, []);
 
   return (
+    // Y-only entrance on the shell, h1, and description: transform never
+    // gates LCP, so the heading paints straight from SSR. Opacity starts are
+    // reserved for the small greeting words, which are not the LCP element.
     <motion.section
       className="no-js-visible relative z-20 space-y-4 px-6 pt-10"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ y: 24 }}
+      animate={{ y: 0 }}
       transition={entryTransition}
     >
       <div className="flex flex-col items-start gap-6">
@@ -152,8 +155,8 @@ export function Hero() {
 
           <motion.h1
             className="no-js-visible text-lg sm:text-xl md:text-2xl font-semibold leading-[1.05] tracking-tight text-balance"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 12 }}
+            animate={{ y: 0 }}
             transition={{ ...entryTransition, delay: 0.08 }}
           >
             <span className="block">{heroConfig.headlineBefore}</span>
@@ -176,8 +179,8 @@ export function Hero() {
 
           <motion.p
             className="no-js-visible mt-4 text-sm text-muted-foreground max-sm:text-sm"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 12 }}
+            animate={{ y: 0 }}
             transition={{ ...entryTransition, delay: 0.14 }}
           >
             {afterHighlight === undefined ? (

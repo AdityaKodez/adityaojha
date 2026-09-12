@@ -8,7 +8,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { GeistPixelGrid } from "geist/font/pixel";
 import { Metadata, Viewport } from "next";
 import { DM_Sans, Geist_Mono, Instrument_Serif } from "next/font/google";
-import Script from 'next/script';
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -91,9 +90,6 @@ export const metadata: Metadata = {
   },
   verification: {
     google: siteConfig.meta.googleVerification || undefined,
-    other: {
-      "sa-verify": "akoderxyziqhgzo",
-    },
   },
 };
 
@@ -174,8 +170,6 @@ export default function RootLayout({
           </TooltipProvider>
         </ThemeProvider>
         <Analytics />
-
-        <Script src="https://scripts.simpleanalyticscdn.com/latest.js"  />
       </body>
     </html>
   );

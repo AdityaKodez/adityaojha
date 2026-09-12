@@ -1,6 +1,6 @@
 "use client";
 
-import { blurReveal } from "@/lib/motion";
+import { reveal } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -27,9 +27,7 @@ export function AccordionSection({
   return (
     <motion.section
       id={id}
-      // Collapsed by default, so blurring the whole shell stays cheap: it is
-      // the heading that resolves, and the rows blur again on expand.
-      {...blurReveal({ y: 16, blur: 4, margin: "-80px" })}
+      {...reveal({ y: 16, margin: "-80px" })}
       className={cn("pt-6 border-t border-dashed", className)}
     >
       <h2>

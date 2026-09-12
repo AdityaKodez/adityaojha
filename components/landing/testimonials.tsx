@@ -8,7 +8,7 @@ import {
   getEnabledTestimonials,
   testimonialsSectionConfig,
 } from "@/config/testimonials";
-import { blurReveal } from "@/lib/motion";
+import { reveal } from "@/lib/motion";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { BsArrowUpRightCircle } from "react-icons/bs";
@@ -18,10 +18,10 @@ const enabledTestimonials = getEnabledTestimonials();
 export function Testimonials() {
   return (
     <section className="border-t border-dashed pt-8 overflow-hidden">
-      {/* Only the heading resolves: the slider below never stops moving, and
-          blurring a wide marquee is expensive for no visual gain. */}
+      {/* Only the heading reveals: the slider below never stops moving, and
+          animating a wide marquee is expensive for no visual gain. */}
       <motion.h2
-        {...blurReveal({ y: 8, blur: 6, margin: "-80px" })}
+        {...reveal({ y: 8, margin: "-80px" })}
         className="no-js-visible section-heading mb-3"
       >
         Community

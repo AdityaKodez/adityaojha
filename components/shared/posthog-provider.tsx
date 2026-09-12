@@ -1,29 +1,8 @@
 "use client";
 
-import posthog from "posthog-js";
-import { PostHogProvider as PHProvider } from "posthog-js/react";
+import { getPostHog } from "@/lib/analytics";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, Suspense, type ReactNode } from "react";
-
-if (typeof window !== "undefined") {
-  const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-  const posthogHost =
-    process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
-
-  if (posthogKey) {
-    posthog.init(posthogKey, {
-      api_host: posthogHost,
-      person_profiles: "identified_only",
-      capture_pageview: false, // Handled manually by PostHogPageView for App Router accuracy
-      capture_pageleave: true,
-      autocapture: true,
-    });
-  } else if (process.env.NODE_ENV === "development") {
-    console.warn(
-      "[PostHog] NEXT_PUBLIC_POSTHOG_KEY is not defined. Events will not be sent to PostHog.",
-    );
-  }
-}
 
 function PostHogPageView() {
   const pathname = usePathname();
@@ -36,9 +15,11 @@ function PostHogPageView() {
       if (searchStr) {
         url = `${url}?${searchStr}`;
       }
-      posthog.capture("$pageview", {
-        $current_url: url,
-        pathname,
+      void getPostHog().then((posthog) => {
+        posthog?.capture("$pageview", {
+          $current_url: url,
+          pathname,
+        });
       });
     }
   }, [pathname, searchParams]);
@@ -46,13 +27,49 @@ function PostHogPageView() {
   return null;
 }
 
+/** Runs the callback when the main thread next has a spare moment. */
+function onIdle(callback: () => void): () => void {
+  if (typeof window.requestIdleCallback === "function") {
+    const id = window.requestIdleCallback(callback);
+    return () => window.cancelIdleCallback(id);
+  }
+  const id = window.setTimeout(callback, 200);
+  return () => window.clearTimeout(id);
+}
+
 export function PostHogProvider({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+    if (!posthogKey) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          "[PostHog] NEXT_PUBLIC_POSTHOG_KEY is not defined. Events will not be sent to PostHog.",
+        );
+      }
+      return;
+    }
+
+    // Wait for the window load event, then an idle slot, so the PostHog
+    // bundle never competes with hydration or first paint.
+    if (document.readyState === "complete") {
+      return onIdle(() => void getPostHog());
+    }
+
+    const onLoad = () => {
+      onIdle(() => void getPostHog());
+    };
+    window.addEventListener("load", onLoad, { once: true });
+    return () => window.removeEventListener("load", onLoad);
+  }, []);
+
   return (
-    <PHProvider client={posthog}>
+    <>
       <Suspense fallback={null}>
         <PostHogPageView />
       </Suspense>
       {children}
-    </PHProvider>
+    </>
   );
 }
