@@ -9,6 +9,7 @@ import {
   sponsorsSectionConfig,
 } from "@/config/sponsors";
 import type { Sponsor } from "@/config/types";
+import { trackEvent } from "@/lib/analytics";
 import { reveal } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Loader2, Plus } from "lucide-react";
@@ -226,6 +227,14 @@ export function SponsorOrbit({ seats, sponsors }: SponsorOrbitProps) {
                     rel="noopener noreferrer"
                     aria-label={`${sponsor.name}, sponsor`}
                     className={circle}
+                    onClick={() =>
+                      trackEvent("sponsor_link_clicked", {
+                        sponsor_name: sponsor.name,
+                        seat: i,
+                        url: sponsor.url!,
+                        location: window.location.pathname,
+                      })
+                    }
                     {...handlers}
                   >
                     {inner}
@@ -247,6 +256,10 @@ export function SponsorOrbit({ seats, sponsors }: SponsorOrbitProps) {
                       event.preventDefault();
                       if (claimingSeat !== null) return;
                       setClaimingSeat(i);
+                      trackEvent("sponsor_seat_claim_clicked", {
+                        seat: i,
+                        location: window.location.pathname,
+                      });
                       // Full-page navigation on purpose: the route 302s to
                       // Dodo's hosted checkout, which a client router would
                       // try to render instead of following.

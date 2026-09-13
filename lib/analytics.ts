@@ -125,6 +125,16 @@ export type EventMap = {
   campfire_toggled: {
     action: "light" | "extinguish";
   };
+  sponsor_seat_claim_clicked: {
+    seat: number;
+    location: string;
+  };
+  sponsor_link_clicked: {
+    sponsor_name: string;
+    seat: number;
+    url: string;
+    location: string;
+  };
 };
 
 /**
