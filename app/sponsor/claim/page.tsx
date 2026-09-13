@@ -36,7 +36,8 @@ export default function SponsorClaimPage() {
         <h1 className="section-heading">claim your seat.</h1>
         <p className="px-6 py-2 font-mono text-xs text-muted-foreground">
           Payment received? Drop in your name, a link, and an optional logo.
-          The seat is already live with a generated avatar in the meantime.
+          Just paid? The seat goes live a minute or two after checkout, then
+          you can claim it.
         </p>
       </section>
 

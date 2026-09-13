@@ -1,9 +1,13 @@
 "use client";
 
+import { socialsConfig } from "@/config/socials";
 import { useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 
 type Status = "idle" | "submitting" | "success";
+
+const X_HANDLE = socialsConfig.find((social) => social.id === "x");
+const X_URL = X_HANDLE?.href ?? "https://x.com/AdiKodez";
 
 const inputClass =
   "micro-transition w-full rounded-md bg-background px-3 py-2 text-sm ring-1 ring-inset ring-border " +
@@ -23,6 +27,13 @@ export function ClaimForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+
+  function handleLogoChange(event: React.ChangeEvent<HTMLInputElement>) {
+    if (logoPreview) URL.revokeObjectURL(logoPreview);
+    const file = event.target.files?.[0];
+    setLogoPreview(file && file.size > 0 ? URL.createObjectURL(file) : null);
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,6 +61,8 @@ export function ClaimForm() {
       }
 
       setStatus("success");
+      if (logoPreview) URL.revokeObjectURL(logoPreview);
+      setLogoPreview(null);
       formRef.current?.reset();
     } catch {
       setError("The claim could not be saved. Try again.");
@@ -72,6 +85,8 @@ export function ClaimForm() {
       onSubmit={handleSubmit}
       className="flex flex-col gap-5 px-6 pb-2"
     >
+
+
       <div>
         <label htmlFor="claim-email" className={labelClass}>
           Email you paid with
@@ -136,13 +151,24 @@ export function ClaimForm() {
         <label htmlFor="claim-logo" className={labelClass}>
           Logo (optional, PNG or JPEG up to 512KB)
         </label>
-        <input
-          id="claim-logo"
-          name="logo"
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          className="block w-full font-mono text-xs text-muted-foreground file:mr-3 file:rounded-md file:border-0 file:bg-muted file:px-3 file:py-1.5 file:text-xs file:text-foreground"
-        />
+        <div className="flex items-center gap-3">
+          <input
+            id="claim-logo"
+            name="logo"
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            onChange={handleLogoChange}
+            className="block w-full font-mono text-xs text-muted-foreground file:mr-3 file:rounded-md file:border-0 file:bg-muted file:px-3 file:py-1.5 file:text-xs file:text-foreground"
+          />
+          {logoPreview && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={logoPreview}
+              alt="Logo preview"
+              className="micro-transition size-12 shrink-0 rounded-full object-cover ring-1 ring-inset ring-border"
+            />
+          )}
+        </div>
         <p className="mt-1.5 font-mono text-xs text-muted-foreground">
           Skip it and the seat keeps its generated avatar.
         </p>
@@ -161,6 +187,19 @@ export function ClaimForm() {
       >
         {status === "submitting" ? "Saving..." : "Claim seat"}
       </button>
+
+      <p className="font-mono text-xs text-muted-foreground">
+        Paid but stuck, or something looks off?{" "}
+        <a
+          href={X_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="micro-transition text-foreground underline underline-offset-2 hover:text-primary"
+        >
+          DM me on X{X_HANDLE ? ` (${X_HANDLE.handle})` : ""}
+        </a>{" "}
+        and I will sort it out.
+      </p>
     </form>
   );
 }
