@@ -111,6 +111,7 @@ export const siteConfig: PortfolioConfig = {
     "testimonials",
     "bookmarks",
     "certifications",
+    "sponsors",
   ],
   sectionFlags: {
     socials: true,
@@ -121,6 +122,7 @@ export const siteConfig: PortfolioConfig = {
     projects: true,
     bookmarks: true,
     certifications: true,
+    sponsors: true,
     experience: false,
     services: false,
     workflow: false,

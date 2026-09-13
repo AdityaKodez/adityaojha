@@ -2,6 +2,7 @@ import { ComponentsCatalog } from "@/components/showcase/components-catalog";
 import { ComponentsShell } from "@/components/showcase/components-shell";
 import { CopyBlock } from "@/components/showcase/copy-block";
 import { RotatingInstallCommand } from "@/components/showcase/rotating-install-command";
+import { SponsorsSection } from "@/components/landing/sponsors";
 import { getEnabledComponents } from "@/config/components";
 import { getRegistrySetupSnippet } from "@/config/registry";
 import type { Metadata } from "next";
@@ -90,6 +91,8 @@ export default function ComponentsPage() {
           Choose npm, pnpm, yarn, or bun on any component page.
         </p>
       </section>
+
+      <SponsorsSection />
     </ComponentsShell>
   );
 }

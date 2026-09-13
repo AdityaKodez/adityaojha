@@ -14,6 +14,7 @@ export type SectionId =
   | "github"
   | "bookmarks"
   | "certifications"
+  | "sponsors"
   | "contact";
 
 export interface SectionFlags {
@@ -251,6 +252,48 @@ export interface Certification {
   domain: string;
   date?: string;
   icon?: LinkCardIcon;
+}
+
+export interface Sponsor {
+  id: string;
+  name: string;
+  /** Display date, shown in the hover tooltip. */
+  date?: string;
+  url?: string;
+  /** Square logo image, shown inside the circle. Falls back to a generated avatar. */
+  logo?: string;
+  /** 0-based seat index on the orbit. */
+  seat: number;
+  order: number;
+  enabled?: boolean;
+  /** Dodo payment id, present on sponsors added through the payment webhook. */
+  paymentId?: string;
+  /** False until the sponsor has submitted the claim form with url and logo. */
+  claimed?: boolean;
+}
+
+export interface SponsorTier {
+  id: string;
+  name: string;
+  /** One-time price in USD. */
+  price: number;
+  /** How long the seat stays up. Shown verbatim next to the price. */
+  duration: string;
+  description: string;
+  /** Bullet-free short list of what the tier includes. */
+  perks: string[];
+  /** Marks the tier as the recommended one in the UI. */
+  featured?: boolean;
+  order: number;
+  enabled?: boolean;
+}
+
+export interface SponsorsSectionConfig {
+  label: string;
+  heading: string;
+  description: string;
+  seats: number;
+  tiers: SponsorTier[];
 }
 
 export type ComponentIcon =

@@ -169,6 +169,28 @@ html[data-frame="wide"] {
     @apply text-xl font-semibold border-y border-dashed bg-muted/20 px-6 py-2;
   }
 
+  /* Dotted ring for the sponsor orbit: the same radial-gradient dot pattern
+     used by the character headings, revealed only along the ellipse edge.
+     The tile is square so dots fall evenly on the flat and curved arcs. */
+  .orbit-dot-ring {
+    background-image: radial-gradient(
+      circle,
+      color-mix(in oklch, var(--muted-foreground) 60%, transparent) 2px,
+      transparent 2.5px
+    );
+    background-size: 10px 10px;
+    background-position: center;
+    background-repeat: repeat;
+    opacity: 0.8;
+    mask-image: radial-gradient(
+      farthest-side,
+      transparent calc(100% - 4.5px),
+      #000 calc(100% - 3.5px),
+      #000 calc(100% - 0.5px),
+      transparent 100%
+    );
+  }
+
   .micro-transition {
     transition-property: transform, background-color, border-color, color, opacity, box-shadow;
     transition-duration: var(--motion-duration-base);
@@ -730,6 +752,17 @@ code[data-theme*=" "] span,
   50% { transform: rotate(10deg); }
   60% { transform: rotate(0deg); }
   100% { transform: rotate(0deg); }
+}
+
+/* Sponsor orbit: seats bob gently on staggered phases, transform only. */
+@keyframes seat-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @utility no-scrollbar {

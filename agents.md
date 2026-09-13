@@ -101,6 +101,7 @@ component.
 | `config/components.ts` | `componentsSectionConfig` (home teaser), `componentRegistry` plus `findComponent()` and `getEnabledComponents()` |
 | `config/registry.ts` | Registry helpers, `getAddCommands()` (direct URL `https://akoder.xyz/r/<id>.json` per package manager), `getRegistrySetupSnippet()` |
 | `config/world-cities.ts` | City coordinates used by the dotted world map |
+| `config/sponsors.ts` | `sponsorsSectionConfig` (orbit copy, seat count, CTAs) + `sponsorsConfig`, one sponsor per orbit seat |
 
 Pattern to copy: every domain exports a section config object (heading text) and
 a typed item array. Every item carries `id`, `order`, and an optional `enabled`
@@ -155,8 +156,10 @@ The home page is a loop, not a hand-written layout.
   `components/skeletons/github-skeleton.tsx`, and only rendered when
   `GITHUB_TOKEN` is present.
 - The current order is projects, components, skills, about, github,
-  testimonials, bookmarks, socials. Certifications, experience, services,
-  workflow and contact exist but are flagged off.
+  testimonials, bookmarks, socials, sponsors. Certifications, experience,
+  services, workflow and contact exist but are flagged off. The `sponsors`
+  section (orbit around the Bit mascot) also renders at the bottom of
+  `/components`; there is deliberately no standalone sponsor route.
 - `components` is a teaser, not the showcase: it previews
   `componentsSectionConfig.previewCount` registry entries and ends in a
   `see all n components` link to `/components`. Keep it that way, the full
@@ -351,6 +354,11 @@ Rules:
 | `VERCEL_TOKEN` | `app/api/visitor-count/route.ts` | The footer visitor counter stays hidden (the route returns null counts) |
 | `VERCEL_PROJECT_ID` | `app/api/visitor-count/route.ts` | Same as above; both vars are required to query the Web Analytics count endpoint |
 | `VERCEL_TEAM_ID` | `app/api/visitor-count/route.ts` | Optional, only needed when the project lives under a Vercel team |
+| `DODO_PAYMENTS_API_KEY` | `app/api/sponsor-checkout/route.ts`, `app/api/sponsor-claim/route.ts` | The claim-a-seat CTA degrades and the claim route refuses to verify payments |
+| `DODO_WEBHOOK_KEY` | `app/api/dodo-webhook/route.ts` | The webhook rejects everything with a 500, so Dodo retries |
+| `SPONSOR_GITHUB_TOKEN` | `lib/sponsor-store.ts` | Paid seats cannot be committed; nothing rendered changes |
+| `DODO_ORBIT_SEAT_PRODUCT_ID` | `config/sponsors.ts` | Checkout sessions cannot be created, the CTA degrades |
+| `DODO_PAYMENTS_MODE` | `app/api/sponsor-checkout/route.ts`, `app/api/sponsor-claim/route.ts`, `app/api/dodo-webhook/route.ts` | Optional, set to `test` to hit `test.dodopayments.com` |
 
 Gotchas:
 

@@ -16,6 +16,7 @@ import { Services } from "@/components/landing/services";
 import { GitSkeleton } from "@/components/skeletons/github-skeleton";
 import { Skills } from "@/components/landing/skills";
 import Social from "@/components/landing/social";
+import { SponsorsSection } from "@/components/landing/sponsors";
 import { Testimonials } from "@/components/landing/testimonials";
 import { Vader } from "@/components/landing/vader";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
@@ -41,6 +42,7 @@ const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   components: <ComponentHighlights />,
   bookmarks: <Bookmarks />,
   certifications: <Certifications />,
+  sponsors: <SponsorsSection />,
   experience: <Experience />,
   services: <Services />,
   workflow: <HowIWork />,
