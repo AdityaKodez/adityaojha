@@ -11,7 +11,7 @@ import {
 import type { Sponsor } from "@/config/types";
 import { reveal } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
 
@@ -76,6 +76,9 @@ interface SponsorOrbitProps {
  */
 export function SponsorOrbit({ seats, sponsors }: SponsorOrbitProps) {
   const [hovered, setHovered] = useState<number | null>(null);
+  // The checkout route round-trips to Dodo before redirecting, so the
+  // clicked seat spins until the browser leaves for the hosted checkout.
+  const [claimingSeat, setClaimingSeat] = useState<number | null>(null);
 
   const claimedBySeat = new Map(
     sponsors.map((sponsor) => [sponsor.seat, sponsor]),
@@ -144,6 +147,8 @@ export function SponsorOrbit({ seats, sponsors }: SponsorOrbitProps) {
                 <Avvvatars value={sponsor.id} style="shape" size={56} />
               </span>
             )
+          ) : claimingSeat === i ? (
+            <Loader2 className="size-4 animate-spin" aria-hidden />
           ) : (
             <Plus className="size-4" aria-hidden />
           );
@@ -218,7 +223,22 @@ export function SponsorOrbit({ seats, sponsors }: SponsorOrbitProps) {
                   <a
                     href="/api/sponsor-checkout"
                     aria-label="Claim a sponsor seat"
-                    className={circle}
+                    aria-busy={claimingSeat === i}
+                    className={cn(
+                      circle,
+                      claimingSeat === i && "cursor-wait",
+                    )}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      if (claimingSeat !== null) return;
+                      setClaimingSeat(i);
+                      // Full-page navigation on purpose: the route 302s to
+                      // Dodo's hosted checkout, which a client router would
+                      // try to render instead of following.
+                      window.location.assign(
+                        new URL("/api/sponsor-checkout", window.location.origin),
+                      );
+                    }}
                     {...handlers}
                   >
                     {inner}
