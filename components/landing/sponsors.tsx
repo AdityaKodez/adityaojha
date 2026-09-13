@@ -17,8 +17,23 @@ import { useState } from "react";
 
 const OPEN_SEAT_HINT = "this could be you";
 
-/** The cheapest enabled tier sets the seat price shown on open seats. */
+/** Seat price label comes from the cheapest enabled tier. */
 const SEAT_PRICE_LABEL = `$${sponsorTiers.find((tier) => tier.enabled !== false)?.price ?? sponsorTiers[0]?.price ?? 5}`;
+
+/**
+ * Append utm params so sponsor analytics can attribute orbit clicks back
+ * here. Done at render time, so it also covers hand-edited entries.
+ */
+function withReferral(url: string) {
+  try {
+    const parsed = new URL(url);
+    parsed.searchParams.set("utm_source", "akoder.xyz");
+    parsed.searchParams.set("utm_medium", "sponsor");
+    return parsed.toString();
+  } catch {
+    return url;
+  }
+}
 
 /** Categorical flag colors, one per sponsor, cycling in authored order. */
 const FLAG_COLORS = [
@@ -206,7 +221,7 @@ export function SponsorOrbit({ seats, sponsors }: SponsorOrbitProps) {
                 )}
                 {sponsor?.url ? (
                   <a
-                    href={sponsor.url}
+                    href={withReferral(sponsor.url)}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${sponsor.name}, sponsor`}
