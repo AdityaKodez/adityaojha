@@ -1,12 +1,14 @@
 [
   {
     "id": "pay_0NnVTVxfMVfkEoLNcqhwx",
-    "name": "Ajay Chahal",
+    "name": "vakh",
     "date": "2026-09-13",
     "seat": 0,
     "order": 1,
     "enabled": true,
     "paymentId": "pay_0NnVTVxfMVfkEoLNcqhwx",
-    "claimed": false
+    "claimed": true,
+    "url": "https://vakh.com/",
+    "logo": "/sponsors/pay_0NnVTVxfMVfkEoLNcqhwx.png"
   }
 ]
