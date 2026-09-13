@@ -19,6 +19,7 @@ import Social from "@/components/landing/social";
 import { Testimonials } from "@/components/landing/testimonials";
 import { Vader } from "@/components/landing/vader";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+import { PixelDissolve } from "@/components/ui/pixel-dissolve";
 import { projectsConfig, projectsSectionConfig } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
@@ -112,6 +113,7 @@ export default function Home() {
           position="bottom"
           height="calc(80px + env(safe-area-inset-bottom))"
         />
+        <PixelDissolve />
       </div>
 
       <div className="fixed bottom-6 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none px-4 sm:px-6 flex justify-end">

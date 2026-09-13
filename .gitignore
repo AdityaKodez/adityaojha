@@ -56,3 +56,5 @@ next-env.d.ts
 .lint*.out
 .tsc*.out
 .page*.html
+
+/.zcode/

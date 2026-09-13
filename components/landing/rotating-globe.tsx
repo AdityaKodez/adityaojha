@@ -118,7 +118,10 @@ function buildContinents(angle: number) {
 
 export function RotatingGlobe({ isHovered: externalHover, className }: RotatingGlobeProps) {
   const [internalHover, setInternalHover] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(() => {
+    if (typeof window === "undefined") return false
+    return window.matchMedia("(prefers-reduced-motion:reduce)");
+  });
   const isHovered = externalHover ?? internalHover;
 
   const rawId = useId();
@@ -135,7 +138,6 @@ export function RotatingGlobe({ isHovered: externalHover, className }: RotatingG
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(query.matches);
 
     const onChange = (event: MediaQueryListEvent) => setReducedMotion(event.matches);
     query.addEventListener("change", onChange);
