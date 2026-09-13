@@ -97,25 +97,33 @@ export function VisitorCounterOdometer({ visitors }: { visitors: number }) {
       {...revealOnMount({ y: 6 })}
       className="flex flex-wrap items-center justify-center font-mono text-[11px] tracking-[0.15em] text-muted-foreground"
     >
-      <Flower animate={!reducedMotion} />
-      <span>Say hi, visitor</span>
-      {/* tracking-normal plus an explicit gap: the digits are separate flex
-          items, so inherited letter-spacing would space them unevenly. The
-          gap mirrors the 0.15em rhythm of the surrounding text. */}
-      <span className="ml-2 flex items-center gap-[0.15em] font-medium tracking-normal text-foreground">
-        {chars.map((char, index) =>
-          char >= "0" && char <= "9" ? (
-            <Digit
-              key={`${chars.length}-${index}`}
-              digit={Number(char)}
-              animate={!reducedMotion}
-            />
-          ) : (
-            <span key={index} className="leading-none">
-              {char}
-            </span>
-          ),
-        )}
+      {/* The odometer stacks all numerals 0-9 per column to animate the roll,
+          so assistive tech / crawlers would otherwise read the entire digit
+          wheel. Hide the animated visual and expose the real number below. */}
+      <span aria-hidden="true" className="flex flex-wrap items-center justify-center">
+        <Flower animate={!reducedMotion} />
+        <span>Say hi, visitor</span>
+        {/* tracking-normal plus an explicit gap: the digits are separate flex
+            items, so inherited letter-spacing would space them unevenly. The
+            gap mirrors the 0.15em rhythm of the surrounding text. */}
+        <span className="ml-2 flex items-center gap-[0.15em] font-medium tracking-normal text-foreground">
+          {chars.map((char, index) =>
+            char >= "0" && char <= "9" ? (
+              <Digit
+                key={`${chars.length}-${index}`}
+                digit={Number(char)}
+                animate={!reducedMotion}
+              />
+            ) : (
+              <span key={index} className="leading-none">
+                {char}
+              </span>
+            ),
+          )}
+        </span>
+      </span>
+      <span className="sr-only">
+        Say hi, visitor {visitors.toLocaleString("en-US")}
       </span>
     </p>
   );
