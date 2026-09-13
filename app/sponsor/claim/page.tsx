@@ -1,5 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { ClaimForm } from "./claim-form";
 
 export const metadata: Metadata = {
@@ -40,7 +41,11 @@ export default function SponsorClaimPage() {
       </section>
 
       <section className="border-t border-dashed pt-6">
-        <ClaimForm />
+        {/* The form reads the payment id from the search params, which opts
+            it out of static prerendering without a boundary. */}
+        <Suspense fallback={null}>
+          <ClaimForm />
+        </Suspense>
       </section>
     </main>
   );
