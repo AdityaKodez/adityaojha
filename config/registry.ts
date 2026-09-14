@@ -38,23 +38,24 @@ const RUNNERS: Record<PackageManager, string> = {
   bun: "bunx --bun shadcn@latest",
 };
 
-/** Direct item URL. */
+/** Direct item URL. Kept for the published registry docs and as the no-index fallback. */
 export function getItemUrl(id: string): string {
   return `${siteUrl}/r/${id}.json`;
 }
 
-/** Per-package-manager `shadcn add` commands for one registry item using direct URL style. */
+/**
+ * Per-package-manager `shadcn add` commands for one registry item.
+ *
+ * Uses the namespace form, `@akoder/<id>`. The namespace is published in the
+ * official shadcn directory, so the CLI resolves it with no `components.json`
+ * setup and no URL to paste.
+ */
 export function getAddCommands(id: string): Record<PackageManager, string> {
-  const target = getItemUrl(id);
+  const target = `${registryConfig.namespace}/${id}`;
   return {
     npm: `${RUNNERS.npm} add ${target}`,
     pnpm: `${RUNNERS.pnpm} add ${target}`,
     yarn: `${RUNNERS.yarn} add ${target}`,
     bun: `${RUNNERS.bun} add ${target}`,
   };
-}
-
-/** Snippet users paste into `components.json` to alias the namespace. */
-export function getRegistrySetupSnippet(): string {
-  return `"registries": {\n  "${registryConfig.namespace}": "${registryConfig.itemUrlPattern}"\n}`;
 }

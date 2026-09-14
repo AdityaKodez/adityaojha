@@ -8,10 +8,7 @@ import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 
 import { getComponentIcon } from "@/components/showcase/component-icons";
-import {
-  CopyBlock,
-  InstallCommand,
-} from "@/components/showcase/copy-block";
+import { InstallCommand } from "@/components/showcase/copy-block";
 import { HomeSectionRail } from "@/components/landing/home-section-rail";
 import { markdownComponents } from "@/lib/markdown/markdown-components";
 import type { RailItem } from "@/components/section-rail";
@@ -24,10 +21,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { findComponent, getEnabledComponents } from "@/config/components";
-import {
-  getAddCommands,
-  getRegistrySetupSnippet,
-} from "@/config/registry";
+import { getAddCommands } from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
 import { ComponentDemo } from "@/components/showcase/component-demo";
@@ -59,13 +53,11 @@ export async function generateMetadata({
       title: `${component.title} — aditya ojha`,
       description: component.description,
       siteName: siteConfig.meta.shortTitle,
-      images: [siteConfig.meta.ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: component.title,
       description: component.description,
-      images: [siteConfig.meta.ogImage.url],
     },
   };
 }
@@ -195,8 +187,12 @@ export default async function ComponentDetailPage({
           commands={getAddCommands(component.id)}
         />
         <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-          Install directly from the URL above. To configure the registry once
-          and install components by name, use the setup snippet on the{" "}
+          The{" "}
+          <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
+            @akoder
+          </code>{" "}
+          namespace ships with the shadcn CLI, so there is nothing to configure
+          first. Install any other component the same way from the{" "}
           <Link
             href="/components"
             className="text-foreground underline decoration-dashed underline-offset-4 transition-colors hover:text-primary"
@@ -204,11 +200,6 @@ export default async function ComponentDetailPage({
             components page
           </Link>.
         </p>
-        <CopyBlock
-          className="mt-2"
-          value={getRegistrySetupSnippet()}
-          copyLabel="copy registry config"
-        />
       </section>
 
       {/* Docs — usage, props, notes. */}

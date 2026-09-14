@@ -28,5 +28,5 @@
       "type": "registry:ui"
     }
   ],
-  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/section-rail.json\n```\n\n## Usage\n\n```tsx\nimport { SectionRail } from \"@/components/section-rail\";\n\nconst items = [\n  { id: \"about\", label: \"about\" },\n  { id: \"projects\", label: \"projects\" },\n  { id: \"contact\", label: \"contact\" },\n];\n\nexport function Page() {\n  return (\n    <>\n      <SectionRail items={items} />\n      <main>\n        {items.map((item) => (\n          <section key={item.id} id={item.id}>\n            <h2>{item.label}</h2>\n          </section>\n        ))}\n      </main>\n    </>\n  );\n}\n```"
+  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/section-rail\n```\n\n## Usage\n\n```tsx\nimport { SectionRail } from \"@/components/section-rail\";\n\nconst items = [\n  { id: \"about\", label: \"about\" },\n  { id: \"projects\", label: \"projects\" },\n  { id: \"contact\", label: \"contact\" },\n];\n\nexport function Page() {\n  return (\n    <>\n      <SectionRail items={items} />\n      <main>\n        {items.map((item) => (\n          <section key={item.id} id={item.id}>\n            <h2>{item.label}</h2>\n          </section>\n        ))}\n      </main>\n    </>\n  );\n}\n```"
 }

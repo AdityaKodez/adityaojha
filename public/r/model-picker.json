@@ -46,5 +46,5 @@
       "type": "registry:file"
     }
   ],
-  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/model-picker.json\n```\n\n## Usage\n\n```tsx\nimport { useState } from \"react\";\nimport { ModelPicker, defaultModelProviders } from \"@/components/ui/model-picker\";\n\nexport function ChatComposer() {\n  const [model, setModel] = useState(\"grok-4.6\");\n  return (\n    <ModelPicker\n      providers={defaultModelProviders}\n      value={model}\n      onValueChange={setModel}\n    />\n  );\n}\n```"
+  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/model-picker\n```\n\n## Usage\n\n```tsx\nimport { useState } from \"react\";\nimport { ModelPicker, defaultModelProviders } from \"@/components/ui/model-picker\";\n\nexport function ChatComposer() {\n  const [model, setModel] = useState(\"grok-4.6\");\n  return (\n    <ModelPicker\n      providers={defaultModelProviders}\n      value={model}\n      onValueChange={setModel}\n    />\n  );\n}\n```"
 }

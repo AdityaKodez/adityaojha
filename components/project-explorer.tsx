@@ -25,8 +25,13 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  * critically damped spring (so the blur never overshoots into a negative
  * radius), and the focus resolves last.
  *
- * Returns no motion props under `prefers-reduced-motion`, which leaves the
- * element in its resting state.
+ * Reduced motion shortens the transition to zero rather than returning no
+ * props. The hidden state is server-rendered into the markup as an inline
+ * `style`, and hydration never removes an inline style that the client no
+ * longer specifies — so dropping `whileInView` here would strand that
+ * `opacity: 0` with nothing left to resolve it, and the element would stay
+ * invisible for good. Keeping the resolver and zeroing the duration gives
+ * reduced-motion users an instant appear instead of no appear.
  */
 function useBlurReveal({
   y = 8,
@@ -41,10 +46,6 @@ function useBlurReveal({
 } = {}): Pick<MotionProps, "initial" | "whileInView" | "viewport" | "transition"> {
   const prefersReducedMotion = useReducedMotion();
 
-  if (prefersReducedMotion) {
-    return {};
-  }
-
   return {
     initial: { opacity: 0, y, filter: `blur(${blur}px)` },
     whileInView: {
@@ -56,11 +57,19 @@ function useBlurReveal({
       transitionEnd: { filter: "none" },
     },
     viewport: { once: true, margin },
-    transition: {
-      default: { type: "spring", stiffness: 420, damping: 34, mass: 0.7, delay },
-      opacity: { duration: 0.18, ease: EASE, delay },
-      filter: { duration: 0.32, ease: EASE, delay },
-    },
+    transition: prefersReducedMotion
+      ? { duration: 0 }
+      : {
+          default: {
+            type: "spring",
+            stiffness: 420,
+            damping: 34,
+            mass: 0.7,
+            delay,
+          },
+          opacity: { duration: 0.18, ease: EASE, delay },
+          filter: { duration: 0.32, ease: EASE, delay },
+        },
   };
 }
 

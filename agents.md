@@ -99,7 +99,7 @@ component.
 | `config/experience.ts` | `experienceSectionConfig` + `experienceConfig` |
 | `config/testimonials.ts` | `testimonialsConfig` |
 | `config/components.ts` | `componentsSectionConfig` (home teaser), `componentRegistry` plus `findComponent()` and `getEnabledComponents()` |
-| `config/registry.ts` | Registry helpers, `getAddCommands()` (direct URL `https://akoder.xyz/r/<id>.json` per package manager), `getRegistrySetupSnippet()` |
+| `config/registry.ts` | Registry helpers, `getAddCommands()` (`@akoder/<id>` per package manager), `getItemUrl()` and `registryConfig.itemUrlPattern` for the direct-URL fallback |
 | `config/world-cities.ts` | City coordinates used by the dotted world map |
 | `config/sponsors.ts` | `sponsorsSectionConfig` (orbit copy, seat count, CTAs) + `sponsorsConfig`, one sponsor per orbit seat |
 
@@ -298,8 +298,10 @@ Two surfaces render Markdown and they must stay in sync.
 
 ## 14. Registry pipeline
 
-The site publishes its own shadcn registry. It is JSON served over HTTP;
-nothing is registered with shadcn itself.
+The site publishes its own shadcn registry. It is JSON served over HTTP, and
+the `@akoder` namespace is listed in the official shadcn directory
+(`ui.shadcn.com/r/registries.json`), so the CLI resolves it with no consumer
+setup.
 
 1. `registry.json` at the root is the catalog, name `akoder`, homepage
    akoder.xyz, and an `items` array. Each item declares `name`, `type`,
@@ -309,12 +311,18 @@ nothing is registered with shadcn itself.
 2. `scripts/build-registry.mjs` reads the catalog, inlines each file's source,
    and writes `public/r/registry.json` plus one `public/r/<name>.json` per
    item. It runs on `prebuild`, so Vercel always ships fresh JSON.
-3. Consumers install directly with `npx shadcn add https://akoder.xyz/r/<name>.json`,
-   or register the `@akoder` namespace in their `components.json` and install with
-   `npx shadcn add @akoder/<name>`.
+3. The install form shown to users is always the namespace form,
+   `npx shadcn add @akoder/<name>`. `getAddCommands()` returns it per package
+   manager, and the `docs` string of every item in `registry.json` carries it
+   too. `getItemUrl()` returns the direct `https://akoder.xyz/r/<name>.json`
+   form, which still works and is the fallback if the directory index ever
+   fails, but it is deliberately not surfaced in any install block.
 
 Rules:
 
+- Never reintroduce a `components.json` setup step into UI copy. Because the
+  namespace is indexed, there is nothing for a consumer to configure, and the
+  old `getRegistrySetupSnippet()` helper was removed for that reason.
 - Any edit to a file listed in `registry.json` must be followed by
   `npm run registry:build`, or the published JSON goes stale.
 - Published files must be self-contained. A consumer's project has no `config/`

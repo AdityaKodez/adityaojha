@@ -29,5 +29,5 @@
       "type": "registry:ui"
     }
   ],
-  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/progress-bars.json\n```\n\n## Usage\n\n```tsx\nimport { DotProgress, ProgressBars } from \"@/components/ui/progress-bars\";\n\nconst milestones = [\n  { id: \"design\", label: \"design\", value: 82 },\n  { id: \"build\", label: \"build\", value: 64 },\n  { id: \"launch\", label: \"launch\", value: 49 },\n];\n\nexport function ProjectProgress() {\n  return <ProgressBars items={milestones} />;\n}\n\n// Same props, dot matrix fill instead of etched rules.\nexport function ProjectDots() {\n  return <DotProgress items={milestones} orientation=\"horizontal\" />;\n}\n```"
+  "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/progress-bars\n```\n\n## Usage\n\n```tsx\nimport { DotProgress, ProgressBars } from \"@/components/ui/progress-bars\";\n\nconst milestones = [\n  { id: \"design\", label: \"design\", value: 82 },\n  { id: \"build\", label: \"build\", value: 64 },\n  { id: \"launch\", label: \"launch\", value: 49 },\n];\n\nexport function ProjectProgress() {\n  return <ProgressBars items={milestones} />;\n}\n\n// Same props, dot matrix fill instead of etched rules.\nexport function ProjectDots() {\n  return <DotProgress items={milestones} orientation=\"horizontal\" />;\n}\n```"
 }

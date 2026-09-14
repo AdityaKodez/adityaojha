@@ -20,8 +20,12 @@ export function Bookmarks() {
 
   const displayedItems = showAll ? items : items.slice(0, DEFAULT_VISIBLE_ITEMS);
 
+  // The `#bookmarks` anchor is owned by the section wrapper in `app/page.tsx`,
+  // which renders `<div id={sectionId}>` for every entry in `sectionOrder`.
+  // Setting it again here produced a duplicate id: invalid HTML, and the anchor
+  // resolved unpredictably.
   return (
-    <section id="bookmarks" className="border-t border-dashed pt-8">
+    <section className="border-t border-dashed pt-8">
       <motion.h2
         {...reveal({ y: 8, margin: "-80px" })}
         className="no-js-visible section-heading mb-3"

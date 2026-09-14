@@ -35,7 +35,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/ask-ai.json\n```\n\n## Usage\n\n```tsx\nimport { AskAI } from \"@/components/ui/ask-ai\";\n\nexport function Hero() {\n  return (\n    <AskAI\n      prompt=\"Introduce this project and explain what makes it unique.\"\n      label=\"ask an ai\"\n    />\n  );\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/ask-ai\n```\n\n## Usage\n\n```tsx\nimport { AskAI } from \"@/components/ui/ask-ai\";\n\nexport function Hero() {\n  return (\n    <AskAI\n      prompt=\"Introduce this project and explain what makes it unique.\"\n      label=\"ask an ai\"\n    />\n  );\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -84,7 +84,7 @@
           "target": "public/ai/gemini.svg"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/model-picker.json\n```\n\n## Usage\n\n```tsx\nimport { useState } from \"react\";\nimport { ModelPicker, defaultModelProviders } from \"@/components/ui/model-picker\";\n\nexport function ChatComposer() {\n  const [model, setModel] = useState(\"grok-4.6\");\n  return (\n    <ModelPicker\n      providers={defaultModelProviders}\n      value={model}\n      onValueChange={setModel}\n    />\n  );\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/model-picker\n```\n\n## Usage\n\n```tsx\nimport { useState } from \"react\";\nimport { ModelPicker, defaultModelProviders } from \"@/components/ui/model-picker\";\n\nexport function ChatComposer() {\n  const [model, setModel] = useState(\"grok-4.6\");\n  return (\n    <ModelPicker\n      providers={defaultModelProviders}\n      value={model}\n      onValueChange={setModel}\n    />\n  );\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -118,7 +118,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/command-palette.json\n```\n\n## Usage\n\n```tsx\nimport { CommandPalette } from \"@/components/ui/command-palette\";\n\nexport function AppShell() {\n  const [open, setOpen] = useState(false);\n\n  return (\n    <>\n      <button onClick={() => setOpen(true)}>open palette</button>\n      <CommandPalette open={open} onOpenChange={setOpen} recents />\n    </>\n  );\n}\n```\n\nPass `groups` for top-level actions, `pages` plus `page` ids on items for drill-down navigation, and ⌘K / Ctrl+K toggles the palette by default. Recents persist per `storageKey` when `recents` is on."
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/command-palette\n```\n\n## Usage\n\n```tsx\nimport { CommandPalette } from \"@/components/ui/command-palette\";\n\nexport function AppShell() {\n  const [open, setOpen] = useState(false);\n\n  return (\n    <>\n      <button onClick={() => setOpen(true)}>open palette</button>\n      <CommandPalette open={open} onOpenChange={setOpen} recents />\n    </>\n  );\n}\n```\n\nPass `groups` for top-level actions, `pages` plus `page` ids on items for drill-down navigation, and ⌘K / Ctrl+K toggles the palette by default. Recents persist per `storageKey` when `recents` is on."
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -149,7 +149,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json\n```\n\n## Usage\n\n```tsx\nimport { DottedWorldMap } from \"@/components/ui/dotted-world-map\";\n\nconst points = [\n  { name: \"London\", lat: 51.5074, lng: -0.1278, value: 0.9, radius: 12 },\n  { name: \"Tokyo\", lat: 35.6762, lng: 139.6503, value: 0.8, radius: 12 },\n  { name: \"New York\", lat: 40.7128, lng: -74.006, value: 0.95, radius: 13 },\n];\n\nexport function VisitorsMap() {\n  return <DottedWorldMap points={points} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/dotted-world-map\n```\n\n## Usage\n\n```tsx\nimport { DottedWorldMap } from \"@/components/ui/dotted-world-map\";\n\nconst points = [\n  { name: \"London\", lat: 51.5074, lng: -0.1278, value: 0.9, radius: 12 },\n  { name: \"Tokyo\", lat: 35.6762, lng: 139.6503, value: 0.8, radius: 12 },\n  { name: \"New York\", lat: 40.7128, lng: -74.006, value: 0.95, radius: 13 },\n];\n\nexport function VisitorsMap() {\n  return <DottedWorldMap points={points} />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -182,7 +182,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/copy-command-block.json\n```\n\n## Usage\n\n```tsx\nimport { CopyCommandBlock } from \"@/components/ui/copy-command-block\";\n\nexport function Command() {\n  return <CopyCommandBlock commands={{ npm: \"npm i motion\", pnpm: \"pnpm add motion\" }} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/copy-command-block\n```\n\n## Usage\n\n```tsx\nimport { CopyCommandBlock } from \"@/components/ui/copy-command-block\";\n\nexport function Command() {\n  return <CopyCommandBlock commands={{ npm: \"npm i motion\", pnpm: \"pnpm add motion\" }} />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -215,7 +215,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/github-map.json\n```\n\n## Usage\n\n```tsx\nimport { GitHubCalendar } from \"@/components/ui/github-map\";\n\nexport function ActivityGraph() {\n  return <GitHubCalendar data={[{ date: \"2025-01-01\", count: 4 }]} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/github-map\n```\n\n## Usage\n\n```tsx\nimport { GitHubCalendar } from \"@/components/ui/github-map\";\n\nexport function ActivityGraph() {\n  return <GitHubCalendar data={[{ date: \"2025-01-01\", count: 4 }]} />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -244,7 +244,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/project-explorer.json\n```\n\n## Usage\n\n```tsx\nimport { ProjectExplorer } from \"@/components/project-explorer\";\n\nexport function WorkShowcase() {\n  return <ProjectExplorer />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/project-explorer\n```\n\n## Usage\n\n```tsx\nimport { ProjectExplorer } from \"@/components/project-explorer\";\n\nexport function WorkShowcase() {\n  return <ProjectExplorer />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -272,7 +272,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/carousel.json\n```\n\n## Usage\n\n```tsx\nimport { Carousel } from \"@/components/ui/carousel\";\n\nexport function SlideShow() {\n  return (\n    <Carousel\n      items={[\n        { id: \"1\", title: \"Slide 1\", content: <div>Content 1</div> },\n        { id: \"2\", title: \"Slide 2\", content: <div>Content 2</div> },\n      ]}\n    />\n  );\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/carousel\n```\n\n## Usage\n\n```tsx\nimport { Carousel } from \"@/components/ui/carousel\";\n\nexport function SlideShow() {\n  return (\n    <Carousel\n      items={[\n        { id: \"1\", title: \"Slide 1\", content: <div>Content 1</div> },\n        { id: \"2\", title: \"Slide 2\", content: <div>Content 2</div> },\n      ]}\n    />\n  );\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -304,7 +304,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/mode-toggler.json\n```\n\n## Usage\n\n```tsx\nimport { ModeToggler } from \"@/components/ui/mode-toggler\";\n\nexport function Header() {\n  return (\n    <header className=\"flex items-center justify-between px-4 h-12\">\n      <span>my app</span>\n      <ModeToggler />\n    </header>\n  );\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/mode-toggler\n```\n\n## Usage\n\n```tsx\nimport { ModeToggler } from \"@/components/ui/mode-toggler\";\n\nexport function Header() {\n  return (\n    <header className=\"flex items-center justify-between px-4 h-12\">\n      <span>my app</span>\n      <ModeToggler />\n    </header>\n  );\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -332,7 +332,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/interactive-skill-cloud.json\n```\n\n## Usage\n\n```tsx\nimport { InteractiveSkillCloud } from \"@/components/ui/interactive-skill-cloud\";\nimport { Code2, Zap } from \"lucide-react\";\n\nconst items = [\n  { id: \"react\", name: \"React\", icon: <Code2 className=\"size-4\" /> },\n  { id: \"zap\", name: \"tRPC\", icon: <Zap className=\"size-4\" /> },\n];\n\nexport function TechStack() {\n  return <InteractiveSkillCloud items={items} height={360} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/interactive-skill-cloud\n```\n\n## Usage\n\n```tsx\nimport { InteractiveSkillCloud } from \"@/components/ui/interactive-skill-cloud\";\nimport { Code2, Zap } from \"lucide-react\";\n\nconst items = [\n  { id: \"react\", name: \"React\", icon: <Code2 className=\"size-4\" /> },\n  { id: \"zap\", name: \"tRPC\", icon: <Zap className=\"size-4\" /> },\n];\n\nexport function TechStack() {\n  return <InteractiveSkillCloud items={items} height={360} />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -365,7 +365,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/contact-channels.json\n```\n\n## Usage\n\n```tsx\nimport { ContactChannels } from \"@/components/ui/contact-channels\";\nimport { Github, Mail } from \"lucide-react\";\n\nconst channels = [\n  { id: \"github\", platform: \"github\", handle: \"@octocat\", href: \"https://github.com\", action: \"external\", icon: <Github className=\"size-4\" /> },\n  { id: \"email\", platform: \"email\", handle: \"hi@example.com\", action: \"copy\", copyValue: \"hi@example.com\", shortcutKey: \"e\", icon: <Mail className=\"size-4\" /> },\n];\n\nexport function Contact() {\n  return <ContactChannels items={channels} columns={2} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/contact-channels\n```\n\n## Usage\n\n```tsx\nimport { ContactChannels } from \"@/components/ui/contact-channels\";\nimport { Github, Mail } from \"lucide-react\";\n\nconst channels = [\n  { id: \"github\", platform: \"github\", handle: \"@octocat\", href: \"https://github.com\", action: \"external\", icon: <Github className=\"size-4\" /> },\n  { id: \"email\", platform: \"email\", handle: \"hi@example.com\", action: \"copy\", copyValue: \"hi@example.com\", shortcutKey: \"e\", icon: <Mail className=\"size-4\" /> },\n];\n\nexport function Contact() {\n  return <ContactChannels items={channels} columns={2} />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -396,7 +396,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/section-rail.json\n```\n\n## Usage\n\n```tsx\nimport { SectionRail } from \"@/components/section-rail\";\n\nconst items = [\n  { id: \"about\", label: \"about\" },\n  { id: \"projects\", label: \"projects\" },\n  { id: \"contact\", label: \"contact\" },\n];\n\nexport function Page() {\n  return (\n    <>\n      <SectionRail items={items} />\n      <main>\n        {items.map((item) => (\n          <section key={item.id} id={item.id}>\n            <h2>{item.label}</h2>\n          </section>\n        ))}\n      </main>\n    </>\n  );\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/section-rail\n```\n\n## Usage\n\n```tsx\nimport { SectionRail } from \"@/components/section-rail\";\n\nconst items = [\n  { id: \"about\", label: \"about\" },\n  { id: \"projects\", label: \"projects\" },\n  { id: \"contact\", label: \"contact\" },\n];\n\nexport function Page() {\n  return (\n    <>\n      <SectionRail items={items} />\n      <main>\n        {items.map((item) => (\n          <section key={item.id} id={item.id}>\n            <h2>{item.label}</h2>\n          </section>\n        ))}\n      </main>\n    </>\n  );\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -428,7 +428,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/progress-bars.json\n```\n\n## Usage\n\n```tsx\nimport { DotProgress, ProgressBars } from \"@/components/ui/progress-bars\";\n\nconst milestones = [\n  { id: \"design\", label: \"design\", value: 82 },\n  { id: \"build\", label: \"build\", value: 64 },\n  { id: \"launch\", label: \"launch\", value: 49 },\n];\n\nexport function ProjectProgress() {\n  return <ProgressBars items={milestones} />;\n}\n\n// Same props, dot matrix fill instead of etched rules.\nexport function ProjectDots() {\n  return <DotProgress items={milestones} orientation=\"horizontal\" />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/progress-bars\n```\n\n## Usage\n\n```tsx\nimport { DotProgress, ProgressBars } from \"@/components/ui/progress-bars\";\n\nconst milestones = [\n  { id: \"design\", label: \"design\", value: 82 },\n  { id: \"build\", label: \"build\", value: 64 },\n  { id: \"launch\", label: \"launch\", value: 49 },\n];\n\nexport function ProjectProgress() {\n  return <ProgressBars items={milestones} />;\n}\n\n// Same props, dot matrix fill instead of etched rules.\nexport function ProjectDots() {\n  return <DotProgress items={milestones} orientation=\"horizontal\" />;\n}\n```"
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -458,7 +458,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add https://akoder.xyz/r/glyph-card.json\n```\n\n## Usage\n\n```tsx\nimport { GlyphCard } from \"@/components/ui/glyph-card\";\n\nconst NEXTJS_GLYPH =\n  \"M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z\";\n\nexport function Stack() {\n  return (\n    <GlyphCard\n      eyebrow=\"Framework\"\n      title=\"Next.js\"\n      subtitle=\"The React framework\"\n      href=\"https://nextjs.org\"\n      glyph={NEXTJS_GLYPH}\n    />\n  );\n}\n```\n\n`glyph` is SVG path data authored on a 24x24 grid. Omit `href` for a static card, pass `accent` to tint the artwork, and use `glyphOffset` in grid units when a mark is drawn off-center."
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/glyph-card\n```\n\n## Usage\n\n```tsx\nimport { GlyphCard } from \"@/components/ui/glyph-card\";\n\nconst NEXTJS_GLYPH =\n  \"M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z\";\n\nexport function Stack() {\n  return (\n    <GlyphCard\n      eyebrow=\"Framework\"\n      title=\"Next.js\"\n      subtitle=\"The React framework\"\n      href=\"https://nextjs.org\"\n      glyph={NEXTJS_GLYPH}\n    />\n  );\n}\n```\n\n`glyph` is SVG path data authored on a 24x24 grid. Omit `href` for a static card, pass `accent` to tint the artwork, and use `glyphOffset` in grid units when a mark is drawn off-center."
     }
   ]
 }

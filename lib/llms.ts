@@ -16,7 +16,6 @@ import type { ComponentDoc, Project } from "@/config/types";
 import {
   PACKAGE_MANAGERS,
   getAddCommands,
-  getRegistrySetupSnippet,
   registryConfig,
   siteUrl,
 } from "@/config/registry";
@@ -96,14 +95,10 @@ function componentIndexLines(): string[] {
 
 function registryPreamble(): string[] {
   return [
-    "Every component below is published as a shadcn registry. Add the namespace to your `components.json` once, then install any item by direct URL.",
-    "",
-    "```json",
-    getRegistrySetupSnippet(),
-    "```",
+    `Every component below is published as a shadcn registry under the ${registryConfig.namespace} namespace. The namespace is in the official shadcn directory, so the CLI resolves it with no \`components.json\` setup.`,
     "",
     "```bash",
-    `npx shadcn@latest add ${siteUrl}/r/<name>.json`,
+    `npx shadcn@latest add ${registryConfig.namespace}/<name>`,
     "```",
   ];
 }
