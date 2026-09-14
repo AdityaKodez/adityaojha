@@ -1,4 +1,5 @@
 import { TestimonialsGrid } from "@/components/landing/testimonials-grid";
+import { TestimonialsMarquee } from "@/components/landing/testimonials";
 import { getAllTestimonials } from "@/config/testimonials";
 import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
@@ -117,6 +118,11 @@ export default function TestimonialsPage() {
       <section className="border-t border-dashed">
         <h2 className="sr-only">all testimonials</h2>
         <TestimonialsGrid testimonials={testimonials} />
+      </section>
+
+      <section className="overflow-hidden border-t border-dashed">
+        <h2 className="sr-only">From the community</h2>
+        <TestimonialsMarquee reverse />
       </section>
     </main>
   );
