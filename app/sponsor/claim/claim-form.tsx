@@ -16,7 +16,7 @@ import {
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 type Status = "idle" | "submitting" | "success";
 
@@ -44,6 +44,115 @@ const SEAT_PRICE =
   sponsorTiers.find((tier) => tier.enabled !== false)?.price ??
   sponsorTiers[0]?.price ??
   5;
+const DRAFT_KEY = "akoder:sponsor-claim-draft";
+
+type ClaimDraft = {
+  email: string;
+  paymentId: string;
+  name: string;
+  link: string;
+};
+
+const EMPTY_DRAFT: ClaimDraft = {
+  email: "",
+  paymentId: "",
+  name: "",
+  link: "",
+};
+
+function parseDraft(raw: string | null): ClaimDraft {
+  if (!raw) return EMPTY_DRAFT;
+  try {
+    const parsed = JSON.parse(raw) as Partial<ClaimDraft>;
+    if (!parsed || typeof parsed !== "object") return EMPTY_DRAFT;
+    return {
+      email: typeof parsed.email === "string" ? parsed.email.slice(0, 320) : "",
+      paymentId:
+        typeof parsed.paymentId === "string" ? parsed.paymentId.slice(0, 100) : "",
+      name: typeof parsed.name === "string" ? parsed.name.slice(0, 60) : "",
+      link:
+        typeof parsed.link === "string"
+          ? parsed.link.replace(/^\s*(?:https?:\/\/|\/\/)/i, "").slice(0, 292)
+          : "",
+    };
+  } catch {
+    return EMPTY_DRAFT;
+  }
+}
+
+let draftCache: ClaimDraft | null = null;
+const draftListeners = new Set<() => void>();
+
+function readDraft(): ClaimDraft {
+  try {
+    return parseDraft(window.localStorage.getItem(DRAFT_KEY));
+  } catch {
+    return EMPTY_DRAFT;
+  }
+}
+
+function getDraftSnapshot(): ClaimDraft {
+  if (draftCache === null) draftCache = readDraft();
+  return draftCache;
+}
+
+function getServerDraftSnapshot(): ClaimDraft {
+  return EMPTY_DRAFT;
+}
+
+function subscribeToDraft(onStoreChange: () => void) {
+  draftListeners.add(onStoreChange);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key !== DRAFT_KEY) return;
+    draftCache = null;
+    draftListeners.forEach((listener) => listener());
+  };
+  window.addEventListener("storage", onStorage);
+  return () => {
+    draftListeners.delete(onStoreChange);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+function persistDraft(draft: ClaimDraft) {
+  try {
+    if (!draft.email && !draft.paymentId && !draft.name && !draft.link) {
+      window.localStorage.removeItem(DRAFT_KEY);
+      return;
+    }
+    window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } catch {
+    // Private mode or quota. The form still works without a draft.
+  }
+}
+
+function setDraft(next: ClaimDraft) {
+  draftCache = next;
+  persistDraft(next);
+  draftListeners.forEach((listener) => listener());
+}
+
+function patchDraft(patch: Partial<ClaimDraft>) {
+  setDraft({ ...getDraftSnapshot(), ...patch });
+}
+
+function clearDraft() {
+  draftCache = EMPTY_DRAFT;
+  try {
+    window.localStorage.removeItem(DRAFT_KEY);
+  } catch {
+    // ignore
+  }
+  draftListeners.forEach((listener) => listener());
+}
+
+function useClaimDraft() {
+  return useSyncExternalStore(
+    subscribeToDraft,
+    getDraftSnapshot,
+    getServerDraftSnapshot,
+  );
+}
 
 const SHARE_URL = `https://x.com/intent/post?text=${encodeURIComponent(
   `Just took a seat on ${X_HANDLE?.handle ?? "@AdiKodez"}’s orbit ✦`,
@@ -100,8 +209,15 @@ function SummaryRow({
 /** Post-payment setup. An email or a receipt payment ID identifies the seat. */
 export function ClaimForm() {
   const searchParams = useSearchParams();
-  const [paymentId, setPaymentId] = useState(searchParams.get("payment_id") ?? "");
-  const [paymentDetailsOpen, setPaymentDetailsOpen] = useState(Boolean(paymentId.trim()));
+  const queryPaymentId = searchParams.get("payment_id") ?? "";
+  const draft = useClaimDraft();
+  const [paymentTouched, setPaymentTouched] = useState(false);
+  const paymentId = paymentTouched
+    ? draft.paymentId
+    : queryPaymentId.trim() || draft.paymentId;
+  const [paymentDetailsOpen, setPaymentDetailsOpen] = useState(
+    Boolean(queryPaymentId.trim()),
+  );
   const [status, setStatus] = useState<Status>("idle");
   const [claimed, setClaimed] = useState<ClaimedSeat | null>(null);
   const [error, setError] = useState<ClaimError | null>(null);
@@ -109,11 +225,16 @@ export function ClaimForm() {
   const [logoError, setLogoError] = useState<string | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [logoName, setLogoName] = useState("");
-  const [link, setLink] = useState("");
   const logoInputRef = useRef<HTMLInputElement>(null);
   const errorRef = useRef<HTMLDivElement>(null);
   const successRef = useRef<HTMLHeadingElement>(null);
-  const dirtyRef = useRef(false);
+
+  function saveDraft(patch: Partial<ClaimDraft>) {
+    patchDraft({
+      ...patch,
+      paymentId: patch.paymentId ?? (queryPaymentId.trim() || draft.paymentId),
+    });
+  }
 
   useEffect(() => {
     return () => {
@@ -131,13 +252,15 @@ export function ClaimForm() {
       return;
     }
     function warnBeforeLeaving(event: BeforeUnloadEvent) {
-      if (!dirtyRef.current) return;
+      // Text fields survive reload via localStorage. The logo file input
+      // cannot, so only warn when a file is sitting in the picker.
+      if (!logoName) return;
       event.preventDefault();
       event.returnValue = "";
     }
     window.addEventListener("beforeunload", warnBeforeLeaving);
     return () => window.removeEventListener("beforeunload", warnBeforeLeaving);
-  }, [status]);
+  }, [status, logoName]);
 
   function handleLogoChange(event: React.ChangeEvent<HTMLInputElement>) {
     const input = event.currentTarget;
@@ -170,7 +293,9 @@ export function ClaimForm() {
 
   /** The field owns the scheme, so a pasted one is stripped instead of doubled. */
   function handleLinkChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setLink(event.target.value.replace(/^\s*(?:https?:\/\/|\/\/)/i, ""));
+    saveDraft({
+      link: event.target.value.replace(/^\s*(?:https?:\/\/|\/\/)/i, ""),
+    });
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -180,7 +305,7 @@ export function ClaimForm() {
     // Keep the editable receipt ID from the form, not the original query value.
     const data = new FormData(event.currentTarget);
     // The visible field holds only the host and path; the API needs a full URL.
-    const host = link.trim().replace(/^\/+/, "");
+    const host = draft.link.trim().replace(/^\/+/, "");
     data.set("url", host ? `https://${host}` : "");
     setStatus("submitting");
     setError(null);
@@ -210,7 +335,7 @@ export function ClaimForm() {
         logoName,
       });
       setStatus("success");
-      dirtyRef.current = false;
+      clearDraft();
     } catch {
       setError({
         message: "The claim could not be saved. Check your connection and try again.",
@@ -346,7 +471,6 @@ export function ClaimForm() {
         ) : (
           <form
             onSubmit={handleSubmit}
-            onChange={() => { dirtyRef.current = true; }}
             aria-label="Claim your sponsor seat"
             aria-busy={status === "submitting"}
           >
@@ -368,6 +492,8 @@ export function ClaimForm() {
                 spellCheck={false}
                 autoCapitalize="none"
                 required={!paymentId.trim()}
+                value={draft.email}
+                onChange={(event) => saveDraft({ email: event.target.value })}
                 placeholder="you@example.com…"
                 aria-describedby="claim-email-help"
                 className={inputClass}
@@ -392,7 +518,12 @@ export function ClaimForm() {
                     id="claim-payment-id"
                     name="paymentId"
                     value={paymentId}
-                    onChange={(event) => setPaymentId(event.target.value)}
+                    onChange={(event) => {
+                      const next = event.target.value;
+                      setPaymentTouched(true);
+                      saveDraft({ paymentId: next });
+                      if (next.trim()) setPaymentDetailsOpen(true);
+                    }}
                     maxLength={100}
                     autoComplete="off"
                     spellCheck={false}
@@ -426,6 +557,8 @@ export function ClaimForm() {
                     type="text"
                     autoComplete="nickname"
                     maxLength={60}
+                    value={draft.name}
+                    onChange={(event) => saveDraft({ name: event.target.value })}
                     placeholder="Your name or project…"
                     className={inputClass}
                   />
@@ -451,7 +584,7 @@ export function ClaimForm() {
                       spellCheck={false}
                       autoCapitalize="none"
                       maxLength={292}
-                      value={link}
+                      value={draft.link}
                       onChange={handleLinkChange}
                       placeholder="your-site.dev"
                       aria-describedby="claim-url-help"
@@ -535,6 +668,7 @@ export function ClaimForm() {
                           event.preventDefault();
                           if (checkingOut) return;
                           setCheckingOut(true);
+                          saveDraft({ paymentId });
                           // Full-page navigation: the route 302s to Dodo's
                           // hosted checkout, which a client router would try
                           // to render instead of following.
