@@ -13,6 +13,13 @@ export const metadata: Metadata = {
 
 const PAGE_URL = `${siteConfig.meta.url}/sponsor/claim`;
 
+/**
+ * The page column. The heading band, the intro, the form and the footer all
+ * use this exact string so their left edges line up. Keep it in sync with
+ * COLUMN in claim-form.tsx.
+ */
+const COLUMN = "mx-auto w-full max-w-2xl px-4";
+
 export default function SponsorClaimPage() {
   return (
     <main
@@ -33,8 +40,12 @@ export default function SponsorClaimPage() {
       />
 
       <header>
-        <h1 className="section-heading text-balance">Claim your seat.</h1>
-        <div className="mx-auto flex w-full max-w-2xl items-center gap-5 px-4 pb-8 pt-6 sm:gap-8">
+        {/* .section-heading owns the full-bleed dashed band, so its own px-6 is
+            cancelled and the text sits in the page column instead. */}
+        <h1 className="section-heading px-0">
+          <span className={`${COLUMN} block`}>Claim your seat.</span>
+        </h1>
+        <div className={`${COLUMN} flex items-start gap-5 pb-8 pt-6`}>
           <div className="min-w-0 flex-1">
             <p className="text-balance text-base font-medium tracking-tight">Make yourself at home.</p>
             <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
@@ -42,22 +53,29 @@ export default function SponsorClaimPage() {
               logo so people know who’s keeping the orbit going.
             </p>
           </div>
-          <div aria-hidden="true" className="relative flex h-32 w-24 shrink-0 items-center justify-center sm:w-28">
-            <div className="orbit-dot-ring absolute inset-x-0 top-7 h-20 -rotate-[22deg] rounded-[50%]" />
-            <span className="absolute right-0 top-8 size-2 rounded-full bg-primary ring-4 ring-background" />
-            <BitBlob
-              awake
-              gaze="left"
-              className="relative size-20 -rotate-6 [&_.bit-body]:[animation:none] [&_.bit-eye]:[animation:none] sm:size-24"
-            />
-            <span className="absolute bottom-0 -rotate-6 font-serif text-base italic text-muted-foreground">Your new neighbor</span>
+          {/* Bit on a dotted ring with one satellite dot. The caption is a
+              normal line under the block, not an overlay, so it cannot
+              collide with the copy on narrow screens. */}
+          <div className="w-24 shrink-0 sm:w-28">
+            <div aria-hidden="true" className="relative flex size-24 items-center justify-center sm:size-28">
+              <div className="orbit-dot-ring absolute inset-0 rounded-[50%]" />
+              <span className="absolute right-0 top-1/2 size-2 -translate-y-1/2 rounded-full bg-primary ring-4 ring-background" />
+              <BitBlob
+                awake
+                gaze="left"
+                className="relative size-14 -rotate-6 [&_.bit-body]:[animation:none] [&_.bit-eye]:[animation:none] sm:size-16"
+              />
+            </div>
+            <p aria-hidden="true" className="mt-1.5 text-center font-serif text-xs italic leading-tight text-muted-foreground">
+              Your neighbor
+            </p>
           </div>
         </div>
       </header>
 
       {/* Keep the search-param reader behind Suspense for static rendering. */}
       <Suspense fallback={
-        <div role="status" className="mx-auto w-full max-w-2xl px-4 pb-8">
+        <div role="status" className={`${COLUMN} pb-8`}>
           <div aria-hidden className="space-y-5">
             <div className="h-5 w-40 rounded-md bg-muted" />
             <div className="h-11 rounded-md bg-muted/60" />

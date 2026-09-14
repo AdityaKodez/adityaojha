@@ -1,6 +1,8 @@
 "use client";
 
+import { siteConfig } from "@/config/site";
 import { socialsConfig } from "@/config/socials";
+import { revealOnMount } from "@/lib/motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -10,23 +12,77 @@ import {
   LockKeyhole,
   Upload,
 } from "lucide-react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 type Status = "idle" | "submitting" | "success";
 
+/** What the seat now carries, kept from the submitted form for the receipt. */
+type ClaimedSeat = {
+  name: string;
+  /** Host and path only; the scheme lives in the field, not the value. */
+  url: string;
+  logoName: string;
+};
+
 const X_HANDLE = socialsConfig.find((social) => social.id === "x");
 const X_URL = X_HANDLE?.href ?? "https://x.com/AdiKodez";
 const MAX_LOGO_BYTES = 512 * 1024;
 const ACCEPTED_LOGO_TYPES = ["image/png", "image/jpeg", "image/webp"];
 
+const SHARE_URL = `https://x.com/intent/post?text=${encodeURIComponent(
+  `Just took a seat on ${X_HANDLE?.handle ?? "@AdiKodez"}’s orbit ✦`,
+)}&url=${encodeURIComponent(`${siteConfig.meta.url}/#sponsors`)}`;
+
+const NEXT_STEPS = [
+  {
+    label: "Seat details saved",
+    detail: "Your name, link and logo are committed.",
+    state: "done",
+  },
+  {
+    label: "Deploy running",
+    detail: "The site is rebuilding with your seat in it.",
+    state: "active",
+  },
+  {
+    label: "Live on the orbit",
+    detail: "Usually a minute or two from now.",
+    state: "pending",
+  },
+] as const;
+
 const inputClass =
   "micro-transition min-h-11 w-full min-w-0 rounded-md bg-background px-3 py-2.5 text-sm text-foreground ring-1 ring-inset ring-border " +
   "placeholder:text-muted-foreground hover:ring-muted-foreground/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60";
 const labelClass = "mb-2 block text-sm font-medium text-foreground";
+/**
+ * The page column. Must match COLUMN in page.tsx so the form, the heading and
+ * the footer share one left edge.
+ */
+const COLUMN = "mx-auto w-full max-w-2xl px-4";
 const linkClass =
   "micro-transition rounded-sm text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
+const actionClass =
+  "micro-transition inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+
+/** One receipt line. `div` inside `dl` is valid and keeps the pair aligned. */
+function SummaryRow({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-baseline justify-between gap-4 py-2.5">
+      <dt className="shrink-0 font-mono text-[11px] text-muted-foreground">{label}</dt>
+      <dd className="min-w-0 truncate text-right text-sm">{children}</dd>
+    </div>
+  );
+}
 
 /** Post-payment setup. An email or a receipt payment ID identifies the seat. */
 export function ClaimForm() {
@@ -34,6 +90,7 @@ export function ClaimForm() {
   const [paymentId, setPaymentId] = useState(searchParams.get("payment_id") ?? "");
   const [paymentDetailsOpen, setPaymentDetailsOpen] = useState(Boolean(paymentId.trim()));
   const [status, setStatus] = useState<Status>("idle");
+  const [claimed, setClaimed] = useState<ClaimedSeat | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [logoError, setLogoError] = useState<string | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
@@ -125,6 +182,13 @@ export function ClaimForm() {
         setStatus("idle");
         return;
       }
+      // Keep what was sent so the success view can show it back. The saved
+      // form data is deliberately limited to the receipt details it displays.
+      setClaimed({
+        name: String(data.get("name") ?? "").trim(),
+        url: host,
+        logoName,
+      });
       setStatus("success");
       dirtyRef.current = false;
     } catch {
@@ -135,30 +199,127 @@ export function ClaimForm() {
 
   return (
     <>
-      <div className="mx-auto w-full max-w-2xl px-4 pb-8">
+      <div className={`${COLUMN} pb-8`}>
         {status === "success" ? (
-          <section aria-labelledby="claim-success" className="py-6">
-            <span className="mb-5 inline-flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Check aria-hidden className="size-5" />
-            </span>
-            <h2
-              ref={successRef}
-              id="claim-success"
-              tabIndex={-1}
-              className="w-fit rounded-sm text-base font-medium tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
-            >
-              You’re part of the orbit.
-            </h2>
-            <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground">
-              Your seat details are saved. They go live on the next deploy,
-              usually within a minute or two.
-            </p>
-            <Link
-              href="/#sponsors"
-              className="micro-transition mt-6 inline-flex min-h-11 items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            >
-              Back to the orbit <ArrowRight aria-hidden className="size-4" />
-            </Link>
+          <section aria-labelledby="claim-success" className="pb-2">
+            <motion.div {...revealOnMount({ y: 6 })}>
+              <p className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 font-mono text-[11px] text-primary ring-1 ring-inset ring-primary/25">
+                <Check aria-hidden className="size-3" />
+                Seat claimed
+              </p>
+              <h2
+                ref={successRef}
+                id="claim-success"
+                tabIndex={-1}
+                className="mt-3 w-fit rounded-sm text-base font-medium tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+              >
+                You’re in, right beside Bit.
+              </h2>
+              <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
+                Your details are saved and a deploy is already on its way.
+                There is nothing else for you to do.
+              </p>
+
+              <div className="mt-7 border-t border-dashed pt-6">
+                <p className="text-sm font-medium tracking-tight">What you saved</p>
+                <dl className="mt-2 divide-y divide-dashed">
+                  <SummaryRow label="Display name">
+                    {claimed?.name || (
+                      <span className="text-muted-foreground">Left as it was</span>
+                    )}
+                  </SummaryRow>
+                  <SummaryRow label="Link">
+                    {claimed?.url ? (
+                      <a
+                        href={`https://${claimed.url}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`${linkClass} inline-flex max-w-full items-center gap-1`}
+                      >
+                        <span className="truncate">{claimed.url}</span>
+                        <ArrowUpRight aria-hidden className="size-3.5 shrink-0" />
+                        <span className="sr-only">, opens in a new tab</span>
+                      </a>
+                    ) : (
+                      <span className="text-muted-foreground">None added</span>
+                    )}
+                  </SummaryRow>
+                  <SummaryRow label="Logo">
+                    {claimed?.logoName || (
+                      <span className="text-muted-foreground">Generated avatar kept</span>
+                    )}
+                  </SummaryRow>
+                </dl>
+              </div>
+
+              <div className="mt-7 border-t border-dashed pt-6">
+                <p className="text-sm font-medium tracking-tight">What happens next</p>
+                <ol className="mt-3 space-y-3">
+                  {NEXT_STEPS.map((step) => (
+                    <li key={step.label} className="flex items-start gap-3">
+                      <span
+                        aria-hidden="true"
+                        className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full ${
+                          step.state === "done"
+                            ? "bg-primary text-primary-foreground"
+                            : step.state === "active"
+                              ? "ring-1 ring-inset ring-primary/50"
+                              : "ring-1 ring-inset ring-border"
+                        }`}
+                      >
+                        {step.state === "done" ? (
+                          <Check className="size-3" />
+                        ) : (
+                          <span
+                            className={`size-1.5 rounded-full ${
+                              step.state === "active"
+                                ? "bg-primary motion-safe:animate-pulse"
+                                : "bg-muted-foreground/40"
+                            }`}
+                          />
+                        )}
+                      </span>
+                      <span className="min-w-0">
+                        <span
+                          className={`block text-sm ${
+                            step.state === "pending" ? "text-muted-foreground" : "text-foreground"
+                          }`}
+                        >
+                          {step.label}
+                        </span>
+                        <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
+                          {step.detail}
+                        </span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div className="mt-7 border-t border-dashed pt-5">
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Link
+                    href="/#sponsors"
+                    className={`${actionClass} bg-primary text-primary-foreground hover:bg-primary/90`}
+                  >
+                    See the orbit <ArrowRight aria-hidden className="size-4" />
+                  </Link>
+                  <a
+                    href={SHARE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${actionClass} bg-background ring-1 ring-inset ring-border hover:bg-muted`}
+                  >
+                    Share on X <ArrowUpRight aria-hidden className="size-4" />
+                    <span className="sr-only">, opens in a new tab</span>
+                  </a>
+                </div>
+                <p className="mt-3 text-pretty text-xs leading-relaxed text-muted-foreground">
+                  The seat is permanent. Nothing renews, nothing expires, and
+                  there is nothing to manage.
+                </p>
+              </div>
+            </motion.div>
           </section>
         ) : (
           <form
@@ -343,18 +504,22 @@ export function ClaimForm() {
         )}
       </div>
 
-      <footer className="relative border-t border-dashed bg-muted/15 px-4 pb-6 pt-8 text-center">
-        <h2 className="text-balance text-base font-medium tracking-tight">Bit’s got good company.</h2>
-        <p className="mx-auto mt-2 max-w-xs text-pretty text-sm leading-relaxed text-muted-foreground">
-          Thanks for backing the work. You help keep the components free and the little experiments going.
-        </p>
-        <div className="mx-auto mt-6 flex max-w-sm flex-col items-center gap-1 text-xs leading-relaxed text-muted-foreground">
-          <p>{status === "success" ? "Need to change something later?" : "Just paid? Your seat may take a minute or two to register."}</p>
-          <a href={X_URL} target="_blank" rel="noopener noreferrer" className={`${linkClass} inline-flex min-h-9 items-center gap-1.5`}>
-            {status === "success" ? "DM me on X" : "Need a hand? DM me"}
-            <ArrowUpRight aria-hidden className="size-3.5" />
-            <span className="sr-only">{status === "success" ? "" : " on X"}{X_HANDLE ? ` (${X_HANDLE.handle})` : ""}, opens in a new tab</span>
-          </a>
+      {/* mt-auto pins the band to the bottom of the min-h-dvh frame, so the
+          short success state does not leave the frame hanging mid-page. */}
+      <footer className="mt-auto border-t border-dashed bg-muted/15 py-8 text-center">
+        <div className={COLUMN}>
+          <h2 className="text-balance text-base font-medium tracking-tight">Bit’s got good company.</h2>
+          <p className="mx-auto mt-2 max-w-md text-pretty text-sm leading-relaxed text-muted-foreground">
+            Thanks for backing the work. You help keep the components free and the little experiments going.
+          </p>
+          <div className="mx-auto mt-6 flex flex-col items-center gap-1 text-xs leading-relaxed text-muted-foreground">
+            <p>{status === "success" ? "Need to change something later?" : "Just paid? Your seat may take a minute or two to register."}</p>
+            <a href={X_URL} target="_blank" rel="noopener noreferrer" className={`${linkClass} inline-flex min-h-9 items-center gap-1.5`}>
+              {status === "success" ? "DM me on X" : "Need a hand? DM me"}
+              <ArrowUpRight aria-hidden className="size-3.5" />
+              <span className="sr-only">{status === "success" ? "" : " on X"}{X_HANDLE ? ` (${X_HANDLE.handle})` : ""}, opens in a new tab</span>
+            </a>
+          </div>
         </div>
       </footer>
     </>
