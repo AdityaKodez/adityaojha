@@ -1,5 +1,5 @@
 import { TestimonialsGrid } from "@/components/landing/testimonials-grid";
-import { TestimonialsMarquee } from "@/components/landing/testimonials";
+import { SponsorsSection } from "@/components/landing/sponsors";
 import { getAllTestimonials } from "@/config/testimonials";
 import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
@@ -96,7 +96,7 @@ export default function TestimonialsPage() {
   return (
     <main
       id="testimonials"
-      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-14 pb-12"
+      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-14"
     >
       <script
         type="application/ld+json"
@@ -120,10 +120,7 @@ export default function TestimonialsPage() {
         <TestimonialsGrid testimonials={testimonials} />
       </section>
 
-      <section className="overflow-hidden border-t border-dashed">
-        <h2 className="sr-only">From the community</h2>
-        <TestimonialsMarquee reverse />
-      </section>
+      <SponsorsSection />
     </main>
   );
 }

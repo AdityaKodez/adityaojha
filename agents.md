@@ -159,7 +159,8 @@ The home page is a loop, not a hand-written layout.
   testimonials, bookmarks, socials, sponsors. Certifications, experience,
   services, workflow and contact exist but are flagged off. The `sponsors`
   section (orbit around the Bit mascot) also renders at the bottom of
-  `/components`; there is deliberately no standalone sponsor route.
+  `/components` and `/testimonials`; there is deliberately no standalone
+  sponsor route.
 - `components` is a teaser, not the showcase: it previews
   `componentsSectionConfig.previewCount` registry entries and ends in a
   `see all n components` link to `/components`. Keep it that way, the full

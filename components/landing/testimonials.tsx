@@ -14,8 +14,8 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { BsArrowUpRightCircle } from "react-icons/bs";
 
-const MARQUEE_SPEED = 80;
-const MARQUEE_SPEED_HOVER = 30;
+const MARQUEE_SPEED = 64;
+const MARQUEE_SPEED_HOVER = 24;
 
 const enabledTestimonials = getEnabledTestimonials();
 const marqueeSplit = Math.ceil(enabledTestimonials.length / 2);
@@ -55,20 +55,6 @@ function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
           </div>
         </CardContent>
       </Card>
-    </div>
-  );
-}
-
-export function TestimonialsMarquee({
-  reverse = false,
-}: {
-  reverse?: boolean;
-}) {
-  return (
-    <div className="relative px-6">
-      <TestimonialsTrack items={enabledTestimonials} reverse={reverse} />
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-linear-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-linear-to-l from-background to-transparent" />
     </div>
   );
 }
