@@ -23,8 +23,14 @@ const DODO_BASE =
 const MAX_LOGO_BYTES = 512 * 1024;
 const ACCEPTED_LOGO_TYPES = ["image/png", "image/jpeg", "image/webp"];
 
-function error(message: string, status: number) {
-  return NextResponse.json({ error: message }, { status });
+/** Codes the claim form uses to offer checkout when nothing to claim exists. */
+type ClaimErrorCode = "no-payment" | "not-registered";
+
+function error(message: string, status: number, code?: ClaimErrorCode) {
+  return NextResponse.json(
+    code ? { error: message, code } : { error: message },
+    { status },
+  );
 }
 
 async function dodoGet(path: string): Promise<Response | null> {
@@ -94,30 +100,38 @@ async function findPaidPaymentsByEmail(email: string): Promise<string[]> {
     .filter((id): id is string => typeof id === "string");
 }
 
-async function verifyPayment(paymentId: string): Promise<string | null> {
-  if (!API_KEY) return "Payments are not configured.";
+type PaymentCheck = { error: string; code?: ClaimErrorCode } | null;
+
+async function verifyPayment(paymentId: string): Promise<PaymentCheck> {
+  if (!API_KEY) return { error: "Payments are not configured." };
 
   const response = await dodoGet(`/payments/${paymentId}`);
-  if (!response) return "The payment could not be verified. Try again.";
+  if (!response) return { error: "The payment could not be verified. Try again." };
 
   if (response.status === 404) {
-    return "That payment id does not match a payment.";
+    return {
+      error: "That payment id does not match a payment.",
+      code: "no-payment",
+    };
   }
   if (!response.ok) {
-    return "The payment could not be verified. Try again.";
+    return { error: "The payment could not be verified. Try again." };
   }
 
   const payment = (await response.json().catch(() => null)) as Record<
     string,
     unknown
   > | null;
-  if (!payment) return "The payment could not be verified. Try again.";
+  if (!payment) return { error: "The payment could not be verified. Try again." };
 
   if (payment.status !== "succeeded") {
-    return "This payment has not completed yet.";
+    return { error: "This payment has not completed yet." };
   }
   if (!hasOrbitSeat(payment)) {
-    return "This payment is not for an orbit seat.";
+    return {
+      error: "This payment is not for an orbit seat.",
+      code: "no-payment",
+    };
   }
 
   return null;
@@ -145,7 +159,7 @@ export async function POST(request: Request) {
       return error("A valid payment id is required.", 400);
     }
     const paymentError = await verifyPayment(paymentIdInput);
-    if (paymentError) return error(paymentError, 409);
+    if (paymentError) return error(paymentError.error, 409, paymentError.code);
     candidates = [paymentIdInput];
   } else if (email) {
     if (!API_KEY) return error("Payments are not configured.", 503);
@@ -154,6 +168,7 @@ export async function POST(request: Request) {
       return error(
         "No completed orbit seat payment found for that email.",
         409,
+        "no-payment",
       );
     }
   } else {
@@ -168,6 +183,7 @@ export async function POST(request: Request) {
     return error(
       "The seat is not registered yet. It appears a minute or two after payment, then you can claim it.",
       409,
+      "not-registered",
     );
   }
   if (resolved === "already-claimed") {
@@ -223,6 +239,7 @@ export async function POST(request: Request) {
       return error(
         "The seat is not registered yet. It appears a minute or two after payment, then you can claim it.",
         409,
+        "not-registered",
       );
     case "already-claimed":
       return error("This seat has already been claimed.", 409);

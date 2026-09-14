@@ -2,6 +2,7 @@
 
 import { siteConfig } from "@/config/site";
 import { socialsConfig } from "@/config/socials";
+import { sponsorTiers } from "@/config/sponsors";
 import { revealOnMount } from "@/lib/motion";
 import {
   ArrowRight,
@@ -19,6 +20,13 @@ import { useEffect, useRef, useState } from "react";
 
 type Status = "idle" | "submitting" | "success";
 
+type ClaimErrorCode = "no-payment" | "not-registered";
+
+type ClaimError = {
+  message: string;
+  code?: ClaimErrorCode;
+};
+
 /** What the seat now carries, kept from the submitted form for the receipt. */
 type ClaimedSeat = {
   name: string;
@@ -31,6 +39,11 @@ const X_HANDLE = socialsConfig.find((social) => social.id === "x");
 const X_URL = X_HANDLE?.href ?? "https://x.com/AdiKodez";
 const MAX_LOGO_BYTES = 512 * 1024;
 const ACCEPTED_LOGO_TYPES = ["image/png", "image/jpeg", "image/webp"];
+const CHECKOUT_HREF = "/api/sponsor-checkout";
+const SEAT_PRICE =
+  sponsorTiers.find((tier) => tier.enabled !== false)?.price ??
+  sponsorTiers[0]?.price ??
+  5;
 
 const SHARE_URL = `https://x.com/intent/post?text=${encodeURIComponent(
   `Just took a seat on ${X_HANDLE?.handle ?? "@AdiKodez"}’s orbit ✦`,
@@ -91,13 +104,14 @@ export function ClaimForm() {
   const [paymentDetailsOpen, setPaymentDetailsOpen] = useState(Boolean(paymentId.trim()));
   const [status, setStatus] = useState<Status>("idle");
   const [claimed, setClaimed] = useState<ClaimedSeat | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<ClaimError | null>(null);
+  const [checkingOut, setCheckingOut] = useState(false);
   const [logoError, setLogoError] = useState<string | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [logoName, setLogoName] = useState("");
   const [link, setLink] = useState("");
   const logoInputRef = useRef<HTMLInputElement>(null);
-  const errorRef = useRef<HTMLParagraphElement>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
   const successRef = useRef<HTMLHeadingElement>(null);
   const dirtyRef = useRef(false);
 
@@ -177,8 +191,14 @@ export function ClaimForm() {
         body: data,
       });
       if (!response.ok) {
-        const body = (await response.json().catch(() => null)) as { error?: string } | null;
-        setError(body?.error ?? "The claim could not be saved. Try again.");
+        const body = (await response.json().catch(() => null)) as {
+          error?: string;
+          code?: ClaimErrorCode;
+        } | null;
+        setError({
+          message: body?.error ?? "The claim could not be saved. Try again.",
+          code: body?.code,
+        });
         setStatus("idle");
         return;
       }
@@ -192,7 +212,9 @@ export function ClaimForm() {
       setStatus("success");
       dirtyRef.current = false;
     } catch {
-      setError("The claim could not be saved. Check your connection and try again.");
+      setError({
+        message: "The claim could not be saved. Check your connection and try again.",
+      });
       setStatus("idle");
     }
   }
@@ -481,10 +503,61 @@ export function ClaimForm() {
 
             <div className="mt-7 border-t border-dashed pt-5">
               {error && (
-                <p ref={errorRef} tabIndex={-1} role="alert" className="mb-4 flex items-start gap-2 rounded-md bg-destructive/5 p-3 text-xs leading-relaxed text-destructive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive">
-                  <CircleAlert aria-hidden className="mt-0.5 size-4 shrink-0" />
-                  <span>{error}</span>
-                </p>
+                <div
+                  ref={errorRef}
+                  tabIndex={-1}
+                  role="alert"
+                  className="mb-4 space-y-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive"
+                >
+                  <p className="flex items-start gap-2 rounded-md bg-destructive/5 p-3 text-xs leading-relaxed text-destructive">
+                    <CircleAlert aria-hidden className="mt-0.5 size-4 shrink-0" />
+                    <span>{error.message}</span>
+                  </p>
+                  {(error.code === "no-payment" || error.code === "not-registered") && (
+                    <div className="rounded-md bg-muted/20 p-3 ring-1 ring-inset ring-border">
+                      <p className="text-sm font-medium tracking-tight">
+                        {error.code === "no-payment"
+                          ? "Need a seat first?"
+                          : "Already paid, or still need a seat?"}
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                        {error.code === "no-payment"
+                          ? `Checkout is $${SEAT_PRICE} once. After paying you will come back here to claim the seat.`
+                          : `If you already paid, wait a minute and try again. If you have not, take a $${SEAT_PRICE} seat and you will return here.`}
+                      </p>
+                      <a
+                        href={CHECKOUT_HREF}
+                        aria-busy={checkingOut}
+                        className={`${actionClass} mt-3 w-full bg-background ring-1 ring-inset ring-border hover:bg-muted ${
+                          checkingOut ? "cursor-wait opacity-60" : ""
+                        }`}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          if (checkingOut) return;
+                          setCheckingOut(true);
+                          // Full-page navigation: the route 302s to Dodo's
+                          // hosted checkout, which a client router would try
+                          // to render instead of following.
+                          window.location.assign(
+                            new URL(CHECKOUT_HREF, window.location.origin),
+                          );
+                        }}
+                      >
+                        {checkingOut ? (
+                          <>
+                            <Loader2 aria-hidden className="size-4 motion-safe:animate-spin" />
+                            Opening checkout…
+                          </>
+                        ) : (
+                          <>
+                            Take a ${SEAT_PRICE} seat
+                            <ArrowUpRight aria-hidden className="size-4" />
+                          </>
+                        )}
+                      </a>
+                    </div>
+                  )}
+                </div>
               )}
               <button
                 type="submit"
