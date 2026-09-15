@@ -23,12 +23,7 @@ const marqueeTop = enabledTestimonials.slice(0, marqueeSplit);
 const marqueeBottom = enabledTestimonials.slice(marqueeSplit);
 
 function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
-  return (
-    <div className="w-85 md:w-87.5 py-2.5 md:py-3">
-      {/* Hover tint is intentional: it signals the marquee slowdown
-          (speedOnHover), not clickability. Deliberately no cursor-pointer
-          here. These quotes have no source links, and advertising a
-          click that does nothing generates PostHog $dead_click events. */}
+  const card = (
       <Card className="h-full bg-background hover:bg-muted/50 transition-colors rounded-none">
         <CardContent className="p-3 flex flex-col gap-2 h-full">
           <p className="text-sm text-muted-foreground leading-tight flex-1">
@@ -55,6 +50,23 @@ function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
           </div>
         </CardContent>
       </Card>
+  );
+
+  return (
+    <div className="w-85 md:w-87.5 py-2.5 md:py-3">
+      {testimonial.href ? (
+        <a
+          href={testimonial.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block h-full"
+          aria-label={`Open original post from ${testimonial.name}`}
+        >
+          {card}
+        </a>
+      ) : (
+        card
+      )}
     </div>
   );
 }

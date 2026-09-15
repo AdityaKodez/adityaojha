@@ -154,6 +154,8 @@ export interface Testimonial {
   content: string;
   avatar: string;
   image: string;
+  /** Permalink to the original X or Reddit post, when one exists. */
+  href?: string;
   order: number;
   enabled?: boolean;
 }

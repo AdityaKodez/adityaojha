@@ -126,7 +126,7 @@ All types live in `config/types.ts`.
   `enabled`, `action` (`copy`, `external`, `mailto`), `copyValue`,
   `shortcutKey`, `tooltipDefault`.
 - **`Testimonial`**, `id`, `name`, `role`, `content`, `avatar`, `image`,
-  `order`, `enabled`.
+  `href` (optional), `order`, `enabled`.
 - **`Project`**, `id`, `title`, `description`, `content`, `image`, `imageAlt`,
   `liveUrl`, `githubUrl`, `year`, `status` (`building`, `new`, `shipped`),
   `category`, `tags`, `metrics` (icon `users` or `chart`, plus `label`),

@@ -3,6 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { Testimonial } from "@/config/types";
 import { reveal, revealDelay } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 
 /**
@@ -27,13 +28,25 @@ export function TestimonialsGrid({
             y: 8,
             delay: revealDelay(index, 0.04),
           })}
-          className="group relative flex flex-col px-4 py-5 transition-colors hover:bg-muted/10"
+          className={cn(
+            "group relative flex flex-col px-4 py-5 transition-colors hover:bg-muted/10",
+            testimonial.href && "cursor-pointer",
+          )}
         >
           <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5" />
           <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-50 transition-opacity group-hover:opacity-100" />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-foreground/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
 
           <div className="relative z-10 flex flex-1 flex-col">
+            {testimonial.href ? (
+              <a
+                href={testimonial.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute inset-0 z-20"
+                aria-label={`Open original post from ${testimonial.name}`}
+              />
+            ) : null}
             <blockquote className="text-sm leading-snug text-muted-foreground">
               &ldquo;{testimonial.content}&rdquo;
             </blockquote>
