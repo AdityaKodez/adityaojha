@@ -38,6 +38,48 @@ const RUNNERS: Record<PackageManager, string> = {
   bun: "bunx --bun shadcn@latest",
 };
 
+/** Install prefix per package manager for plain npm dependencies. */
+const INSTALLERS: Record<PackageManager, string> = {
+  npm: "npm install",
+  pnpm: "pnpm add",
+  yarn: "yarn add",
+  bun: "bun add",
+};
+
+/**
+ * Per-package-manager install commands for a registry item's npm dependencies.
+ * Returns null when the item has none, so callers can skip the block entirely.
+ */
+export function getDependencyCommands(
+  dependencies: readonly string[],
+): Record<PackageManager, string> | null {
+  if (dependencies.length === 0) return null;
+  const packages = dependencies.join(" ");
+  return {
+    npm: `${INSTALLERS.npm} ${packages}`,
+    pnpm: `${INSTALLERS.pnpm} ${packages}`,
+    yarn: `${INSTALLERS.yarn} ${packages}`,
+    bun: `${INSTALLERS.bun} ${packages}`,
+  };
+}
+
+/**
+ * Per-package-manager `shadcn add` commands for the shadcn primitives an item
+ * depends on (`registryDependencies`). Returns null when there are none.
+ */
+export function getPrimitiveCommands(
+  registryDependencies: readonly string[],
+): Record<PackageManager, string> | null {
+  if (registryDependencies.length === 0) return null;
+  const items = registryDependencies.join(" ");
+  return {
+    npm: `${RUNNERS.npm} add ${items}`,
+    pnpm: `${RUNNERS.pnpm} add ${items}`,
+    yarn: `${RUNNERS.yarn} add ${items}`,
+    bun: `${RUNNERS.bun} add ${items}`,
+  };
+}
+
 /** Direct item URL. Kept for the published registry docs and as the no-index fallback. */
 export function getItemUrl(id: string): string {
   return `${siteUrl}/r/${id}.json`;

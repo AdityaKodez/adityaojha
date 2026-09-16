@@ -174,6 +174,18 @@ export const componentRegistry: ComponentDoc[] = [
     enabled: true,
   },
   {
+    id: "workflow-status",
+    title: "Workflow Status",
+    description:
+      "Compact, semantic workflow badges with two sizes, clear icons, custom labels, and an icon-only form for dense interfaces.",
+    icon: "status",
+    demoPath: "app/components/[id]/demos/workflow-status-demo.tsx",
+    docPath: "content/components/workflow-status.md",
+    order: 17,
+    enabled: true,
+    new: true,
+  },
+  {
     id: "progressive-blur",
     title: "Progressive Blur",
     description:

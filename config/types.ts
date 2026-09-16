@@ -314,7 +314,8 @@ export type ComponentIcon =
   | "command"
   | "sparkles"
   | "models"
-  | "stack";
+  | "stack"
+  | "status";
 
 export interface ComponentDoc {
   id: string;

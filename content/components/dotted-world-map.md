@@ -66,7 +66,3 @@ export function VisitorsMap() {
 - **Land-only dots.** The background uses a compact Natural Earth land mask, so oceans remain clear instead of forming a rectangular dot field.
 - **Theming.** The default color scale is a green → red heat ramp. For theme-aware colors, pass the same `--heatmap-level-*` CSS variables used by `components/ui/github-map.tsx` via the `colors` prop.
 - **Custom projections.** The component uses an equirectangular projection. If you need a different projection (Mercator, orthographic globe, Robinson), fork the projection math — lat/lng → x/y happens in two small spots inside the file.
-
-## Manual installation
-
-The CLI is the supported path. If you would rather not use it, copy `components/ui/dotted-world-map.tsx` into your project. It is self-contained: the only imports are `cn` from `@/lib/utils` and the shadcn `tooltip` primitive, so make sure both exist before dropping the file in.

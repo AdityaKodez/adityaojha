@@ -54,7 +54,3 @@ export type CarouselItem = {
 - **Keyboard Navigation.** Supports standard WAI-ARIA keys: `ArrowLeft`, `ArrowRight`, `Home` (first slide), and `End` (last slide).
 - **Touch Gesture Safety.** Threshold angle checks distinguish between intentional horizontal swipes and vertical page scrolling.
 - **Pagination Controls.** Includes interactive progress pill dots and a padded tabular count display (`01 / 04`).
-
-## Manual installation
-
-Copy `components/ui/carousel.tsx` into your project. Ensure `motion` is installed.

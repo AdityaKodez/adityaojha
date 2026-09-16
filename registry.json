@@ -432,6 +432,37 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "workflow-status",
+      "type": "registry:ui",
+      "title": "Workflow Status",
+      "description": "Compact, semantic workflow badges with two sizes, clear icons, custom labels, and an icon-only form for dense interfaces.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "status",
+        "workflow",
+        "badge",
+        "accessibility"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/workflow-status",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/workflow-status.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/workflow-status.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/workflow-status\n```\n\n## Usage\n\n```tsx\nimport { WorkflowStatusBadge } from \"@/components/ui/workflow-status\";\n\nexport function DeploymentState() {\n  return <WorkflowStatusBadge status=\"in-progress\" />;\n}\n```\n\nPass any of the built-in semantic states: `pending`, `in-progress`, `submitted`, `in-review`, `success`, `failed`, or `expired`. Use `label` for product-specific language, or `iconOnly` for compact interface areas."
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "glyph-card",
       "type": "registry:ui",
       "title": "Glyph Card",

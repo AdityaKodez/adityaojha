@@ -9,6 +9,7 @@ import remarkGfm from "remark-gfm";
 
 import { getComponentIcon } from "@/components/showcase/component-icons";
 import { InstallCommand } from "@/components/showcase/copy-block";
+import { ManualInstall } from "@/components/showcase/manual-install";
 import { HomeSectionRail } from "@/components/landing/home-section-rail";
 import { markdownComponents } from "@/lib/markdown/markdown-components";
 import type { RailItem } from "@/components/section-rail";
@@ -206,6 +207,12 @@ export default async function ComponentDetailPage({
       <div className="border-t border-dashed prose prose-neutral dark:prose-invert max-w-none px-6 py-6 [&_a]:text-primary [&_code]:text-foreground [&_table]:w-full">
         {renderedDocs}
       </div>
+
+      {/* Manual installation — dependencies and the actual source, from registry.json. */}
+      <ManualInstall
+        componentId={component.id}
+        componentTitle={component.title}
+      />
 
       {/* Examples carousel */}
       <ComponentExamples id={component.id} />

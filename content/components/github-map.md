@@ -39,7 +39,3 @@ export function ActivitySection() {
 - **Accessible Tooltips.** Each individual day cell wraps a floating Shadcn tooltip displaying the formatted date (e.g. `Sep 13, 2025: 5 contributions`) for hover and screen readers.
 - **Theme-Aware Color Palettes.** Uses CSS custom variables (`--heatmap-level-*`) by default, seamlessly adapting to light, dark, and custom themes.
 - **Legend Included.** Renders a "Less &rarr; More" intensity swatch legend below the calendar grid.
-
-## Manual installation
-
-Copy `components/ui/github-map.tsx` into your project. Ensure `date-fns`, `motion`, and the shadcn `tooltip` primitive are installed.

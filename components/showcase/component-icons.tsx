@@ -424,6 +424,29 @@ const ModelPickerIcon = ({
   </svg>
 );
 
+const WorkflowStatusIcon = ({
+  size = 24,
+  color = "currentColor",
+  ...props
+}: ComponentIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <circle cx="12" cy="12" r="8.5" strokeOpacity="0.35" />
+    <path d="m8.5 12 2.3 2.3 4.8-5.1" />
+    <circle cx="18.5" cy="5.5" r="1.5" fill={color} stroke="none" />
+  </svg>
+);
+
 const SparklesIcon = ({
   size = 24,
   color = "currentColor",
@@ -463,6 +486,7 @@ export {
   CommandPaletteIcon,
   SparklesIcon,
   ModelPickerIcon,
+  WorkflowStatusIcon,
 };
 
 /** Maps a `ComponentDoc.icon` key onto its icon component. */
@@ -498,6 +522,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return SparklesIcon;
     case "models":
       return ModelPickerIcon;
+    case "status":
+      return WorkflowStatusIcon;
     case "globe":
     default:
       return DottedWorldMapIcon;

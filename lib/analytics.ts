@@ -52,6 +52,14 @@ export type EventMap = {
   component_demo_source_copied: {
     component_id: string;
   };
+  component_source_copied: {
+    component_id: string;
+    file: string;
+  };
+  component_source_expanded: {
+    component_id: string;
+    file: string;
+  };
   package_manager_changed: {
     selected_manager: string;
     component_id?: string;

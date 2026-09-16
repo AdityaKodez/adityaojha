@@ -45,7 +45,3 @@ export function Contact() {
 - **Icons as nodes.** Icons are plain `ReactNode`s, so any icon set works — lucide, react-icons, or local SVG components. Nothing is imported on your behalf.
 - **Hairline grid.** The wrapper draws the top and left rules, each cell draws its bottom and right rule — one border per edge, dashed to match the blueprint language.
 - **Accessible.** Every cell is a real `<button>` or `<a>` with visible focus rings and tooltip labels.
-
-## Manual installation
-
-Copy `components/ui/contact-channels.tsx` into your project. Ensure `lucide-react` is installed and that the shadcn `tooltip` primitive is available (install it with `npx shadcn@latest add tooltip`).

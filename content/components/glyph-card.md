@@ -123,8 +123,3 @@ own card.
 - **Sizing.** The card fills its container's height (`h-full`) and reserves
   vertical space proportional to `glyphSize`. Put it in a grid cell or give the
   wrapper an explicit height.
-
-## Manual installation
-
-Copy `components/ui/glyph-card.tsx` into your project and install `motion` and
-`lucide-react`. The component is a client component and needs no provider.

@@ -33,7 +33,3 @@ export function InstallationGuide() {
 - **Global Package Preference Sync.** Remembers the selected package manager in `localStorage` so switching from npm to pnpm on one card updates all command blocks across the site.
 - **Copy Feedback State.** Provides visual icon feedback (Check / Error / Copy) accompanied by a tooltip.
 - **Blueprint Styling.** Features dashed border outlines, subtle inner rings, and blueprint grid background.
-
-## Manual installation
-
-Copy `components/ui/copy-command-block.tsx` into your project. Ensure `lucide-react`, `motion`, and the shadcn `tooltip` component are present.

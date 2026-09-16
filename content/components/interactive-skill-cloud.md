@@ -37,12 +37,6 @@ export function TechStack() {
 - **Reduced-motion safe.** Under `prefers-reduced-motion`, and on the server, it renders a static wrapped cloud instead of running the physics loop.
 - **Self-contained.** Icons are passed as props — the component only imports matter.js and your icons.
 
-## Manual installation
+## Setup notes
 
-Copy `components/ui/interactive-skill-cloud.tsx` into your project. Ensure `matter-js` is installed:
-
-```bash
-npm install matter-js
-```
-
-The component uses `@types/matter-js` for TypeScript projects. It requires a client component (`"use client"`); there is no server-side physics.
+TypeScript projects also want `@types/matter-js`. The physics loop runs on the client only, so the file is a client component; there is no server-side physics.

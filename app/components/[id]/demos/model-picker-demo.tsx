@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   defaultModelProviders,
   ModelPicker,
-} from "@/components/ui/model-picker";
+} from "../../../../components/ui/model-picker";
 
 export function ModelPickerDemo() {
   const [modelId, setModelId] = useState("grok-4.6");
@@ -21,3 +21,5 @@ export function ModelPickerDemo() {
     </div>
   );
 }
+
+export default ModelPickerDemo;

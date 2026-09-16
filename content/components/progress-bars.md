@@ -61,6 +61,6 @@ import { DotProgress } from "@/components/ui/progress-bars";
 - **Reduced motion.** Motion is skipped and final sizes render immediately when the operating system asks for reduced motion.
 - **Responsive.** Vertical columns keep a readable width and scroll horizontally rather than collapsing.
 
-## Manual installation
+## Setup notes
 
-Copy `components/ui/progress-bars.tsx` into your project. Install `motion`, add the shadcn tooltip primitive with `npx shadcn@latest add tooltip`, and mount `TooltipProvider` once near your application root.
+Mount shadcn's `TooltipProvider` once near your application root, otherwise the value tooltips never open.

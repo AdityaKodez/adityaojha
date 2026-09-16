@@ -28,9 +28,9 @@ export function Header() {
 - **Composable.** Pass `className` to strip the border/rounding for embedding in a pill group or navbar strip.
 - **Audio optional.** Omit `audioSrc` for a silent toggle; pass a `.mp3` or `.ogg` URL to match the site's own click sound.
 
-## Manual installation
+## Setup notes
 
-Copy `components/ui/mode-toggler.tsx` into your project. Ensure `next-themes` and `lucide-react` are installed, and that your root layout wraps children with `ThemeProvider`:
+The toggle reads and writes the `next-themes` context, so your root layout has to wrap children with `ThemeProvider`:
 
 ```tsx
 // app/layout.tsx

@@ -516,7 +516,7 @@ export function ProjectExplorer({
                   <ImageIcon className="size-8 stroke-[1.25] text-muted-foreground/60" />
                 </div>
               )}
-              <div className="border-t px-3 py-1.5 font-mono text-[11px] text-muted-foreground">
+              <div className="border-t rounded-t-lg px-3 py-1.5  text-[11px] text-muted-foreground">
                 {activeProject.title}
               </div>
             </div>

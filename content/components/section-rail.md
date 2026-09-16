@@ -107,6 +107,6 @@ Items with an `href` navigate instead of scrolling. Pass `activeId` to pin the c
 - **Stable targets.** IDs must be unique in the document. When `scrollRootRef` is provided, targets outside that element are ignored.
 - **Tooltip setup.** Mount shadcn's `TooltipProvider` once near the root of your application.
 
-## Manual installation
+## Setup notes
 
-Copy `components/section-rail.tsx` into your project. Install the shadcn `tooltip` primitive and ensure the standard `@/lib/utils` `cn` helper is available. The link mode uses Next.js `Link`; replace it with an anchor or your router's link component outside Next.js.
+The source expects the standard `@/lib/utils` `cn` helper. Link mode uses the Next.js `Link` component: outside Next.js, swap it for an anchor or your router's own link.
