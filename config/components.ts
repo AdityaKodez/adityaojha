@@ -177,7 +177,7 @@ export const componentRegistry: ComponentDoc[] = [
     id: "workflow-status",
     title: "Workflow Status",
     description:
-      "Compact, semantic workflow badges with two sizes, clear icons, custom labels, and an icon-only form for dense interfaces.",
+      "Compact workflow badges with semantic defaults, custom states, icon and colour overrides, two sizes, and an icon-only form.",
     icon: "status",
     demoPath: "app/components/[id]/demos/workflow-status-demo.tsx",
     docPath: "content/components/workflow-status.md",

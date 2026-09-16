@@ -35,9 +35,32 @@ For dense interfaces, render the icon-only form. It works with either size. The 
 <WorkflowStatusBadge status="success" iconOnly size="sm" />
 ```
 
+## Custom states
+
+Pass any status string and provide an icon and colour classes for product-specific states. If `label` is omitted, values such as `awaiting_payment` are displayed as “Awaiting payment”.
+
+```tsx
+import { Ban, PackageCheck } from "lucide-react";
+
+<WorkflowStatusBadge
+  status="queued"
+  label="Queued for release"
+  icon={PackageCheck}
+  colorClassName="bg-cyan-500/12 text-cyan-700 dark:text-cyan-300"
+/>
+
+<WorkflowStatusBadge
+  status="cancelled"
+  icon={Ban}
+  colorClassName="bg-orange-500/12 text-orange-700 dark:text-orange-300"
+/>
+```
+
+The exported `workflowStatusPresentations` map is available when filters, menus, or other UI need to reuse the built-in presentation metadata.
+
 ## Status labels
 
-`getWorkflowStatusLabel` returns the default label for a state, so filters and legends beside the badge can reuse the same copy instead of duplicating it.
+`getWorkflowStatusLabel` returns the default or inferred label for a state, so filters and legends beside the badge can reuse the same copy instead of duplicating it.
 
 ```tsx
 import { getWorkflowStatusLabel, workflowStatuses } from "@/components/ui/workflow-status";
@@ -52,8 +75,11 @@ const options = workflowStatuses.map((status) => ({
 
 | Prop | Type | Default | Notes |
 | --- | --- | --- | --- |
-| `status` | `WorkflowStatus` | required | Selects the label, icon, and semantic presentation. |
+| `status` | `WorkflowStatusValue` | required | Selects a built-in state or identifies a custom state. |
 | `label` | `string` | state label | Replaces the visible and accessible label. |
+| `icon` | `LucideIcon` | state icon | Replaces the built-in icon. Custom states fall back to `CircleDashed`. |
+| `colorClassName` | `string` | state colours | Replaces the badge background and foreground colour classes. |
+| `iconClassName` | `string` | | Adds classes to the icon without changing the badge. |
 | `size` | `"sm" \| "default"` | `"default"` | Reduces the badge and icon footprint when set to `"sm"`. |
 | `iconOnly` | `boolean` | `false` | Renders a circular badge without visible text. |
 | `className` | `string` | | Extra classes for placement and spacing. |
@@ -63,5 +89,6 @@ const options = workflowStatuses.map((status) => ({
 - **Semantic states.** Every built-in state pairs a distinct icon and colour, so users do not need to decode colour alone.
 - **No wrapper.** The component only renders the badge. Use a list, table, or card around it according to your layout.
 - **Accessible by default.** The icon is decorative and the visible label carries the state. Icon-only badges keep that label as visually hidden text rather than an `aria-label`, which is not reliably exposed on a generic element.
-- **Predictable overrides.** Classes merge through `tailwind-merge`, so anything you pass in `className` replaces the matching default instead of sitting next to it.
+- **Custom states.** Use any status string with `icon` and `colorClassName`, or reuse and extend the exported `workflowStatusPresentations` map.
+- **Predictable overrides.** Colour overrides are explicit through `colorClassName`; layout overrides remain in `className`. Both merge through `tailwind-merge`.
 - **Reduced motion.** Only the in-progress icon spins. Operating-system reduced-motion preferences stop the browser animation.

@@ -23,12 +23,19 @@ export const workflowStatuses = [
 ] as const;
 
 export type WorkflowStatus = (typeof workflowStatuses)[number];
+export type WorkflowStatusValue = WorkflowStatus | (string & {});
 export type WorkflowStatusBadgeSize = "sm" | "default";
 
 export interface WorkflowStatusBadgeProps extends ComponentProps<"span"> {
-  status: WorkflowStatus;
-  /** Overrides the default label for the selected state. */
+  status: WorkflowStatusValue;
+  /** Overrides the default or inferred label for the selected state. */
   label?: string;
+  /** Replaces the state's default icon. */
+  icon?: LucideIcon;
+  /** Replaces the state's background and foreground colour classes. */
+  colorClassName?: string;
+  /** Adds classes to the icon. */
+  iconClassName?: string;
   /** Reduces the badge footprint for dense interfaces. */
   size?: WorkflowStatusBadgeSize;
   /**
@@ -45,7 +52,10 @@ type StatusPresentation = {
   iconClassName?: string;
 };
 
-const STATUS_PRESENTATIONS: Record<WorkflowStatus, StatusPresentation> = {
+export const workflowStatusPresentations: Record<
+  WorkflowStatus,
+  StatusPresentation
+> = {
   pending: {
     label: "Pending",
     icon: AlertTriangle,
@@ -55,7 +65,6 @@ const STATUS_PRESENTATIONS: Record<WorkflowStatus, StatusPresentation> = {
     label: "In progress",
     icon: CircleDashed,
     className: "bg-sky-500/12 text-sky-700 dark:text-sky-300",
-    
   },
   submitted: {
     label: "Submitted",
@@ -85,8 +94,19 @@ const STATUS_PRESENTATIONS: Record<WorkflowStatus, StatusPresentation> = {
 };
 
 /** Default label for a state. Useful for filters and legends built alongside the badge. */
-export function getWorkflowStatusLabel(status: WorkflowStatus): string {
-  return STATUS_PRESENTATIONS[status].label;
+export function getWorkflowStatusLabel(status: WorkflowStatusValue): string {
+  return isWorkflowStatus(status)
+    ? workflowStatusPresentations[status].label
+    : humanizeStatus(status);
+}
+
+function isWorkflowStatus(status: WorkflowStatusValue): status is WorkflowStatus {
+  return status in workflowStatusPresentations;
+}
+
+function humanizeStatus(status: string) {
+  const label = status.trim().replace(/[-_]+/g, " ");
+  return label ? label.charAt(0).toUpperCase() + label.slice(1) : "Status";
 }
 
 function cn(...inputs: ClassValue[]) {
@@ -100,14 +120,19 @@ function cn(...inputs: ClassValue[]) {
 export function WorkflowStatusBadge({
   status,
   label,
+  icon,
+  colorClassName,
+  iconClassName,
   size = "default",
   iconOnly = false,
   className,
   ...props
 }: WorkflowStatusBadgeProps) {
-  const presentation = STATUS_PRESENTATIONS[status];
-  const Icon = presentation.icon;
-  const resolvedLabel = label ?? presentation.label;
+  const presentation = isWorkflowStatus(status)
+    ? workflowStatusPresentations[status]
+    : undefined;
+  const Icon = icon ?? presentation?.icon ?? CircleDashed;
+  const resolvedLabel = label ?? presentation?.label ?? humanizeStatus(status);
 
   return (
     <span
@@ -121,7 +146,9 @@ export function WorkflowStatusBadge({
           : size === "sm"
             ? "min-h-6 gap-1 rounded-lg px-2 py-1 text-xs"
             : "min-h-8 gap-1.5 rounded-xl px-3 py-1.5 text-sm",
-        presentation.className,
+        colorClassName ??
+          presentation?.className ??
+          "bg-muted text-muted-foreground",
         className,
       )}
       {...props}
@@ -132,7 +159,8 @@ export function WorkflowStatusBadge({
         className={cn(
           "shrink-0 motion-reduce:animate-none",
           size === "sm" ? "size-3.5" : "size-4.5",
-          presentation.iconClassName,
+          presentation?.iconClassName,
+          iconClassName,
         )}
       />
       {iconOnly ? <span className="sr-only">{resolvedLabel}</span> : resolvedLabel}

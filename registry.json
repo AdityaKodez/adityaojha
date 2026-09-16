@@ -435,7 +435,7 @@
       "name": "workflow-status",
       "type": "registry:ui",
       "title": "Workflow Status",
-      "description": "Compact, semantic workflow badges with two sizes, clear icons, custom labels, and an icon-only form for dense interfaces.",
+      "description": "Compact workflow badges with semantic defaults, custom states, icon and colour overrides, two sizes, and an icon-only form.",
       "author": "Aditya Ojha <https://akoder.xyz>",
       "categories": [
         "status",
