@@ -27,6 +27,7 @@ import type { SectionId } from "@/config/types";
 import type { ReactElement } from "react";
 import { Suspense } from "react";
 import { HomeAskAI } from "@/components/landing/home-ask-ai";
+import { BottomNav } from "@/components/landing/bottom-nav";
 
 const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   socials: <Social />,
@@ -115,9 +116,10 @@ export default function Home() {
           position="bottom"
           height="calc(80px + env(safe-area-inset-bottom))"
         />
-        <PixelDissolve />
-      </div>
+          <PixelDissolve />
 
+      </div>
+      <BottomNav />
       <div className="fixed bottom-6 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none px-4 sm:px-6 flex justify-end">
         <div className="pointer-events-auto">
           <HomeAskAI />

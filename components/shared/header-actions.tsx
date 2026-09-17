@@ -184,8 +184,8 @@ export function HeaderActions() {
               className="h-8 w-8 cursor-pointer rounded-none border-0 text-muted-foreground transition-colors hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               onClick={() => toggleTheme("button")}
             >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform duration-300 dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform duration-300 dark:rotate-0 dark:scale-100" />
+              <Sun className="h-4 w-4 rotate-0 fill-yellow-400 scale-100 transition-transform duration-300 dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 rotate-90 fill-gray-400 scale-0 transition-transform duration-300 dark:rotate-0 dark:scale-100" />
               <span className="sr-only">
                 {siteConfig.banner.themeToggleLabel}
               </span>
