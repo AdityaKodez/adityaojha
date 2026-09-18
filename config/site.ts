@@ -85,6 +85,11 @@ export const siteConfig: PortfolioConfig = {
         changeFrequency: "monthly",
         priority: 0.6,
       },
+      {
+        url: "https://akoder.xyz/sponsor",
+        changeFrequency: "monthly",
+        priority: 0.6,
+      },
     ],
   },
   personal: {

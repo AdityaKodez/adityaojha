@@ -14,7 +14,9 @@ import { reveal } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Loader2, Plus } from "lucide-react";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { useState } from "react";
+import { BsArrowUpRightCircle } from "react-icons/bs";
 
 const OPEN_SEAT_HINT = "this could be you";
 
@@ -57,8 +59,9 @@ function seatPosition(index: number, seats: number) {
 /**
  * Short sketchy rays radiating off Bit, like a doodled sun. Static by
  * design; the only motion on the center is Bit's own idle animation.
+ * Exported for the /sponsor hero, which puts Bit in the same spotlight.
  */
-function EmitRays({ className }: { className?: string }) {
+export function EmitRays({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 160 160"
@@ -335,9 +338,18 @@ export function SponsorsSection() {
         {heading}
       </motion.h2>
 
-      <p className="truncate px-6 py-2 font-mono text-xs text-muted-foreground">
-        {description}
-      </p>
+      <div className="flex items-center justify-between gap-4 px-6 py-2">
+        <p className="truncate font-mono text-xs text-muted-foreground">
+          {description}
+        </p>
+        <Link
+          href="/sponsor"
+          className="micro-transition flex shrink-0 items-center gap-1.5 rounded-sm font-mono text-xs text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+        >
+          Details
+          <BsArrowUpRightCircle aria-hidden className="size-3.5" />
+        </Link>
+      </div>
 
       <SponsorOrbit seats={seats} sponsors={getEnabledSponsors(seats)} />
     </section>

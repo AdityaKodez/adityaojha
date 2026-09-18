@@ -143,6 +143,11 @@ export type EventMap = {
     url: string;
     location: string;
   };
+  sponsor_cta_clicked: {
+    location: string;
+    surface: "hero" | "tier" | "footer";
+    cta: "checkout" | "claim";
+  };
 };
 
 /**

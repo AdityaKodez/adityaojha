@@ -13,6 +13,7 @@ const ROUTES = [
   { href: "/", label: "Home" },
   { href: "/components", label: "Components" },
   { href: "/testimonials", label: "Testimonials" },
+  { href: "/sponsor", label: "Sponsor" },
 ] as const;
 
 /* two-bar mark, lucide stroke weight, lower bar stretches on hover */
@@ -26,7 +27,7 @@ function TwoBarIcon({ className }: { className?: string }) {
         width="10"
         height="2"
         rx="1"
-        className="transition-[width] duration-200 ease-out motion-reduce:transition-none group-hover:w-[16px]"
+        className="transition-[width] duration-200 ease-out motion-reduce:transition-none group-hover:w-4"
       />
     </svg>
   );

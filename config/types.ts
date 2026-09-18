@@ -298,6 +298,27 @@ export interface SponsorsSectionConfig {
   tiers: SponsorTier[];
 }
 
+/** One numbered point on the /sponsor page, used for the why and steps lists. */
+export interface SponsorPagePoint {
+  label: string;
+  description: string;
+}
+
+export interface SponsorPageConfig {
+  title: string;
+  tagline: string;
+  description: string;
+  /** Serif italic caption under the hero mascot. */
+  mascotCaption: string;
+  whyHeading: string;
+  why: SponsorPagePoint[];
+  tierHeading: string;
+  stepsHeading: string;
+  steps: SponsorPagePoint[];
+  ctaHeading: string;
+  ctaDescription: string;
+}
+
 export type ComponentIcon =
   | "globe"
   | "terminal"

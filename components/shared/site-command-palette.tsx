@@ -3,6 +3,7 @@
 import {
   Contrast,
   FolderOpen,
+  HeartHandshake,
   Home,
   Layers,
   Link,
@@ -90,6 +91,13 @@ export function SiteCommandPalette({
             icon: <MessageSquareQuote className="size-4" />,
             keywords: ["community", "kind words", "feedback", "quotes"],
             onSelect: go("/testimonials"),
+          },
+          {
+            id: "go-sponsor",
+            label: "Sponsor",
+            icon: <HeartHandshake className="size-4" />,
+            keywords: ["orbit", "seat", "support", "back the work", "donate"],
+            onSelect: go("/sponsor"),
           },
         ],
       },

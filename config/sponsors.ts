@@ -1,6 +1,7 @@
 import generatedSponsors from "@/config/sponsors.generated.json";
 import type {
   Sponsor,
+  SponsorPageConfig,
   SponsorTier,
   SponsorsSectionConfig,
 } from "@/config/types";
@@ -45,6 +46,59 @@ export const sponsorsSectionConfig: SponsorsSectionConfig = {
   description: "Built out of pocket. A seat is $5, once, and stays up for good.",
   seats: 6,
   tiers: sponsorTiers,
+};
+
+/**
+ * Copy for the dedicated /sponsor page. The home section stays a teaser;
+ * this is the full pitch: why seats exist, what one includes, and how
+ * claiming works. Prices still come from `sponsorTiers` at render time, so
+ * the page never drifts from checkout.
+ */
+export const sponsorPageConfig: SponsorPageConfig = {
+  title: "Sponsor the work.",
+  tagline: "Take a seat beside Bit, for good.",
+  description:
+    "Everything on this site is built and paid for out of pocket: the components, the case studies, the small experiments. A seat keeps it independent and ad free. Five dollars, once, and your name stays on the orbit.",
+  mascotCaption: "Your host",
+  whyHeading: "What a seat does",
+  why: [
+    {
+      label: "Keeps it free",
+      description:
+        "The registry, the writeups, the demos. Seats keep all of it open and ad free.",
+    },
+    {
+      label: "Pays the bills",
+      description:
+        "Domain, hosting, and the tools behind the site. Boring costs, covered on time.",
+    },
+    {
+      label: "Funds the weird stuff",
+      description:
+        "Small experiments like this orbit exist because someone backed them early.",
+    },
+  ],
+  tierHeading: "One tier, one price",
+  stepsHeading: "How it works",
+  steps: [
+    {
+      label: "Take a seat",
+      description: "Checkout takes about a minute. $5 once, nothing recurring.",
+    },
+    {
+      label: "Make it yours",
+      description:
+        "Right after payment, add your name, link, and logo on the claim page.",
+    },
+    {
+      label: "Live on the orbit",
+      description:
+        "One deploy later, your seat sits beside Bit on the home page, permanently.",
+    },
+  ],
+  ctaHeading: "Ready when you are.",
+  ctaDescription:
+    "One payment, no subscription. The seat stays up as long as the site does.",
 };
 
 /** Dodo product id for the $5 orbit seat, used to create checkout sessions. */
