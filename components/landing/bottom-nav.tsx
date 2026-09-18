@@ -39,9 +39,9 @@ export function BottomNav() {
   const rootRef = useRef<HTMLDivElement>(null);
 
   /* close whenever the route changes */
-  useEffect(() => {
+  const handleNavigate = () => {
     setOpen(false);
-  }, [pathname]);
+  };
 
   /* close on outside pointerdown or Escape while open */
   useEffect(() => {
@@ -87,7 +87,10 @@ export function BottomNav() {
                   key={route.href}
                   href={route.href}
                   aria-current={isActive ? "page" : undefined}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    handleNavigate();
+                  }}
                   className={cn(
                     "rounded-lg px-3 py-1.5 text-sm transition-colors duration-200 motion-reduce:transition-none",
                     "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
