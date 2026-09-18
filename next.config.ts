@@ -32,6 +32,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    "/**": ["./lib/fonts/**/*"],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

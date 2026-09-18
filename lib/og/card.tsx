@@ -27,26 +27,26 @@ const FAINT = "#52525b";
 const BORDER = "#27272a";
 const PANEL = "#111113";
 
-const nodeFont = (rel: string) =>
-  readFileSync(path.join(process.cwd(), "node_modules", rel));
+const loadFont = (file: string) =>
+  readFileSync(path.join(process.cwd(), "lib", "fonts", file));
 
 export function getOgFonts() {
   return [
     {
       name: SANS,
-      data: nodeFont("geist/dist/fonts/geist-sans/Geist-Regular.ttf"),
+      data: loadFont("Geist-Regular.ttf"),
       style: "normal" as const,
       weight: 400 as const,
     },
     {
       name: SANS,
-      data: nodeFont("geist/dist/fonts/geist-sans/Geist-Bold.ttf"),
+      data: loadFont("Geist-Bold.ttf"),
       style: "normal" as const,
       weight: 700 as const,
     },
     {
       name: MONO,
-      data: nodeFont("geist/dist/fonts/geist-mono/GeistMono-Regular.ttf"),
+      data: loadFont("GeistMono-Regular.ttf"),
       style: "normal" as const,
       weight: 400 as const,
     },
@@ -55,7 +55,10 @@ export function getOgFonts() {
 
 /** Collapse whitespace and cut on a word boundary so long copy never overflows. */
 function clamp(text: string, max: number) {
-  const clean = text.replace(/\s+/g, " ").trim();
+  const clean = text
+    .replace(/\u2318/g, "Cmd+")
+    .replace(/\s+/g, " ")
+    .trim();
   if (clean.length <= max) return clean;
   const cut = clean.slice(0, max);
   const at = cut.lastIndexOf(" ");
@@ -214,7 +217,7 @@ export function OgCard({
               fontWeight: 700,
               fontSize: titleSize(title.length),
               lineHeight: 1.06,
-              letterSpacing: -1.6,
+              letterSpacing: -0.5,
               color: TEXT,
               width: 1056,
             }}

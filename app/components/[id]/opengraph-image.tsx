@@ -10,6 +10,10 @@ export const alt = "A component from the akoder shadcn registry";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
+export async function generateStaticParams() {
+  return getEnabledComponents().map((c) => ({ id: c.id }));
+}
+
 export default async function Image({
   params,
 }: {

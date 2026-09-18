@@ -18,9 +18,6 @@ const DARK_TEXT = "#fafafa";
 const loadFont = (file: string) =>
   readFileSync(path.join(process.cwd(), "lib", "fonts", file));
 
-const loadNodeFont = (rel: string) =>
-  readFileSync(path.join(process.cwd(), "node_modules", rel));
-
 const HEAT_LEVELS = ["#1a1a1d", "#27272b", "#3d3d44", "#62626c", "#a1a1aa", "#e4e4e7"];
 
 function mulberry32(seed: number) {
@@ -167,7 +164,7 @@ export default async function handler() {
     {
       ...size,
       fonts: [
-        { name: GEIST, data: loadNodeFont("geist/dist/fonts/geist-sans/Geist-Bold.ttf"), style: "normal", weight: 700 },
+        { name: GEIST, data: loadFont("Geist-Bold.ttf"), style: "normal", weight: 700 },
         { name: SERIF, data: loadFont("InstrumentSerif-Italic.ttf"), style: "italic", weight: 400 },
       ],
     },
