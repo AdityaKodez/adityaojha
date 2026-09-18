@@ -199,6 +199,18 @@ export const testimonialsConfig: Testimonial[] = [
     order: 18,
     enabled: true,
   },
+  {
+    id: "owais",
+    name: "Muhammad Owais Warsi",
+    role: "writing and shipping softwares",
+    content:
+      "Thanks, I have already checked your portfolio several times even before this comment...amazing",
+    avatar: "MO",
+    image: "/testimonial/owais.jpg",
+    href: "https://x.com/MO_warsi786/status/2100838324084826595",
+    order: 19,
+    enabled: true,
+  },
 ];
 
 /** Every testimonial in authored order. Used by the /testimonials page. */
