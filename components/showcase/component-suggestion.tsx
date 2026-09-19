@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, ImagePlus, Loader2, Plus, Send, X } from "lucide-react";
+import { ImagePlus, Loader2, Plus, Send, X } from "lucide-react";
 
 import { componentsSectionConfig } from "@/config/components";
 import { trackEvent } from "@/lib/analytics";
@@ -16,10 +16,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+} from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { CatalogView } from "@/components/showcase/components-view";
+import XIcon from "@/public/x-icon";
 
 const suggestion = componentsSectionConfig.suggestion;
 
@@ -249,7 +255,7 @@ function SuggestionDialog({
     const data = new FormData();
     data.set("idea", trimmedIdea);
     data.set("references", references.trim());
-    data.set("name", name.trim());
+    data.set("name", name.trim().replace(/^@/, ""));
     data.set("website", honeypot);
     files.forEach((file) => data.append("images", file));
 
@@ -304,38 +310,45 @@ function SuggestionDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent>
+      <DialogContent className={status === "success" ? "gap-5" : "gap-[1.1rem]"}>
         <DialogHeader
           className={cn(
-            "flex gap-3.5 pr-8 text-left",
+            "flex text-left",
             status === "success"
-              ? "flex-col items-center pr-0 text-center"
-              : "flex-row items-center space-y-0"
+              ? "flex-col items-center gap-3 pr-0 text-center"
+              : "flex-row items-center gap-3.5 space-y-0"
           )}
         >
-          {status !== "success" ? (
-            <div
-              onMouseEnter={() => setIsMascotHovered(true)}
-              onMouseLeave={() => setIsMascotHovered(false)}
-              className="flex shrink-0 items-center justify-center select-none"
-            >
-              <BitBlob
-                awake={isMascotHovered || isFormActive || status === "submitting"}
-                gaze={
-                  isMascotHovered
-                    ? "up"
-                    : isFormActive || status === "submitting"
-                      ? "down"
-                      : "right"
-                }
-                className={cn(
-                  "size-12 transition-transform duration-300 ease-out",
-                  isFormActive ? "scale-105 -rotate-3" : "-rotate-1 hover:scale-105"
-                )}
-                aria-hidden
-              />
-            </div>
-          ) : null}
+          <div
+            onMouseEnter={() => setIsMascotHovered(true)}
+            onMouseLeave={() => setIsMascotHovered(false)}
+            className="flex shrink-0 items-center justify-center select-none"
+          >
+            <BitBlob
+              awake={
+                status === "success" ||
+                isMascotHovered ||
+                isFormActive ||
+                status === "submitting"
+              }
+              gaze={
+                status === "success" || isMascotHovered
+                  ? "up"
+                  : isFormActive || status === "submitting"
+                    ? "down"
+                    : "right"
+              }
+              className={cn(
+                "transition-transform duration-300 ease-out",
+                status === "success"
+                  ? "size-14 rotate-3"
+                  : isFormActive
+                    ? "size-12 scale-105 -rotate-3"
+                    : "size-12 -rotate-1 hover:scale-105"
+              )}
+              aria-hidden
+            />
+          </div>
           <div
             className={cn(
               "flex min-w-0 flex-col gap-0.5",
@@ -356,27 +369,14 @@ function SuggestionDialog({
         </DialogHeader>
 
         {status === "success" ? (
-          <div className="flex flex-col items-center gap-4 py-6 text-center">
-            <div className="relative flex items-center justify-center select-none">
-              <BitBlob
-                awake
-                gaze="up"
-                className="size-16 rotate-3"
-                aria-hidden
-              />
-              <span className="absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-emerald-500 text-white shadow-xs">
-                <Check className="size-3" />
-              </span>
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => handleOpenChange(false)}
-            >
-              {suggestion.doneLabel}
-            </Button>
-          </div>
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full"
+            onClick={() => handleOpenChange(false)}
+          >
+            {suggestion.doneLabel}
+          </Button>
         ) : (
           <form
             onSubmit={submit}
@@ -386,7 +386,7 @@ function SuggestionDialog({
                 setIsInputFocused(false);
               }
             }}
-            className="flex flex-col gap-4"
+            className="mt-1 flex flex-col gap-4"
           >
             {/* Honeypot. Humans never see it; bots that fill it are dropped
                 server-side with a fake success so they learn nothing. */}
@@ -402,7 +402,12 @@ function SuggestionDialog({
             />
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="suggestion-idea">{suggestion.ideaLabel}</Label>
+              <Label
+                htmlFor="suggestion-idea"
+                className="text-xs font-normal text-muted-foreground"
+              >
+                {suggestion.ideaLabel}
+              </Label>
               <Textarea
                 ref={ideaRef}
                 id="suggestion-idea"
@@ -422,7 +427,10 @@ function SuggestionDialog({
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="suggestion-references">
+              <Label
+                htmlFor="suggestion-references"
+                className="text-xs font-normal text-muted-foreground"
+              >
                 {suggestion.referencesLabel}
               </Label>
               <Textarea
@@ -444,7 +452,7 @@ function SuggestionDialog({
             <div className="flex flex-col gap-1.5">
               <span
                 id="suggestion-images-label"
-                className="text-sm font-medium"
+                className="text-xs font-normal text-muted-foreground"
               >
                 {suggestion.imagesLabel}
               </span>
@@ -458,7 +466,7 @@ function SuggestionDialog({
                 className="flex cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-input px-4 py-4 text-center transition-colors hover:border-muted-foreground/40 hover:bg-muted/30"
               >
                 <ImagePlus className="size-4 text-muted-foreground" />
-                <span className="text-sm">
+                <span className="text-xs text-muted-foreground">
                   {suggestion.imagesButton}
                 </span>
                 <span className="font-mono text-[11px] text-muted-foreground">
@@ -509,16 +517,29 @@ function SuggestionDialog({
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="suggestion-name">{suggestion.nameLabel}</Label>
-              <Input
-                id="suggestion-name"
-                type="text"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                placeholder={suggestion.namePlaceholder}
-                maxLength={80}
-                autoComplete="off"
-              />
+              <Label
+                htmlFor="suggestion-name"
+                className="text-xs font-normal text-muted-foreground"
+              >
+                {suggestion.nameLabel}
+              </Label>
+              <InputGroup>
+                <InputGroupAddon>
+                  <InputGroupText>
+                    <XIcon size={14} aria-hidden />
+                  </InputGroupText>
+                </InputGroupAddon>
+                <InputGroupInput
+                  id="suggestion-name"
+                  type="text"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  placeholder={suggestion.namePlaceholder}
+                  maxLength={80}
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+              </InputGroup>
             </div>
 
             <DialogFooter className="mt-1 flex flex-col gap-2 sm:flex-col sm:justify-stretch sm:space-x-0 w-full">
@@ -532,6 +553,7 @@ function SuggestionDialog({
               ) : null}
               <Button
                 type="submit"
+                variant="secondary"
                 size="lg"
                 className="w-full"
                 disabled={status === "submitting"}
