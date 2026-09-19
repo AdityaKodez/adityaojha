@@ -353,7 +353,8 @@ Rules:
   Vaul drawer on mobile. It POSTs to `/api/component-suggestion`, which
   moderates (heuristics plus Jev when `TYPESAFE_API_KEY` is set) and forwards
   to the Discord webhook. Moderation rejects answer 200 with a fake success
-  so abusers get no signal.
+  so abusers get no signal. The X handle is required; success copy says we
+  will contact that handle about progress.
 - Each entry points at a live demo under `app/components/[id]/demos/` and a
   Markdown doc under `content/components/`.
 - `getComponentIcon(name)` in `components/showcase/component-icons.tsx` maps an

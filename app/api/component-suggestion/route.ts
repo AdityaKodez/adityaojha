@@ -97,6 +97,7 @@ export async function POST(request: Request) {
     .slice(0, MAX_REFERENCES_LENGTH);
   const name = String(form.get("name") ?? "")
     .trim()
+    .replace(/^@/, "")
     .slice(0, MAX_NAME_LENGTH);
   const honeypot = String(form.get("website") ?? "");
 
@@ -109,6 +110,10 @@ export async function POST(request: Request) {
     return invalid(
       `Describe the component in ${MIN_IDEA_LENGTH} to ${MAX_IDEA_LENGTH} characters.`
     );
+  }
+
+  if (!name) {
+    return invalid("Add your X handle so we can reach you about progress.");
   }
 
   const rawFiles = form

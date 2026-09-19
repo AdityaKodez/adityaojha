@@ -38,6 +38,10 @@ import XIcon from "@/public/x-icon";
 
 const suggestion = componentsSectionConfig.suggestion;
 
+function normalizeHandle(value: string) {
+  return value.trim().replace(/^@/, "");
+}
+
 /* Mirrors the caps enforced by app/api/component-suggestion/route.ts. */
 const MIN_IDEA_LENGTH = 20;
 const MAX_IMAGES = 3;
@@ -254,9 +258,15 @@ function SuggestionDialog({
     if (status === "submitting") return;
 
     const trimmedIdea = idea.trim();
+    const trimmedHandle = normalizeHandle(name);
     if (trimmedIdea.length < MIN_IDEA_LENGTH) {
       setStatus("error");
       setErrorMessage(suggestion.ideaTooShortMessage);
+      return;
+    }
+    if (!trimmedHandle) {
+      setStatus("error");
+      setErrorMessage(suggestion.nameRequiredMessage);
       return;
     }
 
@@ -266,7 +276,7 @@ function SuggestionDialog({
     const data = new FormData();
     data.set("idea", trimmedIdea);
     data.set("references", references.trim());
-    data.set("name", name.trim().replace(/^@/, ""));
+    data.set("name", trimmedHandle);
     data.set("website", honeypot);
     files.forEach((file) => data.append("images", file));
 
@@ -381,6 +391,14 @@ function SuggestionDialog({
                 ? suggestion.successDescription
                 : suggestion.description}
             </Description>
+            {status === "success" ? (
+              <p className="text-xs text-muted-foreground/80">
+                {suggestion.successFollowUp.replace(
+                  "{handle}",
+                  normalizeHandle(name)
+                )}
+              </p>
+            ) : null}
           </div>
         </Header>
 
@@ -554,6 +572,8 @@ function SuggestionDialog({
                   maxLength={80}
                   autoComplete="off"
                   spellCheck={false}
+                  required
+                  aria-required="true"
                 />
               </InputGroup>
             </div>
