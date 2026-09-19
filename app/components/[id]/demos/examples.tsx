@@ -17,6 +17,13 @@ import {
 
 import { weeklyVisitors } from "./dotted-world-map-demo";
 import { GitHubCalendarExample } from "./github-map-demo";
+import {
+  DecisionMeterAbstainExample,
+  DecisionMeterChoiceExample,
+  DecisionMeterNoulExample,
+  DecisionMeterScoreExample,
+  DecisionMeterStatesExample,
+} from "./decision-meter-demo";
 import { DotProgressExample, ProgressBarsCapacityExample } from "./progress-bars-demo";
 import {
   GlyphCardAccentExample,
@@ -311,6 +318,46 @@ function progressBarsExamples(): CarouselItem[] {
   ];
 }
 
+function decisionMeterExamples(): CarouselItem[] {
+  return [
+    {
+      id: "decision-meter-choice",
+      title: "Ranked choice",
+      description:
+        "One Choice answer carries a probability for every option, so a single question renders the whole ranking. The dashed line is the gate your code acts on.",
+      content: <DecisionMeterChoiceExample />,
+    },
+    {
+      id: "decision-meter-abstain",
+      title: "Nothing clears the gate",
+      description:
+        "When the winner falls short of the threshold, the meter reports the gap instead of presenting the least bad option.",
+      content: <DecisionMeterAbstainExample />,
+    },
+    {
+      id: "decision-meter-score",
+      title: "Score levels",
+      description:
+        "Ordered levels read from the top down, with the landed position marked. The fractional score is kept rather than rounded.",
+      content: <DecisionMeterScoreExample />,
+    },
+    {
+      id: "decision-meter-noul",
+      title: "Noul gauge",
+      description:
+        "A yes/no probability, and deliberately no confidence readout, because a Noul does not return one.",
+      content: <DecisionMeterNoulExample />,
+    },
+    {
+      id: "decision-meter-states",
+      title: "Loading and unconfigured",
+      description:
+        "Placeholders for an in-flight request and for a missing API key, so the interface degrades quietly.",
+      content: <DecisionMeterStatesExample />,
+    },
+  ];
+}
+
 function glyphCardExamples(): CarouselItem[] {
   return [
     {
@@ -469,6 +516,7 @@ const exampleRegistry: Record<string, () => CarouselItem[]> = {
   "carousel": carouselExamples,
   "progress-bars": progressBarsExamples,
   "glyph-card": glyphCardExamples,
+  "decision-meter": decisionMeterExamples,
 };
 
 /**

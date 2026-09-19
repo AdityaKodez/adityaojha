@@ -490,6 +490,37 @@
         }
       ],
       "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/glyph-card\n```\n\n## Usage\n\n```tsx\nimport { GlyphCard } from \"@/components/ui/glyph-card\";\n\nconst NEXTJS_GLYPH =\n  \"M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z\";\n\nexport function Stack() {\n  return (\n    <GlyphCard\n      eyebrow=\"Framework\"\n      title=\"Next.js\"\n      subtitle=\"The React framework\"\n      href=\"https://nextjs.org\"\n      glyph={NEXTJS_GLYPH}\n    />\n  );\n}\n```\n\n`glyph` is SVG path data authored on a 24x24 grid. Omit `href` for a static card, pass `accent` to tint the artwork, and use `glyphOffset` in grid units when a mark is drawn off-center."
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "decision-meter",
+      "type": "registry:ui",
+      "title": "Decision Meter",
+      "description": "Renders a TypeSafe System One answer: ranked Choice probabilities with a visible gate line, Score levels, or a Noul gauge. The variant is inferred from the answer's own shape, so a Noul never gets a confidence readout it does not have.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "ai",
+        "chart",
+        "visualization",
+        "accessibility"
+      ],
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/decision-meter",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/decision-meter.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/decision-meter.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/decision-meter\n```\n\n## Usage\n\nPass an answer from a [TypeSafe](https://typesafe.ai) System One model straight through. There is no mapping step and no `variant` prop: the shape of the answer picks the layout.\n\n```tsx\nimport { DecisionMeter } from \"@/components/ui/decision-meter\";\nimport { choice, TypeSafeClient } from \"@typesafe-ai/sdk\";\n\nconst client = new TypeSafeClient();\n\nconst response = await client.systemOne({\n  state: { query, catalog },\n  questions: {\n    best_match: choice(\"Which component in `catalog` best fits `query`?\", options),\n  },\n});\n\n<DecisionMeter\n  label=\"best match\"\n  answer={response.answers.best_match}\n  threshold={0.6}\n  model={response.model}\n/>;\n```\n\n`threshold` is the probability your code requires before it acts. It is drawn as a dashed gate line across every track, and when a Choice winner does not clear it the meter says so instead of presenting the least bad option. A Choice answer carries a probability for every option, so one question renders a full ranking. Score keeps its fractional position, and a Noul renders no confidence readout because it has none."
     }
   ]
 }

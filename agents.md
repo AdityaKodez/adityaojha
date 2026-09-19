@@ -335,10 +335,18 @@ Rules:
   components still follow §9.
 - Keep UI copy inside published components in sentence case too. It is part of the
   design language consumers are installing. Avoid uppercase shouting there as well.
-- Current items: dotted-world-map, copy-command-block, github-map,
-  project-explorer, progressive-blur, infinite-slider, carousel, mode-toggler,
+- Current items (16, all in `registry.json`): dotted-world-map,
+  copy-command-block, github-map, project-explorer, carousel, mode-toggler,
   interactive-skill-cloud, contact-channels, section-rail, progress-bars,
-  command-palette, ask-ai, model-picker, glyph-card.
+  command-palette, ask-ai, model-picker, glyph-card, workflow-status,
+  decision-meter.
+- `progressive-blur` and `infinite-slider` exist in `config/components.ts` with
+  `enabled: false`. They are deliberately not in `registry.json` or `public/r/`.
+- `decision-meter` renders answers from TypeSafe System One models (Jev). It is
+  presentational and does no fetching, so it needs no API key. A route that
+  calls the model would be the first server-side inference in this repo: read
+  `.kiro/skills/typesafe-ai/SKILL.md` first, keep the key server side, and add
+  `TYPESAFE_API_KEY` to §16 and `.env.example`.
 
 ## 15. Component showcase
 

@@ -5,6 +5,7 @@ import { CarouselDemo } from "@/app/components/[id]/demos/carousel-demo";
 import { CommandPaletteDemo } from "@/app/components/[id]/demos/command-palette-demo";
 import { ContactChannelsDemo } from "@/app/components/[id]/demos/contact-channels-demo";
 import { CopyCommandBlockDemo } from "@/app/components/[id]/demos/copy-command-block-demo";
+import { DecisionMeterDemo } from "@/app/components/[id]/demos/decision-meter-demo";
 import { DottedWorldMapDemo } from "@/app/components/[id]/demos/dotted-world-map-demo";
 import { GitHubMapDemo } from "@/app/components/[id]/demos/github-map-demo";
 import { InfiniteSliderDemo } from "@/app/components/[id]/demos/infinite-slider-demo";
@@ -54,6 +55,8 @@ export function ComponentDemo({ id }: { id: string }) {
       return <CommandPaletteDemo />;
     case "workflow-status":
       return <WorkflowStatusDemo />;
+    case "decision-meter":
+      return <DecisionMeterDemo />;
     default:
       return (
         <div className="text-sm text-muted-foreground">

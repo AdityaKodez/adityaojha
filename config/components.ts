@@ -186,6 +186,19 @@ export const componentRegistry: ComponentDoc[] = [
     new: true,
   },
   {
+    id: "decision-meter",
+    title: "Decision Meter",
+    description:
+      "Renders a TypeSafe System One answer: ranked Choice probabilities with a visible gate line, Score levels, or a Noul gauge. The variant is inferred from the answer's own shape.",
+    icon: "meter",
+    demoPath: "app/components/[id]/demos/decision-meter-demo.tsx",
+    docPath: "content/components/decision-meter.md",
+    order: 18,
+    enabled: true,
+    new: true,
+    colSpan: 2,
+  },
+  {
     id: "progressive-blur",
     title: "Progressive Blur",
     description:

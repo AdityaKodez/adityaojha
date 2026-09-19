@@ -447,6 +447,31 @@ const WorkflowStatusIcon = ({
   </svg>
 );
 
+const DecisionMeterIcon = ({
+  size = 24,
+  color = "currentColor",
+  ...props
+}: ComponentIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    {/* Ranked probability bars, the top one clearing the dashed gate. */}
+    <path d="M3.5 6.5h16" />
+    <path d="M3.5 12h8.5" strokeOpacity="0.6" />
+    <path d="M3.5 17.5h5" strokeOpacity="0.35" />
+    <path d="M17.5 3v18" strokeDasharray="2 2.5" strokeOpacity="0.8" />
+  </svg>
+);
+
 const SparklesIcon = ({
   size = 24,
   color = "currentColor",
@@ -487,6 +512,7 @@ export {
   SparklesIcon,
   ModelPickerIcon,
   WorkflowStatusIcon,
+  DecisionMeterIcon,
 };
 
 /** Maps a `ComponentDoc.icon` key onto its icon component. */
@@ -524,6 +550,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return ModelPickerIcon;
     case "status":
       return WorkflowStatusIcon;
+    case "meter":
+      return DecisionMeterIcon;
     case "globe":
     default:
       return DottedWorldMapIcon;
