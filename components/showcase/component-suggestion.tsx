@@ -361,6 +361,7 @@ function SuggestionDialog({
                     ? "size-12 scale-105 -rotate-3"
                     : "size-12 -rotate-1 hover:scale-105"
               )}
+
               aria-hidden
             />
           </div>
@@ -598,7 +599,7 @@ function SuggestionDialog({
         <DrawerContent className="max-h-[88dvh] bg-background">
           <div
             className={cn(
-              "flex min-h-0 flex-col overflow-y-auto px-5 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-2",
+              "flex min-h-0 flex-col no-scrollbar overflow-y-auto px-5 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-2",
               status === "success" ? "gap-5" : "gap-[1.1rem]"
             )}
           >
