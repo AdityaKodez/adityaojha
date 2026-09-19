@@ -6,7 +6,6 @@ import { ComponentHighlights } from "@/components/landing/component-highlights";
 import { CTA } from "@/components/landing/cta";
 import { Experience } from "@/components/landing/experience";
 import { Footer } from "@/components/landing/footer";
-import { FrameGutters } from "@/components/shared/frame-gutters";
 import { GitHubSection } from "@/components/landing/github-section";
 import { Hero } from "@/components/landing/hero";
 import { HowIWork } from "@/components/landing/how-i-work";
@@ -19,15 +18,14 @@ import Social from "@/components/landing/social";
 import { SponsorsSection } from "@/components/landing/sponsors";
 import { Testimonials } from "@/components/landing/testimonials";
 import { Vader } from "@/components/landing/vader";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { PixelDissolve } from "@/components/ui/pixel-dissolve";
+import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { projectsConfig, projectsSectionConfig } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
 import type { ReactElement } from "react";
 import { Suspense } from "react";
 import { HomeAskAI } from "@/components/landing/home-ask-ai";
-import { BottomNav } from "@/components/landing/bottom-nav";
 
 const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   socials: <Social />,
@@ -59,26 +57,22 @@ export default function Home() {
 
   return (
     <>
-      <FrameGutters />
       <Vader />
-
-      <div className="relative mx-auto w-full max-w-3xl">
-        <Campfire />
-        <div className="relative w-full max-w-3xl px-2 border-x bg-muted/20">
-          <main
-            id="main-content"
-            className="relative flex bg-background min-h-dvh flex-col gap-y-4 overflow-x-clip border-x border-b-2 pt-8"
-          >
-            <div id="hero" className="bg-background scroll-mt-20">
-              <Hero />
-            </div>
-            {siteConfig.sectionOrder.map((sectionId) => {
-            if (
-                !siteConfig.sectionFlags[sectionId] ||
-                (sectionId === "github" && !showGithub)
-              ) {
-              return null;
-            }
+      <Campfire />
+      <main
+        id="main-content"
+        className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x border-b-2 bg-background pt-8"
+      >
+        <div id="hero" className="bg-background scroll-mt-20">
+          <Hero />
+        </div>
+        {siteConfig.sectionOrder.map((sectionId) => {
+          if (
+            !siteConfig.sectionFlags[sectionId] ||
+            (sectionId === "github" && !showGithub)
+          ) {
+            return null;
+          }
 
           const content =
             sectionId === "github" ? (
@@ -97,33 +91,26 @@ export default function Home() {
             >
               {content}
             </div>
-            );
-          })}
-
-          <Footer />
-        </main>
-      </div>
-
+          );
+        })}
+        <Footer />
+      </main>
       <HomeSectionRail
         items={[
           { id: "hero", label: "top" },
           ...visibleSections.map((id) => ({ id, label: id })),
         ]}
       />
-
-      <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none">
+      <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-[var(--frame-max-w)]">
         <ProgressiveBlur
           position="bottom"
           height="calc(80px + env(safe-area-inset-bottom))"
         />
-          <PixelDissolve />
-
+        <PixelDissolve />
       </div>
-      <BottomNav />
-      <div className="fixed bottom-6 left-0 right-0 z-50 mx-auto w-full max-w-3xl pointer-events-none px-4 sm:px-6 flex justify-end">
+      <div className="pointer-events-none fixed bottom-6 left-0 right-0 z-50 mx-auto flex w-full max-w-[var(--frame-max-w)] justify-end px-4 sm:px-6">
         <div className="pointer-events-auto">
           <HomeAskAI />
-        </div>
         </div>
       </div>
     </>

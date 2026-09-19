@@ -8,6 +8,7 @@ import { getComponentIcon } from "@/components/showcase/component-icons";
 import { ComponentDemo } from "@/components/showcase/component-demo";
 import { useComponentsView } from "@/components/showcase/components-view";
 import type { CatalogView } from "@/components/showcase/components-view";
+import { ComponentSuggestion } from "@/components/showcase/component-suggestion";
 import { trackEvent } from "@/lib/analytics";
 import {
   Tooltip,
@@ -20,30 +21,8 @@ interface ComponentsCatalogProps {
   components: ComponentDoc[];
 }
 
-/**
- * Walks the card grid two columns at a time to find out whether the last row
- * ends short. A `colSpan: 2` entry that meets a half-filled row wraps to the
- * next one, so the count of items says nothing about where the grid closes —
- * only the running column cursor does.
- */
-function cardGridHasTrailingGap(components: ComponentDoc[]): boolean {
-  let column = 0;
-  for (const component of components) {
-    const span = component.colSpan === 2 ? 2 : 1;
-    // A wide item can't start in the second column, so it wraps.
-    if (span === 2) {
-      column = 0;
-      continue;
-    }
-    column = (column + 1) % 2;
-  }
-  return column === 1;
-}
-
 export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
   const [view, setView] = useComponentsView();
-  const needsListFiller = components.length % 2 === 1;
-  const needsCardFiller = cardGridHasTrailingGap(components);
 
   // Persist the new view and, only when it actually changes, log the switch so
   // the list-vs-cards preference can be analyzed post-hoc. Re-clicking the
@@ -118,17 +97,13 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
       {/* List View */}
       {view === "list" && (
         <div className="grid grid-cols-1 sm:grid-cols-2">
-          {components.map((c, index) => {
+          {components.map((c) => {
             const Icon = getComponentIcon(c.icon);
             return (
               <Link
                 key={c.id}
                 href={`/components/${c.id}`}
-                className={cn(
-                  "group relative flex items-stretch",
-                  (index < components.length - 1 || needsListFiller) &&
-                    "border-b sm:border-b-0"
-                )}
+                className="group relative flex items-stretch border-b sm:border-b-0"
               >
                 <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5 transition-colors hover:bg-muted/10">
                   <div className="relative flex size-10 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground transition-colors group-hover:text-foreground">
@@ -156,39 +131,11 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
             );
           })}
 
-          {needsListFiller ? (
-            <div
-              aria-hidden
-              className="relative flex select-none items-stretch"
-            >
-              <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5">
-                <div className="relative flex size-10 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground/50">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    className="h-4 w-4"
-                  >
-                    <path d="M12 6v12" />
-                    <path d="M6 12h12" />
-                  </svg>
-                  <div className="pointer-events-none absolute inset-0 rounded-sm border border-dashed border-muted-foreground/20" />
-                </div>
-                <div className="flex min-w-0 grow flex-col">
-                  <h3 className="truncate text-sm font-medium tracking-tight text-muted-foreground/60">
-                    something new is on the bench
-                  </h3>
-                  <p className="mt-1 line-clamp-2 text-xs text-muted-foreground/50">
-                    the next block lands in this slot. it is being drawn,
-                    measured, and argued with.
-                  </p>
-                </div>
-              </div>
-              <div className="pointer-events-none absolute inset-0 border border-dashed border-muted-foreground/15" />
-            </div>
-          ) : null}
+          {/* The trailing slot. It squares off an odd row exactly like the
+              old filler did, and when the count is even it simply opens the
+              next one, because the suggestion CTA is a permanent fixture,
+              not a gap-filler. */}
+          <ComponentSuggestion variant="list" />
         </div>
       )}
 
@@ -297,35 +244,9 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
             );
           })}
 
-          {needsCardFiller ? (
-            <div
-              aria-hidden
-              className="relative hidden min-w-0 select-none flex-col sm:flex"
-            >
-              {/* Stands in for the tab strip so the dashed box lines up with
-                  the preview body of a real card, not with its tab. */}
-              <div className="-mb-px flex items-center py-2">
-                <div className="size-6" />
-              </div>
-
-              <div className="catalog-card-body flex flex-1 flex-col items-center justify-center gap-2 overflow-hidden rounded-md border border-dashed p-6 text-center">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  className="size-4 text-muted-foreground/40"
-                >
-                  <path d="M12 6v12" />
-                  <path d="M6 12h12" />
-                </svg>
-                <p className="font-mono text-[11px] text-muted-foreground/50">
-                  next block on the bench
-                </p>
-              </div>
-            </div>
-          ) : null}
+          {/* Same trailing slot in card view. The tab stand-in keeps the
+              dashed body aligned with the preview bodies of real cards. */}
+          <ComponentSuggestion variant="cards" />
         </div>
       )}
     </div>

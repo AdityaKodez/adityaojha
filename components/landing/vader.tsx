@@ -32,7 +32,7 @@ export function Vader() {
   };
 
   return (
-    <div className=" absolute right-14 top-6 flex justify-center px-6 py-6">
+    <div className="fixed right-14 top-6 z-10 flex justify-center px-6 py-6">
       <button
         type="button"
         aria-label="Toggle Vader's lightsaber"

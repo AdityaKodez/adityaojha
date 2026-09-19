@@ -127,6 +127,17 @@ export type EventMap = {
     view: "list" | "cards";
     previous_view: "list" | "cards";
   };
+  component_suggestion_opened: {
+    view: "list" | "cards";
+  };
+  component_suggestion_submitted: {
+    view: "list" | "cards";
+    has_reference: boolean;
+  };
+  component_suggestion_failed: {
+    view: "list" | "cards";
+    reason: "invalid" | "network" | "unavailable" | "rate_limited";
+  };
   vader_lightsaber_toggled: {
     action: "ignite" | "extinguish";
   };

@@ -58,3 +58,4 @@ next-env.d.ts
 .page*.html
 
 /.zcode/
+/outputs/

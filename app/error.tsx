@@ -16,7 +16,7 @@ export default function ErrorBoundary({
   }, [error]);
 
   return (
-    <main className="relative min-h-[60vh] max-w-3xl mx-auto flex flex-col items-center justify-center px-6 text-center overflow-x-clip py-16">
+    <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-x-clip border-x border-b-2 bg-background px-6 py-16 text-center">
       <div className="space-y-3">
         <p className="font-mono text-xs text-destructive">Something went wrong</p>
         <h1 className="text-xl font-medium tracking-tight">An error occurred</h1>

@@ -87,7 +87,7 @@ export function ProjectContent({
       variants={containerVariants}
       initial={shouldReduceMotion ? "visible" : "hidden"}
       animate="visible"
-      className="relative min-h-dvh gap-y-4 flex flex-col max-w-3xl mx-auto border-x border-b-2 overflow-x-clip pt-14 pb-12"
+      className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x border-b-2 bg-background pt-14 pb-12"
     >
       {/* Breadcrumb */}
       <motion.div variants={itemVariants} className="px-6 pt-4 border-t border-dashed">

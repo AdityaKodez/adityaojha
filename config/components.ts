@@ -6,6 +6,37 @@ export const componentsSectionConfig = {
   /** How many registry entries the home page previews before "see all". */
   previewCount: 4,
   seeMoreLabel: "see all",
+  /** Copy for the catalog's suggestion CTA, dialog, and submit feedback. */
+  suggestion: {
+    cardTitle: "Suggest a component",
+    cardDescription: "The next block lands in this slot. Tell it what to be.",
+    cardHint: "This slot takes requests.",
+    title: "Suggest a component",
+    description:
+      "Describe the component you want. References and images help it get built.",
+    ideaLabel: "Component idea",
+    ideaPlaceholder:
+      "A command menu with nested pages, recent actions and keyboard navigation.",
+    ideaTooShortMessage: "Describe the component in at least 20 characters.",
+    referencesLabel: "References",
+    referencesPlaceholder:
+      "Links to similar components, docs, or demos. One per line.",
+    imagesLabel: "Images",
+    imagesButton: "Add images or drop them here",
+    imagesHint: "PNG, JPG, or WebP. Up to 3 files, 1.5 MB each.",
+    removeImageLabel: "Remove image",
+    nameLabel: "Name or handle",
+    namePlaceholder: "Optional",
+    submitLabel: "Send suggestion",
+    submittingLabel: "Sending suggestion...",
+    successTitle: "Suggestion received",
+    successDescription: "It is on the bench for review.",
+    errorDescription: "The suggestion could not be sent. Try again.",
+    rateLimitMessage: "Too many suggestions right now. Try again later.",
+    unavailableMessage: "The suggestion box is not set up yet.",
+    cancelLabel: "Cancel",
+    doneLabel: "Done",
+  },
 };
 
 export const componentRegistry: ComponentDoc[] = [
