@@ -52,7 +52,7 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/ask-ai.md",
     order: 1,
     enabled: true,
-    new: true,
+
   },
   {
     id: "model-picker",
@@ -76,7 +76,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/glyph-card.md",
     order: 3,
     enabled: true,
-    new: true,
   },
   {
     id: "command-palette",
