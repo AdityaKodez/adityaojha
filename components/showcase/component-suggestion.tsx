@@ -6,6 +6,7 @@ import { ImagePlus, Loader2, Plus, Send, X } from "lucide-react";
 import { componentsSectionConfig } from "@/config/components";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/lib/use-mobile";
 import BitBlob from "@/components/landing/bit";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
 import {
   InputGroup,
   InputGroupAddon,
@@ -40,7 +49,8 @@ type SubmitStatus = "idle" | "submitting" | "success" | "error";
 /**
  * The catalog's trailing slot. What used to be a dead "next block on the
  * bench" filler is now the entry point for suggesting that block: a CTA in
- * the same grid position that opens the suggestion dialog.
+ * the same grid position that opens the suggestion dialog on desktop
+ * and a bottom drawer on mobile.
  */
 export function ComponentSuggestion({ variant }: { variant: CatalogView }) {
   const [open, setOpen] = useState(false);
@@ -145,6 +155,7 @@ function SuggestionDialog({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isMascotHovered, setIsMascotHovered] = useState(false);
+  const isMobile = useIsMobile();
 
   const isFormActive =
     isInputFocused ||
@@ -308,12 +319,16 @@ function SuggestionDialog({
     });
   };
 
-  return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className={status === "success" ? "gap-5" : "gap-[1.1rem]"}>
-        <DialogHeader
+  const Header = isMobile ? DrawerHeader : DialogHeader;
+  const Title = isMobile ? DrawerTitle : DialogTitle;
+  const Description = isMobile ? DrawerDescription : DialogDescription;
+  const Footer = isMobile ? DrawerFooter : DialogFooter;
+
+  const panel = (
+    <>
+      <Header
           className={cn(
-            "flex text-left",
+            "flex p-0 text-left",
             status === "success"
               ? "flex-col items-center gap-3 pr-0 text-center"
               : "flex-row items-center gap-3.5 space-y-0"
@@ -355,18 +370,18 @@ function SuggestionDialog({
               status !== "success" && "flex-1"
             )}
           >
-            <DialogTitle>
+            <Title>
               {status === "success"
                 ? suggestion.successTitle
                 : suggestion.title}
-            </DialogTitle>
-            <DialogDescription>
+            </Title>
+            <Description>
               {status === "success"
                 ? suggestion.successDescription
                 : suggestion.description}
-            </DialogDescription>
+            </Description>
           </div>
-        </DialogHeader>
+        </Header>
 
         {status === "success" ? (
           <Button
@@ -542,7 +557,7 @@ function SuggestionDialog({
               </InputGroup>
             </div>
 
-            <DialogFooter className="mt-1 flex flex-col gap-2 sm:flex-col sm:justify-stretch sm:space-x-0 w-full">
+            <Footer className="mt-1 flex w-full flex-col gap-2 p-0 sm:flex-col sm:justify-stretch">
               {errorMessage ? (
                 <p
                   role="alert"
@@ -567,9 +582,37 @@ function SuggestionDialog({
                   ? suggestion.submittingLabel
                   : suggestion.submitLabel}
               </Button>
-            </DialogFooter>
+            </Footer>
           </form>
         )}
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer
+        open={open}
+        onOpenChange={handleOpenChange}
+        shouldScaleBackground={false}
+      >
+        <DrawerContent className="max-h-[88dvh] bg-background">
+          <div
+            className={cn(
+              "flex min-h-0 flex-col overflow-y-auto px-5 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-2",
+              status === "success" ? "gap-5" : "gap-[1.1rem]"
+            )}
+          >
+            {panel}
+          </div>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogContent className={status === "success" ? "gap-5" : "gap-[1.1rem]"}>
+        {panel}
       </DialogContent>
     </Dialog>
   );

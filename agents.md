@@ -42,7 +42,7 @@ database, no auth, no payments. All content is typed configuration.
 | UI | React 19 |
 | Language | TypeScript 5, strict |
 | Styling | Tailwind 4 via `@tailwindcss/postcss`, plus `@tailwindcss/typography` and `tw-animate-css` |
-| Primitives | Radix UI and Base UI, vendored into `components/ui/` |
+| Primitives | Radix UI and Base UI, vendored into `components/ui/`; Vaul for the mobile suggestion drawer |
 | Motion | Motion 12 |
 | Icons | `lucide-react`, `react-icons`, and local icon components under `public/` |
 | Fonts | Geist (sans, mono, pixel grid) and Instrument Serif (`lib/fonts/`) |
@@ -349,10 +349,11 @@ Rules:
   `findComponent(id)` skips disabled entries, and `getEnabledComponents()`
   returns enabled entries sorted by `order`.
 - The catalog's trailing slot is the suggestion CTA
-  (`components/showcase/component-suggestion.tsx`): a dialog form that POSTs
-  to `/api/component-suggestion`, which moderates (heuristics plus Jev when
-  `TYPESAFE_API_KEY` is set) and forwards to the Discord webhook. Moderation
-  rejects answer 200 with a fake success so abusers get no signal.
+  (`components/showcase/component-suggestion.tsx`): a dialog on desktop and a
+  Vaul drawer on mobile. It POSTs to `/api/component-suggestion`, which
+  moderates (heuristics plus Jev when `TYPESAFE_API_KEY` is set) and forwards
+  to the Discord webhook. Moderation rejects answer 200 with a fake success
+  so abusers get no signal.
 - Each entry points at a live demo under `app/components/[id]/demos/` and a
   Markdown doc under `content/components/`.
 - `getComponentIcon(name)` in `components/showcase/component-icons.tsx` maps an
