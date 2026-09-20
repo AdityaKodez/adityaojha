@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 /**
  * One chunk per demo. These used to be static imports, which meant every
@@ -104,13 +105,21 @@ function demoChunk(load: () => Promise<ComponentType>) {
   return dynamic(load, { loading: DemoFallback });
 }
 
+/**
+ * Placeholder while a demo chunk is still in flight, either during a
+ * client-side navigation or when the card view mounts its demos. Shaped like
+ * the demos themselves: a centered block with a bar under it.
+ */
 function DemoFallback() {
   return (
     <div
-      className="flex min-h-[220px] w-full items-center justify-center"
       aria-hidden
+      className="flex min-h-[180px] w-full flex-col items-center justify-center"
     >
-      <div className="size-4 animate-pulse rounded-full bg-muted-foreground/30" />
+      <div className="flex w-full max-w-[18rem] flex-col items-center gap-3">
+        <Skeleton className="h-24 w-full rounded-lg" />
+        <Skeleton className="h-2.5 w-24 rounded-full" />
+      </div>
     </div>
   );
 }
