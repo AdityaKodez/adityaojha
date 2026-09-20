@@ -313,6 +313,9 @@ function SuggestionDialog({
       } else if (body?.error === "unavailable") {
         failureReason = "unavailable";
         message = suggestion.unavailableMessage;
+      } else if (body?.error === "network") {
+        failureReason = "network";
+        message = "Could not reach the suggestion service. Try again in a moment.";
       } else if (body?.error === "invalid") {
         failureReason = "invalid";
         message = body.message ?? suggestion.errorDescription;

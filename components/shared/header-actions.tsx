@@ -203,7 +203,7 @@ export function HeaderActions() {
       <audio
         ref={themeAudioRef}
         src={siteConfig.banner.switchAudioSrc}
-        preload="auto"
+        preload="none"
       />
 
       <SiteCommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />

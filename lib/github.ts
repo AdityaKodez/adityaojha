@@ -1,3 +1,5 @@
+import "server-only";
+
 const GITHUB_GRAPHQL_API = "https://api.github.com/graphql";
 
 const QUERY = `

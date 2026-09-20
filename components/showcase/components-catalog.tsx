@@ -52,7 +52,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
                 <button
                   type="button"
                   onClick={() => selectView("list")}
-                  aria-label="list view"
+                  aria-label="List view"
                   aria-pressed={view === "list"}
                   className={cn(
                     "flex size-6 items-center justify-center rounded-sm transition-colors",
@@ -65,7 +65,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>list view</p>
+                <p>List view</p>
               </TooltipContent>
             </Tooltip>
 
@@ -74,7 +74,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
                 <button
                   type="button"
                   onClick={() => selectView("cards")}
-                  aria-label="card view"
+                  aria-label="Card view"
                   aria-pressed={view === "cards"}
                   className={cn(
                     "flex size-6 items-center justify-center rounded-sm transition-colors",
@@ -87,7 +87,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>card view</p>
+                <p>Card view</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -112,7 +112,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
                     {c.new && (
                       <span
                         className="absolute -top-1 -right-1 size-2 rounded-full bg-sky-500 ring-2 ring-background"
-                        aria-label="new component"
+                        aria-label="New component"
                       />
                     )}
                   </div>
@@ -177,7 +177,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
                       {c.new && (
                         <span
                           className="size-1.5 shrink-0 rounded-full bg-sky-500 ring-2 ring-background"
-                          aria-label="new component"
+                          aria-label="New component"
                         />
                       )}
                     </Link>

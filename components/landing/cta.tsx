@@ -63,7 +63,7 @@ export function CTA() {
     >
       <h2 className="section-heading mb-3">{siteConfig.contact.title}</h2>
       <div>
-        <p className="px-6 text-md text-muted-foreground mb-4">{siteConfig.contact.description}</p>
+        <p className="px-6 text-sm text-muted-foreground mb-4">{siteConfig.contact.description}</p>
         <div className="px-6 mb-6">
           <Button asChild size="lg" className="w-fit">
             <Link

@@ -33,20 +33,10 @@ go to [http://localhost:3000](http://localhost:3000) and check it out.
 every component under `/components` is published as a [shadcn](https://ui.shadcn.com) registry, so you can install it into your own project instead of copying files.
 
 ```bash
-npx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json
-```
-
-or register the namespace in your `components.json` to install by name:
-
-```json
-"registries": {
-  "@akoder": "https://akoder.xyz/r/{name}.json"
-}
-```
-
-```bash
 npx shadcn@latest add @akoder/dotted-world-map
 ```
+
+the `@akoder` namespace is published in the official shadcn directory, so the cli resolves it with no setup. replace `dotted-world-map` with any item from `registry.json`.
 
 `registry.json` at the repo root is the source of truth. after editing a component or adding a new one, rebuild the served json files
 

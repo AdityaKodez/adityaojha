@@ -91,7 +91,7 @@
       "name": "command-palette",
       "type": "registry:ui",
       "title": "Command Palette",
-      "description": "A keyboard-first ⌘K palette with grouped actions, drill-down pages, recent items, and directional motion — built on cmdk inside a self-contained dialog shell.",
+      "description": "A keyboard-first ⌘K palette with grouped actions, drill-down pages, recent items, and directional motion, built on cmdk inside a self-contained dialog shell.",
       "author": "Aditya Ojha <https://akoder.xyz>",
       "categories": [
         "navigation",
@@ -311,7 +311,7 @@
       "name": "interactive-skill-cloud",
       "type": "registry:ui",
       "title": "Interactive Skill Cloud",
-      "description": "A draggable physics pill cloud powered by matter.js — pills rain down, pile at the bottom, and collide; grab one and fling it.",
+      "description": "A draggable physics pill cloud powered by matter.js, pills rain down, pile at the bottom, and collide; grab one and fling it.",
       "author": "Aditya Ojha <https://akoder.xyz>",
       "categories": [
         "skills",

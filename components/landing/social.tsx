@@ -170,7 +170,7 @@ const Social = () => {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p className="gap-1 flex items-center">
-                    {copied[social.id] ? "copied!" : social.tooltipDefault}
+                    {copied[social.id] ? "Copied!" : social.tooltipDefault}
                     {social.shortcutKey ? <Kbd>{social.shortcutKey}</Kbd> : null}
                   </p>
                 </TooltipContent>

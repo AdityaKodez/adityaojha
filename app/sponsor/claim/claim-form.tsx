@@ -20,7 +20,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 type Status = "idle" | "submitting" | "success";
 
-type ClaimErrorCode = "no-payment" | "not-registered";
+type ClaimErrorCode = "not-registered";
 
 type ClaimError = {
   message: string;
@@ -646,17 +646,13 @@ export function ClaimForm() {
                     <CircleAlert aria-hidden className="mt-0.5 size-4 shrink-0" />
                     <span>{error.message}</span>
                   </p>
-                  {(error.code === "no-payment" || error.code === "not-registered") && (
+                  {error.code === "not-registered" && (
                     <div className="rounded-md bg-muted/20 p-3 ring-1 ring-inset ring-border">
                       <p className="text-sm font-medium tracking-tight">
-                        {error.code === "no-payment"
-                          ? "Need a seat first?"
-                          : "Already paid, or still need a seat?"}
+                        Already paid, or still need a seat?
                       </p>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                        {error.code === "no-payment"
-                          ? `Checkout is $${SEAT_PRICE} once. After paying you will come back here to claim the seat.`
-                          : `If you already paid, wait a minute and try again. If you have not, take a $${SEAT_PRICE} seat and you will return here.`}
+                        {`If you already paid, wait a minute and try again. If you have not, take a $${SEAT_PRICE} seat and you will return here.`}
                       </p>
                       <a
                         href={CHECKOUT_HREF}

@@ -25,14 +25,14 @@ export function SiteHeader() {
         <TooltipTrigger asChild>
           <Link
             href="/"
-            aria-label="home"
+            aria-label="Home"
             className="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-md border border-border/60 bg-background/60 backdrop-blur-md shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             <Logo size={18} />
           </Link>
         </TooltipTrigger>
         <TooltipContent>
-          <p>home</p>
+          <p>Home</p>
         </TooltipContent>
       </Tooltip>
 

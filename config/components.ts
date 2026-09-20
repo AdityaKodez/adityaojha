@@ -81,7 +81,7 @@ export const componentRegistry: ComponentDoc[] = [
     id: "command-palette",
     title: "Command Palette",
     description:
-      "A keyboard-first ⌘K palette with grouped actions, drill-down pages, recent items, and directional motion — built on cmdk inside a self-contained dialog shell.",
+      "A keyboard-first ⌘K palette with grouped actions, drill-down pages, recent items, and directional motion, built on cmdk inside a self-contained dialog shell.",
     icon: "command",
     demoPath: "app/components/[id]/demos/command-palette-demo.tsx",
     docPath: "content/components/command-palette.md",
@@ -153,7 +153,7 @@ export const componentRegistry: ComponentDoc[] = [
     id: "interactive-skill-cloud",
     title: "Interactive Skill Cloud",
     description:
-      "A draggable physics pill cloud powered by matter.js — pills rain down, pile at the bottom, and collide; grab one and fling it.",
+      "A draggable physics pill cloud powered by matter.js, pills rain down, pile at the bottom, and collide; grab one and fling it.",
     icon: "pills",
     demoPath: "app/components/[id]/demos/interactive-skill-cloud-demo.tsx",
     docPath: "content/components/interactive-skill-cloud.md",

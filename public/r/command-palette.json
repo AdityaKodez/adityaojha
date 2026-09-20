@@ -3,7 +3,7 @@
   "name": "command-palette",
   "type": "registry:ui",
   "title": "Command Palette",
-  "description": "A keyboard-first ⌘K palette with grouped actions, drill-down pages, recent items, and directional motion — built on cmdk inside a self-contained dialog shell.",
+  "description": "A keyboard-first ⌘K palette with grouped actions, drill-down pages, recent items, and directional motion, built on cmdk inside a self-contained dialog shell.",
   "author": "Aditya Ojha <https://akoder.xyz>",
   "categories": [
     "navigation",

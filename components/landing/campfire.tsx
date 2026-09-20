@@ -148,7 +148,7 @@ export function Campfire() {
           {burning ? "Extinguish fire" : "Light campfire"}
         </span>
       </button>
-      <audio ref={audioRef} src="campfire.mp3" loop/>
+      <audio ref={audioRef} src="campfire.mp3" loop preload="none"/>
     </div>
   );
 }

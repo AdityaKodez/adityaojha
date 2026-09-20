@@ -21,8 +21,8 @@ type Tab = "preview" | "code";
 const TABS = ["preview", "code"] as const;
 
 const TAB_LABELS: Record<Tab, string> = {
-  preview: "preview",
-  code: "code",
+  preview: "Preview",
+  code: "Code",
 };
 
 export type PreviewBoxProps = {

@@ -6,7 +6,7 @@ import { getEnabledComponents } from "@/config/components";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "components",
+  title: "Components",
   description:
     "A growing set of reusable building blocks — lightweight, themable, and easy to drop into any project.",
   alternates: {

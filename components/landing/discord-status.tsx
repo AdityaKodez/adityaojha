@@ -243,7 +243,7 @@ function TooltipBody({ data }: { data: LanyardData }) {
 
   // ── Fallback ──
   if (data.discord_status === "offline") {
-    return <p>currently offline</p>;
+    return <p>Currently offline</p>;
   }
 
   return <p>no activity right now.</p>;

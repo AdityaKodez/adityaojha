@@ -45,7 +45,7 @@ export function ComponentHighlights() {
                   {component.new && (
                     <span
                       className="absolute -top-1 -right-1 size-2 rounded-full bg-sky-500 ring-2 ring-background"
-                      aria-label="new component"
+                      aria-label="New component"
                     />
                   )}
                 </div>

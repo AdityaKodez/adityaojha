@@ -24,7 +24,14 @@ const MAX_LOGO_BYTES = 512 * 1024;
 const ACCEPTED_LOGO_TYPES = ["image/png", "image/jpeg", "image/webp"];
 
 /** Codes the claim form uses to offer checkout when nothing to claim exists. */
-type ClaimErrorCode = "no-payment" | "not-registered";
+type ClaimErrorCode = "not-registered";
+
+/**
+ * One answer for every "we cannot find a claimable paid seat" outcome, so a
+ * probe cannot tell an unknown payment id from a paid-but-unregistered seat.
+ */
+const NO_SEAT_MESSAGE =
+  "We could not match that to a paid seat. Check the details and try again.";
 
 function error(message: string, status: number, code?: ClaimErrorCode) {
   return NextResponse.json(
@@ -110,8 +117,8 @@ async function verifyPayment(paymentId: string): Promise<PaymentCheck> {
 
   if (response.status === 404) {
     return {
-      error: "That payment id does not match a payment.",
-      code: "no-payment",
+      error: NO_SEAT_MESSAGE,
+      code: "not-registered",
     };
   }
   if (!response.ok) {
@@ -129,8 +136,8 @@ async function verifyPayment(paymentId: string): Promise<PaymentCheck> {
   }
   if (!hasOrbitSeat(payment)) {
     return {
-      error: "This payment is not for an orbit seat.",
-      code: "no-payment",
+      error: NO_SEAT_MESSAGE,
+      code: "not-registered",
     };
   }
 
@@ -165,11 +172,7 @@ export async function POST(request: Request) {
     if (!API_KEY) return error("Payments are not configured.", 503);
     candidates = await findPaidPaymentsByEmail(email);
     if (!candidates.length) {
-      return error(
-        "No completed orbit seat payment found for that email.",
-        409,
-        "no-payment",
-      );
+      return error(NO_SEAT_MESSAGE, 409, "not-registered");
     }
   } else {
     return error(
@@ -179,12 +182,10 @@ export async function POST(request: Request) {
   }
 
   const resolved = await resolveClaimablePayment(candidates);
+  // Identical answer for "never paid" and "paid but not registered yet" so a
+  // probe cannot tell which emails or payment ids hold a seat.
   if (resolved === "not-found") {
-    return error(
-      "The seat is not registered yet. It appears a minute or two after payment, then you can claim it.",
-      409,
-      "not-registered",
-    );
+    return error(NO_SEAT_MESSAGE, 409, "not-registered");
   }
   if (resolved === "already-claimed") {
     return error("This seat has already been claimed.", 409);

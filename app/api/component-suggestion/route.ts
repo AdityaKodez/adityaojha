@@ -69,7 +69,7 @@ function sanitizeFilename(name: string, index: number): string {
 
 export async function POST(request: Request) {
   const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    request.headers.get("x-forwarded-for")?.split(",").at(-1)?.trim() ?? "unknown";
   if (isRateLimited(ip)) {
     return NextResponse.json(
       { error: "rate_limited" },

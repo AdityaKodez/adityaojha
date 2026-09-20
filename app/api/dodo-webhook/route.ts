@@ -63,8 +63,14 @@ export async function POST(request: Request) {
     return new Response(null, { status: 200 });
   }
 
+  // Fail closed: without the configured product id there is no way to tell an
+  // orbit seat payment from any other, so no seat is committed.
+  if (!orbitSeatProductId) {
+    console.error("dodo-webhook: DODO_ORBIT_SEAT_PRODUCT_ID is not set");
+    return new Response("Could not record the sponsor.", { status: 500 });
+  }
+
   if (
-    orbitSeatProductId &&
     !data.product_cart?.some((item) => item.product_id === orbitSeatProductId)
   ) {
     console.error(

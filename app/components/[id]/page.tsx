@@ -120,7 +120,7 @@ export default async function ComponentDetailPage({
               {c.new && (
                 <span
                   className="absolute -top-1.5 -right-1.5 size-2 rounded-full bg-sky-500 ring-2 ring-background"
-                  aria-label="new component"
+                  aria-label="New component"
                 />
               )}
             </span>

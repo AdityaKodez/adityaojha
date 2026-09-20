@@ -29,6 +29,7 @@ for (const item of registry.items) {
         path: file.path,
         content,
         type: file.type || "registry:ui",
+        ...(file.target ? { target: file.target } : {}),
       };
     }),
   };

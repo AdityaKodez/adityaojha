@@ -138,7 +138,7 @@ export const siteConfig: PortfolioConfig = {
     imageSrc: "/images/brand-background.png",
     imageAlt: "Halftone skyline glowing in blue, teal, and orange",
     openSourceUrl: "https://github.com/AdityaKodez/adityaojha",
-    openSourceTooltip: "this project is open source !",
+    openSourceTooltip: "this project is open source!",
     themeToggleLabel: "toggle theme",
     themeShortcut: "D",
     themeTooltip: "toggle theme",

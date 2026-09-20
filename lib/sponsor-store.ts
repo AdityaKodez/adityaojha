@@ -4,6 +4,8 @@
    branch Vercel builds from. Without SPONSOR_GITHUB_TOKEN every call here
    returns null/false and the routes degrade instead of throwing. */
 
+import "server-only";
+
 import type { Sponsor } from "@/config/types";
 
 const TOKEN = process.env.SPONSOR_GITHUB_TOKEN;

@@ -13,6 +13,8 @@
  * suggestion still gets delivered.
  */
 
+import "server-only";
+
 export type ModerationVerdict = {
   action: "allow" | "reject";
   reason?: "spam" | "low_quality";

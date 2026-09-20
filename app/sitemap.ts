@@ -4,24 +4,18 @@ import { siteConfig } from "@/config/site";
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-const defaultDate = new Date();
-
-
   const baseEntries = siteConfig.meta.sitemap.map((item) => ({
     ...item,
-    lastModified: defaultDate,
   }));
 
   const componentEntries: MetadataRoute.Sitemap = [
     {
       url: `${siteConfig.meta.url}/components`,
-      lastModified: defaultDate,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     ...getEnabledComponents().map((c) => ({
       url: `${siteConfig.meta.url}/components/${c.id}`,
-      lastModified: defaultDate,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

@@ -3,7 +3,7 @@
   "name": "interactive-skill-cloud",
   "type": "registry:ui",
   "title": "Interactive Skill Cloud",
-  "description": "A draggable physics pill cloud powered by matter.js — pills rain down, pile at the bottom, and collide; grab one and fling it.",
+  "description": "A draggable physics pill cloud powered by matter.js, pills rain down, pile at the bottom, and collide; grab one and fling it.",
   "author": "Aditya Ojha <https://akoder.xyz>",
   "categories": [
     "skills",

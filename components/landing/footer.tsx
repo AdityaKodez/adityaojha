@@ -142,7 +142,7 @@ export function Footer() {
           The soul becomes dyed with the color of its thoughts.
         </p>
         <p className="mt-3 font-mono text-[10px] tracking-[0.2em] text-muted-foreground/80">
-          — MARCUS AURELIUS
+          Marcus Aurelius
         </p>
         <p className="mt-5 font-mono text-[11px] tracking-[0.15em] text-muted-foreground">
           Made with &lt;3 and lots of coffee.

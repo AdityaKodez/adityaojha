@@ -333,7 +333,7 @@ export function SponsorsSection() {
     <section className="border-t border-dashed pt-8">
       <motion.h2
         {...reveal({ y: 8, margin: "-80px" })}
-        className="no-js-visible section-heading mb-3 capitalize"
+        className="no-js-visible section-heading mb-3"
       >
         {heading}
       </motion.h2>
