@@ -341,7 +341,7 @@ Rules:
 - Current items: dotted-world-map, copy-command-block, github-map,
   project-explorer, progressive-blur, infinite-slider, carousel, mode-toggler,
   interactive-skill-cloud, contact-channels, section-rail, progress-bars,
-  command-palette, ask-ai, model-picker, glyph-card.
+  command-palette, ask-ai, model-picker, glyph-card, snake.
 
 ## 15. Component showcase
 

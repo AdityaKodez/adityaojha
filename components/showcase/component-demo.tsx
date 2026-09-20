@@ -98,6 +98,9 @@ const DEMOS: Record<string, ComponentType> = {
       (m) => m.WorkflowStatusDemo,
     ),
   ),
+  snake: demoChunk(() =>
+    import("@/app/components/[id]/demos/snake-demo").then((m) => m.SnakeDemo),
+  ),
 };
 
 /** Loads one demo as its own chunk, with the shared placeholder. */

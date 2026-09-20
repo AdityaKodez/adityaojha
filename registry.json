@@ -490,6 +490,38 @@
         }
       ],
       "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/glyph-card\n```\n\n## Usage\n\n```tsx\nimport { GlyphCard } from \"@/components/ui/glyph-card\";\n\nconst NEXTJS_GLYPH =\n  \"M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z\";\n\nexport function Stack() {\n  return (\n    <GlyphCard\n      eyebrow=\"Framework\"\n      title=\"Next.js\"\n      subtitle=\"The React framework\"\n      href=\"https://nextjs.org\"\n      glyph={NEXTJS_GLYPH}\n    />\n  );\n}\n```\n\n`glyph` is SVG path data authored on a 24x24 grid. Omit `href` for a static card, pass `accent` to tint the artwork, and use `glyphOffset` in grid units when a mark is drawn off-center."
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "snake",
+      "type": "registry:ui",
+      "title": "Snake",
+      "description": "A monochrome snake game on a dot-lattice field. Steer with the arrow keys, WASD, or a swipe, eat to grow by one segment, and wrap around the edges.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "game",
+        "canvas",
+        "interactive"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "motion",
+        "react-icons"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/snake",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/snake.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/snake.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/snake\n```\n\n## Usage\n\n```tsx\nimport { Snake } from \"@/components/ui/snake\";\n\nexport function Game() {\n  return <Snake />;\n}\n```\n\nSteer with the arrow keys, WASD, or a swipe. `gridSize` sets the cells per side (20 means 20x20), `speed` is the milliseconds per step, and `initialLength` is the starting segment count. The colors are `var(--token, literal)` references resolved at runtime, so the field follows your theme and falls back to the literal in projects without the tokens; pass a literal color to `fieldColor`, `dotColor`, or `snakeColor` to opt out."
     }
   ]
 }

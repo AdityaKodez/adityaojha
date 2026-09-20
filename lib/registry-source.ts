@@ -58,19 +58,22 @@ const CODE_LANGS: Record<string, string> = {
   ".json": "json",
 };
 
+// The catalog is cached for the life of the process in production only. In dev
+// every call re-reads it, because the module-level cache would otherwise pin a
+// registry.json from before the server started and no HMR event clears it.
 let catalogPromise: Promise<RegistryCatalog> | null = null;
+const cacheCatalog = process.env.NODE_ENV === "production";
 
 function readCatalog(): Promise<RegistryCatalog> {
-  if (!catalogPromise) {
-    const catalogPath = path.join(
-      /*turbopackIgnore: true*/ process.cwd(),
-      "registry.json",
-    );
-    catalogPromise = readFile(catalogPath, "utf8").then(
-      (raw) => JSON.parse(raw) as RegistryCatalog,
-    );
-  }
-  return catalogPromise;
+  if (catalogPromise) return catalogPromise;
+
+  const request = readFile(
+    path.join(/*turbopackIgnore: true*/ process.cwd(), "registry.json"),
+    "utf8",
+  ).then((raw) => JSON.parse(raw) as RegistryCatalog);
+
+  if (cacheCatalog) catalogPromise = request;
+  return request;
 }
 
 /**

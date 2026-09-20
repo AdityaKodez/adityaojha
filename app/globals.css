@@ -164,6 +164,10 @@ html[data-frame="wide"] {
   }
 }
 
+html,
+body {
+    scrollbar-gutter:auto;
+}
 @layer components {
   .section-heading {
     @apply text-xl font-semibold border-y border-dashed bg-muted/20 px-6 py-2;
@@ -213,13 +217,13 @@ html[data-frame="wide"] {
     transform: scale(0.992);
   }
   .blueprint-bg {
-    background-image: 
+    background-image:
       repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.015) 10px, rgba(0,0,0,0.015) 11px),
       repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(0,0,0,0.015) 10px, rgba(0,0,0,0.015) 11px);
   }
 
   .dark .blueprint-bg {
-    background-image: 
+    background-image:
       repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.01) 10px, rgba(255,255,255,0.01) 11px),
       repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255,255,255,0.01) 10px, rgba(255,255,255,0.01) 11px);
   }

@@ -218,6 +218,17 @@ export const componentRegistry: ComponentDoc[] = [
     new: true,
   },
   {
+    id: "snake",
+    title: "Snake",
+    description:
+      "A monochrome snake game on a dot-lattice field. Steer with the arrow keys, WASD, or a swipe, eat to grow by one segment, and wrap around the edges.",
+    icon: "snake",
+    demoPath: "app/components/[id]/demos/snake-demo.tsx",
+    docPath: "content/components/snake.md",
+    order: 18,
+    enabled: true,
+  },
+  {
     id: "progressive-blur",
     title: "Progressive Blur",
     description:

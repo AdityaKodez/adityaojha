@@ -447,6 +447,30 @@ const WorkflowStatusIcon = ({
   </svg>
 );
 
+const SnakeIcon = ({
+  size = 24,
+  color = "currentColor",
+  ...props
+}: ComponentIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    {/* body trail, dimmed so the head reads as the brightest token */}
+    <path d="M5 5v5h5v5h5v5" strokeOpacity="0.7" />
+    <circle cx="15" cy="20" r="2" fill={color} stroke="none" />
+    <circle cx="19.5" cy="4.5" r="1.2" fill={color} fillOpacity="0.4" stroke="none" />
+  </svg>
+);
+
 const SparklesIcon = ({
   size = 24,
   color = "currentColor",
@@ -487,6 +511,7 @@ export {
   SparklesIcon,
   ModelPickerIcon,
   WorkflowStatusIcon,
+  SnakeIcon,
 };
 
 /** Maps a `ComponentDoc.icon` key onto its icon component. */
@@ -524,6 +549,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return ModelPickerIcon;
     case "status":
       return WorkflowStatusIcon;
+    case "snake":
+      return SnakeIcon;
     case "globe":
     default:
       return DottedWorldMapIcon;

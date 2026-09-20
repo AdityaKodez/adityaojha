@@ -336,7 +336,8 @@ export type ComponentIcon =
   | "sparkles"
   | "models"
   | "stack"
-  | "status";
+  | "status"
+  | "snake";
 
 export interface ComponentDoc {
   id: string;

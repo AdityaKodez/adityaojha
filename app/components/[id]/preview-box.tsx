@@ -89,13 +89,13 @@ export function PreviewBox({
     <div
       aria-label={ariaLabel}
       className={cn(
-        "relative mx-3 my-4 rounded-lg border bg-muted/10 p-0.5 sm:mx-6",
+        "relative mx-3 my-4 rounded-lg border bg-muted/10 p-0.5 sm:mx-6 no-scrollbar",
         className,
       )}
     >
       <div
         className={cn(
-          "preview-box relative overflow-hidden rounded-md border bg-muted/50 p-2",
+          "preview-box relative overflow-hidden rounded-md border bg-muted/50 p-2 no-scrollbar",
         )}
       >
         {/* Blueprint overlay — decorative only, so its paint is fully isolated
