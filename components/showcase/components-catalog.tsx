@@ -5,7 +5,7 @@ import { LayoutGrid, List } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ComponentDoc } from "@/config/types";
 import { getComponentIcon } from "@/components/showcase/component-icons";
-import { ComponentDemo } from "@/components/showcase/component-demo";
+import { CardPlayground } from "@/components/showcase/card-playground";
 import { useComponentsView } from "@/components/showcase/components-view";
 import type { CatalogView } from "@/components/showcase/components-view";
 import { ComponentSuggestion } from "@/components/showcase/component-suggestion";
@@ -236,9 +236,7 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
                     tabIndex={-1}
                     className="absolute inset-0 z-0"
                   />
-                  <div className="relative z-10 flex w-full min-w-0 justify-center">
-                    <ComponentDemo id={c.id} />
-                  </div>
+                  <CardPlayground componentId={c.id} />
                 </div>
               </div>
             );

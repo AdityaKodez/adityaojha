@@ -1,6 +1,9 @@
 "use client";
 
-import { ContactChannels } from "@/components/ui/contact-channels";
+import {
+  ContactChannels,
+  type ContactChannelsProps,
+} from "@/components/ui/contact-channels";
 import { FaGithub, FaDiscord, FaMailchimp } from "react-icons/fa";
 import { MessageCircle } from "lucide-react";
 const sampleChannels = [
@@ -43,10 +46,17 @@ const sampleChannels = [
   },
 ];
 
-export function ContactChannelsDemo() {
+/**
+ * The grid column count is a prop now, driven by the detail page's props
+ * panel. The sample channels stay baked in, and the default matches the two
+ * column grid this demo always rendered.
+ */
+export function ContactChannelsDemo({
+  columns = 2,
+}: Partial<ContactChannelsProps> = {}) {
   return (
     <div className="w-full max-w-xl">
-      <ContactChannels items={sampleChannels} columns={2} />
+      <ContactChannels items={sampleChannels} columns={columns} />
     </div>
   );
 }

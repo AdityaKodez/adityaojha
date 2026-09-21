@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 /**
  * Sticky floating header shared by every route.
@@ -19,6 +20,10 @@ import Link from "next/link";
  * `/components` in card view.
  */
 export function SiteHeader() {
+  const pathname = usePathname();
+  const isComponentsRoute =
+    pathname === "/components" || pathname.startsWith("/components/");
+
   return (
     <header className="sticky top-3 sm:top-4 z-40 mx-auto -mb-8 flex w-full max-w-[var(--frame-max-w)] items-center justify-between px-6 pointer-events-none">
       <Tooltip>
@@ -26,9 +31,19 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label="Home"
-            className="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-md border border-border/60 bg-background/60 backdrop-blur-md shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className={`pointer-events-auto flex h-8 items-center justify-center rounded-md border border-border/60 bg-background/60 text-muted-foreground backdrop-blur-md shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${
+              isComponentsRoute ? "gap-1.5 px-2.5" : "w-8"
+            }`}
           >
             <Logo size={18} />
+            {isComponentsRoute ? (
+              <>
+                <span aria-hidden="true" className="h-3 w-px bg-border/60" />
+                <span className="font-mono text-[10px] font-medium leading-none">
+                  UI
+                </span>
+              </>
+            ) : null}
           </Link>
         </TooltipTrigger>
         <TooltipContent>

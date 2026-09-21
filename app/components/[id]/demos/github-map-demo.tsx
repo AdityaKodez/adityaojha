@@ -38,21 +38,18 @@ export function generateMockContributions(): { date: string; count: number }[] {
   return result;
 }
 
-export function GitHubMapDemo() {
+/**
+ * The colour scale is the panel-driven prop; the mock data stays here.
+ */
+export function GitHubMapDemo({
+  colors = GITHUB_GREENS,
+}: {
+  colors?: string[];
+} = {}) {
   const data = useMemo(() => generateMockContributions(), []);
 
   return (
     <div className="w-full">
-      <GitHubCalendar data={data} colors={GITHUB_GREENS} />
-    </div>
-  );
-}
-
-export function GitHubCalendarExample({ colors }: { colors?: string[] }) {
-  const data = useMemo(() => generateMockContributions(), []);
-
-  return (
-    <div className="w-full flex items-center justify-center h-full">
       <GitHubCalendar data={data} colors={colors} />
     </div>
   );

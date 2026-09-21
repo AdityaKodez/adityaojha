@@ -1,34 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+import {
+  ProgressiveBlur,
+  type ProgressiveBlurProps,
+} from "@/components/ui/progressive-blur";
 
-export function ProgressiveBlurDemo() {
-  const [position, setPosition] = useState<"bottom" | "top" | "both">("bottom");
-
+/**
+ * The blur edge and its height are props now: the inline position button group
+ * this demo used to render moved into the props panel, so the preview stays a
+ * plain example of the component's API. Every prop falls back to the same
+ * value the panel starts from, so the catalog cards and the home teaser render
+ * exactly what they rendered before.
+ */
+export function ProgressiveBlurDemo({
+  position = "bottom",
+  height = "45%",
+}: Partial<ProgressiveBlurProps> = {}) {
   return (
     <div className="w-full max-w-lg space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-mono text-muted-freground">
+        <span className="text-xs font-mono text-muted-foreground">
           Blur Edge Position:
         </span>
-        <div className="flex items-center gap-1">
-          {(["bottom", "top", "both"] as const).map((pos) => (
-            <button
-              key={pos}
-              type="button"
-              onClick={() => setPosition(pos)}
-              aria-pressed={position === pos}
-              className={`px-2.5 py-1 text-xs font-mono capitalize rounded-sm transition-colors cursor-pointer ${
-                position === pos
-                  ? "bg-muted text-foreground font-medium"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
-              }`}
-            >
-              {pos}
-            </button>
-          ))}
-        </div>
       </div>
 
       <div className="relative h-64 w-full overflow-hidden rounded-lg border bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 p-6 flex flex-col justify-between">
@@ -53,10 +46,7 @@ export function ProgressiveBlurDemo() {
         </div>
 
         {/* Progressive Blur Overlay */}
-        <ProgressiveBlur
-          position={position}
-          height="45%"
-        />
+        <ProgressiveBlur position={position} height={height} />
       </div>
     </div>
   );

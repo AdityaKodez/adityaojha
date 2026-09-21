@@ -14,33 +14,35 @@ import { Skeleton } from "@/components/ui/skeleton";
  * SSR'd on first paint, so this only moves their JavaScript into separate
  * chunks and keeps the loading fallback for when a chunk is still in flight.
  */
-const DEMOS: Record<string, ComponentType> = {
+const DEMOS: Record<string, ComponentType<Record<string, unknown>>> = {
   "ask-ai": demoChunk(() =>
-    import("@/app/components/[id]/demos/ask-ai-demo").then((m) => m.AskAIDemo),
+    import("@/app/components/[id]/demos/ask-ai-demo").then(
+      (m) => m.AskAIDemo as ComponentType<Record<string, unknown>>,
+    ),
   ),
   "model-picker": demoChunk(() =>
     import("@/app/components/[id]/demos/model-picker-demo").then(
-      (m) => m.ModelPickerDemo,
+      (m) => m.ModelPickerDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "dotted-world-map": demoChunk(() =>
     import("@/app/components/[id]/demos/dotted-world-map-demo").then(
-      (m) => m.DottedWorldMapDemo,
+      (m) => m.DottedWorldMapDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "copy-command-block": demoChunk(() =>
     import("@/app/components/[id]/demos/copy-command-block-demo").then(
-      (m) => m.CopyCommandBlockDemo,
+      (m) => m.CopyCommandBlockDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "github-map": demoChunk(() =>
     import("@/app/components/[id]/demos/github-map-demo").then(
-      (m) => m.GitHubMapDemo,
+      (m) => m.GitHubMapDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "project-explorer": demoChunk(() =>
     import("@/app/components/[id]/demos/project-explorer-demo").then(
-      (m) => m.ProjectExplorerDemo,
+      (m) => m.ProjectExplorerDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   carousel: demoChunk(() =>
@@ -50,7 +52,7 @@ const DEMOS: Record<string, ComponentType> = {
   ),
   "infinite-slider": demoChunk(() =>
     import("@/app/components/[id]/demos/infinite-slider-demo").then(
-      (m) => m.InfiniteSliderDemo,
+      (m) => m.InfiniteSliderDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "mode-toggler": demoChunk(() =>
@@ -60,17 +62,18 @@ const DEMOS: Record<string, ComponentType> = {
   ),
   "progressive-blur": demoChunk(() =>
     import("@/app/components/[id]/demos/progressive-blur-demo").then(
-      (m) => m.ProgressiveBlurDemo,
+      (m) => m.ProgressiveBlurDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "interactive-skill-cloud": demoChunk(() =>
     import("@/app/components/[id]/demos/interactive-skill-cloud-demo").then(
-      (m) => m.InteractiveSkillCloudDemo,
+      (m) =>
+        m.InteractiveSkillCloudDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "contact-channels": demoChunk(() =>
     import("@/app/components/[id]/demos/contact-channels-demo").then(
-      (m) => m.ContactChannelsDemo,
+      (m) => m.ContactChannelsDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "section-rail": demoChunk(() =>
@@ -80,12 +83,12 @@ const DEMOS: Record<string, ComponentType> = {
   ),
   "progress-bars": demoChunk(() =>
     import("@/app/components/[id]/demos/progress-bars-demo").then(
-      (m) => m.ProgressBarsDemo,
+      (m) => m.ProgressBarsDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "glyph-card": demoChunk(() =>
     import("@/app/components/[id]/demos/glyph-card-demo").then(
-      (m) => m.GlyphCardDemo,
+      (m) => m.GlyphCardDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   "command-palette": demoChunk(() =>
@@ -95,16 +98,24 @@ const DEMOS: Record<string, ComponentType> = {
   ),
   "workflow-status": demoChunk(() =>
     import("@/app/components/[id]/demos/workflow-status-demo").then(
-      (m) => m.WorkflowStatusDemo,
+      (m) => m.WorkflowStatusDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
   snake: demoChunk(() =>
-    import("@/app/components/[id]/demos/snake-demo").then((m) => m.SnakeDemo),
+    import("@/app/components/[id]/demos/snake-demo").then(
+      (m) => m.SnakeDemo as ComponentType<Record<string, unknown>>,
+    ),
   ),
 };
 
-/** Loads one demo as its own chunk, with the shared placeholder. */
-function demoChunk(load: () => Promise<ComponentType>) {
+/**
+ * Loads one demo as its own chunk, with the shared placeholder.
+ *
+ * The demos that take playground props declare a narrower prop type than the
+ * map's `Record<string, unknown>`, so the channel is widened here rather than
+ * narrowing every demo to an index signature.
+ */
+function demoChunk(load: () => Promise<ComponentType<Record<string, unknown>>>) {
   return dynamic(load, { loading: DemoFallback });
 }
 
@@ -127,7 +138,18 @@ function DemoFallback() {
   );
 }
 
-export function ComponentDemo({ id }: { id: string }) {
+/**
+ * Renders one demo. `props` is the live channel used by the detail page's
+ * props panel; every other surface (catalog cards, home teaser) omits it, so
+ * the demo keeps the defaults baked into its own signature.
+ */
+export function ComponentDemo({
+  id,
+  props,
+}: {
+  id: string;
+  props?: Record<string, unknown>;
+}) {
   const Demo = DEMOS[id];
 
   if (!Demo) {
@@ -138,5 +160,5 @@ export function ComponentDemo({ id }: { id: string }) {
     );
   }
 
-  return <Demo />;
+  return <Demo {...props} />;
 }

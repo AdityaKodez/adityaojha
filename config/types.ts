@@ -356,6 +356,76 @@ export interface ComponentDoc {
   colSpan?: 1 | 2;
 }
 
+/** A named colour ramp offered by the preview props panel. */
+export interface PlaygroundPalette {
+  id: string;
+  label: string;
+  /** Low to high. Drives both the swatch chip and the resolved prop values. */
+  colors: string[];
+}
+
+/**
+ * One control in the props panel. V1 covers four kinds: a fixed palette picker,
+ * a slider, a toggle, and a small segmented switch for enum props.
+ */
+export type PlaygroundControl =
+  | {
+      kind: "palette";
+      key: string;
+      label?: string;
+      /** Palette id selected on first paint. */
+      default: string;
+    }
+  | {
+      kind: "slider";
+      key: string;
+      label: string;
+      min: number;
+      max: number;
+      step: number;
+      default: number;
+      /** Readout formatter. Defaults to two decimals. */
+      format?: (value: number) => string;
+    }
+  | {
+      kind: "toggle";
+      key: string;
+      label: string;
+      /** Second line under the label, e.g. what the toggle does. */
+      description?: string;
+      default: boolean;
+    }
+  | {
+      kind: "segmented";
+      key: string;
+      label: string;
+      options: Array<{ value: string; label: string }>;
+      default: string;
+    };
+
+/** Live control values, keyed by control key. */
+export type PlaygroundValues = Record<string, string | number | boolean>;
+
+/**
+ * Per-component description of the props panel. The panel only ever feeds the
+ * live preview; the static props table in the markdown docs is untouched.
+ *
+ * V1 allows a single palette control per component, so `resolve` receives the
+ * selected ramp directly.
+ */
+export interface PlaygroundSchema {
+  /** Export name used when copying the current values as a JSX snippet. */
+  componentName: string;
+  controls: PlaygroundControl[];
+  /** Resolved keys to leave out of the copied snippet. */
+  omitFromSnippet?: string[];
+  /** Maps control values onto the props the component actually takes. */
+  resolve: (
+    values: PlaygroundValues,
+    palette: PlaygroundPalette,
+  ) => Record<string, unknown>;
+}
+
 export interface PortfolioConfig {
   meta: SiteMetaConfig;
   personal: PersonalInfo;

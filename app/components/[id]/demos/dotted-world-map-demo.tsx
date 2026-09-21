@@ -1,6 +1,11 @@
-import { DottedWorldMap } from "@/components/ui/dotted-world-map";
+"use client";
 
-export const weeklyVisitors = [
+import {
+  DottedWorldMap,
+  type DottedWorldMapProps,
+} from "@/components/ui/dotted-world-map";
+
+const weeklyVisitors = [
   {
     name: "New York",
     lat: 40.7128,
@@ -67,14 +72,30 @@ export const weeklyVisitors = [
   },
 ];
 
-export function DottedWorldMapDemo() {
+/**
+ * The props are the ones the detail page's panel drives; each default below is
+ * what the catalog and the home teaser render.
+ */
+export function DottedWorldMapDemo({
+  dotRadius = 2,
+  spacing = 6,
+  baseOpacity = 0.92,
+  showMarkers = true,
+  showLegend = true,
+  colors,
+  baseColor,
+}: Partial<DottedWorldMapProps> = {}) {
   return (
     <div className="w-full max-w-3xl">
       <DottedWorldMap
         points={weeklyVisitors}
-        dotRadius={2}
-        spacing={6}
-        baseOpacity={0.92}
+        colors={colors}
+        baseColor={baseColor}
+        dotRadius={dotRadius}
+        spacing={spacing}
+        baseOpacity={baseOpacity}
+        showMarkers={showMarkers}
+        showLegend={showLegend}
         legendLabels={{ low: "Fewer visitors", high: "More visitors" }}
       />
     </div>

@@ -1,8 +1,18 @@
 "use client";
 
-import { CopyCommandBlock } from "@/components/ui/copy-command-block";
+import {
+  CopyCommandBlock,
+  type CopyCommandBlockProps,
+} from "@/components/ui/copy-command-block";
 
-export function CopyCommandBlockDemo() {
+/**
+ * The panel drives the tab switcher and the prompt icon, so both command
+ * shapes stay a plain example of the component's API.
+ */
+export function CopyCommandBlockDemo({
+  showTabs = true,
+  showPrompt = true,
+}: Partial<CopyCommandBlockProps> = {}) {
   return (
     <div className="w-full max-w-lg space-y-6">
       <div className="space-y-2">
@@ -10,6 +20,8 @@ export function CopyCommandBlockDemo() {
           multi-package manager install command:
         </span>
         <CopyCommandBlock
+          showTabs={showTabs}
+          showPrompt={showPrompt}
           commands={{
             npm: "npx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
             pnpm: "pnpm dlx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
@@ -23,7 +35,11 @@ export function CopyCommandBlockDemo() {
         <span className="text-xs font-mono text-muted-foreground">
           single standalone command:
         </span>
-        <CopyCommandBlock command="git clone https://github.com/AdityaKodez/adityaojha.git" />
+        <CopyCommandBlock
+          showTabs={showTabs}
+          showPrompt={showPrompt}
+          command="git clone https://github.com/AdityaKodez/adityaojha.git"
+        />
       </div>
     </div>
   );

@@ -68,12 +68,12 @@ There is no typecheck script; run `npx tsc --noEmit` directly.
 
 | Path | Contents |
 | --- | --- |
-| `app/` | Routes: `page.tsx` (home), `components/` and `components/[id]/` (showcase), `project/[id]/` (case studies), `testimonials/` (all quotes, 2 col grid), `api/` (discord-status, visitor-count, sponsor-checkout, sponsor-claim, dodo-webhook, component-suggestion); plus `layout.tsx`, `error.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `not-found.tsx`. `bookmarks/` and `certifications/` are home sections only, not routes. |
-| `components/` | Subdivided into `landing/` (one file per home section, hero, about, skills, etc.), `showcase/` (catalog, shell, preview), `shared/` (header, footer, theme provider, logo), `ui/`, `motion-primitives/`, `skeletons/` |
+| `app/` | Routes: `page.tsx` (home), `components/` and `components/[id]/` (showcase; the detail route adds `preview-box.tsx` and `playground.tsx`), `project/[id]/` (case studies), `testimonials/` (all quotes, 2 col grid), `api/` (discord-status, visitor-count, sponsor-checkout, sponsor-claim, dodo-webhook, component-suggestion); plus `layout.tsx`, `error.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `not-found.tsx`. `bookmarks/` and `certifications/` are home sections only, not routes. |
+| `components/` | Subdivided into `landing/` (one file per home section, hero, about, skills, etc.), `showcase/` (catalog, card, preview, props panel), `shared/` (header, footer, theme provider, logo), `ui/`, `motion-primitives/`, `skeletons/` |
 | `components/ui/` | Vendored shadcn and Radix primitives; source of most registry items |
 | `components/motion-primitives/` | Motion-heavy building blocks |
 | `components/skeletons/` | Loading placeholders |
-| `config/` | The data layer, one file per domain, plus `types.ts` |
+| `config/` | The data layer, one file per domain, plus `types.ts` and `playground.ts` (preview props panel schemas) |
 | `content/` | Markdown docs for the showcase |
 | `lib/` | `utils.ts` (the `cn` helper), `github.ts`, `discord-status.ts`, `highlight.ts`, `markdown/` (shared Markdown rendering helpers), `react-query.ts`, `fonts/` |
 | `public/` | Static assets; `public/r/` holds generated registry JSON |
@@ -363,6 +363,25 @@ Rules:
 - Set `enabled: false` to hide an entry without deleting it.
 - To add a component: write the doc file, write the demo file, add the catalog
   entry, and, if it should be installable, add the file to `registry.json`.
+- `config/playground.ts` holds one optional control schema per component. When
+  an entry exists, the detail page renders a props panel under the preview and
+  the catalog card gets a collapsed `props` toggle. The panel only ever feeds
+  the live preview: the props table in the Markdown doc is static and is never
+  generated from the schema, so the two can drift and that is accepted.
+- Adding a schema means three edits: the entry in `config/playground.ts`, a
+  props signature on the demo (`Partial<XProps> = {}`, so the catalog renders
+  the same defaults), and an `as ComponentType<Record<string, unknown>>` cast on
+  that demo's loader in `components/showcase/component-demo.tsx`, which is the
+  one place the untyped props channel is widened.
+- Demo props must default to what the catalog and home teaser render today, so
+  the first paint of a component does not change when it gains a schema.
+- Keep panel control keys identical to the documented prop names: the copied
+  snippet is built from them.
+- Panel chrome: one container, one level. A tinted background (`bg-muted/20`),
+  no border, and no nested box, since the preview box above already supplies
+  the frame. Radii stay concentric: the preview frame is `rounded-2xl` with a
+  4px inset stage at `rounded-xl`, and the panel matches the frame's radius so
+  the stacked containers line up on both edges.
 
 ## 16. Environment
 

@@ -1,6 +1,9 @@
 "use client";
 
-import { InteractiveSkillCloud } from "@/components/ui/interactive-skill-cloud";
+import {
+  InteractiveSkillCloud,
+  type InteractiveSkillCloudProps,
+} from "@/components/ui/interactive-skill-cloud";
 import AiSdk from "@/public/stacks/ai-sdk";
 import AuthIcon from "@/public/stacks/auth";
 import CursorIcon from "@/public/stacks/cursor";
@@ -30,10 +33,23 @@ const stackItems = [
   { id: "cursor", name: "Cursor", icon: icon(CursorIcon) },
 ];
 
-export function InteractiveSkillCloudDemo() {
+/**
+ * The arena height and the gravity switch are props now, driven by the detail
+ * page's props panel. The stack items, the icon helper and the serif overlay
+ * stay baked in, and both props default to the values this demo always
+ * rendered.
+ */
+export function InteractiveSkillCloudDemo({
+  height = 420,
+  gravity = 1,
+}: Partial<InteractiveSkillCloudProps> = {}) {
   return (
     <div className="w-full max-w-xl">
-      <InteractiveSkillCloud items={stackItems} height={420}>
+      <InteractiveSkillCloud
+        items={stackItems}
+        height={height}
+        gravity={gravity}
+      >
         <div className="pointer-events-none absolute left-4 top-4 z-0 max-w-[220px] select-none sm:left-6 sm:top-6 sm:max-w-[260px]">
           <p className="font-serif text-2xl italic leading-tight text-foreground/90 sm:text-3xl">
             my skills for building modern products

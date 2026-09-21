@@ -25,9 +25,7 @@ import { findComponent, getEnabledComponents } from "@/config/components";
 import { getAddCommands } from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
-import { ComponentDemo } from "@/components/showcase/component-demo";
-import { ComponentExamples } from "./demos/examples";
-import { PreviewBox } from "./preview-box";
+import { ComponentPlayground } from "./playground";
 
 export async function generateStaticParams() {
   return getEnabledComponents().map((c) => ({ id: c.id }));
@@ -164,11 +162,11 @@ export default async function ComponentDetailPage({
         </p>
       </div>
 
-      {/* Preview / Code box */}
-      <PreviewBox
+      {/* Preview / Code box, plus the live props panel when the component has
+          a control schema. */}
+      <ComponentPlayground
         componentId={component.id}
         ariaLabel={`${component.title} preview`}
-        preview={<ComponentDemo id={component.id} />}
         codeHtml={highlighted}
         rawCode={demoRaw}
       />
@@ -213,9 +211,6 @@ export default async function ComponentDetailPage({
         componentId={component.id}
         componentTitle={component.title}
       />
-
-      {/* Examples carousel */}
-      <ComponentExamples id={component.id} />
     </main>
     </>
   );

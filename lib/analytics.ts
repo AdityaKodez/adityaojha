@@ -52,6 +52,22 @@ export type EventMap = {
   component_demo_source_copied: {
     component_id: string;
   };
+  playground_prop_changed: {
+    component_id: string;
+    prop: string;
+    control: "palette" | "slider" | "toggle" | "segmented";
+  };
+  playground_props_copied: {
+    component_id: string;
+  };
+  playground_props_reset: {
+    component_id: string;
+  };
+  playground_props_toggled: {
+    component_id: string;
+    location: "catalog_card";
+    expanded: boolean;
+  };
   component_source_copied: {
     component_id: string;
     file: string;
