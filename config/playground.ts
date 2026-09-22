@@ -539,6 +539,36 @@ const PLAYGROUNDS: Record<string, PlaygroundSchema> = {
       columns: Number(values.columns),
     }),
   },
+
+  "stack-rolodex": {
+    componentName: "StackRolodex",
+    controls: [
+      {
+        kind: "slider",
+        key: "interval",
+        label: "Interval",
+        min: 800,
+        max: 4000,
+        step: 100,
+        default: 2000,
+        format: (value) => `${(value / 1000).toFixed(1)}s`,
+      },
+      {
+        kind: "slider",
+        key: "step",
+        label: "Spacing",
+        min: 36,
+        max: 80,
+        step: 2,
+        default: 50,
+        format: (value) => `${value}px`,
+      },
+    ],
+    resolve: (values) => ({
+      interval: values.interval,
+      step: values.step,
+    }),
+  },
 };
 
 export function getPlayground(id: string): PlaygroundSchema | undefined {

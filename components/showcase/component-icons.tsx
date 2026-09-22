@@ -494,6 +494,30 @@ const SparklesIcon = ({
   </svg>
 );
 
+const RolodexIcon = ({
+  size = 24,
+  color = "currentColor",
+  ...props
+}: ComponentIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    {/* depth ramp: the active pill is full width, its neighbours shrink and dim */}
+    <rect x="3" y="10" width="18" height="4" rx="2" />
+    <rect x="5.5" y="4" width="13" height="3" rx="1.5" strokeOpacity="0.5" />
+    <rect x="5.5" y="17" width="13" height="3" rx="1.5" strokeOpacity="0.5" />
+  </svg>
+);
+
 export {
   DottedWorldMapIcon,
   CopyCommandBlockIcon,
@@ -512,6 +536,7 @@ export {
   ModelPickerIcon,
   WorkflowStatusIcon,
   SnakeIcon,
+  RolodexIcon,
 };
 
 /** Maps a `ComponentDoc.icon` key onto its icon component. */
@@ -551,6 +576,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return WorkflowStatusIcon;
     case "snake":
       return SnakeIcon;
+    case "rolodex":
+      return RolodexIcon;
     case "globe":
     default:
       return DottedWorldMapIcon;

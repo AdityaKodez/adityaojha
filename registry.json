@@ -522,6 +522,35 @@
         }
       ],
       "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/snake\n```\n\n## Usage\n\n```tsx\nimport { Snake } from \"@/components/ui/snake\";\n\nexport function Game() {\n  return <Snake />;\n}\n```\n\nSteer with the arrow keys, WASD, or a swipe. `gridSize` sets the cells per side (20 means 20x20), `speed` is the milliseconds per step, and `initialLength` is the starting segment count. The colors are `var(--token, literal)` references resolved at runtime, so the field follows your theme and falls back to the literal in projects without the tokens; pass a literal color to `fieldColor`, `dotColor`, or `snakeColor` to opt out."
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "stack-rolodex",
+      "type": "registry:ui",
+      "title": "Stack Rolodex",
+      "description": "A rotating vertical pill stack that cycles through a list rolodex-style, with depth scaling, edge fading, and an optional side label.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "animation",
+        "marquee",
+        "stack",
+        "interactive"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/stack-rolodex",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/stack-rolodex.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/stack-rolodex.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/stack-rolodex\n```\n\n## Usage\n\n```tsx\nimport { StackRolodex } from \"@/components/ui/stack-rolodex\";\nimport { SiGithub, SiPrisma, SiSupabase, SiVercel } from \"react-icons/si\";\n\nconst STACK = [\n  { id: \"vercel\", name: \"Vercel\", icon: SiVercel },\n  { id: \"github\", name: \"GitHub\", icon: SiGithub },\n  { id: \"supabase\", name: \"Supabase\", icon: SiSupabase, color: \"#3ECF8E\" },\n  { id: \"prisma\", name: \"Prisma\", icon: SiPrisma, color: \"#16A394\" },\n];\n\nexport function StackSection() {\n  return <StackRolodex items={STACK} label=\"in my stack\" />;\n}\n```\n\n`items` takes any icon component that accepts a `className`, such as react-icons, lucide-react, or your own SVG components. `interval` is the milliseconds between rotations and `step` the pixel distance between pills, with three pills visible on each side of the active one. Omit `label` to render the stack on its own. An item can carry its brand `color`, which the icon takes while its pill is the active one; items without a color keep the neutral styling."
     }
   ]
 }

@@ -222,6 +222,18 @@ export const componentRegistry: ComponentDoc[] = [
     enabled: true,
   },
   {
+    id: "stack-rolodex",
+    title: "Stack Rolodex",
+    description:
+      "A rotating vertical pill stack that cycles through a list rolodex-style, with depth scaling, edge fading, and an optional side label.",
+    icon: "rolodex",
+    demoPath: "app/components/[id]/demos/stack-rolodex-demo.tsx",
+    docPath: "content/components/stack-rolodex.md",
+    order: 19,
+    enabled: true,
+    new: true,
+  },
+  {
     id: "progressive-blur",
     title: "Progressive Blur",
     description:

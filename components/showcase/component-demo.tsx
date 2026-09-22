@@ -106,6 +106,11 @@ const DEMOS: Record<string, ComponentType<Record<string, unknown>>> = {
       (m) => m.SnakeDemo as ComponentType<Record<string, unknown>>,
     ),
   ),
+  "stack-rolodex": demoChunk(() =>
+    import("@/app/components/[id]/demos/stack-rolodex-demo").then(
+      (m) => m.StackRolodexDemo as ComponentType<Record<string, unknown>>,
+    ),
+  ),
 };
 
 /**

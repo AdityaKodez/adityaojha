@@ -337,7 +337,8 @@ export type ComponentIcon =
   | "models"
   | "stack"
   | "status"
-  | "snake";
+  | "snake"
+  | "rolodex";
 
 export interface ComponentDoc {
   id: string;
