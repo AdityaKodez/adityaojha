@@ -25,21 +25,14 @@ import { cn } from "@/lib/utils";
 /** Shared row: fixed label column, control, readout. */
 function ControlRow({
   label,
-  compact,
   children,
 }: {
   label: string;
-  compact?: boolean;
   children: ReactNode;
 }) {
   return (
-    <div className={cn("flex items-center", compact ? "gap-2.5" : "gap-3")}>
-      <span
-        className={cn(
-          "shrink-0 text-muted-foreground",
-          compact ? "w-16 text-[11px]" : "w-24 text-xs",
-        )}
-      >
+    <div className="flex items-center gap-3">
+      <span className="w-24 shrink-0 text-xs text-muted-foreground">
         {label}
       </span>
       {children}
@@ -50,28 +43,18 @@ function ControlRow({
 function PaletteControl({
   control,
   value,
-  compact,
   onChange,
 }: {
   control: Extract<PlaygroundControl, { kind: "palette" }>;
   value: string;
-  compact?: boolean;
   onChange: (next: string) => void;
 }) {
   return (
-    <div className={cn("flex flex-col", compact ? "gap-2" : "gap-2.5")}>
-      <span
-        className={cn(
-          "font-medium text-foreground",
-          compact ? "text-[11px]" : "text-xs",
-        )}
-      >
+    <div className="flex flex-col gap-2.5">
+      <span className="text-xs font-medium text-foreground">
         {control.label ?? "Palette"}
       </span>
-      <div
-        className={cn("flex flex-wrap items-center", compact ? "gap-1.5" : "gap-2")}
-        role="group"
-      >
+      <div className="flex flex-wrap items-center gap-2" role="group">
         {playgroundPalettes.map((palette) => {
           const isActive = palette.id === value;
           return (
@@ -83,19 +66,13 @@ function PaletteControl({
                   aria-pressed={isActive}
                   aria-label={palette.label}
                   className={cn(
-                    "overflow-hidden border p-0.5 micro-transition focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-                    compact ? "h-7 w-11 rounded-md" : "h-9 w-14 rounded-lg",
+                    "h-9 w-14 overflow-hidden rounded-lg border p-0.5 micro-transition focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
                     isActive
                       ? "border-foreground"
                       : "border-border hover:border-foreground/30",
                   )}
                 >
-                  <span
-                    className={cn(
-                      "flex h-full w-full overflow-hidden",
-                      compact ? "rounded-[4px]" : "rounded-[5px]",
-                    )}
-                  >
+                  <span className="flex h-full w-full overflow-hidden rounded-[5px]">
                     {palette.colors.map((color) => (
                       <span
                         key={color}
@@ -120,20 +97,18 @@ function PaletteControl({
 function SliderControl({
   control,
   value,
-  compact,
   onChange,
   onCommit,
 }: {
   control: Extract<PlaygroundControl, { kind: "slider" }>;
   value: number;
-  compact?: boolean;
   onChange: (next: number) => void;
   onCommit: () => void;
 }) {
   const readout = control.format ? control.format(value) : value.toFixed(2);
 
   return (
-    <ControlRow label={control.label} compact={compact}>
+    <ControlRow label={control.label}>
       <SliderPrimitive.Root
         value={[value]}
         min={control.min}
@@ -151,12 +126,7 @@ function SliderControl({
           className="block size-3 rounded-full border border-foreground/30 bg-background shadow-sm micro-transition hover:scale-110 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         />
       </SliderPrimitive.Root>
-      <span
-        className={cn(
-          "shrink-0 text-right font-mono tabular-nums text-foreground",
-          compact ? "w-10 text-[10px]" : "w-12 text-[11px]",
-        )}
-      >
+      <span className="w-12 shrink-0 text-right font-mono text-[11px] tabular-nums text-foreground">
         {readout}
       </span>
     </ControlRow>
@@ -166,32 +136,20 @@ function SliderControl({
 function ToggleControl({
   control,
   value,
-  compact,
   onChange,
 }: {
   control: Extract<PlaygroundControl, { kind: "toggle" }>;
   value: boolean;
-  compact?: boolean;
   onChange: (next: boolean) => void;
 }) {
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="flex min-w-0 flex-col">
-        <span
-          className={cn(
-            "font-medium text-foreground",
-            compact ? "text-[11px]" : "text-xs",
-          )}
-        >
+        <span className="text-xs font-medium text-foreground">
           {control.label}
         </span>
         {control.description ? (
-          <span
-            className={cn(
-              "text-muted-foreground",
-              compact ? "text-[10px]" : "text-xs",
-            )}
-          >
+          <span className="text-xs text-muted-foreground">
             {control.description}
           </span>
         ) : null}
@@ -211,16 +169,14 @@ function ToggleControl({
 function SegmentedControl({
   control,
   value,
-  compact,
   onChange,
 }: {
   control: Extract<PlaygroundControl, { kind: "segmented" }>;
   value: string;
-  compact?: boolean;
   onChange: (next: string) => void;
 }) {
   return (
-    <ControlRow label={control.label} compact={compact}>
+    <ControlRow label={control.label}>
       <div
         role="group"
         aria-label={control.label}
@@ -235,8 +191,7 @@ function SegmentedControl({
               onClick={() => onChange(option.value)}
               aria-pressed={isActive}
               className={cn(
-                "rounded-[5px] micro-transition focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-                compact ? "px-2 py-0.5 text-[11px]" : "px-2.5 py-1 text-xs",
+                "rounded-[5px] px-2.5 py-1 text-xs micro-transition focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
                 isActive
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground",
@@ -259,12 +214,6 @@ export type PropsPanelProps = {
   isDefault: boolean;
   onChange: (key: string, value: string | number | boolean) => void;
   onReset: () => void;
-  /**
-   * `full` is the detail page's framed panel with its own header. `compact`
-   * drops the frame and header for the catalog cards, where the card body
-   * already supplies the border and the caller supplies the toggle.
-   */
-  variant?: "full" | "compact";
 };
 
 /**
@@ -278,10 +227,8 @@ export function PropsPanel({
   isDefault,
   onChange,
   onReset,
-  variant = "full",
 }: PropsPanelProps) {
   const { status, copy } = useCopy();
-  const compact = variant === "compact";
   const snippet = useMemo(
     () => buildPlaygroundSnippet(schema, values),
     [schema, values],
@@ -313,7 +260,7 @@ export function PropsPanel({
   };
 
   const controls = (
-    <div className={cn("flex flex-col", compact ? "gap-3.5" : "gap-5")}>
+    <div className="flex flex-col gap-5">
       {schema.controls.map((control) => {
         if (control.kind === "palette") {
           return (
@@ -321,7 +268,6 @@ export function PropsPanel({
               key={control.key}
               control={control}
               value={String(values[control.key])}
-              compact={compact}
               onChange={(next) => {
                 setValue(control, next);
                 commit(control);
@@ -336,7 +282,6 @@ export function PropsPanel({
               key={control.key}
               control={control}
               value={Number(values[control.key])}
-              compact={compact}
               onChange={(next) => setValue(control, next)}
               onCommit={() => commit(control)}
             />
@@ -349,7 +294,6 @@ export function PropsPanel({
               key={control.key}
               control={control}
               value={Boolean(values[control.key])}
-              compact={compact}
               onChange={(next) => {
                 setValue(control, next);
                 commit(control);
@@ -363,7 +307,6 @@ export function PropsPanel({
             key={control.key}
             control={control}
             value={String(values[control.key])}
-            compact={compact}
             onChange={(next) => {
               setValue(control, next);
               commit(control);
@@ -374,23 +317,10 @@ export function PropsPanel({
     </div>
   );
 
-  if (compact) {
-    // Same treatment as the full panel, scaled down: a tint instead of a
-    // border, since the card body already supplies its own edges.
-    return (
-      <section
-        aria-label="Props"
-        className="w-full min-w-0 rounded-md bg-muted/20 p-3"
-      >
-        {controls}
-      </section>
-    );
-  }
-
   return (
     <section
       aria-label="Props"
-      className="mx-3 my-4 rounded-2xl bg-muted/20 p-4 sm:mx-6 sm:p-5"
+      className="mx-3 mb-4 rounded-2xl bg-muted/20 p-4 sm:mx-6 sm:p-5"
     >
       {/* One container, one level. The tint is the whole separation: no
           border, and no second box nested inside to hold the controls. The

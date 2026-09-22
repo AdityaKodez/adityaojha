@@ -33,7 +33,6 @@ import {
 } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import type { CatalogView } from "@/components/showcase/components-view";
 import XIcon from "@/public/x-icon";
 
 const suggestion = componentsSectionConfig.suggestion;
@@ -56,28 +55,20 @@ type SubmitStatus = "idle" | "submitting" | "success" | "error";
  * the same grid position that opens the suggestion dialog on desktop
  * and a bottom drawer on mobile.
  */
-export function ComponentSuggestion({ variant }: { variant: CatalogView }) {
+export function ComponentSuggestion() {
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (next: boolean) => {
     if (next) {
-      trackEvent("component_suggestion_opened", { view: variant });
+      trackEvent("component_suggestion_opened", {});
     }
     setOpen(next);
   };
 
   return (
     <>
-      {variant === "list" ? (
-        <SuggestionListCta onClick={() => handleOpenChange(true)} />
-      ) : (
-        <SuggestionCardCta onClick={() => handleOpenChange(true)} />
-      )}
-      <SuggestionDialog
-        open={open}
-        onOpenChange={handleOpenChange}
-        view={variant}
-      />
+      <SuggestionListCta onClick={() => handleOpenChange(true)} />
+      <SuggestionDialog open={open} onOpenChange={handleOpenChange} />
     </>
   );
 }
@@ -109,44 +100,12 @@ function SuggestionListCta({ onClick }: { onClick: () => void }) {
   );
 }
 
-/** Card view CTA. Keeps the tab stand-in so its body lines up with real cards. */
-function SuggestionCardCta({ onClick }: { onClick: () => void }) {
-  return (
-    <div className="relative flex min-w-0 flex-col">
-      {/* Stands in for the tab strip so the dashed box lines up with the
-          preview body of a real card, not with its tab. */}
-      <div className="-mb-px flex items-center py-2">
-        <div className="size-6" />
-      </div>
-
-      <button
-        type="button"
-        onClick={onClick}
-        className="catalog-card-body group relative flex flex-1 flex-col items-center justify-center gap-2 overflow-hidden rounded-tr-md rounded-b-md border border-dashed p-6 text-center transition-colors hover:border-muted-foreground/30 hover:bg-muted/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-      >
-        <span className="relative flex size-8 items-center justify-center rounded-sm bg-background text-muted-foreground transition-colors group-hover:text-foreground">
-          <Plus className="size-4" />
-          <span className="pointer-events-none absolute inset-0 rounded-sm border border-dashed border-muted-foreground/20 transition-colors group-hover:border-muted-foreground/40" />
-        </span>
-        <p className="text-sm font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
-          {suggestion.cardTitle}
-        </p>
-        <p className="font-mono text-[11px] text-muted-foreground/50">
-          {suggestion.cardHint}
-        </p>
-      </button>
-    </div>
-  );
-}
-
 function SuggestionDialog({
   open,
   onOpenChange,
-  view,
 }: {
   open: boolean;
   onOpenChange: (next: boolean) => void;
-  view: CatalogView;
 }) {
   const [idea, setIdea] = useState("");
   const [references, setReferences] = useState("");
@@ -296,7 +255,6 @@ function SuggestionDialog({
       if (response.ok) {
         setStatus("success");
         trackEvent("component_suggestion_submitted", {
-          view,
           has_reference: references.trim().length > 0 || files.length > 0,
         });
         return;
@@ -327,7 +285,6 @@ function SuggestionDialog({
     setStatus("error");
     setErrorMessage(message);
     trackEvent("component_suggestion_failed", {
-      view,
       reason: failureReason,
     });
   };

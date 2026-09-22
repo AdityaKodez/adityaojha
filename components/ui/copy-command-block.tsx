@@ -2,9 +2,9 @@
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { Check, Copy, Terminal, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import React, { useCallback, useState } from "react";
+import { Check, Copy, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion, type Transition } from "motion/react";
+import React, { useCallback, useId, useState } from "react";
 
 export type PackageManagerType = "npm" | "pnpm" | "yarn" | "bun";
 
@@ -74,7 +74,7 @@ export interface CopyCommandBlockProps {
   storageKey?: string;
   /** Show package manager switcher tabs when multiple commands provided. */
   showTabs?: boolean;
-  /** Show terminal `$` prompt icon. */
+  /** Show the terminal `$` prompt. */
   showPrompt?: boolean;
   /** Extra class names. */
   className?: string;
@@ -142,12 +142,21 @@ export function CopyCommandBlock({
     }
   }, [activeCommand]);
 
+  const reducedMotion = useReducedMotion();
+  // Per-instance id: several blocks can share a page, and a shared layoutId
+  // would make the pill fly between them.
+  const pillId = useId();
+  const pillTransition: Transition = reducedMotion
+    ? { duration: 0 }
+    : { type: "spring", stiffness: 420, damping: 34, mass: 0.7 };
+
   const hasTabs = !singleCommand && showTabs && typeof commands === "object";
 
   return (
-    <div className={cn("relative flex flex-col gap-1.5 w-full", className)}>
+    <div className={cn("relative", className)}>
       {hasTabs && (
-        <div className="flex items-center gap-1">
+        /* Package manager tabs — the active background slides between tabs. */
+        <div className="flex w-fit items-center gap-1 rounded-t-lg border bg-muted">
           {DEFAULT_PACKAGE_MANAGERS.map((pm) => {
             const Icon = PM_ICONS[pm];
             const isActive = activePm === pm;
@@ -155,90 +164,114 @@ export function CopyCommandBlock({
               <button
                 key={pm}
                 type="button"
-                aria-pressed={isActive}
                 onClick={() => selectPm(pm)}
+                aria-pressed={isActive}
                 className={cn(
-                  "flex items-center gap-1.5 rounded-sm px-2 py-0.5 font-mono text-[11px] tracking-wider transition-colors",
+                  "relative flex items-center gap-1.5 rounded-t-lg px-2 py-1 font-mono text-[10px] tracking-wider micro-transition",
                   isActive
-                    ? "bg-muted text-foreground font-medium"
+                    ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
-                <AnimatePresence mode="wait" initial={false}>
+                {isActive && (
+                  <motion.span
+                    layoutId={`pm-tab-pill-${pillId}`}
+                    initial={false}
+                    transition={pillTransition}
+                    className="absolute inset-0 rounded-t-lg bg-background"
+                    aria-hidden="true"
+                  />
+                )}
+                <Icon className="relative z-10 size-3 shrink-0" />
+                <AnimatePresence initial={false}>
                   {isActive && (
                     <motion.span
-                      key={pm}
-                      initial={{ opacity: 0, scale: 0.6 }}
+                      key="label"
+                      initial={
+                        reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.6 }
+                      }
                       animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.6 }}
-                      transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
-                      className="flex items-center"
+                      exit={
+                        reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.6 }
+                      }
+                      transition={
+                        reducedMotion
+                          ? { duration: 0 }
+                          : { duration: 0.15, ease: [0.22, 1, 0.36, 1] }
+                      }
+                      className="relative z-10 origin-left whitespace-nowrap"
                     >
-                      <Icon className="size-3 shrink-0" />
+                      {pm}
                     </motion.span>
                   )}
                 </AnimatePresence>
-                {pm}
               </button>
             );
           })}
         </div>
       )}
 
-      <div className="group relative overflow-hidden rounded-md border border-dashed bg-muted/10">
-        <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40" />
-        <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-foreground/5" />
+      {/* With tabs the top-left corner stays square so the strip sits flush
+          against the frame; a standalone block rounds all four corners. */}
+      <div
+        className={cn(
+          "relative border bg-muted/10 p-0.5",
+          hasTabs ? "rounded-tl-none rounded-b-lg rounded-r-lg" : "rounded-lg",
+        )}
+      >
+        <div className="group/copy relative overflow-hidden rounded-md border bg-muted/10">
+          <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-40" />
+          <div className="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-muted-foreground/5" />
 
-        <div className="relative flex items-center gap-3 px-3.5 py-2.5">
-          {showPrompt && (
-            <span className="select-none font-mono text-xs text-muted-foreground/60 flex items-center gap-1.5">
-              <Terminal className="size-3.5" />
-              <span>$</span>
-            </span>
-          )}
-
-          <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="relative flex items-center gap-3 px-4 py-3">
             <AnimatePresence mode="wait" initial={false}>
               <motion.code
-                key={activeCommand}
-                initial={{ opacity: 0, y: 3 }}
+                key={activePm}
+                initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 3 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -3 }}
-                transition={{ duration: 0.12 }}
-                className="whitespace-pre font-mono text-[12.5px] leading-relaxed text-foreground"
+                exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -3 }}
+                transition={
+                  reducedMotion
+                    ? { duration: 0 }
+                    : { duration: 0.12, ease: [0.22, 1, 0.36, 1] }
+                }
+                className="min-w-0 flex-1 overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-pre font-mono text-[12.5px] leading-relaxed text-foreground"
               >
+                {showPrompt && (
+                  <span className="select-none pr-2 text-muted-foreground">$</span>
+                )}
                 {activeCommand}
               </motion.code>
             </AnimatePresence>
-          </div>
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={copyToClipboard}
-                aria-label="copy command"
-                className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring transition-colors"
-              >
-                {copyStatus === "copied" ? (
-                  <Check className="size-3.5 text-green-500" />
-                ) : copyStatus === "error" ? (
-                  <X className="size-3.5 text-destructive" />
-                ) : (
-                  <Copy className="size-3.5" />
-                )}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                {copyStatus === "copied"
-                  ? "copied!"
-                  : copyStatus === "error"
-                    ? "failed to copy"
-                    : "copy command"}
-              </p>
-            </TooltipContent>
-          </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={copyToClipboard}
+                  aria-label="copy command"
+                  className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  {copyStatus === "copied" ? (
+                    <Check className="size-3.5 text-green-500" />
+                  ) : copyStatus === "error" ? (
+                    <X className="size-3.5 text-destructive" />
+                  ) : (
+                    <Copy className="size-3.5" />
+                  )}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  {copyStatus === "copied"
+                    ? "copied!"
+                    : copyStatus === "error"
+                      ? "copy failed"
+                      : "copy command"}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </div>
       </div>
     </div>

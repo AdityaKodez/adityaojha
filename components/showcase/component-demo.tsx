@@ -140,8 +140,8 @@ function DemoFallback() {
 
 /**
  * Renders one demo. `props` is the live channel used by the detail page's
- * props panel; every other surface (catalog cards, home teaser) omits it, so
- * the demo keeps the defaults baked into its own signature.
+ * props panel; the home teaser omits it, so the demo keeps the defaults baked
+ * into its own signature.
  */
 export function ComponentDemo({
   id,

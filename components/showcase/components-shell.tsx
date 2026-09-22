@@ -1,33 +1,10 @@
-"use client";
-
-import { useEffect } from "react";
-
-import { useComponentsView } from "@/components/showcase/components-view";
-
 /**
  * Inner column for the /components route.
  *
- * The card grid needs more room than the 48rem reading column the rest of the
- * site uses, so the shell widens `--frame-max-w` on `<html>` while the card
- * view is active. The root layout, header, and gutter all read that token.
- * The attribute is cleared on unmount so other routes keep the default.
+ * Same shell the other routes use: the root layout draws the frame and the
+ * gutters, this just supplies the scrolling column.
  */
 export function ComponentsShell({ children }: { children: React.ReactNode }) {
-  const [view] = useComponentsView();
-  const isWide = view === "cards";
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (isWide) {
-      root.dataset.frame = "wide";
-    } else {
-      delete root.dataset.frame;
-    }
-    return () => {
-      delete root.dataset.frame;
-    };
-  }, [isWide]);
-
   return (
     <main
       id="components"

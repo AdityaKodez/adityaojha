@@ -32,4 +32,4 @@ export function InstallationGuide() {
 
 - **Global Package Preference Sync.** Remembers the selected package manager in `localStorage` so switching from npm to pnpm on one card updates all command blocks across the site.
 - **Copy Feedback State.** Provides visual icon feedback (Check / Error / Copy) accompanied by a tooltip.
-- **Blueprint Styling.** Features dashed border outlines, subtle inner rings, and blueprint grid background.
+- **Copy-block Chrome.** Same dual-border frame, blueprint grid, and inner ring as the site's install blocks, with the tab strip sitting flush against the top-left corner.

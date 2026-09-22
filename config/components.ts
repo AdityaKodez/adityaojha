@@ -10,7 +10,6 @@ export const componentsSectionConfig = {
   suggestion: {
     cardTitle: "Suggest a component",
     cardDescription: "The next block lands in this slot. Tell it what to be.",
-    cardHint: "This slot takes requests.",
     title: "Suggest a component",
     description:
       "Describe the component you want. References and images help it get built.",
@@ -99,7 +98,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/progress-bars.md",
     order: 5,
     enabled: true,
-    colSpan: 2,
   },
   {
     id: "section-rail",
@@ -111,8 +109,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/section-rail.md",
     order: 6,
     enabled: true,
-    // The demo pairs a rail with a prose column — it needs the full row width.
-    colSpan: 2,
   },
   {
     id: "project-explorer",
@@ -124,7 +120,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/project-explorer.md",
     order: 7,
     enabled: true,
-    colSpan: 2,
   },
   {
     id: "dotted-world-map",
@@ -136,7 +131,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/dotted-world-map.md",
     order: 8,
     enabled: true,
-    colSpan: 2,
   },
   {
     id: "copy-command-block",
@@ -170,7 +164,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/github-map.md",
     order: 11,
     enabled: true,
-    colSpan: 2,
   },
   {
     id: "carousel",

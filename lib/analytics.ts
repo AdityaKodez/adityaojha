@@ -63,11 +63,6 @@ export type EventMap = {
   playground_props_reset: {
     component_id: string;
   };
-  playground_props_toggled: {
-    component_id: string;
-    location: "catalog_card";
-    expanded: boolean;
-  };
   component_source_copied: {
     component_id: string;
     file: string;
@@ -139,19 +134,11 @@ export type EventMap = {
     location: string;
     trigger_type: "bubble" | "pill";
   };
-  components_view_switched: {
-    view: "list" | "cards";
-    previous_view: "list" | "cards";
-  };
-  component_suggestion_opened: {
-    view: "list" | "cards";
-  };
+  component_suggestion_opened: Record<string, never>;
   component_suggestion_submitted: {
-    view: "list" | "cards";
     has_reference: boolean;
   };
   component_suggestion_failed: {
-    view: "list" | "cards";
     reason: "invalid" | "network" | "unavailable" | "rate_limited";
   };
   vader_lightsaber_toggled: {

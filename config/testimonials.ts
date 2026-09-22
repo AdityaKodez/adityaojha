@@ -211,6 +211,17 @@ export const testimonialsConfig: Testimonial[] = [
     order: 19,
     enabled: true,
   },
+  {
+    id: "madhurjya",
+    name: "MDC",
+    role: "@MadhurjyaDC",
+    content: "sick design bro",
+    avatar: "MD",
+    image: "/testimonial/madhurjya.jpg",
+    href: "https://x.com/MadhurjyaDC/status/2101991276984103279",
+    order: 20,
+    enabled: true,
+  },
 ];
 
 /** Every testimonial in authored order. Used by the /testimonials page. */

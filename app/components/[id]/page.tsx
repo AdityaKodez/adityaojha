@@ -172,7 +172,7 @@ export default async function ComponentDetailPage({
       />
 
       {/* Installation — registry CLI command */}
-      <section className="border-t border-dashed px-6 py-6">
+      <section className=" px-6 py-6">
         <h2 className="text-base font-medium tracking-tight">Installation</h2>
         <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
           {component.title} is published as a shadcn registry item. The CLI
@@ -202,7 +202,7 @@ export default async function ComponentDetailPage({
       </section>
 
       {/* Docs — usage, props, notes. */}
-      <div className="border-t border-dashed prose prose-neutral dark:prose-invert max-w-none px-6 py-6 [&_a]:text-primary [&_code]:text-foreground [&_table]:w-full">
+      <div className=" prose prose-neutral dark:prose-invert max-w-none px-6 py-6 [&_a]:text-primary [&_code]:text-foreground [&_table]:w-full">
         {renderedDocs}
       </div>
 
@@ -215,4 +215,3 @@ export default async function ComponentDetailPage({
     </>
   );
 }
-

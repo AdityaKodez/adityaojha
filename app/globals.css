@@ -102,10 +102,6 @@
   --scrollbar-thumb-hover: oklch(0.78 0 0);
 }
 
-html[data-frame="wide"] {
-  --frame-max-w: 72rem;
-}
-
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -295,23 +291,6 @@ body {
     .preview-body {
       --preview-min-h: clamp(240px, 42svh, 420px);
       --preview-max-h: clamp(420px, 62svh, 560px);
-    }
-  }
-
-  /* -------------------------------------------------------------------------
-     Catalog card previews (components/components-catalog.tsx)
-
-     A floor so a single-control demo still reads as a stage next to a taller
-     neighbour. No ceiling on purpose: the card already clips horizontal bleed,
-     and cutting a demo off vertically looks like a bug rather than a boundary.
-  ------------------------------------------------------------------------- */
-  .catalog-card-body {
-    min-height: clamp(180px, 24vh, 260px);
-  }
-
-  @supports (height: 1svh) {
-    .catalog-card-body {
-      min-height: clamp(180px, 24svh, 260px);
     }
   }
 

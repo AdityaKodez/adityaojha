@@ -277,8 +277,8 @@ const PLAYGROUNDS: Record<string, PlaygroundSchema> = {
       {
         kind: "toggle",
         key: "showPrompt",
-        label: "Prompt icon",
-        description: "Terminal $ before the command",
+        label: "Prompt",
+        description: "$ before the command",
         default: true,
       },
     ],
