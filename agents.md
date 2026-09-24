@@ -329,6 +329,13 @@ Rules:
   old `getRegistrySetupSnippet()` helper was removed for that reason.
 - Any edit to a file listed in `registry.json` must be followed by
   `npm run registry:build`, or the published JSON goes stale.
+- The directory entry is also an input, not just an output. shadcn monitors it
+  and publishes a `health` object per registry at
+  `ui.shadcn.com/r/registries.json`. `lib/registry-health.ts` (server-only)
+  fetches that index hourly and `config/registry-health.ts` holds the shared
+  types, labels, and points per breakdown component, so the pill strip under
+  the catalog on `/components` is the published record rather than a claim. If
+  the fetch or the parse fails, the strip renders nothing, by design.
 - Published files must be self-contained. A consumer's project has no `config/`
   directory, no `@/config/*` imports, and no site-specific data. Inline data or
   accept it as props.

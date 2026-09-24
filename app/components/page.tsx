@@ -1,5 +1,6 @@
 import { ComponentsCatalog } from "@/components/showcase/components-catalog";
 import { ComponentsShell } from "@/components/showcase/components-shell";
+import { RegistryStatus } from "@/components/showcase/registry-status";
 import { RotatingInstallCommand } from "@/components/showcase/rotating-install-command";
 import { SponsorsSection } from "@/components/landing/sponsors";
 import { getEnabledComponents } from "@/config/components";
@@ -50,6 +51,11 @@ export default function ComponentsPage() {
         </section>
         <h2 className="sr-only">Available Components</h2>
         <ComponentsCatalog components={components} />
+
+        {/* Registry credentials, right under the catalog: what the namespace
+            buys you in the shadcn directory, and the health score shadcn
+            publishes for it. */}
+        <RegistryStatus />
       </section>
 
       {/* Registry — the namespace is in the official shadcn directory, so there
