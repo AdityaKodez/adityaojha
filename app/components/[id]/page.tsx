@@ -8,6 +8,7 @@ import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 
 import { getComponentIcon } from "@/components/showcase/component-icons";
+import { CopyPageMenu } from "@/components/showcase/copy-page-menu";
 import { InstallCommand } from "@/components/showcase/copy-block";
 import { ManualInstall } from "@/components/showcase/manual-install";
 import { HomeSectionRail } from "@/components/landing/home-section-rail";
@@ -25,6 +26,7 @@ import { findComponent, getEnabledComponents } from "@/config/components";
 import { getAddCommands } from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
+import { formatComponentPageMarkdown } from "@/lib/component-page-markdown";
 import { ComponentPlayground } from "./playground";
 
 export async function generateStaticParams() {
@@ -153,7 +155,14 @@ export default async function ComponentDetailPage({
       </div>
 
       {/* Title bar */}
-      <h1 className="section-heading">{component.title}</h1>
+      <div className="section-heading flex flex-wrap items-center justify-between gap-2">
+        <h1>{component.title}</h1>
+        <CopyPageMenu
+          componentId={component.id}
+          componentTitle={component.title}
+          markdown={formatComponentPageMarkdown(component, docsMd)}
+        />
+      </div>
 
       {/* Description */}
       <div className="px-6 mt-3">
