@@ -182,7 +182,7 @@ export default function RootLayout({
         <Script
           defer
           src="https://talvess.vercel.app/script.js"
-          data-website-id="f5b5fcbe-226d-469d-a5f9-2d4f45dea914"
+          data-website-id="60de5aa9-eea8-4f05-b1d6-8a3d244d5644"
         />
       </body>
     </html>
