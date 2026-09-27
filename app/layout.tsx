@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/next";
 import { GeistPixelGrid } from "geist/font/pixel";
 import { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { DM_Sans, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
@@ -178,6 +179,11 @@ export default function RootLayout({
           </TooltipProvider>
         </ThemeProvider>
         <Analytics />
+        <Script
+          defer
+          src="https://talvess.vercel.app/script.js"
+          data-website-id="f5b5fcbe-226d-469d-a5f9-2d4f45dea914"
+        />
       </body>
     </html>
   );
