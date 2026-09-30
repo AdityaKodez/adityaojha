@@ -2,6 +2,7 @@ import type { ComponentDoc } from "./types";
 
 /** Registry entry featured above the components catalog. */
 export const componentSpotlightId = "stack-rolodex";
+export const componentSpotlightLabel = "Featured";
 
 /** Home page teaser for the /components showcase. */
 export const componentsSectionConfig = {

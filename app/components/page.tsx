@@ -5,7 +5,7 @@ import { ComponentsShell } from "@/components/showcase/components-shell";
 import { RegistryStatus } from "@/components/showcase/registry-status";
 import { RotatingInstallCommand } from "@/components/showcase/rotating-install-command";
 import { SponsorsSection } from "@/components/landing/sponsors";
-import { componentSpotlightId, findComponent, getEnabledComponents } from "@/config/components";
+import { componentSpotlightId, componentSpotlightLabel, findComponent, getEnabledComponents } from "@/config/components";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -54,7 +54,10 @@ export default function ComponentsPage() {
         </section>
 
         {spotlight && SpotlightIcon && (
-          <section aria-labelledby="component-spotlight-title" className="mt-4 border-t border-dashed">
+          <section aria-labelledby="component-spotlight-title" className="relative mt-6 border-t border-dashed">
+            <p className="absolute top-0 left-4 -translate-y-1/2 rounded-sm bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
+              {componentSpotlightLabel}
+            </p>
             <div className="flex min-h-[350px] items-center justify-center overflow-hidden px-6 py-2">
               <ComponentDemo id={spotlight.id} />
             </div>
