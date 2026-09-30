@@ -214,6 +214,8 @@ export type ModelPickerProps = {
   side?: "top" | "bottom" | "left" | "right";
   align?: "start" | "center" | "end";
   placeholder?: string;
+  /** Trigger size. Small fits compact composer toolbars. */
+  size?: "default" | "sm";
   className?: string;
 };
 
@@ -609,6 +611,7 @@ export function ModelPicker({
   side = "top",
   align = "start",
   placeholder = "Select a model",
+  size = "default",
   className,
 }: ModelPickerProps) {
   const listId = useId();
@@ -816,13 +819,15 @@ export function ModelPicker({
           type="button"
           aria-label={triggerLabel}
           aria-haspopup="listbox"
+          data-size={size}
           className={cn(
-            "inline-flex h-11 max-w-full cursor-pointer touch-manipulation items-center gap-2 rounded-full bg-background px-3 text-sm font-medium tracking-tight text-foreground ring-1 ring-inset ring-border/80 transition-[background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-muted/70 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring data-[state=open]:bg-muted/70 motion-reduce:transition-none motion-reduce:active:scale-100 sm:px-4",
+            "inline-flex max-w-full cursor-pointer touch-manipulation items-center rounded-full bg-background font-medium tracking-tight text-foreground ring-1 ring-inset ring-border/80 transition-[background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-muted/70 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring data-[state=open]:bg-muted/70 motion-reduce:transition-none motion-reduce:active:scale-100",
+            size === "sm" ? "h-8 gap-1.5 px-2.5 text-xs" : "h-11 gap-2 px-3 text-sm sm:px-4",
             className,
           )}
         >
           {selected ? (
-            <span className="inline-flex size-6 shrink-0 items-center justify-center text-foreground sm:size-7">
+            <span className={cn("inline-flex shrink-0 items-center justify-center text-foreground", size === "sm" ? "size-4" : "size-6 sm:size-7")}>
               <ProviderGlyph provider={selected.provider} />
             </span>
           ) : null}
@@ -830,7 +835,7 @@ export function ModelPicker({
             {triggerLabel}
           </span>
           {thinkingLabel ? (
-            <span className="hidden shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline-flex">
+            <span className={cn("hidden shrink-0 items-center gap-1.5 rounded-full py-0.5 text-[10px] font-medium text-muted-foreground sm:inline-flex", size === "sm" ? "px-1" : "px-2")}>
               <EffortMeter levels={thinkingLevels ?? []} filled={filledSteps} />
               
             </span>

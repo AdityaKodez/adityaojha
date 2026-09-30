@@ -1,7 +1,7 @@
 import type { ComponentDoc } from "./types";
 
 /** Registry entry featured above the components catalog. */
-export const componentSpotlightId = "stack-rolodex";
+export const componentSpotlightId = "prompt-bar";
 export const componentSpotlightLabel = "Featured";
 
 /** Home page teaser for the /components showcase. */
@@ -45,6 +45,18 @@ export const componentsSectionConfig = {
 };
 
 export const componentRegistry: ComponentDoc[] = [
+  {
+    id: "prompt-bar",
+    title: "Prompt Bar",
+    description:
+      "A compact prompt input with removable context chips, a toolbar slot for your model picker, and async send, stop, and retry states.",
+    icon: "prompt",
+    demoPath: "app/components/[id]/demos/prompt-bar-demo.tsx",
+    docPath: "content/components/prompt-bar.md",
+    order: 0,
+    enabled: true,
+    new: true,
+  },
   {
     id: "ask-ai",
     title: "Ask AI",

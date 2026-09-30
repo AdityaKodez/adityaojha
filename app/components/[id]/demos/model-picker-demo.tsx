@@ -17,6 +17,7 @@ export function ModelPickerDemo({
   side = "bottom",
   align = "center",
   closeOnSelect = false,
+  size = "default",
 }: Partial<ModelPickerProps> = {}) {
   const [modelId, setModelId] = useState("grok-4.6");
 
@@ -30,6 +31,7 @@ export function ModelPickerDemo({
         side={side}
         align={align}
         closeOnSelect={closeOnSelect}
+        size={size}
         defaultOpen={true}
       />
     </div>

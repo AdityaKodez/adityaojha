@@ -471,6 +471,29 @@ const SnakeIcon = ({
   </svg>
 );
 
+const PromptBarIcon = ({
+  size = 24,
+  color = "currentColor",
+  ...props
+}: ComponentIconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <rect x="2" y="6" width="20" height="12" rx="3" />
+    <path d="m8.5 9-2.5 6" />
+    <path d="M17 15V9m-2.5 2.5L17 9l2.5 2.5" />
+  </svg>
+);
+
 const SparklesIcon = ({
   size = 24,
   color = "currentColor",
@@ -532,6 +555,7 @@ export {
   ProgressBarsIcon,
   SectionRailIcon,
   CommandPaletteIcon,
+  PromptBarIcon,
   SparklesIcon,
   ModelPickerIcon,
   WorkflowStatusIcon,
@@ -570,6 +594,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return CommandPaletteIcon;
     case "sparkles":
       return SparklesIcon;
+    case "prompt":
+      return PromptBarIcon;
     case "models":
       return ModelPickerIcon;
     case "status":

@@ -15,6 +15,11 @@ import { Skeleton } from "@/components/ui/skeleton";
  * chunks and keeps the loading fallback for when a chunk is still in flight.
  */
 const DEMOS: Record<string, ComponentType<Record<string, unknown>>> = {
+  "prompt-bar": demoChunk(() =>
+    import("@/app/components/[id]/demos/prompt-bar-demo").then(
+      (m) => m.PromptBarDemo as ComponentType<Record<string, unknown>>,
+    ),
+  ),
   "ask-ai": demoChunk(() =>
     import("@/app/components/[id]/demos/ask-ai-demo").then(
       (m) => m.AskAIDemo as ComponentType<Record<string, unknown>>,

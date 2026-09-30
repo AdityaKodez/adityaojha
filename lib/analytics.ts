@@ -35,6 +35,10 @@ export function getPostHog(): Promise<PostHog | null> {
 }
 
 export type EventMap = {
+  prompt_bar_submitted: {
+    component_id: "prompt-bar";
+    demo: true;
+  };
   registry_command_copied: {
     component_id: string;
     package_manager: string;

@@ -540,6 +540,24 @@ const PLAYGROUNDS: Record<string, PlaygroundSchema> = {
     }),
   },
 
+  "prompt-bar": {
+    componentName: "PromptBar",
+    controls: [
+      { kind: "toggle", key: "disabled", label: "Disabled", default: false },
+      {
+        kind: "slider",
+        key: "maxHeight",
+        label: "Maximum input height",
+        min: 120,
+        max: 360,
+        step: 24,
+        default: 240,
+        format: (value) => `${value}px`,
+      },
+    ],
+    resolve: (values) => ({ disabled: values.disabled, maxHeight: values.maxHeight }),
+  },
+
   "stack-rolodex": {
     componentName: "StackRolodex",
     controls: [

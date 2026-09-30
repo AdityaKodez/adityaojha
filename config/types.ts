@@ -334,6 +334,7 @@ export type ComponentIcon =
   | "bars"
   | "command"
   | "sparkles"
+  | "prompt"
   | "models"
   | "stack"
   | "status"

@@ -552,6 +552,45 @@
         }
       ],
       "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/stack-rolodex\n```\n\n## Usage\n\n```tsx\nimport { StackRolodex } from \"@/components/ui/stack-rolodex\";\nimport { SiGithub, SiPrisma, SiSupabase, SiVercel } from \"react-icons/si\";\n\nconst STACK = [\n  { id: \"vercel\", name: \"Vercel\", icon: SiVercel },\n  { id: \"github\", name: \"GitHub\", icon: SiGithub },\n  { id: \"supabase\", name: \"Supabase\", icon: SiSupabase, color: \"#3ECF8E\" },\n  { id: \"prisma\", name: \"Prisma\", icon: SiPrisma, color: \"#16A394\" },\n];\n\nexport function StackSection() {\n  return <StackRolodex items={STACK} label=\"in my stack\" />;\n}\n```\n\n`items` takes any icon component that accepts a `className`, such as react-icons, lucide-react, or your own SVG components. `interval` is the milliseconds between rotations and `step` the pixel distance between pills, with three pills visible on each side of the active one. Omit `label` to render the stack on its own. An item can carry its brand `color`, which the icon takes while its pill is the active one; items without a color keep the neutral styling."
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "prompt-bar",
+      "type": "registry:ui",
+      "title": "Prompt Bar",
+      "description": "A compact prompt input with removable context chips, a toolbar slot for your model picker, and async send, stop, and retry states.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "ai",
+        "input",
+        "context",
+        "accessibility"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "badge",
+        "command",
+        "field",
+        "hover-card",
+        "input-group",
+        "popover",
+        "progress",
+        "separator"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/prompt-bar",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/prompt-bar.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/prompt-bar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn add @akoder/prompt-bar\n```\n\n## Usage\n\n```tsx\nimport { PromptBar } from \"@/components/ui/prompt-bar\";\n\nexport function Input({ send }: { send: (text: string) => Promise<void> }) {\n  return <PromptBar onSubmit={({ text }) => send(text)} />;\n}\n```\n\nSupply `/` choices through `skills` and `@` choices through `contextOptions`. Update `contexts` in `onContextAdd` and `onContextRemove`. Skills accept `instructions`; both item types accept consumer-defined `data`, preserved in callbacks and `onSubmit`. Use `PromptBar<TContextData, TSkillData>` for typed payloads. Control skill selection with `skill` and `onSkillChange`, or initialize it with `defaultSkill`. Your app builds the prompt and loads or uploads files; the prompt bar does not execute commands or append their payloads to text. See https://akoder.xyz/components/prompt-bar for a complete prompt-building example and the props reference. Compose an optional model picker through `toolbar`. The component awaits `onSubmit`, clears the draft and selected skill only on success, and preserves them on failure or cancellation. Use `onStop` to cancel work in your app. No AI client or site analytics are bundled."
     }
   ]
 }

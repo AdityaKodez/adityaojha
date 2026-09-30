@@ -16,6 +16,7 @@ export function ChatComposer() {
       value={model}
       onValueChange={setModel}
       side="top"
+      size="sm"
     />
   );
 }
@@ -60,6 +61,7 @@ Unknown provider ids without an `icon` fall back to the first letter of the prov
 | `side` | `"top" \| "bottom" \| "left" \| "right"` | `"top"` | Placement side for the popover relative to the trigger. |
 | `align` | `"start" \| "center" \| "end"` | `"start"` | Alignment of the popover along the trigger edge. |
 | `placeholder` | `string` | `"Select a model"` | Trigger text when nothing is selected. |
+| `size` | `"default" \| "sm"` | `"default"` | Small uses a 32px trigger with tighter spacing and a smaller provider mark. The popover keeps its full layout. |
 | `className` | `string` | - | Extra class names forwarded to the trigger. |
 
 ## Notes & Features
