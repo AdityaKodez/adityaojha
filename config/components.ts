@@ -1,5 +1,8 @@
 import type { ComponentDoc } from "./types";
 
+/** Registry entry featured above the components catalog. */
+export const componentSpotlightId = "stack-rolodex";
+
 /** Home page teaser for the /components showcase. */
 export const componentsSectionConfig = {
   title: "Components",
