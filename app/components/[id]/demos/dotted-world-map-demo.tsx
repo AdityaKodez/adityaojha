@@ -8,6 +8,7 @@ import {
 const weeklyVisitors = [
   {
     name: "New York",
+    countryCode: "US",
     lat: 40.7128,
     lng: -74.006,
     value: 0.95,
@@ -16,6 +17,7 @@ const weeklyVisitors = [
   },
   {
     name: "London",
+    countryCode: "GB",
     lat: 51.5074,
     lng: -0.1278,
     value: 0.9,
@@ -24,6 +26,7 @@ const weeklyVisitors = [
   },
   {
     name: "Tokyo",
+    countryCode: "JP",
     lat: 35.6762,
     lng: 139.6503,
     value: 0.8,
@@ -32,6 +35,7 @@ const weeklyVisitors = [
   },
   {
     name: "Singapore",
+    countryCode: "SG",
     lat: 1.3521,
     lng: 103.8198,
     value: 0.68,
@@ -40,6 +44,7 @@ const weeklyVisitors = [
   },
   {
     name: "Mumbai",
+    countryCode: "IN",
     lat: 19.076,
     lng: 72.8777,
     value: 0.62,
@@ -48,6 +53,7 @@ const weeklyVisitors = [
   },
   {
     name: "Berlin",
+    countryCode: "DE",
     lat: 52.52,
     lng: 13.405,
     value: 0.5,
@@ -56,6 +62,7 @@ const weeklyVisitors = [
   },
   {
     name: "São Paulo",
+    countryCode: "BR",
     lat: -23.5505,
     lng: -46.6333,
     value: 0.45,
@@ -64,6 +71,7 @@ const weeklyVisitors = [
   },
   {
     name: "Sydney",
+    countryCode: "AU",
     lat: -33.8688,
     lng: 151.2093,
     value: 0.32,

@@ -6,6 +6,7 @@ import { DottedWorldMap } from "@/components/ui/dotted-world-map";
 const weeklyVisitors = [
   {
     name: "London",
+    countryCode: "GB",
     lat: 51.5074,
     lng: -0.1278,
     value: 0.9,
@@ -14,6 +15,7 @@ const weeklyVisitors = [
   },
   {
     name: "Tokyo",
+    countryCode: "JP",
     lat: 35.6762,
     lng: 139.6503,
     value: 0.8,
@@ -22,6 +24,7 @@ const weeklyVisitors = [
   },
   {
     name: "New York",
+    countryCode: "US",
     lat: 40.7128,
     lng: -74.006,
     value: 0.95,
@@ -46,7 +49,7 @@ export function VisitorsMap() {
 
 | Prop           | Type                                                                                             | Default                          | Notes                                                                                                                              |
 | -------------- | ------------------------------------------------------------------------------------------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `points`       | `Array<{ name: string; lat: number; lng: number; value: number; radius?: number; tooltip?: string }>` | _required_                       | `value` (0–1) controls heat and marker color. `tooltip` supplies the hover and keyboard detail. Points with `value < 0.02` are skipped. |
+| `points`       | `Array<{ name: string; lat: number; lng: number; value: number; radius?: number; tooltip?: string; countryCode?: string }>` | _required_                       | `value` (0–1) controls heat and marker color. `tooltip` supplies the hover and keyboard detail. `countryCode` adds a country flag. Points with `value < 0.02` are skipped. |
 | `colors`       | `string[]`                                                                                        | green → red scale                | Color scale interpolated by `value`. Pass CSS variables (e.g. `--heatmap-level-*`) to adapt to light/dark automatically.            |
 | `baseColor`    | `string`                                                                                          | `colors[0]`                      | Color for the low-intensity land dots.                                                                                              |
 | `dotRadius`    | `number`                                                                                          | `1.7`                            | Radius of an individual land dot in SVG units. Point markers are drawn larger for reliable hover and focus.                          |
@@ -62,6 +65,7 @@ export function VisitorsMap() {
 ## Notes
 
 - **Interactive point data.** Each point gets a large hover and keyboard-focus target. Its tooltip defaults to the location name and activity score when `tooltip` is omitted.
+- **Country flags.** Set `countryCode` to an uppercase ISO 3166-1 alpha-2 code, such as `US` for Ashburn or Oregon and `DE` for Frankfurt. The tooltip shows the country's SVG flag from [Flagcdn](https://flagpedia.net/download/api), with a globe fallback for invalid codes or failed images. Omit the code to keep a text-only tooltip. Sites with a Content Security Policy must allow `https://flagcdn.com` in `img-src`.
 - **Built-in legend.** The legend explains what the colors mean, much like the GitHub contribution graph — swatches run from the low end of the scale to the high end, with configurable labels.
 - **Land-only dots.** The background uses a compact Natural Earth land mask, so oceans remain clear instead of forming a rectangular dot field.
 - **Theming.** The default color scale is a green → red heat ramp. For theme-aware colors, pass the same `--heatmap-level-*` CSS variables used by `components/ui/github-map.tsx` via the `colors` prop.

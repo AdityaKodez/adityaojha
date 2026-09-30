@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
@@ -19,6 +20,8 @@ export type WorldPoint = {
   radius?: number;
   /** Hover/focus detail for the point marker. Defaults to name + activity score. */
   tooltip?: string;
+  /** Optional ISO 3166-1 alpha-2 country code for the tooltip flag. */
+  countryCode?: string;
 };
 
 const DEFAULT_COLORS = [
@@ -515,6 +518,9 @@ export function DottedWorldMap({
               </g>
             </TooltipTrigger>
             <TooltipContent>
+              {point.countryCode !== undefined ? (
+                <CountryFlag code={point.countryCode} />
+              ) : null}
               <p>{label}</p>
             </TooltipContent>
           </Tooltip>
@@ -535,6 +541,27 @@ export function DottedWorldMap({
         </div>
       ) : null}
     </div>
+  );
+}
+
+function CountryFlag({ code }: { code: string }) {
+  const [failedCode, setFailedCode] = useState<string | null>(null);
+
+  if (failedCode === code || !/^[A-Z]{2}$/.test(code)) {
+    return <Globe aria-hidden="true" className="size-4 shrink-0" strokeWidth={1.8} />;
+  }
+
+  return (
+    // The CDN serves SVG flags directly, without the Next.js image optimizer.
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`https://flagcdn.com/${code.toLowerCase()}.svg`}
+      alt=""
+      width={20}
+      height={15}
+      className="max-h-4 w-5 shrink-0 object-contain"
+      onError={() => setFailedCode(code)}
+    />
   );
 }
 

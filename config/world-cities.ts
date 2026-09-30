@@ -29,6 +29,7 @@ export const worldPopulationHeatSources: WorldPoint[] = [
 export const edgeRegionTrafficSources: WorldPoint[] = [
   {
     name: "Ashburn",
+    countryCode: "US",
     lat: 39.04,
     lng: -77.49,
     value: 0.95,
@@ -37,6 +38,7 @@ export const edgeRegionTrafficSources: WorldPoint[] = [
   },
   {
     name: "Frankfurt",
+    countryCode: "DE",
     lat: 50.11,
     lng: 8.68,
     value: 0.82,
@@ -45,6 +47,7 @@ export const edgeRegionTrafficSources: WorldPoint[] = [
   },
   {
     name: "Singapore",
+    countryCode: "SG",
     lat: 1.35,
     lng: 103.82,
     value: 0.7,
@@ -53,6 +56,7 @@ export const edgeRegionTrafficSources: WorldPoint[] = [
   },
   {
     name: "Oregon",
+    countryCode: "US",
     lat: 45.8,
     lng: -119.7,
     value: 0.58,
@@ -61,6 +65,7 @@ export const edgeRegionTrafficSources: WorldPoint[] = [
   },
   {
     name: "Mumbai",
+    countryCode: "IN",
     lat: 19.08,
     lng: 72.88,
     value: 0.52,
@@ -69,6 +74,7 @@ export const edgeRegionTrafficSources: WorldPoint[] = [
   },
   {
     name: "São Paulo",
+    countryCode: "BR",
     lat: -23.55,
     lng: -46.63,
     value: 0.36,
@@ -77,6 +83,7 @@ export const edgeRegionTrafficSources: WorldPoint[] = [
   },
   {
     name: "Sydney",
+    countryCode: "AU",
     lat: -33.87,
     lng: 151.21,
     value: 0.28,
@@ -85,6 +92,7 @@ export const edgeRegionTrafficSources: WorldPoint[] = [
   },
   {
     name: "Cape Town",
+    countryCode: "ZA",
     lat: -33.92,
     lng: 18.42,
     value: 0.18,
