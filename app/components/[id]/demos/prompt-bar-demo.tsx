@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { FileCode, Globe, Paintbrush, RotateCcw, ScanLine, Wrench } from "lucide-react";
+import { FileCode, Globe, RotateCcw } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ModelPicker, defaultModelProviders } from "@/components/ui/model-picker";
@@ -20,9 +20,9 @@ const CONTEXT_OPTIONS: PromptBarContext[] = [
 ];
 
 const SKILLS: PromptBarSkill[] = [
-  { id: "design", label: "Design", description: "Shape an interface from your idea", icon: <Paintbrush /> },
-  { id: "review", label: "Review", description: "Find issues and suggest improvements", icon: <ScanLine /> },
-  { id: "debug", label: "Debug", description: "Trace a problem and work through a fix", icon: <Wrench /> },
+  { id: "design", label: "Design", description: "Shape an interface from your idea" },
+  { id: "review", label: "Review", description: "Find issues and suggest improvements" },
+  { id: "debug", label: "Debug", description: "Trace a problem and work through a fix" },
 ];
 
 const DEFAULT_MODEL = defaultModelProviders[0].models[0].id;

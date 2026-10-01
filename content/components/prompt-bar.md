@@ -34,7 +34,7 @@ Supply your own slash commands through `skills` and your own mention choices thr
 
 - `/` selects one skill. Selecting another replaces it. The skill can carry `instructions` and typed `data` for any behavior your app supports.
 - `@` calls `onContextAdd` with the complete context item. Update `contexts` to display the chip. Already selected IDs are hidden from the menu.
-- Selecting either removes the typed command fragment from the textarea. The remaining text and the selected objects arrive separately in `onSubmit`.
+- Selecting either replaces the typed command fragment with a chip at the caret. Chips stay inline with the surrounding text. The plain text and selected objects arrive separately in `onSubmit`.
 - `data` is app-owned and passed through unchanged. Use it for text content, file IDs, page references, or other metadata. A file label alone does not load its contents.
 
 This example assembles a usable prompt in the consumer. Its context data is typed, so the same payload is available in `onContextAdd` and `onSubmit` without a cast:
@@ -204,7 +204,7 @@ Provider catalogs, model selection and context data stay in the consumer. Toolba
 | `error` | `string` | None | Additional consumer-owned error message. Clear it in the consumer when resolved. |
 | `disabled` | `boolean` | `false` | Disables input, context removal, toolbar controls and sending. |
 | `placeholder` | `string` | `"Ask anything..."` | Empty input hint. |
-| `label` | `string` | `"Your prompt"` | Accessible textarea label, visually hidden. |
+| `label` | `string` | `"Your prompt"` | Accessible prompt input label, visually hidden. |
 | `maxHeight` | `number` | `240` | Textarea height ceiling in pixels. Values below 96 clamp to 96; non-finite values use 240. |
 | `modelLabel` | `string` | None | Selected model's name in context details. |
 | `contextUsage` | `PromptBarUsage` | None | Provider-reported `usedTokens`, `maxTokens`, and optional `cacheHitRate` (0 to 100). Omit when unavailable. |
@@ -244,11 +244,13 @@ The generic parameters default to `unknown`. Supply payload types on the compone
 
 - Enter sends; Shift+Enter creates a new line. Enter during IME composition does not send.
 - Submission requires non-whitespace text or an attachment. A skill or context chip alone does not enable sending. A synchronous lock prevents duplicate sends before React renders the pending state.
-- The textarea grows with its text and container width, then scrolls at `maxHeight`.
+- The inline input grows with its text and container width, then scrolls at `maxHeight`. Tiptap manages editing, selection, and text undo. The registry installs its React, ProseMirror, and StarterKit dependencies.
 - Input is read-only while submitting, so the submitted draft stays stable. If a consumer replaces controlled text while a request is pending, successful completion does not clear the replacement.
 - A failure keeps the text and context. Editing or retrying clears internally caught errors. The consumer owns explicit `error` props.
 - Stop preserves the draft. The consumer must actually cancel its work in `onStop`; the prompt bar ignores that request's later result.
-- Context chips wrap and long labels truncate. The toolbar and send control wrap on narrow screens.
+- Skills use a Zap icon by default. Supply an item's `icon` to override it.
+- Inline chips wrap with the text and long labels truncate. Remove buttons appear on hover or keyboard focus and remain visible on touch devices.
+- Replacing a controlled `value` replaces the text and puts retained context, skill, and attachment chips at the start of the new draft.
 - Screen readers receive the label, keyboard hint, error and submission status. Icons do not add duplicate accessible names.
 
 ## Demo

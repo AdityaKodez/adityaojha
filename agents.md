@@ -40,6 +40,7 @@ database, no auth, no payments. All content is typed configuration.
 | --- | --- |
 | Framework | Next.js 16, App Router, React Server Components, Turbopack |
 | UI | React 19 |
+| Inline prompt editing | Tiptap 3.31.4, with inline context chips and plain text submission |
 | Language | TypeScript 5, strict |
 | Styling | Tailwind 4 via `@tailwindcss/postcss`, plus `@tailwindcss/typography` and `tw-animate-css` |
 | Primitives | Radix UI and Base UI, vendored into `components/ui/`; Vaul for the mobile suggestion drawer |

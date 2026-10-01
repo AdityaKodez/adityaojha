@@ -1,14 +1,17 @@
 "use client";
 
-import { ArrowUp, AtSign, FileText, LoaderCircle, Paperclip, Sparkles, Square, X } from "lucide-react";
+import { ArrowUp, AtSign, FileText, LoaderCircle, Paperclip, Square, X, Zap } from "lucide-react";
+import { EditorContent, Node, NodeViewWrapper, ReactNodeViewRenderer, useEditor, type Editor, type JSONContent, type NodeViewProps } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { EditorState } from "@tiptap/pm/state";
 import { motion, useReducedMotion } from "motion/react";
-import { useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { InputGroup, InputGroupButton, InputGroupTextarea } from "@/components/ui/input-group";
+import { InputGroup, InputGroupButton } from "@/components/ui/input-group";
 import { Popover, PopoverAnchor, PopoverContent } from "@/components/ui/popover";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
@@ -79,6 +82,41 @@ export type PromptBarProps<TContextData = unknown, TSkillData = unknown> = {
 
 type Trigger = { kind: "/" | "@"; query: string; start: number; end: number };
 
+type PromptChip = { key: string; label: string; icon: ReactNode; remove?: () => void; restore: () => void };
+const ChipContext = createContext<{ chips: PromptChip[]; disabled: boolean }>({ chips: [], disabled: false });
+
+function PromptChipView({ node }: NodeViewProps) {
+  const { chips, disabled } = useContext(ChipContext);
+  const chip = chips.find((item) => item.key === node.attrs.key);
+  return (
+    <NodeViewWrapper as="span" contentEditable={false} className="inline-block max-w-full align-baseline">
+      <Badge variant="secondary" className={cn("group/chip relative mx-0.5 h-6 max-w-full min-w-0 gap-1.5 rounded-md px-1.5 align-baseline font-normal", chip?.remove && "pr-6")}>
+        <span aria-hidden className="shrink-0 [&_svg]:size-3">{chip?.icon || <AtSign />}</span>
+        <span className="max-w-52 truncate">{chip?.label || node.attrs.label}</span>
+        {chip?.remove && <InputGroupButton size="icon-xs" disabled={disabled} aria-label={`Remove ${chip.label}`} onMouseDown={(event) => event.preventDefault()} onClick={chip.remove} className="absolute right-0 top-0 size-6 cursor-pointer bg-secondary opacity-0 transition-opacity group-hover/chip:opacity-100 group-focus-within/chip:opacity-100 [@media(hover:none)]:opacity-100"><X aria-hidden /></InputGroupButton>}
+      </Badge>
+    </NodeViewWrapper>
+  );
+}
+
+const PromptChipNode = Node.create({
+  name: "promptChip", group: "inline", inline: true, atom: true, selectable: false,
+  addAttributes: () => ({ key: { default: "" }, label: { default: "" } }),
+  // Chips can only be created through this component, never by pasted HTML.
+  parseHTML: () => [],
+  renderHTML: ({ node }) => ["span", { "data-prompt-chip": node.attrs.key }, node.attrs.label],
+  renderText: ({ node }) => node.attrs.label,
+  addNodeView: () => ReactNodeViewRenderer(PromptChipView),
+});
+
+function promptText(editor: Editor) {
+  return editor.state.doc.textBetween(0, editor.state.doc.content.size, "\n", (node) => node.type.name === "hardBreak" ? "\n" : "");
+}
+
+function textDocument(text: string): JSONContent {
+  return { type: "doc", content: text.split("\n").map((line) => ({ type: "paragraph", content: line ? [{ type: "text", text: line }] : [] })) };
+}
+
 export function PromptBar<TContextData = unknown, TSkillData = unknown>({
   value, defaultValue = "", onValueChange, contexts = [], contextOptions = [],
   onContextAdd, onContextRemove, skills = [], skill: controlledSkill, defaultSkill = null,
@@ -89,13 +127,15 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
 }: PromptBarProps<TContextData, TSkillData>) {
   const id = useId();
   const reducedMotion = useReducedMotion();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const optionRefs = useRef(new Map<string, HTMLDivElement>());
   const inFlight = useRef(false);
   const requestId = useRef(0);
   const composing = useRef(false);
+  const syncingEditor = useRef(false);
+  const chipHistory = useRef(new Map<string, PromptChip>());
   const [draft, setDraft] = useState(defaultValue);
   const [expanded, setExpanded] = useState(Boolean(defaultValue || value || contexts.length));
   const [pending, setPending] = useState(false);
@@ -139,41 +179,108 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
     contextUsage?.cacheHitRate !== undefined ? `Average cache hit rate ${contextUsage.cacheHitRate.toFixed(1)} percent` : null,
   ].filter(Boolean).join(". ");
 
-  useLayoutEffect(() => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-    function resize() {
-      if (!textarea) return;
-      textarea.style.height = "0px";
-      textarea.style.height = `${isExpanded ? Math.max(96, Math.min(textarea.scrollHeight, heightLimit)) : 48}px`;
-    }
-    resize();
-    let width = textarea.clientWidth;
-    const observer = new ResizeObserver(() => {
-      if (textarea.clientWidth !== width) {
-        width = textarea.clientWidth;
-        resize();
-      }
-    });
-    observer.observe(textarea);
-    return () => observer.disconnect();
-  }, [text, heightLimit, isExpanded]);
+  const updateSkill = useCallback((next: PromptBarSkill<TSkillData> | null) => {
+    if (controlledSkill === undefined) setSelectedSkill(next);
+    onSkillChange?.(next);
+  }, [controlledSkill, onSkillChange]);
+  const chips: PromptChip[] = useMemo(() => [
+    ...(skill ? [{ key: `skill-${skill.id}`, label: skill.label, icon: skill.icon || <Zap />, remove: () => updateSkill(null), restore: () => updateSkill(skill) }] : []),
+    ...contexts.map((context) => ({ key: `context-${context.id}`, label: context.label, icon: context.icon || <AtSign />, remove: onContextRemove ? () => onContextRemove(context.id) : undefined, restore: () => onContextAdd?.(context) })),
+    ...attachments.map((file) => ({ key: `file-${file.name}-${file.size}-${file.lastModified}`, label: file.name, icon: <FileText />, remove: () => setAttachments((current) => current.filter((item) => item !== file)), restore: () => setAttachments((current) => current.includes(file) ? current : [...current, file]) })),
+  ], [skill, updateSkill, contexts, onContextRemove, onContextAdd, attachments]);
+  const editor = useEditor({
+    immediatelyRender: false,
+    extensions: [StarterKit.configure({
+      blockquote: false, bold: false, bulletList: false, code: false, codeBlock: false,
+      dropcursor: false, gapcursor: false, heading: false, horizontalRule: false,
+      italic: false, link: false, listItem: false, listKeymap: false, orderedList: false,
+      strike: false, trailingNode: false, underline: false,
+    }), PromptChipNode],
+    content: textDocument(text),
+    onFocus: () => setExpanded(true),
+    onUpdate: ({ editor: current }) => {
+      if (syncingEditor.current) return;
+      const present = new Set<string>();
+      current.state.doc.descendants((node) => { if (node.type.name === "promptChip") present.add(node.attrs.key); });
+      for (const chip of chips) if (!present.has(chip.key)) chip.remove?.();
+      for (const key of present) if (!chips.some((chip) => chip.key === key)) chipHistory.current.get(key)?.restore();
+      updateText(promptText(current));
+      findTrigger(current);
+    },
+    onSelectionUpdate: ({ editor: current }) => findTrigger(current),
+    editorProps: {
+      attributes: {
+        id, "data-slot": "input-group-control", class: "whitespace-pre-wrap break-words outline-none [&_p]:m-0",
+        role: "combobox", "aria-label": label, "aria-multiline": "true",
+        "aria-autocomplete": "list", "aria-haspopup": "listbox",
+        "aria-expanded": String(menuOpen), "aria-invalid": String(Boolean(message)),
+        "aria-disabled": String(disabled), "aria-readonly": String(busy),
+        "aria-describedby": `${id}-hint${message ? ` ${id}-error` : ""}`,
+      },
+      handleKeyDown: (_view, event) => handleEditorKey(event),
+      handlePaste: (view, event) => {
+        event.preventDefault();
+        const pasted = event.clipboardData?.getData("text/plain") || "";
+        if (pasted) view.dispatch(view.state.tr.insertText(pasted.replace(/\r\n?/g, "\n")));
+        return true;
+      },
+    },
+  });
 
-  // cmdk owns the generated list and option IDs. Connect the textarea to those
+  // Keep app-owned selections in the document without rebuilding it while typing.
+  // Existing chips retain their positions; newly supplied chips use the caret.
+  useEffect(() => {
+    if (!editor) return;
+    for (const chip of chips) chipHistory.current.set(chip.key, chip);
+    if (editor.isEditable !== (!disabled && !busy)) editor.setEditable(!disabled && !busy, false);
+    const transaction = editor.state.tr.setMeta("addToHistory", false);
+    const present = new Set<string>();
+    editor.state.doc.descendants((node, position) => {
+      if (node.type.name !== "promptChip") return;
+      if (chips.some((chip) => chip.key === node.attrs.key) && !present.has(node.attrs.key)) present.add(node.attrs.key);
+      else transaction.delete(transaction.mapping.map(position), transaction.mapping.map(position + node.nodeSize));
+    });
+    let position = transaction.mapping.map(editor.state.selection.from);
+    for (const chip of chips) {
+      if (present.has(chip.key)) continue;
+      transaction.insert(position, editor.schema.nodes.promptChip.create({ key: chip.key, label: chip.label }));
+      position += 1;
+    }
+    if (transaction.docChanged) {
+      syncingEditor.current = true;
+      editor.view.dispatch(transaction);
+      syncingEditor.current = false;
+    }
+  }, [editor, chips, disabled, busy]);
+
+  useEffect(() => {
+    if (editor && value !== undefined && promptText(editor) !== value) {
+      // A consumer replacing the controlled value replaces the text, retaining
+      // selected metadata inline at the start of the new draft.
+      const document = textDocument(value);
+      document.content![0].content!.unshift(...chips.map((chip) => ({ type: "promptChip", attrs: { key: chip.key, label: chip.label } })));
+      editor.commands.setContent(document, { emitUpdate: false });
+    }
+    // Only a changed controlled value replaces text. Ordinary editor transactions
+    // must not reset the document or caret while onValueChange is being delivered.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor, value]);
+
+  // cmdk owns the generated list and option IDs. Connect the editor to those
   // actual nodes while keeping typing focus out of the non-modal popover.
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      const textarea = textareaRef.current;
+      const input = editor?.view.dom;
       const option = activeId ? optionRefs.current.get(activeId) : undefined;
-      if (menuOpen && listRef.current) textarea?.setAttribute("aria-controls", listRef.current.id);
-      else textarea?.removeAttribute("aria-controls");
+      if (menuOpen && listRef.current) input?.setAttribute("aria-controls", listRef.current.id);
+      else input?.removeAttribute("aria-controls");
       if (menuOpen && option) {
-        textarea?.setAttribute("aria-activedescendant", option.id);
+        input?.setAttribute("aria-activedescendant", option.id);
         option.scrollIntoView({ block: "nearest" });
-      } else textarea?.removeAttribute("aria-activedescendant");
+      } else input?.removeAttribute("aria-activedescendant");
     });
     return () => cancelAnimationFrame(frame);
-  }, [menuOpen, activeId]);
+  }, [editor, menuOpen, activeId]);
 
   useEffect(() => () => { requestId.current += 1; }, []);
 
@@ -184,30 +291,47 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
     setStatus("");
   }
 
-  function updateSkill(next: PromptBarSkill<TSkillData> | null) {
-    if (controlledSkill === undefined) setSelectedSkill(next);
-    onSkillChange?.(next);
-  }
-
-  function findTrigger(next: string, caret: number) {
-    const match = next.slice(0, caret).match(/(?:^|\s)([/@])([^\s/@]*)$/);
+  function findTrigger(current: Editor) {
+    const { $from, empty } = current.state.selection;
+    const before = $from.parent.textBetween(0, $from.parentOffset, "", "\uFFFC");
+    const match = empty && before.match(/(?:^|[\s\uFFFC])([/@])([^\s/@\uFFFC]*)$/);
     if (!match || (match[1] === "/" ? !skills.length : !onContextAdd)) {
       setTrigger(null);
       return;
     }
-    setTrigger({ kind: match[1] as "/" | "@", query: match[2], start: caret - match[2].length - 1, end: caret });
+    setTrigger({ kind: match[1] as "/" | "@", query: match[2], start: $from.pos - match[2].length - 1, end: $from.pos });
   }
 
   function choose(option: (typeof options)[number]) {
-    if (!trigger) return;
+    if (!trigger || !editor) return;
+    const key = `${trigger.kind === "/" ? "skill" : "context"}-${option.id}`;
+    syncingEditor.current = true;
+    editor.chain().focus().insertContentAt({ from: trigger.start, to: trigger.end }, { type: "promptChip", attrs: { key, label: option.label } }).run();
+    syncingEditor.current = false;
+    updateText(promptText(editor));
     option.select();
-    const caret = trigger.start;
-    updateText(text.slice(0, caret) + text.slice(trigger.end));
     setTrigger(null);
-    requestAnimationFrame(() => {
-      textareaRef.current?.focus();
-      textareaRef.current?.setSelectionRange(caret, caret);
-    });
+  }
+
+  function handleEditorKey(event: KeyboardEvent) {
+    if (event.target instanceof HTMLElement && event.target.closest("button")) return false;
+    if (event.isComposing || composing.current || event.keyCode === 229) return false;
+    if (menuOpen) {
+      if (event.key === "Escape") { setTrigger(null); return true; }
+      if ((event.key === "ArrowDown" || event.key === "ArrowUp") && options.length) {
+        const index = options.findIndex((option) => option.id === activeId);
+        setSelectedId(options[(index + (event.key === "ArrowDown" ? 1 : -1) + options.length) % options.length].id);
+        return true;
+      }
+      if ((event.key === "Enter" && !event.shiftKey) || event.key === "Tab") {
+        const option = options.find((item) => item.id === activeId);
+        if (option) choose(option);
+        return Boolean(option) || event.key === "Enter";
+      }
+    }
+    if (event.key === "Escape" && !text && !chips.length) { setExpanded(false); editor?.commands.blur(); return true; }
+    if (event.key === "Enter" && !event.shiftKey) { formRef.current?.requestSubmit(); return true; }
+    return false;
   }
 
   function attach(files: FileList | null) {
@@ -227,7 +351,7 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
     setAttachments(next);
     setSubmitError(undefined);
     setExpanded(true);
-    textareaRef.current?.focus();
+    editor?.commands.focus();
   }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -242,7 +366,16 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
     try {
       await onSubmit({ text: text.trim(), contexts: [...contexts], skill, attachments: [...attachments] });
       if (currentRequest !== requestId.current) return;
-      if (textareaRef.current?.value === text) updateText("");
+      if (editor && promptText(editor) === text) {
+        // A sent draft starts a new editing history. Undo must not resurrect
+        // files or commands from an already submitted prompt.
+        editor.view.updateState(EditorState.create({
+          schema: editor.schema, doc: editor.schema.nodeFromJSON(textDocument("")),
+          plugins: editor.state.plugins,
+        }));
+        chipHistory.current.clear();
+        updateText("");
+      }
       setAttachments([]);
       updateSkill(null);
       setStatus("Prompt sent.");
@@ -264,20 +397,15 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
       inFlight.current = false;
       setPending(false);
       setStatus("Stopped. Your draft is kept.");
-      textareaRef.current?.focus();
+      editor?.commands.focus();
     } catch (cause) {
       setSubmitError(cause instanceof Error ? cause.message : "Could not stop the request.");
     }
   }
 
-  const chips = [
-    ...(skill ? [{ key: `skill-${skill.id}`, label: skill.label, icon: skill.icon || <Sparkles />, remove: () => updateSkill(null) }] : []),
-    ...contexts.map((context) => ({ key: `context-${context.id}`, label: context.label, icon: context.icon || <AtSign />, remove: onContextRemove ? () => onContextRemove(context.id) : undefined })),
-    ...attachments.map((file, index) => ({ key: `file-${index}`, label: file.name, icon: <FileText />, remove: () => setAttachments((current) => current.filter((_, position) => position !== index)) })),
-  ];
-
   return (
-    <form onSubmit={submit} className={cn("w-full min-w-0", className)}>
+    <ChipContext.Provider value={{ chips, disabled: disabled || busy }}>
+    <form ref={formRef} onSubmit={submit} className={cn("w-full min-w-0", className)}>
       <FieldGroup>
       <Field data-invalid={Boolean(message)} data-disabled={disabled} className="gap-2">
         <FieldLabel htmlFor={id} className="sr-only">{label}</FieldLabel>
@@ -289,52 +417,19 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
           <PopoverAnchor asChild>
             <motion.div layout={!reducedMotion} transition={{ duration: reducedMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}>
               <InputGroup aria-busy={busy} data-disabled={disabled} className={cn("block h-auto rounded-xl border-0 bg-transparent! ring-1 ring-inset ring-border has-disabled:opacity-100 data-[disabled=true]:opacity-50 has-[[data-slot=input-group-control]:focus-visible]:ring-1 has-[[data-slot][aria-invalid=true]]:ring-1", isExpanded && "pb-12")}>
-                {chips.length > 0 && (
-                  <motion.div layout="position" className="flex flex-wrap gap-1.5 px-3 pt-3">
-                    {chips.map((chip) => (
-                      <Badge key={chip.key} variant="secondary" className="h-7 max-w-full min-w-0 gap-1.5 rounded-md font-normal">
-                        <span aria-hidden className="shrink-0 [&_svg]:size-3">{chip.icon}</span>
-                        <span className="truncate">{chip.label}</span>
-                        {chip.remove && <InputGroupButton size="icon-xs" disabled={disabled || busy} aria-label={`Remove ${chip.label}`} onClick={chip.remove}><X aria-hidden /></InputGroupButton>}
-                      </Badge>
-                    ))}
-                  </motion.div>
-                )}
                 <motion.div layout="position">
-                  <InputGroupTextarea
-                    ref={textareaRef} id={id} value={text} placeholder={placeholder}
-                    disabled={disabled} readOnly={busy} aria-invalid={Boolean(message)}
-                    role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded={menuOpen}
-                    aria-describedby={`${id}-hint${message ? ` ${id}-error` : ""}`}
-                    rows={1} className={cn("min-h-0 field-sizing-fixed px-3.5 py-3.5 text-sm leading-5", !isExpanded && "pr-30 overflow-hidden")}
-                    onFocus={() => setExpanded(true)}
-                    onChange={(event) => { updateText(event.target.value); findTrigger(event.target.value, event.target.selectionStart); }}
-                    onSelect={(event) => { if (event.currentTarget.selectionStart === event.currentTarget.selectionEnd) findTrigger(event.currentTarget.value, event.currentTarget.selectionStart); }}
+                  <div className="relative">
+                  {!text && !chips.length && <span aria-hidden className={cn("pointer-events-none absolute left-3.5 text-sm text-muted-foreground", isExpanded ? "top-3.5 leading-6" : "top-1/2 -translate-y-1/2 leading-5")}>{placeholder}</span>}
+                  <EditorContent
+                    editor={editor}
+                    className={cn("overflow-y-auto px-3.5 py-3.5 text-sm", isExpanded ? "leading-6 [&>.tiptap]:min-h-17" : "pr-30 overflow-hidden leading-5 [&>.tiptap]:min-h-5")}
+                    style={{ maxHeight: heightLimit }}
                     onCompositionStart={() => { composing.current = true; }}
                     onCompositionEnd={() => { composing.current = false; }}
-                    onKeyDown={(event) => {
-                      if (event.nativeEvent.isComposing || composing.current || event.nativeEvent.keyCode === 229) return;
-                      if (menuOpen) {
-                        if (event.key === "Escape") { event.preventDefault(); setTrigger(null); return; }
-                        if ((event.key === "ArrowDown" || event.key === "ArrowUp") && options.length) {
-                          event.preventDefault();
-                          const index = options.findIndex((option) => option.id === activeId);
-                          setSelectedId(options[(index + (event.key === "ArrowDown" ? 1 : -1) + options.length) % options.length].id);
-                          return;
-                        }
-                        if ((event.key === "Enter" && !event.shiftKey) || event.key === "Tab") {
-                          if (options.length || event.key === "Enter") event.preventDefault();
-                          const option = options.find((item) => item.id === activeId);
-                          if (option) choose(option);
-                          return;
-                        }
-                      }
-                      if (event.key === "Escape" && !text && !chips.length) { setExpanded(false); event.currentTarget.blur(); }
-                      if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); }
-                    }}
                   />
+                  </div>
                 </motion.div>
-                <motion.div layout="position" className="pointer-events-none absolute right-2.5 bottom-2 left-2.5 flex items-center gap-1.5">
+                <motion.div layout="position" className={cn("pointer-events-none absolute right-2.5 left-2.5 flex items-center gap-1.5", isExpanded ? "bottom-2" : "top-1/2 -translate-y-1/2")}>
                     <motion.fieldset disabled={disabled || busy || !isExpanded} inert={!isExpanded} aria-hidden={!isExpanded} aria-label="Prompt options" initial={false} animate={{ opacity: isExpanded ? 1 : 0 }} transition={{ duration: reducedMotion ? 0 : 0.18 }} className={cn("mr-auto min-w-0 max-w-full [&>button]:max-w-full", isExpanded && "pointer-events-auto")}>
                       {toolbar}
                     </motion.fieldset>
@@ -369,7 +464,7 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
                         <div className="flex flex-col gap-2">
                           {[
                             { label: "Context", items: contexts, icon: <AtSign />, empty: "No context added" },
-                            { label: "Skill", items: skill ? [skill] : [], icon: <Sparkles />, empty: "No skill selected" },
+                            { label: "Skill", items: skill ? [skill] : [], icon: <Zap />, empty: "No skill selected" },
                             { label: "Attachments", items: attachments.map((file, index) => ({ id: String(index), label: file.name, description: `${Math.max(1, Math.ceil(file.size / 1024)).toLocaleString()} KB` })), icon: <Paperclip />, empty: "No files attached" },
                           ].map((group) => (
                             <div key={group.label} className="flex items-start gap-2.5">
@@ -391,7 +486,7 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
                         </div>
                       </HoverCardContent>
                     </HoverCard>
-                    <InputGroupButton type={busy && onStop ? "button" : "submit"} variant={busy || canSubmit ? "default" : "ghost"} size="icon-sm" disabled={disabled || (busy ? !onStop : !canSubmit)} aria-label={busy ? (onStop ? "Stop response" : "Sending prompt") : "Send prompt"} onClick={busy && onStop ? stop : undefined} className="ml-1 rounded-lg">
+                    <InputGroupButton key={busy ? "stop" : "send"} type={busy && onStop ? "button" : "submit"} variant={busy || canSubmit ? "default" : "ghost"} size="icon-sm" disabled={disabled || (busy ? !onStop : !canSubmit)} aria-label={busy ? (onStop ? "Stop response" : "Sending prompt") : "Send prompt"} onClick={() => { if (busy && onStop) stop(); }} className="ml-1 cursor-pointer rounded-lg">
                       {busy ? (onStop ? <Square aria-hidden /> : <LoaderCircle aria-hidden className="animate-spin motion-reduce:animate-none" />) : <ArrowUp aria-hidden />}
                     </InputGroupButton>
                   </div>
@@ -399,14 +494,14 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
               </InputGroup>
             </motion.div>
           </PopoverAnchor>
-          <PopoverContent side="top" align="start" sideOffset={8} className="w-[var(--radix-popover-trigger-width)] max-w-[calc(100vw-2rem)] p-0" onOpenAutoFocus={(event) => event.preventDefault()} onCloseAutoFocus={(event) => event.preventDefault()} onInteractOutside={(event) => { if (event.target === textareaRef.current) event.preventDefault(); }}>
+          <PopoverContent side="top" align="start" sideOffset={8} className="w-[var(--radix-popover-trigger-width)] max-w-[calc(100vw-2rem)] p-0" onOpenAutoFocus={(event) => event.preventDefault()} onCloseAutoFocus={(event) => event.preventDefault()} onInteractOutside={(event) => { if (event.target instanceof globalThis.Node && editor?.view.dom.contains(event.target)) event.preventDefault(); }}>
             <Command shouldFilter={false} value={activeId || ""} onValueChange={setSelectedId}>
               <CommandList ref={listRef} aria-label={trigger?.kind === "/" ? "Skills" : "Context"}>
                 <CommandEmpty>No {trigger?.kind === "/" ? "skills" : "context"} found.</CommandEmpty>
                 <CommandGroup heading={trigger?.kind === "/" ? "Skills" : "Add context"}>
                   {options.map((option) => (
-                    <CommandItem key={option.id} value={option.id} ref={(node) => { if (node) optionRefs.current.set(option.id, node); else optionRefs.current.delete(option.id); }} onSelect={() => choose(option)} onMouseDown={(event) => event.preventDefault()} className="gap-2.5 py-2">
-                      <span aria-hidden className="shrink-0 [&_svg]:size-4">{option.icon || (trigger?.kind === "/" ? <Sparkles /> : <FileText />)}</span>
+                    <CommandItem key={option.id} value={option.id} ref={(node) => { if (node) optionRefs.current.set(option.id, node); else optionRefs.current.delete(option.id); }} onSelect={() => choose(option)} onMouseDown={(event) => event.preventDefault()} className="cursor-pointer gap-2.5 py-2">
+                      <span aria-hidden className="shrink-0 [&_svg]:size-4">{option.icon || (trigger?.kind === "/" ? <Zap /> : <FileText />)}</span>
                       <span className="min-w-0"><span className="block truncate">{option.label}</span>{option.description && <span className="block text-xs text-muted-foreground">{option.description}</span>}</span>
                     </CommandItem>
                   ))}
@@ -422,5 +517,6 @@ export function PromptBar<TContextData = unknown, TSkillData = unknown>({
       </Field>
       </FieldGroup>
     </form>
+    </ChipContext.Provider>
   );
 }

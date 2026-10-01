@@ -568,7 +568,10 @@
       ],
       "dependencies": [
         "lucide-react",
-        "motion"
+        "motion",
+        "@tiptap/react@3.31.4",
+        "@tiptap/pm@3.31.4",
+        "@tiptap/starter-kit@3.31.4"
       ],
       "registryDependencies": [
         "badge",
