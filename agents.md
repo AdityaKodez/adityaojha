@@ -350,7 +350,7 @@ Rules:
   project-explorer, progressive-blur, infinite-slider, carousel, mode-toggler,
   interactive-skill-cloud, contact-channels, section-rail, progress-bars,
   command-palette, ask-ai, model-picker, glyph-card, snake, stack-rolodex,
-  prompt-bar.
+  prompt-bar, theme-switcher.
 
 ## 15. Component showcase
 

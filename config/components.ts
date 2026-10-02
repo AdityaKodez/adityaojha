@@ -46,6 +46,18 @@ export const componentsSectionConfig = {
 
 export const componentRegistry: ComponentDoc[] = [
   {
+    id: "theme-switcher",
+    title: "Theme switcher",
+    description:
+      "A visual Light, Dark, and System theme selector with textured previews, an animated selection outline, and keyboard navigation.",
+    icon: "theme",
+    demoPath: "app/components/[id]/demos/theme-switcher-demo.tsx",
+    docPath: "content/components/theme-switcher.md",
+    order: -1,
+    enabled: true,
+    new: true,
+  },
+  {
     id: "prompt-bar",
     title: "Prompt Bar",
     description:

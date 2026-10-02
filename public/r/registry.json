@@ -5,6 +5,35 @@
   "items": [
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "theme-switcher",
+      "type": "registry:ui",
+      "title": "Theme switcher",
+      "description": "A visual Light, Dark, and System theme selector with textured previews, an animated selection outline, and keyboard navigation.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "theming",
+        "dark-mode",
+        "animation"
+      ],
+      "dependencies": [
+        "motion",
+        "next-themes"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/theme-switcher",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/theme-switcher.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/theme-switcher.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn add @akoder/theme-switcher\n```\n\n## Usage\n\n```tsx\nimport { ThemeSwitcher } from \"@/components/ui/theme-switcher\";\n\nexport function AppearanceSettings() {\n  return <ThemeSwitcher />;\n}\n```\n\nWrap your app in a next-themes ThemeProvider with attribute=\"class\" and enableSystem. Reuse an existing provider when present. Add suppressHydrationWarning to your root html element."
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "ask-ai",
       "type": "registry:ui",
       "title": "Ask AI",
