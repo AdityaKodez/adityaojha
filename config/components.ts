@@ -62,7 +62,7 @@ export const componentRegistry: ComponentDoc[] = [
     title: "Theme switcher",
     description:
       "A visual Light, Dark, and System theme selector with textured previews, an animated selection outline, and keyboard navigation.",
-    icon: "theme",
+    icon: "appearance",
     demoPath: "app/components/[id]/demos/theme-switcher-demo.tsx",
     docPath: "content/components/theme-switcher.md",
     order: -1,

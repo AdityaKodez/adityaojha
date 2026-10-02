@@ -1,5 +1,5 @@
 import type { ComponentIcon } from "@/config/types";
-import { ListTodo } from "lucide-react";
+import { ListTodo, SwatchBook } from "lucide-react";
 import { SVGProps } from "react";
 
 interface ComponentIconProps extends SVGProps<SVGSVGElement> {
@@ -583,6 +583,8 @@ export function getComponentIcon(name: ComponentIcon) {
       return CarouselIcon;
     case "theme":
       return ModeTogglerIcon;
+    case "appearance":
+      return SwatchBook;
     case "pills":
       return StackPillsIcon;
     case "channels":

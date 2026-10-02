@@ -329,6 +329,7 @@ export type ComponentIcon =
   | "slider"
   | "carousel"
   | "theme"
+  | "appearance"
   | "pills"
   | "channels"
   | "rail"
