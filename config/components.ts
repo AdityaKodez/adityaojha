@@ -46,6 +46,18 @@ export const componentsSectionConfig = {
 
 export const componentRegistry: ComponentDoc[] = [
   {
+    id: "todo-list",
+    title: "Todo list",
+    description:
+      "Content-sized task rows with completion checks in your primary color, an animated strike-through, and spring reordering that moves finished tasks to the bottom.",
+    icon: "todo",
+    demoPath: "app/components/[id]/demos/todo-list-demo.tsx",
+    docPath: "content/components/todo-list.md",
+    order: -2,
+    enabled: true,
+    new: true,
+  },
+  {
     id: "theme-switcher",
     title: "Theme switcher",
     description:

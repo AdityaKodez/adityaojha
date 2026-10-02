@@ -1,4 +1,5 @@
 import type { ComponentIcon } from "@/config/types";
+import { ListTodo } from "lucide-react";
 import { SVGProps } from "react";
 
 interface ComponentIconProps extends SVGProps<SVGSVGElement> {
@@ -566,6 +567,8 @@ export {
 /** Maps a `ComponentDoc.icon` key onto its icon component. */
 export function getComponentIcon(name: ComponentIcon) {
   switch (name) {
+    case "todo":
+      return ListTodo;
     case "terminal":
       return CopyCommandBlockIcon;
     case "git":

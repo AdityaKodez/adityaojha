@@ -5,6 +5,36 @@
   "items": [
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "todo-list",
+      "type": "registry:ui",
+      "title": "Todo list",
+      "description": "Content-sized task rows with completion checks in your primary color, an animated strike-through, and spring reordering that moves finished tasks to the bottom.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "tasks",
+        "animation",
+        "interactive",
+        "accessibility"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/todo-list",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/todo-list.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/todo-list.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn add @akoder/todo-list\n```\n\n## Usage\n\n```tsx\nimport { TodoList } from \"@/components/ui/todo-list\";\n\nconst tasks = [\n  { id: \"user-testing\", title: \"Organize a user testing session\" },\n  { id: \"client-review\", title: \"Prepare designs for client review\" },\n  { id: \"meditation\", title: \"15-minute meditation\" },\n];\n\nexport function Tasks() {\n  return <TodoList defaultItems={tasks} />;\n}\n```\n\nClick a task to complete or reopen it. Completed tasks spring to the bottom while the checkmark and strike-through animate. Use `items` and `onItemsChange` for controlled state, or `defaultItems` for local state. Tasks need unique, stable ids and non-empty titles. Completed checkboxes use your primary color. `accentColor` customizes the fill, and `disabled` prevents changes. Reduced motion removes movement. See https://akoder.xyz/components/todo-list for the complete props reference."
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "theme-switcher",
       "type": "registry:ui",
       "title": "Theme switcher",

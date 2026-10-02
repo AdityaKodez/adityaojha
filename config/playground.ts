@@ -88,6 +88,18 @@ export function findPalette(id: string): PlaygroundPalette {
  * snippet reads like the props table.
  */
 const PLAYGROUNDS: Record<string, PlaygroundSchema> = {
+  "todo-list": {
+    componentName: "TodoList",
+    controls: [
+      {
+        kind: "toggle",
+        key: "disabled",
+        label: "Disabled",
+        default: false,
+      },
+    ],
+    resolve: (values) => ({ disabled: values.disabled }),
+  },
   "theme-switcher": {
     componentName: "ThemeSwitcher",
     controls: [
