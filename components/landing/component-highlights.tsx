@@ -1,17 +1,10 @@
-"use client";
-
 import { getComponentIcon } from "@/components/showcase/component-icons";
 import {
   componentsSectionConfig,
   getEnabledComponents,
 } from "@/config/components";
-import { reveal, revealDelay } from "@/lib/motion";
-import { motion } from "motion/react";
 import Link from "next/link";
 import { BsArrowUpRightCircle } from "react-icons/bs";
-
-// Keeps the anchor itself as the grid cell, so the reveal adds no extra node.
-const MotionLink = motion.create(Link);
 
 export function ComponentHighlights() {
   const components = getEnabledComponents();
@@ -20,22 +13,17 @@ export function ComponentHighlights() {
   if (preview.length === 0) return null;
 
   return (
-    // The cards stagger in, so the wrapper only rises.
-    <motion.section
-      {...reveal({ y: 8, margin: "-80px" })}
-      className="border-t border-dashed"
-    >
+    <section className="border-t border-dashed">
       <h2 className="section-heading">{componentsSectionConfig.title}</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2">
-        {preview.map((component, index) => {
+        {preview.map((component) => {
           const Icon = getComponentIcon(component.icon);
 
           return (
-            <MotionLink
+            <Link
               key={component.id}
               href={`/components/${component.id}`}
-              {...reveal({ y: 8, delay: revealDelay(index, 0.04) })}
               className="group relative flex items-stretch"
             >
               <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5 transition-colors hover:bg-muted/10">
@@ -60,7 +48,7 @@ export function ComponentHighlights() {
               </div>
               <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5" />
               <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-50 transition-opacity group-hover:opacity-100" />
-            </MotionLink>
+            </Link>
           );
         })}
       </div>
@@ -74,6 +62,6 @@ export function ComponentHighlights() {
           <BsArrowUpRightCircle className="size-3.5" />
         </Link>
       </div>
-    </motion.section>
+    </section>
   );
 }

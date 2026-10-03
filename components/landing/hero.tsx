@@ -57,6 +57,7 @@ export function Hero() {
   const vibrateAudio = useRef<HTMLAudioElement>(null);
   const lastWaveTrackRef = useRef<number>(0);
   const [isLocationHovered, setIsLocationHovered] = useState(false);
+  const [isLocationTooltipOpen, setIsLocationTooltipOpen] = useState(false);
   const [locationTime, setLocationTime] = useState<string | null>(null);
 
   const [beforeHighlight, afterHighlight] = heroConfig.description.split(
@@ -87,6 +88,8 @@ export function Hero() {
   };
 
   useEffect(() => {
+    if (!isLocationTooltipOpen) return;
+
     const updateLocationTime = () => {
       setLocationTime(locationTimeFormatter.format(new Date()));
     };
@@ -95,7 +98,7 @@ export function Hero() {
     const intervalId = window.setInterval(updateLocationTime, 1000);
 
     return () => window.clearInterval(intervalId);
-  }, []);
+  }, [isLocationTooltipOpen]);
 
   useEffect(() => {
     const vibrate = vibrateAudio.current;
@@ -202,7 +205,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...entryTransition, delay: 0.2 }}
           >
-            <Tooltip>
+            <Tooltip onOpenChange={setIsLocationTooltipOpen}>
               <TooltipTrigger
                 className="micro-transition flex items-center gap-1.5 rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground"
                 onMouseEnter={() => setIsLocationHovered(true)}

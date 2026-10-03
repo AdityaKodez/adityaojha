@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { revealOnMount } from "@/lib/motion";
 
 /* Odometer digits roll inside a fixed-height cell. Same spring as the shared
    reveal helpers so the counter speaks the site's motion language. */
@@ -14,10 +13,8 @@ const ROLL_SPRING = {
 } as const;
 
 function Digit({ digit, animate }: { digit: number; animate: boolean }) {
-  if (!animate) {
-    return <span className="leading-none">{digit}</span>;
-  }
-
+  // Keep the same markup during hydration, even when the browser prefers
+  // reduced motion. Resolve the wheel immediately instead of replacing it.
   return (
     <span
       className="inline-block overflow-hidden"
@@ -27,7 +24,7 @@ function Digit({ digit, animate }: { digit: number; animate: boolean }) {
         className="flex flex-col"
         initial={{ y: 0 }}
         animate={{ y: `calc(${digit} * -${CELL_HEIGHT})` }}
-        transition={ROLL_SPRING}
+        transition={animate ? ROLL_SPRING : { duration: 0 }}
       >
         {Array.from({ length: 10 }, (_, n) => (
           <span
@@ -94,7 +91,6 @@ export function VisitorCounterOdometer({ visitors }: { visitors: number }) {
 
   return (
     <p
-      {...revealOnMount({ y: 6 })}
       className="flex flex-wrap items-center justify-center font-mono text-[11px] tracking-[0.15em] text-muted-foreground"
     >
       {/* The odometer stacks all numerals 0-9 per column to animate the roll,

@@ -12,66 +12,10 @@ import {
   motion,
   useReducedMotion,
   useSpring,
-  type MotionProps,
 } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
-
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-/**
- * Blur-to-sharp entrance: opacity lands first, the rise settles on a
- * critically damped spring (so the blur never overshoots into a negative
- * radius), and the focus resolves last.
- *
- * Reduced motion shortens the transition to zero rather than returning no
- * props. The hidden state is server-rendered into the markup as an inline
- * `style`, and hydration never removes an inline style that the client no
- * longer specifies — so dropping `whileInView` here would strand that
- * `opacity: 0` with nothing left to resolve it, and the element would stay
- * invisible for good. Keeping the resolver and zeroing the duration gives
- * reduced-motion users an instant appear instead of no appear.
- */
-function useBlurReveal({
-  y = 8,
-  blur = 6,
-  delay = 0,
-  margin = "-40px",
-}: {
-  y?: number;
-  blur?: number;
-  delay?: number;
-  margin?: string;
-} = {}): Pick<MotionProps, "initial" | "whileInView" | "viewport" | "transition"> {
-  const prefersReducedMotion = useReducedMotion();
-
-  return {
-    initial: { opacity: 0, y, filter: `blur(${blur}px)` },
-    whileInView: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      // Clear the filter once it lands: a resting `blur(0px)` keeps the
-      // subtree on its own raster layer for nothing.
-      transitionEnd: { filter: "none" },
-    },
-    viewport: { once: true, margin },
-    transition: prefersReducedMotion
-      ? { duration: 0 }
-      : {
-          default: {
-            type: "spring",
-            stiffness: 420,
-            damping: 34,
-            mass: 0.7,
-            delay,
-          },
-          opacity: { duration: 0.18, ease: EASE, delay },
-          filter: { duration: 0.32, ease: EASE, delay },
-        },
-  };
-}
 
 export type ProjectStatus = "building" | "new" | "shipped";
 
@@ -193,12 +137,11 @@ interface PreviewHandlers {
 
 function WorkRow({
   project,
-  index,
   onPreviewStart,
   onPreviewEnd,
   showHoverPreview,
   onProjectClick,
-}: { project: ProjectExplorerItem; index: number } & PreviewHandlers) {
+}: { project: ProjectExplorerItem } & PreviewHandlers) {
   const [name, subtitle] = project.title.split(" — ");
   const href = project.href ?? project.liveUrl ?? (project.id ? `/project/${project.id}` : "#");
   const isExternal = Boolean(
@@ -212,15 +155,8 @@ function WorkRow({
     onProjectClick?.(project, isExternal ? "external_url" : "case_study", href);
   };
 
-  // Capped so a long year group still finishes sharpening quickly.
-  const reveal = useBlurReveal({
-    y: 8,
-    blur: 5,
-    delay: Math.min(index * 0.04, 0.2),
-  });
-
   return (
-    <motion.li {...reveal} className="relative">
+    <li className="relative">
       <Link
         href={href}
         onClick={handleClick}
@@ -272,7 +208,7 @@ function WorkRow({
           className="size-3.5 shrink-0 text-muted-foreground/30 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary group-focus-visible:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:text-primary"
         />
       </Link>
-    </motion.li>
+    </li>
   );
 }
 
@@ -410,20 +346,15 @@ export function ProjectExplorer({
     activeProject?.image && activeProject?.showImage !== false,
   );
 
-  const headingReveal = useBlurReveal({ y: 8, blur: 6, margin: "-100px" });
-
   return (
     <section
       id={id}
       className={cn(showHeading && "border-t border-dashed", "pt-6", className)}
     >
       {showHeading ? (
-        <motion.h2
-          {...headingReveal}
-          className="no-js-visible section-heading mb-3"
-        >
+        <h2 className="no-js-visible section-heading mb-3">
           {title}
-        </motion.h2>
+        </h2>
       ) : null}
 
       <div
@@ -436,12 +367,7 @@ export function ProjectExplorer({
           const FolderIcon = isOpen ? FolderOpenIcon : FolderClosedIcon;
 
           return (
-            <motion.div
-              key={group.year}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-            >
+            <div key={group.year}>
               <button
                 type="button"
                 onClick={() => toggleYear(group.year)}
@@ -471,11 +397,10 @@ export function ProjectExplorer({
                     transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     className="ml-2 overflow-hidden"
                   >
-                    {group.projects.map((project, index) => (
+                    {group.projects.map((project) => (
                       <WorkRow
                         key={project.id}
                         project={project}
-                        index={index}
                         onPreviewStart={handlePreviewStart}
                         onPreviewEnd={handlePreviewEnd}
                         showHoverPreview={showHoverPreview}
@@ -485,7 +410,7 @@ export function ProjectExplorer({
                   </motion.ul>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           );
         })}
       </div>

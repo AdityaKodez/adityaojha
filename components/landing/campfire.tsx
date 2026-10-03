@@ -18,7 +18,11 @@ export function Campfire() {
     if (audioRef.current) {
       if (nextBurning) {
         audioRef.current.volume = 0.2;
-        audioRef.current.play();
+        audioRef.current.play().catch((error: unknown) => {
+          // Extinguishing before playback starts intentionally cancels play.
+          if (error instanceof DOMException && error.name === "AbortError") return;
+          console.error("Campfire audio playback failed", error);
+        });
       } else {
         audioRef.current.pause();
       }
@@ -69,14 +73,16 @@ export function Campfire() {
             }}
           >
             <g>
-              <animate
-                attributeName="opacity"
-                values="1;0;1;0;1"
-                keyTimes="0;.25;.5;.75;1"
-                calcMode="discrete"
-                dur={flickerDuration}
-                repeatCount="indefinite"
-              />
+              {burning && (
+                <animate
+                  attributeName="opacity"
+                  values="1;0;1;0;1"
+                  keyTimes="0;.25;.5;.75;1"
+                  calcMode="discrete"
+                  dur={flickerDuration}
+                  repeatCount="indefinite"
+                />
+              )}
               <path
                 fill="#ed6235"
                 d="M22 12h4v6h4v5h4v9h-4v3H18v-3h-4v-7h4v-6h4z"
@@ -89,14 +95,16 @@ export function Campfire() {
             </g>
 
             <g opacity="0">
-              <animate
-                attributeName="opacity"
-                values="0;1;0;1;0"
-                keyTimes="0;.25;.5;.75;1"
-                calcMode="discrete"
-                dur={flickerDuration}
-                repeatCount="indefinite"
-              />
+              {burning && (
+                <animate
+                  attributeName="opacity"
+                  values="0;1;0;1;0"
+                  keyTimes="0;.25;.5;.75;1"
+                  calcMode="discrete"
+                  dur={flickerDuration}
+                  repeatCount="indefinite"
+                />
+              )}
               <path
                 fill="#ed6235"
                 d="M25 11h4v9h3v6h3v6h-5v3H18v-3h-4v-9h4v-5h3v7h4z"
@@ -109,18 +117,22 @@ export function Campfire() {
             </g>
 
             <rect x="20" y="17" width="2" height="2" fill="#ffc45b">
-              <animate attributeName="y" values="17;6" dur="1.8s" repeatCount="indefinite" />
-              <animate attributeName="x" values="20;18;20" dur="1.8s" repeatCount="indefinite" />
-              <animate
-                attributeName="opacity"
-                values="0;1;1;0"
-                keyTimes="0;.15;.6;1"
-                dur="1.8s"
-                repeatCount="indefinite"
-              />
+              {burning && (
+                <>
+                  <animate attributeName="y" values="17;6" dur="1.8s" repeatCount="indefinite" />
+                  <animate attributeName="x" values="20;18;20" dur="1.8s" repeatCount="indefinite" />
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;1;0"
+                    keyTimes="0;.15;.6;1"
+                    dur="1.8s"
+                    repeatCount="indefinite"
+                  />
+                </>
+              )}
             </rect>
 
-            {stoked ? (
+            {burning && stoked ? (
               <>
                 <rect x="28" y="20" width="1.5" height="1.5" fill="#ffe68b">
                   <animate attributeName="y" values="20;8" dur="1.15s" repeatCount="indefinite" />

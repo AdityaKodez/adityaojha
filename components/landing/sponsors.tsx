@@ -10,10 +10,8 @@ import {
 } from "@/config/sponsors";
 import type { Sponsor } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
-import { reveal } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Loader2, Plus } from "lucide-react";
-import { motion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 import { BsArrowUpRightCircle } from "react-icons/bs";
@@ -331,12 +329,9 @@ export function SponsorsSection() {
 
   return (
     <section className="border-t border-dashed pt-8">
-      <motion.h2
-        {...reveal({ y: 8, margin: "-80px" })}
-        className="no-js-visible section-heading mb-3"
-      >
+      <h2 className="no-js-visible section-heading mb-3">
         {heading}
-      </motion.h2>
+      </h2>
 
       <div className="flex items-center justify-between gap-4 px-6 py-2">
         <p className="truncate font-mono text-xs text-muted-foreground">

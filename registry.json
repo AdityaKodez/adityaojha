@@ -251,7 +251,6 @@
       ],
       "dependencies": [
         "date-fns",
-        "motion",
         "radix-ui"
       ],
       "registryDependencies": [

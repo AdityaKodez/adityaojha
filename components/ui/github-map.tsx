@@ -8,7 +8,6 @@ import {
   startOfWeek,
   subMonths,
 } from "date-fns";
-import { motion } from "motion/react";
 import { useMemo, useCallback } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
@@ -117,11 +116,7 @@ const GitHubCalendar = ({
   }, [startDate, weeks]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.3 }}
+    <div
       className="no-js-visible p-2 overflow-x-auto overflow-y-hidden no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       <div className="flex w-max">
@@ -174,7 +169,7 @@ const GitHubCalendar = ({
         ))}
         <span>more</span>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

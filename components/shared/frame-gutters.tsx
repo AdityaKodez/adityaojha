@@ -36,8 +36,11 @@ export function FrameGutters() {
   const rightLit = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // No hover-capable pointer, nothing to light up.
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    // Match the xl visibility breakpoint as well as pointer capability, so
+    // hidden bands never schedule pointer work.
+    const query = window.matchMedia(
+      "(min-width: 80rem) and (hover: hover) and (pointer: fine)",
+    );
 
     // The bands are fixed, so their boxes only move on resize — measure once
     // and reuse instead of reading layout on every pointer sample.
@@ -74,18 +77,35 @@ export function FrameGutters() {
       for (const { el } of boxes) el.style.setProperty("--gutter-lit", "0");
     };
 
-    measure();
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("resize", measure);
-    document.documentElement.addEventListener("pointerleave", dim);
-    window.addEventListener("blur", dim);
-
-    return () => {
+    const stopListening = () => {
       if (frame !== 0) cancelAnimationFrame(frame);
+      frame = 0;
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("resize", measure);
       document.documentElement.removeEventListener("pointerleave", dim);
       window.removeEventListener("blur", dim);
+      dim();
+    };
+
+    const updateListeners = () => {
+      if (!query.matches) {
+        stopListening();
+        return;
+      }
+
+      measure();
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("resize", measure);
+      document.documentElement.addEventListener("pointerleave", dim);
+      window.addEventListener("blur", dim);
+    };
+
+    updateListeners();
+    query.addEventListener("change", updateListeners);
+
+    return () => {
+      query.removeEventListener("change", updateListeners);
+      stopListening();
     };
   }, []);
 

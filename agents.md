@@ -191,7 +191,11 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 - Dark mode is class-based: `@custom-variant dark (&:is(.dark *))` plus
   `next-themes`, so `dark:` utilities follow the `.dark` class on `<html>`.
 - Motion tokens live in `app/globals.css` (`--motion-duration-base`,
-  `--motion-ease-standard`). Entrances are the shared reveal helpers in
+  `--motion-ease-standard`). Home page sections, headings, and content rows
+  render immediately without scroll entrances. About, Skills, and
+  ComponentHighlights stay Server Components. Keep interaction motion such as
+  folder expansion, hover previews, and the testimonial slider. Entrances on
+  other surfaces use the shared reveal helpers in
   `lib/motion.ts` (`reveal`, `revealOnMount`, `revealVariants`): a 0.18s
   opacity with the ease `[0.22, 1, 0.36, 1]` plus a settle spring on `y`. Only
   `opacity` and `transform` are animated, never `filter` (animated blur forces

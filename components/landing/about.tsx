@@ -1,34 +1,24 @@
-"use client";
-
-import { useMemo } from "react";
-import { motion } from "motion/react";
 import { siteConfig } from "@/config/site";
-import { reveal, revealDelay } from "@/lib/motion";
 import { splitSentences } from "@/lib/sentences";
 
-export const About = () => {
-  const sentences = useMemo(() => splitSentences(siteConfig.about.body), []);
+const sentences = splitSentences(siteConfig.about.body);
 
+export const About = () => {
   return (
-    // The sentences stagger in, so the wrapper only rises.
-    <motion.section
-      {...reveal({ y: 16, margin: "-80px" })}
-      className="no-js-visible border-t border-dashed pt-6"
-    >
+    <section className="no-js-visible border-t border-dashed pt-6">
       <h2 className="section-heading mb-3">{siteConfig.about.title}</h2>
       <div className="px-2">
         <div className="space-y-1 pl-4 md:pl-5">
           {sentences.map((sentence, index) => (
-            <motion.p
+            <p
               key={`${sentence}-${index}`}
-              {...reveal({ y: 6, delay: revealDelay(index, 0.05) })}
               className="micro-transition group relative text-base leading-8 text-muted-foreground hover:text-foreground focus-within:text-foreground"
             >
               {sentence}
-            </motion.p>
+            </p>
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };

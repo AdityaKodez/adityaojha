@@ -30,6 +30,7 @@ export function HeaderActions() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [starCount, setStarCount] = useState<string | null>(null);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [paletteMounted, setPaletteMounted] = useState(false);
 
   const playThemeAudio = () => {
     if (themeAudioRef.current) {
@@ -60,6 +61,7 @@ export function HeaderActions() {
 
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
+        setPaletteMounted(true);
         setPaletteOpen((prev) => !prev);
         return;
       }
@@ -131,7 +133,10 @@ export function HeaderActions() {
             <button
               type="button"
               aria-label="open command palette"
-              onClick={() => setPaletteOpen(true)}
+              onClick={() => {
+                setPaletteMounted(true);
+                setPaletteOpen(true);
+              }}
               className="hidden h-8 items-center justify-center gap-1.5 px-2.5 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:flex"
             >
               <Search className="h-4 w-4" />
@@ -206,7 +211,9 @@ export function HeaderActions() {
         preload="none"
       />
 
-      <SiteCommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
+      {paletteMounted && (
+        <SiteCommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
+      )}
     </>
   );
 }

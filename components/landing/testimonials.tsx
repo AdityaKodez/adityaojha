@@ -9,8 +9,6 @@ import {
   testimonialsSectionConfig,
 } from "@/config/testimonials";
 import type { Testimonial } from "@/config/types";
-import { reveal } from "@/lib/motion";
-import { motion } from "motion/react";
 import Link from "next/link";
 import { BsArrowUpRightCircle } from "react-icons/bs";
 
@@ -95,14 +93,9 @@ function TestimonialsTrack({
 export function Testimonials() {
   return (
     <section className="border-t border-dashed pt-8 overflow-hidden">
-      {/* Only the heading reveals: the slider below never stops moving, and
-          animating a wide marquee is expensive for no visual gain. */}
-      <motion.h2
-        {...reveal({ y: 8, margin: "-80px" })}
-        className="no-js-visible section-heading mb-3"
-      >
+      <h2 className="no-js-visible section-heading mb-3">
         Community
-      </motion.h2>
+      </h2>
       <div className="relative px-6">
         <TestimonialsTrack items={marqueeTop} />
         {marqueeBottom.length > 0 && (

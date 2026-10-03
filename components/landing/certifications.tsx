@@ -1,10 +1,8 @@
 "use client";
 
 import { siteConfig } from "@/config/site";
-import { reveal, revealOnMount, revealDelay } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { ArrowDownCircleIcon, ArrowRightIcon } from "lucide-react";
-import { motion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -25,23 +23,13 @@ export function Certifications() {
   // and the anchor resolved unpredictably.
   return (
     <section className="border-t border-dashed pt-8">
-      <motion.h2
-        {...reveal({ y: 8, margin: "-80px" })}
-        className="no-js-visible section-heading mb-3"
-      >
+      <h2 className="no-js-visible section-heading mb-3">
         {title}
-      </motion.h2>
+      </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2">
-        {displayedItems.map((item, index) => (
-          <motion.div
-            key={item.id}
-            {...revealOnMount({
-              y: 8,
-              delay: revealDelay(index, 0.04),
-            })}
-            className="group relative"
-          >
+        {displayedItems.map((item) => (
+          <div key={item.id} className="group relative">
             <Link
               href={item.url}
               target="_blank"
@@ -75,15 +63,12 @@ export function Certifications() {
             <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5" />
             <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-50 transition-opacity group-hover:opacity-100" />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-foreground/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {items.length > DEFAULT_VISIBLE_ITEMS && (
-        <motion.div
-          {...reveal({ y: 8, margin: "-100px" })}
-          className="flex justify-center border-t border-dashed py-2"
-        >
+        <div className="flex justify-center border-t border-dashed py-2">
           <Button
             onClick={() => setShowAll(!showAll)}
             variant="ghost"
@@ -98,7 +83,7 @@ export function Certifications() {
               )}
             />
           </Button>
-        </motion.div>
+        </div>
       )}
     </section>
   );

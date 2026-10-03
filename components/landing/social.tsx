@@ -1,14 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon, Check, Copy } from "lucide-react";
 import { socialSectionConfig, socialsConfig } from "@/config/socials";
 import type { SocialIcon, SocialLink } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
-import { reveal, revealDelay } from "@/lib/motion";
 import Peerlist from "@/public/peerlist";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
@@ -107,20 +105,15 @@ const Social = () => {
   }, [copyEnabled]);
 
   return (
-    // The cells stagger in, so the wrapper only rises.
-    <motion.section
-      {...reveal({ y: 16 })}
-      className="no-js-visible border-t border-dashed pt-6"
-    >
+    <section className="no-js-visible border-t border-dashed pt-6">
       <h2 className="section-heading">{socialSectionConfig.title}</h2>
 
       <div className="grid grid-cols-2 -mb-px overflow-hidden max-sm:grid-cols-1">
-        {sortedSocials.map((social, idx) => {
+        {sortedSocials.map((social) => {
           const isCopyAction = social.action === "copy";
 
           const cellContent = (
-            <motion.div
-              {...reveal({ y: 8, delay: revealDelay(idx, 0.035) })}
+            <div
               className="micro-transition relative no-js-visible flex items-center gap-3 overflow-hidden p-4 max-sm:border-r-0 group-hover:bg-muted/10 group-focus-visible:bg-muted/10 "
             >
               <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-45 micro-transition group-hover:opacity-100 group-focus-visible:opacity-100" />
@@ -154,7 +147,7 @@ const Social = () => {
                   <ArrowRightIcon className="ml-auto size-3.5 text-muted-foreground/30 micro-transition group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:-rotate-45 group-hover:text-primary group-focus-visible:translate-x-0.5 group-focus-visible:translate-y-0.5 group-focus-visible:-rotate-45 group-focus-visible:text-primary" />
                 )}
               </div>
-            </motion.div>
+            </div>
           );
 
           if (isCopyAction) {
@@ -204,7 +197,7 @@ const Social = () => {
           );
         })}
       </div>
-    </motion.section>
+    </section>
   );
 };
 
