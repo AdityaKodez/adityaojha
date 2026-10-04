@@ -119,7 +119,7 @@ export function EmojiReactions({
           aria-label={selected ? `Change reaction, ${selected.label} selected` : "Add reaction"}
           whileTap={reduceMotion || unavailable ? undefined : { scale: 0.97 }}
           className={cn(
-            "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-background p-2.5 text-muted-foreground shadow-xs ring-1 ring-inset ring-border outline-none transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-50",
+            "relative inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-background p-2 text-muted-foreground shadow-xs ring-1 ring-inset ring-border outline-none transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-50",
             selected && "text-primary",
             className,
           )}
