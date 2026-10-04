@@ -13,13 +13,13 @@ export function Message() {
 }
 ```
 
-The reaction badge opens a compact picker below the message. Selecting an icon swaps the reaction on the badge with a short spring bounce. The picker stays open until you click outside, click the badge, or press Escape. Hover only highlights an option. The defaults use filled React Icons for Love, Laugh, Fire, Crown, and Like.
+The reaction badge opens a compact picker below the message. Selecting an emoji swaps the reaction on the badge with a short spring bounce. The picker stays open until you click outside, click the badge, or press Escape. Hover only highlights an option. The defaults use native emoji: ❤️ Love, 😂 Laugh, 🔥 Fire, 👑 Crown, and 👍 Like. Emoji appearance follows the device and operating system.
 
 ## Props
 
 | Prop | Type | Default | Notes |
 | --- | --- | --- | --- |
-| `reactions` | `EmojiReaction[]` | Love, Laugh, Fire, Crown, Like | Custom React Icons and accessible labels. An empty array disables opening. |
+| `reactions` | `EmojiReaction[]` | Love, Laugh, Fire, Crown, Like | Custom emoji strings and accessible labels. An empty array disables opening. |
 | `value` | `string \| null` | Uncontrolled | Selected reaction id. Null means no reaction. Pair with `onValueChange`; without it, a controlled picker is disabled. |
 | `defaultValue` | `string \| null` | `null` | Initial selection for local state. Later changes do not reset it. |
 | `onValueChange` | `(value: string) => void` | None | Called when a different reaction is selected. Selection does not dismiss the picker. |
@@ -31,10 +31,10 @@ The reaction badge opens a compact picker below the message. Selecting an icon s
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `id` | `string` | Yes | Unique, stable, non-empty identifier. |
-| `icon` | `IconType` | Yes | A React Icons component. |
+| `emoji` | `string` | Yes | Non-empty emoji displayed in the picker and selected badge. |
 | `label` | `string` | Yes | Non-empty accessible name, such as Love. |
 
-Duplicate ids, missing icon components, empty ids or labels, and selected ids missing from the list throw descriptive errors. Without a selection, the trigger shows an Add reaction icon. Selecting the current reaction does nothing; reactions are replaced, not toggled off.
+Duplicate ids, missing or empty emoji strings, empty ids or labels, and selected ids missing from the list throw descriptive errors. Without a selection, the trigger shows a 🙂 emoji with an Add reaction accessible label. Selecting the current reaction does nothing; reactions are replaced, not toggled off.
 
 ## Controlled selection
 
@@ -42,13 +42,12 @@ Duplicate ids, missing icon components, empty ids or labels, and selected ids mi
 "use client";
 
 import { useState } from "react";
-import { RiFireFill, RiHeartFill, RiThumbUpFill } from "react-icons/ri";
 import { EmojiReactions, type EmojiReaction } from "@/components/ui/emoji-reactions";
 
 const reactions: EmojiReaction[] = [
-  { id: "love", icon: RiHeartFill, label: "Love" },
-  { id: "fire", icon: RiFireFill, label: "Fire" },
-  { id: "like", icon: RiThumbUpFill, label: "Like" },
+  { id: "love", emoji: "❤️", label: "Love" },
+  { id: "fire", emoji: "🔥", label: "Fire" },
+  { id: "like", emoji: "👍", label: "Like" },
 ];
 
 export function MessageReaction() {
@@ -57,7 +56,7 @@ export function MessageReaction() {
 }
 ```
 
-The owner controls the displayed value. External updates, including clearing to null, are reflected immediately. The component stores no messages, counts, or server data. Keep custom icon arrays in a client component because icons are component functions.
+The owner controls the displayed value. External updates, including clearing to null, are reflected immediately. The component stores no messages, counts, or server data. Custom reactions are plain objects with emoji strings.
 
 ## Keyboard and motion
 

@@ -3,15 +3,14 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Popover as PopoverPrimitive } from "radix-ui";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
-import type { IconType } from "react-icons";
-import { RiEmotionHappyLine, RiEmotionLaughFill, RiFireFill, RiHeartFill, RiThumbUpFill, RiVipCrownFill } from "react-icons/ri";
 
 import { cn } from "@/lib/utils";
 
 export interface EmojiReaction {
   /** Unique, stable identifier for this reaction. */
   id: string;
-  icon: IconType;
+  /** Emoji displayed in the picker and selected badge. */
+  emoji: string;
   /** Accessible name, such as "Love". */
   label: string;
 }
@@ -29,14 +28,14 @@ export interface EmojiReactionsProps {
 }
 
 const DEFAULT_REACTIONS: EmojiReaction[] = [
-  { id: "love", icon: RiHeartFill, label: "Love" },
-  { id: "laugh", icon: RiEmotionLaughFill, label: "Laugh" },
-  { id: "fire", icon: RiFireFill, label: "Fire" },
-  { id: "crown", icon: RiVipCrownFill, label: "Crown" },
-  { id: "like", icon: RiThumbUpFill, label: "Like" },
+  { id: "love", emoji: "❤️", label: "Love" },
+  { id: "laugh", emoji: "😂", label: "Laugh" },
+  { id: "fire", emoji: "🔥", label: "Fire" },
+  { id: "crown", emoji: "👑", label: "Crown" },
+  { id: "like", emoji: "👍", label: "Like" },
 ];
 
-/** A compact icon reaction picker that animates the selection on its trigger. */
+/** A compact emoji reaction picker that animates the selection on its trigger. */
 export function EmojiReactions({
   reactions = DEFAULT_REACTIONS,
   value,
@@ -56,8 +55,8 @@ export function EmojiReactions({
   const ids = new Set<string>();
 
   for (const reaction of reactions) {
-    if (!reaction.id.trim() || ids.has(reaction.id) || typeof reaction.icon !== "function" || !reaction.label.trim()) {
-      throw new Error("EmojiReactions requires unique, non-empty ids, icon components, and non-empty labels.");
+    if (!reaction.id.trim() || ids.has(reaction.id) || typeof reaction.emoji !== "string" || !reaction.emoji.trim() || !reaction.label.trim()) {
+      throw new Error("EmojiReactions requires unique, non-empty ids, non-empty emoji strings, and non-empty labels.");
     }
     ids.add(reaction.id);
   }
@@ -66,7 +65,6 @@ export function EmojiReactions({
   }
 
   const selected = reactions.find((reaction) => reaction.id === selectedId);
-  const SelectedIcon = selected?.icon ?? RiEmotionHappyLine;
   const unavailable = disabled || reactions.length === 0 || (value !== undefined && !onValueChange);
   // Disabling an open picker closes it without reopening when enabled again.
   if (unavailable && open) setOpen(false);
@@ -136,7 +134,7 @@ export function EmojiReactions({
               transition={{ ...selectionTransition, opacity: { duration: still && !reduceMotion ? 0 : 0.1 } }}
               className="pointer-events-none absolute inset-0 flex items-center justify-center text-xl leading-none"
             >
-              <SelectedIcon className="size-5" />
+              {selected?.emoji ?? "🙂"}
             </motion.span>
           </AnimatePresence>
         </motion.button>
@@ -168,9 +166,7 @@ export function EmojiReactions({
                 className="z-50 max-w-[min(20rem,var(--radix-popover-content-available-width))] origin-(--radix-popover-content-transform-origin) outline-none data-[state=closed]:pointer-events-none"
               >
                 <div role="toolbar" aria-label="Reactions" className="flex flex-wrap justify-center gap-1 rounded-3xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-inset ring-border">
-                  {reactions.map((reaction, index) => {
-                    const Icon = reaction.icon;
-                    return (
+                  {reactions.map((reaction, index) => (
                     <motion.button
                       key={reaction.id}
                       ref={(button) => { buttons.current[index] = button; }}
@@ -192,13 +188,12 @@ export function EmojiReactions({
                           layoutId={`${instanceId}-reaction`}
                           initial={false}
                           transition={selectionTransition}
-                          className="pointer-events-none absolute inset-0 rounded-full bg-primary/10"
+                          className="pointer-events-none absolute inset-0 rounded-full bg-muted"
                         />
                       )}
-                      <Icon aria-hidden="true" className="relative size-5" />
+                      <span aria-hidden="true" className="relative text-xl leading-none">{reaction.emoji}</span>
                     </motion.button>
-                    );
-                  })}
+                  ))}
                 </div>
                 <PopoverPrimitive.Arrow width={10} height={5} className="fill-popover" />
                 <span role="status" className="sr-only">{selected ? `${selected.label} selected` : "No reaction selected"}</span>

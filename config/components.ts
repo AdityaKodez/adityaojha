@@ -49,7 +49,7 @@ export const componentRegistry: ComponentDoc[] = [
     id: "emoji-reactions",
     title: "Emoji reactions",
     description:
-      "A compact React Icons reaction picker that swaps the icon on your message with a short spring bounce, persistent selection, and keyboard navigation.",
+      "A compact emoji reaction picker that swaps the emoji on your message with a short spring bounce, persistent selection, and keyboard navigation.",
     icon: "reactions",
     demoPath: "app/components/[id]/demos/emoji-reactions-demo.tsx",
     docPath: "content/components/emoji-reactions.md",
