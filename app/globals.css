@@ -647,6 +647,9 @@ code[data-theme*=" "] span,
 /* Prop names read as row labels, not code chips: capitalized, no chip box,
    slightly larger than the surrounding meta. Display only, the underlying
    identifier is untouched. */
+.prose table[data-props-table] td:first-child {
+  white-space: nowrap;
+}
 .prose table[data-props-table] td:first-child code {
   text-transform: capitalize;
   background-color: transparent;
@@ -655,11 +658,25 @@ code[data-theme*=" "] span,
   font-size: 0.875rem;
   font-weight: 500;
 }
+.prose table[data-props-table] sup[data-required-label] {
+  position: relative;
+  top: -0.35em;
+  vertical-align: baseline;
+  display: inline-block;
+  padding: 0.125rem 0.25rem;
+  border-radius: calc(var(--radius) - 4px);
+  background-color: color-mix(in oklab, var(--primary) 10%, transparent);
+  color: var(--primary);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
 
 /* Small screens: props tables stack row-by-row so nothing squeezes into four
    columns or scrolls sideways. Each row reads: prop, then type and default
-   sharing one justified line, then notes. The `_required_` marker swaps the
-   "Default" caption for "Required" via :has(). */
+   sharing one justified line, then notes. Required rows show their label by
+   the prop name and omit the empty default. */
 @media (width < 40rem) {
   .prose table[data-props-table],
   .prose table[data-props-table] thead,
@@ -702,10 +719,7 @@ code[data-theme*=" "] span,
   .prose table[data-props-table] td:nth-child(3)::before {
     content: "Default";
   }
-  .prose table[data-props-table] td:nth-child(3):has(> em)::before {
-    content: "Required";
-  }
-  .prose table[data-props-table] td:nth-child(3):has(> em) em {
+  .prose table[data-props-table] tr[data-required-prop] td:nth-child(3) {
     display: none;
   }
   .prose table[data-props-table] td:first-child {

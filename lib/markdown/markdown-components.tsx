@@ -1,4 +1,5 @@
 import type { Components } from "react-markdown";
+import { Children, cloneElement, isValidElement, type ReactNode } from "react";
 import { ProseCodeBlock } from "@/lib/markdown/prose-code-block";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +26,8 @@ function findFirstRow(node: AstNode): AstNode | undefined {
 }
 
 /**
- * Props tables (header row starting "Prop | Type") are stamped with
+ * Props and item-field tables (header row starting "Prop | Type" or
+ * "Field | Type") are stamped with
  * `data-props-table` so the stylesheet can stack them row-by-row on small
  * screens. Every other table keeps the plain GFM table.
  */
@@ -39,7 +41,62 @@ function isPropsTable(node: unknown): boolean {
   const [first, second] = cells
     .slice(0, 2)
     .map((cell) => nodeText(cell).trim().toLowerCase());
-  return first === "prop" && second === "type";
+  return (first === "prop" || first === "field") && second === "type";
+}
+
+interface TableElementProps {
+  children?: ReactNode;
+  "data-required-prop"?: string;
+}
+
+function childText(children: ReactNode): string {
+  return Children.toArray(children)
+    .map((child) => {
+      if (isValidElement<TableElementProps>(child)) {
+        return childText(child.props.children);
+      }
+      return typeof child === "string" || typeof child === "number" ? String(child) : "";
+    })
+    .join("");
+}
+
+function labelRequiredProps(children: ReactNode): ReactNode {
+  return Children.map(children, (child) => {
+    if (!isValidElement<TableElementProps>(child)) return child;
+    if (child.type !== "tr") {
+      return cloneElement(child, {}, labelRequiredProps(child.props.children));
+    }
+
+    const cells = Children.toArray(child.props.children).filter(
+      (cell) => isValidElement<TableElementProps>(cell) && cell.type === "td",
+    );
+    const defaultCell = cells[2];
+    if (
+      !isValidElement<TableElementProps>(defaultCell) ||
+      childText(defaultCell.props.children).trim().toLowerCase() !== "required"
+    ) {
+      return child;
+    }
+
+    let cellIndex = 0;
+    return cloneElement(
+      child,
+      { "data-required-prop": "" },
+      Children.map(child.props.children, (cell) => {
+        if (!isValidElement<TableElementProps>(cell) || cell.type !== "td") return cell;
+        const index = cellIndex++;
+        if (index === 0) {
+          return cloneElement(cell, {}, (
+            <>
+              {cell.props.children}{" "}
+              <sup data-required-label="">Required</sup>
+            </>
+          ));
+        }
+        return index === 2 ? cloneElement(cell, {}, "-") : cell;
+      }),
+    );
+  });
 }
 
 /**
@@ -54,11 +111,16 @@ function isPropsTable(node: unknown): boolean {
  * to every fenced code block without needing a second syntax-highlight pass.
  */
 export const markdownComponents: Components = {
-  table: ({ node, ...props }) => (
-    <div className="my-5 overflow-x-auto">
-      <table {...props} data-props-table={isPropsTable(node) ? "" : undefined} />
-    </div>
-  ),
+  table: ({ node, children, ...props }) => {
+    const propsTable = isPropsTable(node);
+    return (
+      <div className="my-5 overflow-x-auto">
+        <table {...props} data-props-table={propsTable ? "" : undefined}>
+          {propsTable ? labelRequiredProps(children) : children}
+        </table>
+      </div>
+    );
+  },
   pre: ({ node, children, className, ...props }) => (
     <ProseCodeBlock>
       <pre
