@@ -23,10 +23,11 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { findComponent, getEnabledComponents } from "@/config/components";
-import { getAddCommands } from "@/config/registry";
+import { getAddCommands, repoBlobUrl } from "@/config/registry";
 import { siteConfig } from "@/config/site";
 import { highlightCode } from "@/lib/highlight";
 import { formatComponentPageMarkdown } from "@/lib/component-page-markdown";
+import { getRegistrySourceUrl } from "@/lib/registry-source";
 import { ComponentPlayground } from "./playground";
 
 export async function generateStaticParams() {
@@ -78,9 +79,10 @@ export default async function ComponentDetailPage({
 
   // Demo source (raw + syntax-highlighted HTML).
   const demoSourcePath = path.join(/*turbopackIgnore: true*/ root, component.demoPath);
-  const [demoRaw, docsMd] = await Promise.all([
+  const [demoRaw, docsMd, registrySourceUrl] = await Promise.all([
     readFile(demoSourcePath, "utf8"),
     readFile(path.join(/*turbopackIgnore: true*/ root, component.docPath), "utf8"),
+    getRegistrySourceUrl(component.id),
   ]);
   const highlighted = await highlightCode(demoRaw, "tsx");
 
@@ -160,6 +162,10 @@ export default async function ComponentDetailPage({
         <CopyPageMenu
           componentId={component.id}
           componentTitle={component.title}
+          githubUrl={
+            registrySourceUrl ??
+            `${repoBlobUrl}/${component.demoPath.split("/").map(encodeURIComponent).join("/")}`
+          }
           markdown={formatComponentPageMarkdown(component, docsMd)}
         />
       </div>
