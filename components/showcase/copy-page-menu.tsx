@@ -10,8 +10,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getItemUrl, siteUrl } from "@/config/registry";
@@ -42,60 +40,29 @@ export function CopyPageMenu({
   const markdownUrl = `${siteUrl}/components/${componentId}/markdown`;
   const prompt = `Read ${markdownUrl} and help me use the ${componentTitle} component.`;
 
-  const pageLinks = [
-    {
-      href: githubUrl,
-      icon: SiGithub,
-      label: "Open in GitHub",
-      hint: "Browse the source file",
-    },
+  const links = [
+    { href: githubUrl, icon: SiGithub, label: "Open in GitHub" },
     {
       href: `/components/${componentId}/markdown`,
       icon: SiMarkdown,
       label: "View as markdown",
-      hint: "Plain text for LLMs",
     },
-  ];
-  const aiLinks = [
     {
       href: `https://chatgpt.com/?${new URLSearchParams({ q: prompt })}`,
       icon: SiOpenai,
       label: "Open in ChatGPT",
-      hint: "Ask questions about this page",
     },
     {
       href: `https://claude.ai/new?${new URLSearchParams({ q: prompt })}`,
       icon: SiClaude,
       label: "Open in Claude",
-      hint: "Ask questions about this page",
     },
     {
       href: `https://v0.app/chat/api/open?${new URLSearchParams({ url: getItemUrl(componentId) })}`,
       icon: SiV0,
       label: "Open in v0",
-      hint: "Remix the component in v0",
     },
   ];
-
-  const renderLink = ({ href, icon: Icon, label, hint }: (typeof pageLinks)[number]) => (
-    <DropdownMenuItem key={label} asChild className="gap-2.5 py-1.5 pr-2">
-      <a href={href} target="_blank" rel="noopener noreferrer">
-        <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-background ring-1 ring-inset ring-border transition-transform duration-200 group-data-highlighted/dropdown-menu-item:scale-105 motion-reduce:transition-none [&_svg]:size-3.5">
-          <Icon aria-hidden="true" />
-        </span>
-        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <span className="text-[0.8rem] leading-none font-medium">{label}</span>
-          <span className="truncate text-xs leading-none text-muted-foreground!">
-            {hint}
-          </span>
-        </span>
-        <ArrowUpRight
-          aria-hidden="true"
-          className="size-3.5 -translate-x-1 translate-y-1 text-muted-foreground! opacity-0 transition-[opacity,translate] duration-200 group-data-highlighted/dropdown-menu-item:translate-0 group-data-highlighted/dropdown-menu-item:opacity-100 motion-reduce:transition-none"
-        />
-      </a>
-    </DropdownMenuItem>
-  );
 
   return (
     <DropdownMenu>
@@ -224,14 +191,20 @@ export function CopyPageMenu({
         align="end"
         sideOffset={6}
         theme="inherit"
-        className="min-w-64 bg-popover before:hidden"
+        className="min-w-48 bg-popover before:hidden"
       >
-        {pageLinks.map(renderLink)}
-        <DropdownMenuSeparator />
-        <DropdownMenuLabel className="pt-1.5 pb-1 font-mono text-[11px] font-normal">
-          Ask AI
-        </DropdownMenuLabel>
-        {aiLinks.map(renderLink)}
+        {links.map(({ href, icon: Icon, label }) => (
+          <DropdownMenuItem key={label} asChild className="gap-2 pr-2">
+            <a href={href} target="_blank" rel="noopener noreferrer">
+              <Icon aria-hidden="true" />
+              <span className="flex-1">{label}</span>
+              <ArrowUpRight
+                aria-hidden="true"
+                className="size-3.5 -translate-x-1 translate-y-1 text-muted-foreground opacity-0 transition-[opacity,translate] duration-200 group-data-highlighted/dropdown-menu-item:translate-0 group-data-highlighted/dropdown-menu-item:opacity-100 motion-reduce:transition-none"
+              />
+            </a>
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
