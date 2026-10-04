@@ -10,6 +10,9 @@
 
 export const siteUrl = "https://akoder.xyz";
 
+/** Default branch of the site repository, used to link files on GitHub. */
+export const repoBlobUrl = "https://github.com/AdityaKodez/adityaojha/blob/main";
+
 export const registryConfig = {
   /** Namespace users configure in their own `components.json`. */
   namespace: "@akoder",

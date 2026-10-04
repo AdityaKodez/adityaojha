@@ -23,6 +23,7 @@ type RegistryItem = {
   dependencies?: string[];
   registryDependencies?: string[];
   files?: RegistryFileEntry[];
+  meta?: { source?: string };
 };
 
 type RegistryCatalog = {
@@ -122,4 +123,10 @@ export async function getRegistrySource(
     files,
     assets,
   };
+}
+
+/** GitHub URL of a registry item's source file, or null when the id is not published. */
+export async function getRegistrySourceUrl(id: string): Promise<string | null> {
+  const catalog = await readCatalog();
+  return catalog.items?.find((entry) => entry.name === id)?.meta?.source ?? null;
 }
