@@ -46,6 +46,18 @@ export const componentsSectionConfig = {
 
 export const componentRegistry: ComponentDoc[] = [
   {
+    id: "emoji-reactions",
+    title: "Emoji reactions",
+    description:
+      "A compact React Icons reaction picker that swaps the icon on your message with a short spring bounce, persistent selection, and keyboard navigation.",
+    icon: "reactions",
+    demoPath: "app/components/[id]/demos/emoji-reactions-demo.tsx",
+    docPath: "content/components/emoji-reactions.md",
+    order: -3,
+    enabled: true,
+    new: true,
+  },
+  {
     id: "todo-list",
     title: "Todo list",
     description:

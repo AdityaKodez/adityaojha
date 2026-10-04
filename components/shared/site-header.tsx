@@ -26,30 +26,39 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-3 sm:top-4 z-40 mx-auto -mb-8 flex w-full max-w-[var(--frame-max-w)] items-center justify-between px-6 pointer-events-none">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Link
-            href="/"
-            aria-label="Home"
-            className={`pointer-events-auto flex h-8 items-center justify-center rounded-md border border-border/60 bg-background/60 text-muted-foreground backdrop-blur-md shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${
-              isComponentsRoute ? "gap-1.5 px-2.5" : "w-8"
-            }`}
-          >
-            <Logo size={18} />
-            {isComponentsRoute ? (
-              <>
-                <span aria-hidden="true" className="h-3 w-px bg-border/60" />
-                <span className="font-mono text-[10px] font-medium leading-none">
+      <div className="pointer-events-auto flex h-8 items-center overflow-hidden rounded-md border border-border/60 bg-background/60 text-muted-foreground shadow-xs backdrop-blur-md">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link
+              href="/"
+              aria-label="Home"
+              className="flex size-8 items-center justify-center rounded-md outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-ring"
+            >
+              <Logo size={18} />
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Home</p>
+          </TooltipContent>
+        </Tooltip>
+        {isComponentsRoute ? (
+          <>
+            <span aria-hidden="true" className="h-3 w-px bg-border/60" />
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/components"
+                  aria-label="Components"
+                  className="flex h-8 items-center justify-center rounded-md px-2.5 font-mono text-[10px] font-medium leading-none outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-ring"
+                >
                   UI
-                </span>
-              </>
-            ) : null}
-          </Link>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Home</p>
-        </TooltipContent>
-      </Tooltip>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent><p>Components</p></TooltipContent>
+            </Tooltip>
+          </>
+        ) : null}
+      </div>
 
       <HeaderActions />
     </header>

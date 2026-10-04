@@ -5,6 +5,25 @@
   "items": [
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "emoji-reactions",
+      "type": "registry:ui",
+      "title": "Emoji reactions",
+      "description": "A compact React Icons reaction picker that swaps the icon on your message with a short spring bounce, persistent selection, and keyboard navigation.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": ["chat", "animation", "interactive", "accessibility"],
+      "dependencies": ["motion", "radix-ui", "react-icons"],
+      "registryDependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/emoji-reactions",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/emoji-reactions.tsx"
+      },
+      "files": [
+        { "path": "components/ui/emoji-reactions.tsx", "type": "registry:ui" }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn add @akoder/emoji-reactions\n```\n\n## Usage\n\n```tsx\nimport { EmojiReactions } from \"@/components/ui/emoji-reactions\";\n\nexport function Message() {\n  return (\n    <div className=\"relative max-w-72 rounded-2xl bg-muted p-4\">\n      <p>A little bounce makes everything better.</p>\n      <EmojiReactions className=\"absolute -bottom-4 right-3\" />\n    </div>\n  );\n}\n```\n\nClick the trigger to open the reaction picker. Selection swaps the reaction on the message badge with a short spring bounce while the compact picker stays open below it. Use value and onValueChange for controlled state, or defaultValue for local state. Custom reactions require unique ids, React Icons components, and accessible labels. Arrow keys move focus; Enter or Space selects; Escape dismisses. Reduced motion uses brief fades. See https://akoder.xyz/components/emoji-reactions for the full props reference."
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "todo-list",
       "type": "registry:ui",
       "title": "Todo list",

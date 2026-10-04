@@ -88,6 +88,13 @@ export function findPalette(id: string): PlaygroundPalette {
  * snippet reads like the props table.
  */
 const PLAYGROUNDS: Record<string, PlaygroundSchema> = {
+  "emoji-reactions": {
+    componentName: "EmojiReactions",
+    controls: [
+      { kind: "toggle", key: "disabled", label: "Disabled", default: false },
+    ],
+    resolve: (values) => ({ disabled: values.disabled }),
+  },
   "todo-list": {
     componentName: "TodoList",
     controls: [
