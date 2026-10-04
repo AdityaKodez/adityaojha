@@ -60,11 +60,23 @@ function childText(children: ReactNode): string {
     .join("");
 }
 
-function labelRequiredProps(children: ReactNode): ReactNode {
+function isRequiredRow(child: ReactNode): boolean {
+  return isValidElement<TableElementProps>(child) &&
+    child.type === "tr" && child.props["data-required-prop"] !== undefined;
+}
+
+function formatPropsTable(children: ReactNode): ReactNode {
   return Children.map(children, (child) => {
     if (!isValidElement<TableElementProps>(child)) return child;
     if (child.type !== "tr") {
-      return cloneElement(child, {}, labelRequiredProps(child.props.children));
+      const formatted = formatPropsTable(child.props.children);
+      // Stable sorting keeps each group's authored order and leaves headers alone.
+      const ordered = child.type === "tbody"
+        ? Children.toArray(formatted).sort(
+            (a, b) => Number(isRequiredRow(b)) - Number(isRequiredRow(a)),
+          )
+        : formatted;
+      return cloneElement(child, {}, ordered);
     }
 
     const cells = Children.toArray(child.props.children).filter(
@@ -116,7 +128,7 @@ export const markdownComponents: Components = {
     return (
       <div className="my-5 overflow-x-auto">
         <table {...props} data-props-table={propsTable ? "" : undefined}>
-          {propsTable ? labelRequiredProps(children) : children}
+          {propsTable ? formatPropsTable(children) : children}
         </table>
       </div>
     );

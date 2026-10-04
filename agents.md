@@ -297,6 +297,9 @@ Two surfaces render Markdown and they must stay in sync.
 
 - Both pass the shared override map from `lib/markdown/markdown-components.tsx`.
   Never inline a second set of overrides.
+- Props and item-field tables list required rows first, preserving authored
+  order within the required and optional groups. Required rows show a small
+  superscript label in the primary color beside the prop name.
 - All `.prose` styling lives in one **unlayered** block of `app/globals.css`. It
   has to stay unlayered: the typography plugin registers its rules through
   `addComponents`, so `.prose` ends up layered and loses to unlayered CSS
