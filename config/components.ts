@@ -103,7 +103,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/model-picker.md",
     order: 2,
     enabled: true,
-    new: true,
   },
   {
     id: "glyph-card",
@@ -126,7 +125,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/command-palette.md",
     order: 4,
     enabled: true,
-    new: true,
   },
   {
     id: "progress-bars",
@@ -248,7 +246,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/workflow-status.md",
     order: 17,
     enabled: true,
-    new: true,
   },
   {
     id: "snake",
