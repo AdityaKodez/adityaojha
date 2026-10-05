@@ -2,7 +2,6 @@
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { WritingUnderline } from "./writing-underline";
-import DiscordStatus from "./discord-status";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
@@ -224,8 +223,6 @@ export function Hero() {
                 </span>
               </TooltipContent>
             </Tooltip>
-
-            <DiscordStatus />
           </motion.div>
         </div>
       </div>

@@ -4,6 +4,7 @@
 /* ------------------------------------------------------------------ */
 
 import { Suspense } from "react";
+import { DiscordStatus } from "@/components/landing/discord-status";
 import { VisitorCounter } from "@/components/landing/visitor-counter";
 import { VisitorCounterSkeleton } from "@/components/skeletons/visitor-counter-skeleton";
 
@@ -147,6 +148,9 @@ export function Footer() {
         <p className="mt-5 font-mono text-[11px] tracking-[0.15em] text-muted-foreground">
           Made with &lt;3 and lots of coffee.
         </p>
+        <div className="mt-5 max-w-sm">
+          <DiscordStatus />
+        </div>
       </div>
 
       <div
