@@ -111,7 +111,7 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
 
   if (status === "building") {
     return (
-      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-blue-500/10 px-1.5 py-0.5 font-pixel text-[10px] leading-none text-blue-600 dark:text-blue-400">
+      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-blue-500/10 px-1.5 py-0.5 font-sans text-[10px] leading-none text-blue-600 dark:text-blue-400">
         <span className="relative flex size-1.5">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-60 motion-reduce:animate-none" />
           <span className="relative inline-flex size-1.5 rounded-full bg-blue-500" />
@@ -122,7 +122,7 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
   }
 
   return (
-    <span className="inline-flex shrink-0 items-center rounded-sm bg-amber-500/10 px-1.5 py-0.5 font-pixel text-[10px] leading-none text-amber-600 dark:text-amber-400">
+    <span className="inline-flex shrink-0 items-center rounded-sm bg-amber-500/10 px-1.5 py-0.5 font-sans text-[10px] leading-none text-amber-600 dark:text-amber-400">
       new
     </span>
   );
@@ -372,7 +372,7 @@ export function ProjectExplorer({
                 type="button"
                 onClick={() => toggleYear(group.year)}
                 aria-expanded={isOpen}
-                className="group mb-1 flex items-center gap-2 rounded-sm px-1 py-0.5 font-pixel text-sm hover:bg-muted/30 focus-visible:bg-muted/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 transition-colors cursor-pointer select-none"
+                className="group mb-1 flex items-center gap-2 rounded-sm px-1 py-0.5 font-sans text-sm hover:bg-muted/30 focus-visible:bg-muted/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 transition-colors cursor-pointer select-none"
               >
                 <FolderIcon
                   aria-hidden="true"

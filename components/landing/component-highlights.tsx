@@ -56,7 +56,7 @@ export function ComponentHighlights() {
       <div className="flex justify-center items-center border-y py-4">
         <Link
           href="/components"
-          className="flex items-center gap-2 font-pixel text-xs text-muted-foreground transition-colors hover:text-foreground"
+          className="flex items-center gap-2 font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
           {`${componentsSectionConfig.seeMoreLabel} ${components.length} components`}
           <BsArrowUpRightCircle className="size-3.5" />

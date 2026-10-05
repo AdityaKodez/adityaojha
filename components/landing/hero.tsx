@@ -219,7 +219,7 @@ export function Hero() {
                 </span>
               </TooltipTrigger>
               <TooltipContent>
-                <span className="font-pixel text-xs tracking-wider">
+                <span className="font-sans text-xs tracking-wider">
                   {locationTime ?? "--:--:--"}
                 </span>
               </TooltipContent>

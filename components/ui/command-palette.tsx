@@ -142,7 +142,7 @@ const PaletteRow = React.memo(function PaletteRow({
       )}
       <span className="flex-1 truncate">{item.label}</span>
       {item.badge && (
-        <span className="shrink-0 rounded-sm bg-muted px-1.5 py-0.5 font-pixel text-[11px] text-muted-foreground">
+        <span className="shrink-0 rounded-sm bg-muted px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground">
           {item.badge}
         </span>
       )}

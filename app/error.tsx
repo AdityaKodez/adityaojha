@@ -28,7 +28,7 @@ export default function ErrorBoundary({
             onClick={() => reset()}
             variant="outline"
             size="sm"
-            className="gap-2 font-pixel text-xs"
+            className="gap-2 font-sans text-xs"
           >
             <RotateCcw className="size-3.5" />
             try again

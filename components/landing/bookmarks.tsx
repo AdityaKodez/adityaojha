@@ -89,7 +89,7 @@ export function Bookmarks() {
             }}
             variant="ghost"
             size="sm"
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground font-pixel text-xs"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground font-sans text-xs"
           >
             {showAll ? "show less" : `view all ${items.length} bookmarks`}
             <ArrowDownCircleIcon

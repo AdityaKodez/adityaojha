@@ -51,7 +51,7 @@ function StatusBadge({ status }: { status: Project["status"] }) {
 
   if (status === "building") {
     return (
-      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-blue-500/10 px-1.5 py-0.5 font-pixel text-[10px] leading-none text-blue-600 dark:text-blue-400">
+      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-blue-500/10 px-1.5 py-0.5 font-sans text-[10px] leading-none text-blue-600 dark:text-blue-400">
         <span className="relative flex size-1.5">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-60 motion-reduce:animate-none" />
           <span className="relative inline-flex size-1.5 rounded-full bg-blue-500" />
@@ -62,7 +62,7 @@ function StatusBadge({ status }: { status: Project["status"] }) {
   }
 
   return (
-    <span className="inline-flex shrink-0 items-center rounded-sm bg-amber-500/10 px-1.5 py-0.5 font-pixel text-[10px] leading-none text-amber-600 dark:text-amber-400">
+    <span className="inline-flex shrink-0 items-center rounded-sm bg-amber-500/10 px-1.5 py-0.5 font-sans text-[10px] leading-none text-amber-600 dark:text-amber-400">
       new
     </span>
   );

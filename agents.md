@@ -46,7 +46,7 @@ database, no auth, no payments. All content is typed configuration.
 | Primitives | Radix UI and Base UI, vendored into `components/ui/`; Vaul for the mobile suggestion drawer |
 | Motion | Motion 12 |
 | Icons | `lucide-react`, `react-icons`, and local icon components under `public/` |
-| Fonts | Geist (sans, mono, pixel grid) and Instrument Serif (`lib/fonts/`) |
+| Fonts | Geist (sans, mono) and Instrument Serif (`lib/fonts/`) |
 | Theming | `next-themes`, class-based dark mode |
 | Dates | `date-fns` 4 with `date-fns-tz` |
 | Markdown | `react-markdown` on the client surface, `next-mdx-remote` with Shiki on the server surface |
@@ -282,8 +282,9 @@ Deliberately **excluded**, leave these as authored:
 - Headings are `font-medium` with `tracking-tight`. `font-semibold` appears on a
   few section headings only; nothing is heavier than 600 anywhere.
 - Mono is Geist Mono, 10–12.5px, for meta labels, keyboard hints, and code.
-- Pixel accents use `font-pixel` (Geist Pixel Grid); serif accents use
-  `font-serif` (Instrument Serif). Both appear sparingly.
+- Pixel accents used to use `font-pixel` (Geist Pixel Grid); they now use
+  `font-sans` (DM Sans). Serif accents use `font-serif` (Instrument Serif) and
+  appear sparingly.
 - Section headings use the `.section-heading` class rather than ad-hoc sizes.
 
 ## 13. Markdown rendering

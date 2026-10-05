@@ -17,7 +17,7 @@ export default function NotFound() {
     <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-x-clip border-x border-b-2 bg-background px-4 py-8 text-center md:pt-16">
       <PointerDots />
       <div className="relative space-y-4">
-        <h1 className="text-8xl font-pixel text-primary font-medium tracking-tighter">
+        <h1 className="text-8xl font-sans text-primary font-medium tracking-tighter">
           404
         </h1>
         <h2 className="text-2xl font-semibold tracking-tight">

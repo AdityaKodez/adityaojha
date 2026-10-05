@@ -11,7 +11,7 @@ export function HowIWork() {
         <ul className="space-y-1.5 text-sm text-muted-foreground list-disc list-inside">
           {siteConfig.workflow.items.map((item) => (
             <li key={item.label}>
-              <span className="font-medium text-foreground font-pixel">
+              <span className="font-medium text-foreground font-sans">
                 {item.label}:
               </span>{" "}
               {item.description}

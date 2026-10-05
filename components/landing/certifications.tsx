@@ -73,7 +73,7 @@ export function Certifications() {
             onClick={() => setShowAll(!showAll)}
             variant="ghost"
             size="sm"
-            className="flex items-center gap-2 font-pixel text-xs text-muted-foreground hover:text-foreground"
+            className="flex items-center gap-2 font-sans text-xs text-muted-foreground hover:text-foreground"
           >
             {showAll ? "show less" : `view all ${items.length} certifications`}
             <ArrowDownCircleIcon

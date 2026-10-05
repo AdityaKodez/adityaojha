@@ -41,7 +41,7 @@ function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
               <span className="text-sm font-medium leading-none">
                 {testimonial.name}
               </span>
-              <span className="text-xs text-muted-foreground mt-1 font-pixel">
+              <span className="text-xs text-muted-foreground mt-1 font-sans">
                 {testimonial.role}
               </span>
             </div>
@@ -110,7 +110,7 @@ export function Testimonials() {
       <div className="flex justify-center items-center border-y py-4">
         <Link
           href="/testimonials"
-          className="flex items-center gap-2 font-pixel text-xs text-muted-foreground transition-colors hover:text-foreground"
+          className="flex items-center gap-2 font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
           {`${testimonialsSectionConfig.seeMoreLabel} ${getAllTestimonials().length} testimonials`}
           <BsArrowUpRightCircle className="size-3.5" />

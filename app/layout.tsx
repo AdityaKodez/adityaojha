@@ -7,7 +7,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/next";
-import { GeistPixelGrid } from "geist/font/pixel";
 import { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { DM_Sans, Geist_Mono, Instrument_Serif } from "next/font/google";
@@ -145,7 +144,6 @@ export default function RootLayout({
     <html
       lang="en"
       className={cn(
-        GeistPixelGrid.variable,
         "bg-background font-sans",
         DmSans.variable,
         instrumentSerif.variable,
