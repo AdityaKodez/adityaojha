@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, ChevronDown, Copy, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Copy, X } from "@/components/shared/site-icons";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { SiClaude, SiGithub, SiMarkdown, SiOpenai, SiV0 } from "react-icons/si";
 

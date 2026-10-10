@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, RotateCcw } from "lucide-react";
+import { Check, Copy, RotateCcw } from "@/components/shared/site-icons";
 import { Slider as SliderPrimitive, Switch as SwitchPrimitive } from "radix-ui";
 import { useMemo, type ReactNode } from "react";
 

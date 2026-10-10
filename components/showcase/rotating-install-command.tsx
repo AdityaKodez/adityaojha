@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Check, Copy, Terminal, X } from "lucide-react";
+import { Check, Copy, Terminal, X } from "@/components/shared/site-icons";
 import { useEffect, useMemo, useState } from "react";
 
 import {

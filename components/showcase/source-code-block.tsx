@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, Copy, X } from "lucide-react";
+import { Check, ChevronDown, Copy, X } from "@/components/shared/site-icons";
 import { useId, useState } from "react";
 import { SiReact } from "react-icons/si";
 

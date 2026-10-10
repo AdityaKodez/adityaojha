@@ -11,7 +11,7 @@ import {
 import type { Sponsor } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus } from "@/components/shared/site-icons";
 import Link from "next/link";
 import { useState } from "react";
 import { BsArrowUpRightCircle } from "react-icons/bs";

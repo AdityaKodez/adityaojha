@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "@/components/shared/site-icons";
 import Link from "next/link";
 
 import {

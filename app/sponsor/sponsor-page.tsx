@@ -13,7 +13,7 @@ import {
 import { trackEvent } from "@/lib/analytics";
 import { reveal } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "@/components/shared/site-icons";
 import { motion } from "motion/react";
 import Link from "next/link";
 

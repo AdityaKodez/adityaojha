@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { PointerDots } from "@/components/shared/pointer-dots";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon } from "@/components/shared/site-icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 

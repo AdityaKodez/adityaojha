@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy } from "@/components/shared/site-icons";
 import {
   type ReactNode,
   useCallback,

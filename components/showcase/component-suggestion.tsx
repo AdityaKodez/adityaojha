@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ImagePlus, Loader2, Plus, Send, X } from "lucide-react";
+import { ImagePlus, Loader2, Plus, Send, X } from "@/components/shared/site-icons";
 
 import { componentsSectionConfig } from "@/config/components";
 import { trackEvent } from "@/lib/analytics";

@@ -45,7 +45,7 @@ database, no auth, no payments. All content is typed configuration.
 | Styling | Tailwind 4 via `@tailwindcss/postcss`, plus `@tailwindcss/typography` and `tw-animate-css` |
 | Primitives | Radix UI and Base UI, vendored into `components/ui/`; Vaul for the mobile suggestion drawer |
 | Motion | Motion 12 |
-| Icons | `lucide-react`, `react-icons`, and local icon components under `public/` |
+| Icons | HugeIcons for site controls via `components/shared/site-icons.tsx`; `lucide-react` remains in shared UI, published components, and demos; `react-icons` and local assets supply brand icons |
 | Fonts | Geist (sans, mono) and Instrument Serif (`lib/fonts/`) |
 | Theming | `next-themes`, class-based dark mode |
 | Dates | `date-fns` 4 with `date-fns-tz` |
@@ -438,7 +438,7 @@ Gotchas:
 
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 

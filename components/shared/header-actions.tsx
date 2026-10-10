@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
 import OpenSrc from "@/public/stacks/open-src";
-import { Moon, Search, Sun } from "lucide-react";
+import { Moon, Search, Sun } from "@/components/shared/site-icons";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";

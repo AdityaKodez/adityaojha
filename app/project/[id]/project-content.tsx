@@ -19,7 +19,7 @@ import {
   ArrowLeft,
   ArrowRight,
   ForwardIcon,
-} from "lucide-react";
+} from "@/components/shared/site-icons";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";

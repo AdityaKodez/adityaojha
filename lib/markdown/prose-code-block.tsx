@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy } from "lucide-react";
+import { Check, Copy } from "@/components/shared/site-icons";
 import { useCallback, useRef, useState, type ReactNode } from "react";
 import { trackEvent } from "@/lib/analytics";
 import {

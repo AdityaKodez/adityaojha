@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw } from "@/components/shared/site-icons";
 
 export default function ErrorBoundary({
   error,

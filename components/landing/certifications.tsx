@@ -2,7 +2,7 @@
 
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { ArrowDownCircleIcon, ArrowRightIcon } from "lucide-react";
+import { ArrowDownCircleIcon, ArrowRightIcon } from "@/components/shared/site-icons";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

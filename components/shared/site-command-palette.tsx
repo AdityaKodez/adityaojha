@@ -11,7 +11,7 @@ import {
   Monitor,
   Moon,
   Sun,
-} from "lucide-react";
+} from "@/components/shared/site-icons";
 import { FaGithub } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";

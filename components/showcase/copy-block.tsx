@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion, type Transition } from "motion/react";
-import { Check, Copy, X } from "lucide-react";
+import { Check, Copy, X } from "@/components/shared/site-icons";
 import { type ReactNode, useId, useSyncExternalStore } from "react";
 
 import {

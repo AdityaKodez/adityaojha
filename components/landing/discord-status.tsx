@@ -23,7 +23,7 @@ import {
   Radio,
   Swords,
   Tv,
-} from "lucide-react";
+} from "@/components/shared/site-icons";
 import { useInView } from "motion/react";
 import Image from "next/image";
 import { useRef, useState } from "react";

@@ -5,7 +5,7 @@ import type { SocialIcon, SocialLink } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy } from "@/components/shared/site-icons";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";

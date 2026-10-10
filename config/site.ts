@@ -3,7 +3,7 @@ import type { PortfolioConfig } from "@/config/types";
 import SoloLearnIcon from "@/public/sololearn-icon";
 import BrandNextjs from "@/public/stacks/nextjs";
 import X from "@/public/x-icon";
-import { BookmarkCheckIcon } from "lucide-react";
+import { BookmarkCheckIcon } from "@/components/shared/site-icons";
 import { FaYoutube } from "react-icons/fa";
 export const siteConfig: PortfolioConfig = {
   meta: {

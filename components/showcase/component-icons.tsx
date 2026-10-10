@@ -1,5 +1,5 @@
 import type { ComponentIcon } from "@/config/types";
-import { ListTodo, SmilePlus, SwatchBook } from "lucide-react";
+import { ListTodo, SmilePlus, SwatchBook } from "@/components/shared/site-icons";
 import { SVGProps } from "react";
 
 interface ComponentIconProps extends SVGProps<SVGSVGElement> {

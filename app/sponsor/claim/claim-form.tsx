@@ -12,7 +12,7 @@ import {
   Loader2,
   LockKeyhole,
   Upload,
-} from "lucide-react";
+} from "@/components/shared/site-icons";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
