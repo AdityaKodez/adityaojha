@@ -4,6 +4,34 @@
   "homepage": "https://akoder.xyz",
   "items": [
     {
+      "name": "fluid-testimonial-card",
+      "type": "registry:ui",
+      "title": "Fluid testimonial card",
+      "description": "A compact testimonial card that lifts on hover, with a warm, flowing gradient behind its serif quote and author.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "card",
+        "testimonial",
+        "hover",
+        "animation"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/fluid-testimonial-card",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/fluid-testimonial-card.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/fluid-testimonial-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/fluid-testimonial-card\n```\n\n## Usage\n\n```tsx\nimport { FluidTestimonialCard } from \"@/components/ui/fluid-testimonial-card\";\n\nexport function CustomerQuote() {\n  return (\n    <FluidTestimonialCard\n      quote=\"Small details, thoughtfully done.\"\n      description=\"The whole experience feels clear and effortless.\"\n      author=\"Maya Chen\"\n      role=\"Product designer\"\n    />\n  );\n}\n```\n\nHover, focus, or touch the card to reveal the warm fluid background. Reduced motion keeps the gradient static and disables the lift. Missing or failed avatar images show the author's initials."
+    },
+    {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "emoji-reactions",
       "type": "registry:ui",

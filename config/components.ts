@@ -46,6 +46,18 @@ export const componentsSectionConfig = {
 
 export const componentRegistry: ComponentDoc[] = [
   {
+    id: "fluid-testimonial-card",
+    title: "Fluid testimonial card",
+    description:
+      "A compact testimonial card that lifts on hover, with a warm, flowing gradient behind its serif quote and author.",
+    icon: "testimonial",
+    demoPath: "app/components/[id]/demos/fluid-testimonial-card-demo.tsx",
+    docPath: "content/components/fluid-testimonial-card.md",
+    order: -4,
+    enabled: true,
+    new: true,
+  },
+  {
     id: "emoji-reactions",
     title: "Emoji reactions",
     description:

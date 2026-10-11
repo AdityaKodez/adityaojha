@@ -1,5 +1,5 @@
 import type { ComponentIcon } from "@/config/types";
-import { ListTodo, SmilePlus, SwatchBook } from "@/components/shared/site-icons";
+import { ListTodo, MessageSquareQuote, SmilePlus, SwatchBook } from "@/components/shared/site-icons";
 import { SVGProps } from "react";
 
 interface ComponentIconProps extends SVGProps<SVGSVGElement> {
@@ -567,6 +567,8 @@ export {
 /** Maps a `ComponentDoc.icon` key onto its icon component. */
 export function getComponentIcon(name: ComponentIcon) {
   switch (name) {
+    case "testimonial":
+      return MessageSquareQuote;
     case "reactions":
       return SmilePlus;
     case "todo":

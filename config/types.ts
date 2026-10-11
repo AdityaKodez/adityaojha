@@ -320,6 +320,7 @@ export interface SponsorPageConfig {
 }
 
 export type ComponentIcon =
+  | "testimonial"
   | "reactions"
   | "todo"
   | "globe"
