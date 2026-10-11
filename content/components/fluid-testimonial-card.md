@@ -10,13 +10,12 @@ export function CustomerQuote() {
       description="The whole experience feels clear and effortless."
       author="Maya Chen"
       role="Product designer"
-      avatarSrc="/avatars/maya.jpg"
     />
   );
 }
 ```
 
-`quote` and `author` are required. All other props are optional, so you can render just the quote and its attribution.
+`quote` and `author` are required. All other props are optional, so you can render just the quote and its attribution. Without an avatar, the footer shows the author's initials.
 
 ```tsx
 <FluidTestimonialCard
@@ -39,11 +38,30 @@ The component exports `FluidTestimonialCardProps` for typed wrappers and testimo
 | `role` | `string` | - | Muted attribution line beneath the author name. |
 | `avatarSrc` | `string` | - | Decorative portrait URL. Missing or failed images fall back to the author's initials. |
 | `avatar` | `ReactNode` | - | Custom decorative avatar. Takes precedence over `avatarSrc` and the initials fallback. |
+| `colors` | `readonly [string, string, string]` | Yellow, orange, cream | CSS colors for the first glow, second accent, and third highlight. Dark mode derives deeper shades. |
+| `liftAmount` | `number` | `14` | Upward lift in pixels, clamped to 0 through 32. Invalid or nonfinite values use 14. |
 | `className` | `string` | - | Extra classes for the root card. |
+
+## Palette and lift
+
+Pass three CSS colors to customize the wash and use `liftAmount` to control how far the card rises on hover or focus:
+
+```tsx
+<FluidTestimonialCard
+  quote="A calmer way to work."
+  author="Sam Patel"
+  colors={["var(--chart-1)", "var(--chart-2)", "var(--chart-4)"]}
+  liftAmount={8}
+/>
+```
+
+Omit `colors` to retain the default warm palette. Set `liftAmount={0}` to keep the card in place while the wash still flows. Reduced motion always disables lift and gradient drift.
+
+The showcase's Props panel lets you select a palette and adjust lift from 0 to 32px in the live preview. The default Ember selection preserves the component's built-in colors. Use Reset to restore the default palette and 14px lift.
 
 ## Custom avatars
 
-Pass an avatar component or inline SVG through `avatar` to replace the portrait or initials. The showcase demo uses a custom SVG portrait. This simpler example uses your theme's semantic colors and needs no avatar dependency.
+Pass an avatar component or inline SVG through `avatar` to replace the portrait or initials. This example uses your theme's semantic colors and needs no avatar dependency.
 
 ```tsx
 import { FluidTestimonialCard } from "@/components/ui/fluid-testimonial-card";
@@ -69,7 +87,7 @@ Custom avatars render inside the same 32px decorative container and are hidden f
 
 ## Interaction and accessibility
 
-The card rests on a neutral background. Pointer hover and keyboard focus lift it slightly and reveal a moving yellow and orange gradient across its lower half. The text stays still and readable above the decorative wash.
+The card rests on a neutral background. Pointer hover and keyboard focus lift it slightly and reveal a moving gradient across its lower half. The default palette uses warm yellow and orange in light mode and deeper copper and ember tones in dark mode. The text stays still and readable above the decorative wash.
 
 The gradient drifts only while the card is hovered or focused. When neither state is active, the card settles back to its resting position and the wash fades out.
 

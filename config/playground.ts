@@ -88,6 +88,27 @@ export function findPalette(id: string): PlaygroundPalette {
  * snippet reads like the props table.
  */
 const PLAYGROUNDS: Record<string, PlaygroundSchema> = {
+  "fluid-testimonial-card": {
+    componentName: "FluidTestimonialCard",
+    controls: [
+      { kind: "palette", key: "colors", label: "Gradient colors", default: "ember" },
+      {
+        kind: "slider",
+        key: "liftAmount",
+        label: "Hover lift",
+        min: 0,
+        max: 32,
+        step: 2,
+        default: 14,
+        format: (value) => `${value}px`,
+      },
+    ],
+    resolve: (values, palette) => ({
+      // Keep the component's warm default palette on the initial preview.
+      colors: palette.id === "ember" ? undefined : [palette.colors[1], palette.colors[2], palette.colors[4]],
+      liftAmount: values.liftAmount,
+    }),
+  },
   "emoji-reactions": {
     componentName: "EmojiReactions",
     controls: [
@@ -663,7 +684,7 @@ export function buildPlaygroundSnippet(
   const omitted = new Set(schema.omitFromSnippet ?? []);
   const lines = Object.entries(resolved)
     .filter(([key, value]) => value !== undefined && !omitted.has(key))
-    .map(([key, value]) => `  ${key}=${formatSnippetValue(value)},`);
+    .map(([key, value]) => `  ${key}=${formatSnippetValue(value)}`);
 
   return `<${schema.componentName}\n${lines.join("\n")}\n/>`;
 }
