@@ -61,7 +61,7 @@ export default function Home() {
       <Campfire />
       <main
         id="main-content"
-        className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x border-b-2 bg-background pt-8"
+        className="profile-page relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x border-b-2 bg-background pt-8"
       >
         <div id="hero" className="bg-background scroll-mt-20">
           <Hero />

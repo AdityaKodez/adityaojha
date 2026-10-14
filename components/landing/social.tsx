@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon, Check, Copy } from "@/components/shared/site-icons";
@@ -60,12 +60,17 @@ const Social = () => {
     [],
   );
 
-  const handleCopy = (social: SocialLink, method: "click" | "shortcut_key" = "click") => {
+  const handleCopy = useCallback(async (social: SocialLink, method: "click" | "shortcut_key" = "click") => {
     if (!social.copyValue) {
       return;
     }
 
-    navigator.clipboard.writeText(social.copyValue);
+    try {
+      await navigator.clipboard.writeText(social.copyValue);
+    } catch {
+      setCopied((prev) => ({ ...prev, [social.id]: false }));
+      return;
+    }
     trackEvent("social_handle_copied", {
       platform: social.platform,
       handle: social.handle,
@@ -76,7 +81,7 @@ const Social = () => {
     setTimeout(() => {
       setCopied((prev) => ({ ...prev, [social.id]: false }));
     }, 2000);
-  };
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -102,28 +107,23 @@ const Social = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [copyEnabled]);
+  }, [copyEnabled, handleCopy]);
 
   return (
-    <section className="no-js-visible border-t border-dashed pt-6">
-      <h2 className="section-heading">{socialSectionConfig.title}</h2>
+    <section className="profile-socials">
+      <h2 className="profile-section-heading">{socialSectionConfig.title}</h2>
 
-      <div className="grid grid-cols-2 -mb-px overflow-hidden max-sm:grid-cols-1">
+      <div className="profile-social-grid">
         {sortedSocials.map((social) => {
           const isCopyAction = social.action === "copy";
 
           const cellContent = (
             <div
-              className="micro-transition relative no-js-visible flex items-center gap-3 overflow-hidden p-4 max-sm:border-r-0 group-hover:bg-muted/10 group-focus-visible:bg-muted/10 "
+              className="profile-social-row micro-transition group-hover:bg-muted/30 group-focus-visible:bg-muted/30"
             >
-              <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-45 micro-transition group-hover:opacity-100 group-focus-visible:opacity-100" />
-
-              <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5 micro-transition group-hover:ring-muted-foreground/10 group-focus-visible:ring-muted-foreground/10" />
-
               <div className="relative z-10 flex w-full items-center gap-3">
-                <div className="micro-transition relative flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground group-hover:text-foreground group-focus-visible:text-foreground group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5">
+                <div className="micro-transition relative flex size-8 shrink-0 items-center justify-center text-muted-foreground group-hover:text-foreground group-focus-visible:text-foreground">
                   <SocialIconNode icon={social.icon} size={18} />
-                  <div className="pointer-events-none absolute inset-0 rounded-sm ring-1 ring-inset ring-muted-foreground/5" />
                 </div>
 
                 <div className="flex min-w-0 flex-col">
@@ -138,7 +138,7 @@ const Social = () => {
                 {isCopyAction ? (
                   <div className="ml-auto">
                     {copied[social.id] ? (
-                      <Check className="h-3.5 w-3.5 text-green-500" />
+                      <Check className="size-3.5 text-primary" />
                     ) : (
                       <Copy className="h-3.5 w-3.5 text-muted-foreground micro-transition group-hover:text-foreground group-focus-visible:text-foreground" />
                     )}

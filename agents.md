@@ -200,8 +200,10 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   opacity with the ease `[0.22, 1, 0.36, 1]` plus a settle spring on `y`. Only
   `opacity` and `transform` are animated, never `filter` (animated blur forces
   a repaint of the whole subtree per frame), and `whileInView` fires once
-  rather than on every scroll pass. The hero greeting words are the one
-  deliberate exception and keep their blur-to-sharp resolve.
+  rather than on every scroll pass. The profile intro renders on the server
+  without an entrance. Its Anatomy plotter banner uses a separate client
+  component to move SVG groups and ink through refs, with an idle tour that
+  pauses offscreen, while the tab is hidden, and under reduced motion.
 - Shared utility classes: `.section-heading`, `.micro-transition`, and the
   blueprint background used on card hover. Prefer these over repeating the
   utility stack.
@@ -286,6 +288,17 @@ Deliberately **excluded**, leave these as authored:
   `font-sans` (DM Sans). Serif accents use `font-serif` (Instrument Serif) and
   appear sparingly.
 - Section headings use the `.section-heading` class rather than ad-hoc sizes.
+
+The home profile uses `.profile-*` styles scoped in `app/globals.css`: an
+overlapping configured portrait, an Instrument Serif greeting, a 27px product
+headline (25px on mobile), and open social rows. Home section headings use
+one solid top rule and no shaded heading band. Other routes keep their
+existing section-heading treatment. Banner copy lives in
+`config/profile-banner.ts`; geometry is server-only in
+`components/landing/profile-banner/geometry.ts`, using the MIT-licensed
+Anatomy core in `lib/anatomy/`. The pure plotter model is shared by motion,
+ink and the visual coordinate readout. Keyboard input updates the accessible
+slider value, while the animation loop updates only the visual readout.
 
 ## 13. Markdown rendering
 
