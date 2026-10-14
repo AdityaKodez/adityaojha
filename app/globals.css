@@ -845,3 +845,106 @@ code[data-theme*=" "] span,
 .skip-to-content:focus {
   top: 0;
 }
+
+/* Profile workshop: Anatomy geometry inherits the site's light/dark tokens. */
+.profile-hero { padding: 42px 24px 20px; }
+.profile-banner {
+  --anatomy-paper: var(--background);
+  --anatomy-top: var(--background);
+  --anatomy-face: var(--primary);
+  --anatomy-shade-0: color-mix(in oklab, var(--foreground) 22%, var(--background));
+  --anatomy-shade-1: color-mix(in oklab, var(--foreground) 16%, var(--background));
+  --anatomy-shade-2: color-mix(in oklab, var(--foreground) 10%, var(--background));
+  --anatomy-shade-3: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --anatomy-lit-top: var(--primary);
+  --anatomy-lit-shade: color-mix(in oklab, var(--primary) 76%, var(--foreground));
+  --anatomy-hi: color-mix(in oklab, var(--foreground) 70%, var(--background));
+  --anatomy-mid: color-mix(in oklab, var(--foreground) 42%, var(--background));
+  --anatomy-lo: color-mix(in oklab, var(--foreground) 27%, var(--background));
+  --anatomy-faint: color-mix(in oklab, var(--foreground) 12%, var(--background));
+  --anatomy-lit: var(--primary);
+  --anatomy-dot: var(--foreground);
+  position: relative;
+  height: 290px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: color-mix(in oklab, var(--muted) 66%, var(--background));
+  background-image: radial-gradient(color-mix(in oklab, var(--muted-foreground) 18%, transparent) 0.65px, transparent 0.65px);
+  background-size: 16px 16px;
+}
+.profile-banner-top, .profile-banner-bottom {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-geist-mono);
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+.profile-banner-top { top: 15px; }
+.profile-banner-bottom { bottom: 15px; font-variant-numeric: tabular-nums; }
+.profile-banner-bottom > span:first-child { padding-left: 82px; }
+.profile-banner-stage { position: absolute; inset: 22px 14px; touch-action: pan-y; border-radius: var(--radius-sm); }
+.profile-banner-stage:focus-visible { outline: 2px solid var(--ring); outline-offset: 5px; }
+.profile-banner .iso-svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.profile-banner svg path, .profile-banner svg circle { vector-effect: non-scaling-stroke; }
+.profile-banner .iso-fill { fill: var(--anatomy-paper); stroke: none; }
+.profile-banner .iso-shade, .profile-banner .iso-top { stroke: none; }
+.profile-banner .iso-shade[data-shade="0"] { fill: var(--anatomy-shade-0); }
+.profile-banner .iso-shade[data-shade="1"] { fill: var(--anatomy-shade-1); }
+.profile-banner .iso-shade[data-shade="2"] { fill: var(--anatomy-shade-2); }
+.profile-banner .iso-shade[data-shade="3"] { fill: var(--anatomy-shade-3); }
+.profile-banner .iso-top { fill: var(--anatomy-top); }
+.profile-banner .iso-solid[data-lit] > .iso-fill { fill: var(--anatomy-face); }
+.profile-banner .iso-solid[data-lit] > .iso-top { fill: var(--anatomy-lit-top); }
+.profile-banner .iso-solid[data-lit] > .iso-shade { fill: var(--anatomy-lit-shade); }
+.profile-banner .iso-solid[data-lit] > .iso-edge { stroke: var(--anatomy-lit); }
+.profile-banner .iso-line { fill: none; stroke: var(--anatomy-lo); stroke-width: 0.6; stroke-linecap: round; stroke-linejoin: round; }
+.profile-banner .iso-line[data-tone="hi"] { stroke: var(--anatomy-hi); }
+.profile-banner .iso-line[data-tone="mid"] { stroke: var(--anatomy-mid); }
+.profile-banner .iso-line[data-tone="faint"] { stroke: var(--anatomy-faint); }
+.profile-banner .iso-line[data-tone="lit"] { stroke: var(--anatomy-lit); }
+.profile-banner .iso-dots circle { fill: var(--anatomy-dot); stroke: none; opacity: 0.5; }
+.profile-banner .iso-halo { fill: var(--foreground); opacity: 0.09; filter: blur(8px); transform: translateY(3px); }
+.profile-banner-ink { fill: none; stroke: var(--primary); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
+.profile-intro { position: relative; padding: 51px 8px 0; }
+.profile-portrait { position: absolute; top: -30px; left: 8px; width: 76px; height: 76px; border: 4px solid var(--background); border-radius: 50%; object-fit: cover; box-shadow: 0 2px 4px color-mix(in oklab, var(--foreground) 8%, transparent); }
+.profile-greeting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.profile-greeting { font-family: var(--font-serif); font-size: 31px; font-style: italic; line-height: 1.2; letter-spacing: -0.025em; }
+.profile-location { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 4px 0; color: var(--muted-foreground); font-size: 12px; line-height: 1.4; cursor: default; border-radius: var(--radius-sm); }
+.profile-location:hover { color: var(--foreground); }
+.profile-location:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+.profile-headline { margin-top: 18px; max-width: 520px; font-size: 27px; line-height: 1.25; font-weight: 500; letter-spacing: -0.04em; text-wrap: balance; }
+.profile-description { max-width: 615px; margin-top: 16px; font-size: 14px; line-height: 1.65; color: var(--muted-foreground); text-wrap: pretty; }
+.profile-socials { margin: 0 24px 8px; padding-top: 17px; border-top: 1px solid var(--border); }
+.profile-section-heading { font-size: 17px; line-height: 1.4; font-weight: 500; letter-spacing: -0.025em; }
+.profile-social-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; margin-top: 8px; }
+.profile-social-row { position: relative; display: flex; align-items: center; min-height: 68px; padding: 10px 2px; border-bottom: 1px solid var(--border); }
+.profile-social-grid > :nth-last-child(-n + 2) .profile-social-row { border-bottom: none; }
+.profile-social-row .font-mono { font-family: var(--font-sans); font-size: 12px; }
+/* The home page uses one open section rule, so the heading never doubles it. */
+.profile-page > div:not(#hero):not(#socials) > section { border-top-style: solid; }
+.profile-page .section-heading { border: 0; background: transparent; padding-top: 18px; padding-bottom: 12px; font-size: 18px; font-weight: 500; }
+@media (max-width: 639px) {
+  .profile-hero { padding: 38px 16px 16px; }
+  .profile-banner { height: 226px; }
+  .profile-banner-stage { inset: 27px 6px; }
+  .profile-banner-top, .profile-banner-bottom { left: 12px; right: 12px; font-size: 9px; }
+  .profile-banner-bottom > span:first-child { padding-left: 63px; }
+  .profile-intro { padding: 48px 2px 0; }
+  .profile-portrait { left: 2px; width: 68px; height: 68px; top: -26px; }
+  .profile-greeting-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .profile-greeting { font-size: 29px; }
+  .profile-location { font-size: 11px; }
+  .profile-headline { font-size: 25px; margin-top: 16px; }
+  .profile-description { margin-top: 14px; }
+  .profile-socials { margin-left: 16px; margin-right: 16px; }
+  .profile-social-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .profile-social-row { min-height: 60px; }
+  .profile-social-grid > :nth-last-child(2) .profile-social-row { border-bottom: 1px solid var(--border); }
+}
