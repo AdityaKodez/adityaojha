@@ -34,6 +34,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/**": ["./lib/fonts/**/*"],
+    "/opengraph-image": ["./public/images/og/garden.png"],
   },
   images: {
     formats: ["image/avif", "image/webp"],
