@@ -155,7 +155,7 @@ function useClaimDraft() {
 }
 
 const SHARE_URL = `https://x.com/intent/post?text=${encodeURIComponent(
-  `Just took a seat on ${X_HANDLE?.handle ?? "@AdiKodez"}’s orbit ✦`,
+  `Just backed ${X_HANDLE?.handle ?? "@AdiKodez"}’s work. Small support, good company.`,
 )}&url=${encodeURIComponent(`${siteConfig.meta.url}/#sponsors`)}`;
 
 const NEXT_STEPS = [
@@ -170,7 +170,7 @@ const NEXT_STEPS = [
     state: "active",
   },
   {
-    label: "Live on the orbit",
+    label: "On the supporter list",
     detail: "Usually a minute or two from now.",
     state: "pending",
   },
@@ -449,7 +449,7 @@ export function ClaimForm() {
                     href="/#sponsors"
                     className={`${actionClass} bg-primary text-primary-foreground hover:bg-primary/90`}
                   >
-                    See the orbit <ArrowRight aria-hidden className="size-4" />
+                    See the supporters <ArrowRight aria-hidden className="size-4" />
                   </Link>
                   <a
                     href={SHARE_URL}

@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { ArrowDownCircleIcon, ArrowRightIcon } from "@/components/shared/site-icons";
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 
 const DEFAULT_VISIBLE_ITEMS = 4;
 
@@ -68,21 +67,21 @@ export function Certifications() {
       </div>
 
       {items.length > DEFAULT_VISIBLE_ITEMS && (
-        <div className="flex justify-center border-t border-dashed py-2">
-          <Button
+        <div className="flex items-center justify-center border-y py-4">
+          <button
+            type="button"
             onClick={() => setShowAll(!showAll)}
-            variant="ghost"
-            size="sm"
-            className="flex items-center gap-2 font-sans text-xs text-muted-foreground hover:text-foreground"
+            aria-expanded={showAll}
+            className="flex cursor-pointer items-center gap-2 font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
-            {showAll ? "show less" : `view all ${items.length} certifications`}
+            {showAll ? "Show less" : `View all ${items.length} certifications`}
             <ArrowDownCircleIcon
               className={cn(
                 "size-3.5 transition-transform",
                 showAll && "rotate-180",
               )}
             />
-          </Button>
+          </button>
         </div>
       )}
     </section>

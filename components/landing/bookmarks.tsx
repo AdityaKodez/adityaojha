@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { ArrowDownCircleIcon, ArrowRightIcon } from "@/components/shared/site-icons";
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 
 const DEFAULT_VISIBLE_ITEMS = 4;
 
@@ -78,8 +77,9 @@ export function Bookmarks() {
       </div>
 
       {items.length > DEFAULT_VISIBLE_ITEMS && (
-        <div className="flex justify-center border-t border-dashed py-2">
-          <Button
+        <div className="flex items-center justify-center border-y py-4">
+          <button
+            type="button"
             onClick={() => {
               const nextShowAll = !showAll;
               setShowAll(nextShowAll);
@@ -87,18 +87,17 @@ export function Bookmarks() {
                 expanded: nextShowAll,
               });
             }}
-            variant="ghost"
-            size="sm"
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground font-sans text-xs"
+            aria-expanded={showAll}
+            className="flex cursor-pointer items-center gap-2 font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
-            {showAll ? "show less" : `view all ${items.length} bookmarks`}
+            {showAll ? "Show less" : `View all ${items.length} bookmarks`}
             <ArrowDownCircleIcon
               className={cn(
                 "size-3.5 transition-transform",
                 showAll && "rotate-180",
               )}
             />
-          </Button>
+          </button>
         </div>
       )}
     </section>

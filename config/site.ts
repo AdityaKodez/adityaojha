@@ -1,10 +1,49 @@
 import { socialsConfig } from "@/config/socials";
-import type { PortfolioConfig } from "@/config/types";
+import type { AboutGreetings, AboutItem, FooterConfig, PortfolioConfig } from "@/config/types";
 import SoloLearnIcon from "@/public/sololearn-icon";
 import BrandNextjs from "@/public/stacks/nextjs";
 import X from "@/public/x-icon";
 import { BookmarkCheckIcon } from "@/components/shared/site-icons";
 import { FaYoutube } from "react-icons/fa";
+
+export const aboutGreetings: AboutGreetings = {
+  morning: "Good morning !",
+  afternoon: "Good afternoon !",
+  evening: "Good evening !",
+};
+
+export const aboutItems: AboutItem[] = [
+  {
+    id: "build",
+    lead: "I'm Aditya. I build SaaS products",
+    illustration: "browser",
+    body: "from the first rough idea to product flows, data models, and the moment real people use them.",
+  },
+  {
+    id: "share",
+    lead: "I share the decisions, mistakes, and lessons",
+    illustration: "notebook",
+    body: "along the way, because the process is often more useful than a polished launch announcement.",
+  },
+  {
+    id: "learn",
+    lead: "Right now, I'm shipping small, useful software",
+    illustration: "plane",
+    body: "and becoming a sharper product engineer with every release.",
+  },
+];
+
+export const footerConfig: FooterConfig = {
+  quote: "The soul becomes dyed with the color of its thoughts.",
+  attribution: "Marcus Aurelius",
+  credit: "Made with <3 and lots of coffee.",
+  artwork: {
+    src: "/images/footer-garden-strip.webp",
+    width: 1264,
+    height: 600,
+  },
+};
+
 export const siteConfig: PortfolioConfig = {
   meta: {
     url: "https://akoder.xyz",
@@ -96,8 +135,8 @@ export const siteConfig: PortfolioConfig = {
     fullName: "Aditya Ojha",
     firstName: "Aditya",
     avatar: {
-      src: "/profile.avif",
-      alt: "@akcll",
+      src: "/images/profile-cutout.webp",
+      alt: "Pixel-art portrait of Aditya holding a trophy",
       fallback: "AK",
     },
     location: {
@@ -112,11 +151,11 @@ export const siteConfig: PortfolioConfig = {
     "components",
     "skills",
     "about",
+    "sponsors",
     "github",
     "testimonials",
     "bookmarks",
     "certifications",
-    "sponsors",
   ],
   sectionFlags: {
     socials: true,
@@ -135,18 +174,18 @@ export const siteConfig: PortfolioConfig = {
     contact: false,
   },
   banner: {
-    imageSrc: "/images/brand-background.png",
-    imageAlt: "Halftone skyline glowing in blue, teal, and orange",
+    imageSrc: "/images/profile-banner-cutout.webp",
+    imageAlt: "Paper cutouts of a keyboard, notebook, paper plane, and coffee cup",
     openSourceUrl: "https://github.com/AdityaKodez/adityaojha",
-    openSourceTooltip: "this project is open source!",
-    themeToggleLabel: "toggle theme",
+    openSourceTooltip: "This project is open source!",
+    themeToggleLabel: "Toggle theme",
     themeShortcut: "D",
-    themeTooltip: "toggle theme",
+    themeTooltip: "Toggle theme",
     switchAudioSrc: "/switch.mp3",
   },
   about: {
-    title: "Building is how I learn",
-    body: "I build SaaS products end to end: from the first rough idea to product flows, data models, deployment, and the uncomfortable moment real people use them. I share the decisions, mistakes, and lessons because the process is more useful than a polished launch announcement. Right now, I am focused on shipping small, useful software and becoming a sharper product engineer with every release.",
+    title: "Hello there !",
+    body: aboutItems.map(({ lead, body }) => `${lead} ${body}`).join(" "),
   },
   services: {
     title: "What I build best",

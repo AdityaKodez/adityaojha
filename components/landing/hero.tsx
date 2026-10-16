@@ -112,7 +112,7 @@ export function Hero() {
     // gates LCP, so the heading paints straight from SSR. Opacity starts are
     // reserved for the small greeting words, which are not the LCP element.
     <motion.section
-      className="no-js-visible relative z-20 space-y-4 px-6 pt-10"
+      className="no-js-visible relative z-20 space-y-4 px-6 pt-4"
       initial={{ y: 24 }}
       animate={{ y: 0 }}
       transition={entryTransition}

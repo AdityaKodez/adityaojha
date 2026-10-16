@@ -23,7 +23,7 @@ export const projectsConfig: Project[] = [
       { icon: "users", label: "Founder-first" },
     ],
     year: 2026,
-    status: "building",
+    status: "shipped",
     category: "Developer tools",
     order: 1,
     enabled: true,

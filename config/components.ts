@@ -7,9 +7,9 @@ export const componentSpotlightLabel = "Featured";
 /** Home page teaser for the /components showcase. */
 export const componentsSectionConfig = {
   title: "Components",
-  /** How many registry entries the home page previews before "see all". */
+  /** How many registry entries the home page previews before "See all". */
   previewCount: 4,
-  seeMoreLabel: "see all",
+  seeMoreLabel: "See all",
   /** Copy for the catalog's suggestion CTA, dialog, and submit feedback. */
   suggestion: {
     cardTitle: "Suggest a component",

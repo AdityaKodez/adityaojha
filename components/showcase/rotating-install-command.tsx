@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Check, Copy, Terminal, X } from "@/components/shared/site-icons";
+import { Terminal } from "@/components/shared/site-icons";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -18,6 +18,7 @@ import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/use-copy";
 import { usePackageManager, writeManager } from "@/components/showcase/copy-block";
+import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 import { PM_ICONS } from "@/components/showcase/pm-icons";
 
 const ROTATION_INTERVAL_MS = 2400;
@@ -160,25 +161,19 @@ export function RotatingInstallCommand({
                 <button
                   type="button"
                   onClick={handleCopy}
-                  aria-label="copy command"
+                  aria-label="Copy command"
                   className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
-                  {status === "copied" ? (
-                    <Check className="size-3.5 text-green-500" />
-                  ) : status === "error" ? (
-                    <X className="size-3.5 text-destructive" />
-                  ) : (
-                    <Copy className="size-3.5" />
-                  )}
+                  <CopyStatusIcon status={status} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>
                   {status === "copied"
-                    ? "copied!"
+                    ? "Copied!"
                     : status === "error"
-                      ? "copy failed"
-                      : "copy command"}
+                      ? "Copy failed"
+                      : "Copy command"}
                 </p>
               </TooltipContent>
             </Tooltip>

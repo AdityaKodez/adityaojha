@@ -31,7 +31,7 @@ export default function ErrorBoundary({
             className="gap-2 font-sans text-xs"
           >
             <RotateCcw className="size-3.5" />
-            try again
+            Try again
           </Button>
         </div>
       </div>

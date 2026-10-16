@@ -97,12 +97,13 @@ component.
 | `config/skills.ts` | `skillsSectionConfig` + `skillsConfig` |
 | `config/socials.ts` | `socialSectionConfig` + `socialsConfig` |
 | `config/projects.ts` | `projectsSectionConfig` + `projectsConfig` |
+| `config/section-notes.ts` | Optional handwritten side-note copy and left/right placement, keyed by home section |
 | `config/experience.ts` | `experienceSectionConfig` + `experienceConfig` |
 | `config/testimonials.ts` | `testimonialsConfig` |
 | `config/components.ts` | `componentsSectionConfig` (home teaser), `componentRegistry` plus `findComponent()` and `getEnabledComponents()` |
 | `config/registry.ts` | Registry helpers, `getAddCommands()` (`@akoder/<id>` per package manager), `getItemUrl()` and `registryConfig.itemUrlPattern` for the direct-URL fallback |
 | `config/world-cities.ts` | City coordinates used by the dotted world map |
-| `config/sponsors.ts` | `sponsorsSectionConfig` (orbit copy, seat count, CTAs) + `sponsorsConfig`, one sponsor per orbit seat |
+| `config/sponsors.ts` | `sponsorsSectionConfig` (supporter copy, seat count, CTAs) + `sponsorsConfig`, one entry per supporter |
 
 Pattern to copy: every domain exports a section config object (heading text) and
 a typed item array. Every item carries `id`, `order`, and an optional `enabled`
@@ -120,7 +121,9 @@ All types live in `config/types.ts`.
   `fallback`), `location` (`label`, `timezone`), `githubUsername`.
 - **`HeroConfig`**, `greeting`, `waveEmoji`, `headlineBefore`,
   `highlightedPhrases`, `headlineAfter`, `description`, `descriptionHighlight`.
-- **`AboutConfig`**, `title`, `body`, `emphasizedPhrases`.
+- **`AboutConfig`**, fallback `title` and plain-text `body`. `config/site.ts`
+  also exports `aboutGreetings` and typed `aboutItems` for the illustrated
+  introduction. `body` is derived from those items so text exports stay in sync.
 - **`SkillItem`**, `id`, `name`, `icon`, `category` (`language`, `frontend`,
   `backend`, `workflow-ai`), `order`, `enabled`.
 - **`SocialLink`**, `id`, `platform`, `handle`, `href`, `icon`, `order`,
@@ -159,9 +162,17 @@ The home page is a loop, not a hand-written layout.
 - The current order is projects, components, skills, about, github,
   testimonials, bookmarks, socials, sponsors. Certifications, experience,
   services, workflow and contact exist but are flagged off. The `sponsors`
-  section (orbit around the Bit mascot) also renders at the bottom of
-  `/components` and `/testimonials`; there is deliberately no standalone
-  sponsor route.
+  section is a compact, single-row logo strip with one invitation, not an orbit
+  or a grid of empty seats. On the home page it sits directly after About.
+  Supporter names appear in tooltips on hover and keyboard focus. Logo hover
+  motion uses the banner's 0.35s spring with 0.3 bounce and respects reduced
+  motion. The invitation's hover uses secondary colors, never primary.
+  Its “Supported by” heading matches
+  About's greeting: Instrument Serif italic, 25px with a 32px line height,
+  21px horizontal and 1px vertical padding, and 24px above the heading band.
+  The section also renders at the bottom of `/components` and `/testimonials`.
+  `/sponsor` explains support and reuses the list. Keep the payment product id
+  and seat indices unchanged when changing the presentation.
 - `components` is a teaser, not the showcase: it previews
   `componentsSectionConfig.previewCount` registry entries and ends in a
   `see all n components` link to `/components`. Keep it that way, the full
@@ -193,18 +204,40 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 - Motion tokens live in `app/globals.css` (`--motion-duration-base`,
   `--motion-ease-standard`). Home page sections, headings, and content rows
   render immediately without scroll entrances. About, Skills, and
-  ComponentHighlights stay Server Components. Keep interaction motion such as
-  folder expansion, hover previews, and the testimonial slider. Entrances on
-  other surfaces use the shared reveal helpers in
+  ComponentHighlights stay Server Components. About's greeting is a small client
+  component that uses the visitor's local time, with a stable server fallback.
+  Keep interaction motion such as
+  folder expansion, hover previews, and the testimonial slider. The GitHub
+  contribution calendar fades in with a subtle scale settle when its server-loaded
+  content mounts inside the existing Suspense boundary. Entrances on other
+  surfaces use the shared reveal helpers in
   `lib/motion.ts` (`reveal`, `revealOnMount`, `revealVariants`): a 0.18s
   opacity with the ease `[0.22, 1, 0.36, 1]` plus a settle spring on `y`. Only
   `opacity` and `transform` are animated, never `filter` (animated blur forces
   a repaint of the whole subtree per frame), and `whileInView` fires once
-  rather than on every scroll pass. The hero greeting words are the one
-  deliberate exception and keep their blur-to-sharp resolve.
-- Shared utility classes: `.section-heading`, `.micro-transition`, and the
-  blueprint background used on card hover. Prefer these over repeating the
-  utility stack.
+  rather than on every scroll pass. The hero greeting and footer quote words
+  are deliberate exceptions and keep their blur-to-sharp resolve. The footer
+  also has a slower one-time staggered entrance for its text and live status.
+  The garden reveals independently once it clears the bottom fade, with a
+  120px viewport inset. It follows pointer movement with subtle spring-driven
+  parallax, resets on leave, and stays still for touch and reduced motion.
+  Animated elements use `data-reveal` for the reduced-motion override, with a
+  no-JavaScript fallback.
+- Shared utility classes: `.section-heading`, `.micro-transition`,
+  `.liquid-glass`, `.bottom-blur`, and the blueprint background used on card
+  hover. Prefer these over repeating the utility stack.
+- The shared footer on `/`, `/components`, and `/testimonials` stays within the centered page frame, with a compact,
+  transparent paper-cut garden that matches the hero's halftone artwork. Keep
+  its quote, credit, and artwork reference in `footerConfig` in `config/site.ts`.
+  The quote, live Discord status, and credit sit above a continuous botanical
+  panorama, clear of the fixed bottom controls. The visitor count floats
+  centered over the panorama as a liquid-glass pill (`.liquid-glass`, with the
+  displacement map rendered by `footer-scene.tsx`). Preserve
+  the artwork's aspect ratio, cropping its sides on narrow screens.
+  The footer is a sibling of each page's main, with no
+  opening border or nested frame. The garden stage is 280px tall on mobile and
+  320px from the small breakpoint, with a 720px minimum artwork width.
+  Keep it off other inner routes and preserve the intentional heading styles.
 
 ## 10. Borders
 
@@ -213,9 +246,10 @@ simple: **one border per edge, one mechanism per element.**
 
 - The shell owns the outer frame. `app/layout.tsx` draws the centered column
   (`max-w-[var(--frame-max-w)]`), the muted gutter (`px-2 border-x`),
-  FrameGutters, and BottomNav. The bottom fade (ProgressiveBlur plus
+  FrameGutters, and BottomNav. The bottom fade (one masked backdrop blur plus
   PixelDissolve) stays on `app/page.tsx` only. `<main>` inside the shell
-  carries `border-x border-b-2 bg-background`. Nothing inside main
+  carries `border-x bg-background`, with `border-b-2` only on routes without
+  the shared footer so pages with it can blend into the artwork. Nothing inside main
   re-declares an outer frame or adds a vertical side rule.
 - Each section owns exactly one dashed top rule (`border-t border-dashed`). If a
   parent already draws a rule on that edge, the child does not add another.
@@ -286,6 +320,11 @@ Deliberately **excluded**, leave these as authored:
   `font-sans` (DM Sans). Serif accents use `font-serif` (Instrument Serif) and
   appear sparingly.
 - Section headings use the `.section-heading` class rather than ad-hoc sizes.
+- Supplemental section notes use `components/shared/side-note.tsx` with Caveat
+  handwriting and a decorative curved arrow. Keep their copy in
+  `config/section-notes.ts`. They sit in the margins at widths of 80rem and
+  above, without adding a border. Hide the entire note, including its arrow,
+  below that breakpoint.
 
 ## 13. Markdown rendering
 

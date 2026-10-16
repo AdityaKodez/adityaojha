@@ -1,13 +1,10 @@
 "use client";
 
 import BitBlob from "@/components/landing/bit";
-import { EmitRays, SponsorOrbit } from "@/components/landing/sponsors";
+import { EmitRays, SponsorsSection } from "@/components/landing/sponsors";
 import { socialsConfig } from "@/config/socials";
 import {
-    getAllSponsors,
-    getEnabledSponsors,
     sponsorPageConfig,
-    sponsorsSectionConfig,
     sponsorTiers,
 } from "@/config/sponsors";
 import { trackEvent } from "@/lib/analytics";
@@ -61,11 +58,6 @@ function SectionBand({ children }: { children: string }) {
   );
 }
 
-/**
- * The full sponsor pitch. The home page keeps the teaser (heading, orbit,
- * Details link); this page owns the story: hero with Bit, the live orbit,
- * what a seat does, the tier, the claiming steps, and the closing ask.
- */
 export function SponsorPage() {
   const {
     title,
@@ -80,13 +72,6 @@ export function SponsorPage() {
     ctaHeading,
     ctaDescription,
   } = sponsorPageConfig;
-
-  // Same growth rule as the home section: the orbit grows past the
-  // configured seat count when paid sponsors overflow it.
-  const seats = Math.max(
-    sponsorsSectionConfig.seats,
-    getAllSponsors().filter((sponsor) => sponsor.enabled !== false).length,
-  );
 
   return (
     <>
@@ -144,14 +129,7 @@ export function SponsorPage() {
         </div>
       </section>
 
-      {/* The live orbit, the same piece the home page renders. Open seats
-          lead straight to checkout from here too. */}
-      <section aria-labelledby="orbit-heading" className="border-t border-dashed">
-        <h2 id="orbit-heading" className="sr-only">
-          The orbit
-        </h2>
-        <SponsorOrbit seats={seats} sponsors={getEnabledSponsors(seats)} />
-      </section>
+      <SponsorsSection />
 
       <section className="border-t border-dashed pt-8">
         <SectionBand>{whyHeading}</SectionBand>

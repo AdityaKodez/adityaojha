@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRightIcon, Check, Copy } from "@/components/shared/site-icons";
+import { ArrowRightIcon } from "@/components/shared/site-icons";
 import { socialSectionConfig, socialsConfig } from "@/config/socials";
 import type { SocialIcon, SocialLink } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
@@ -17,6 +17,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 
 const sortedSocials = socialsConfig
   .filter((item) => item.enabled !== false)
@@ -137,11 +138,10 @@ const Social = () => {
 
                 {isCopyAction ? (
                   <div className="ml-auto">
-                    {copied[social.id] ? (
-                      <Check className="h-3.5 w-3.5 text-green-500" />
-                    ) : (
-                      <Copy className="h-3.5 w-3.5 text-muted-foreground micro-transition group-hover:text-foreground group-focus-visible:text-foreground" />
-                    )}
+                    <CopyStatusIcon
+                      status={copied[social.id] ? "copied" : "idle"}
+                      className="text-muted-foreground micro-transition group-hover:text-foreground group-focus-visible:text-foreground"
+                    />
                   </div>
                 ) : (
                   <ArrowRightIcon className="ml-auto size-3.5 text-muted-foreground/30 micro-transition group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:-rotate-45 group-hover:text-primary group-focus-visible:translate-x-0.5 group-focus-visible:translate-y-0.5 group-focus-visible:-rotate-45 group-focus-visible:text-primary" />

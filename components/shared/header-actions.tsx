@@ -192,7 +192,7 @@ export function HeaderActions() {
           <TooltipTrigger asChild>
             <button
               type="button"
-              aria-label="open command palette"
+              aria-label="Open command palette"
               onClick={() => {
                 setPaletteMounted(true);
                 setPaletteOpen(true);

@@ -2,7 +2,7 @@
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { Check, Copy, X } from "lucide-react";
+import { Copy, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion, type Transition } from "motion/react";
 import React, { useCallback, useId, useState } from "react";
 
@@ -64,6 +64,71 @@ const RUNNERS: Record<PackageManagerType, string> = {
   yarn: "yarn dlx",
   bun: "bunx --bun",
 };
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/**
+ * Clipboard feedback for the copy button. The glyph morphs between states
+ * instead of snapping: the outgoing icon fades and shrinks away while the
+ * incoming one pops in on a spring, and the check draws itself on. Only
+ * transform, opacity, and the stroke path animate, so the swap never touches
+ * layout. Reduced motion drops to an instant swap.
+ */
+function CopyStatusIcon({ status }: { status: "idle" | "copied" | "error" }) {
+  const reducedMotion = useReducedMotion();
+
+  return (
+    <span aria-hidden="true" className="relative inline-flex size-3.5 shrink-0">
+      <AnimatePresence initial={false}>
+        <motion.span
+          key={status}
+          className={cn(
+            "absolute inset-0 inline-flex items-center justify-center",
+            status === "copied" && "text-green-500",
+            status === "error" && "text-destructive",
+          )}
+          initial={
+            reducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.5, rotate: -12 }
+          }
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7 }}
+          transition={
+            reducedMotion
+              ? { duration: 0 }
+              : { type: "spring", stiffness: 500, damping: 25, mass: 0.6 }
+          }
+        >
+          {status === "copied" ? (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="size-full"
+            >
+              <motion.path
+                d="M20 6 9 17l-5-5"
+                initial={{ pathLength: reducedMotion ? 1 : 0 }}
+                animate={{ pathLength: 1 }}
+                transition={
+                  reducedMotion
+                    ? { duration: 0 }
+                    : { duration: 0.25, ease: EASE, delay: 0.05 }
+                }
+              />
+            </svg>
+          ) : status === "error" ? (
+            <X className="size-full" aria-hidden="true" />
+          ) : (
+            <Copy className="size-full" aria-hidden="true" />
+          )}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
 
 export interface CopyCommandBlockProps {
   /** Map of package manager to full command string, or string template containing `{pm}` / `{runner}` / `{add}`. */
@@ -249,25 +314,19 @@ export function CopyCommandBlock({
                 <button
                   type="button"
                   onClick={copyToClipboard}
-                  aria-label="copy command"
+                  aria-label="Copy command"
                   className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
-                  {copyStatus === "copied" ? (
-                    <Check className="size-3.5 text-green-500" />
-                  ) : copyStatus === "error" ? (
-                    <X className="size-3.5 text-destructive" />
-                  ) : (
-                    <Copy className="size-3.5" />
-                  )}
+                  <CopyStatusIcon status={copyStatus} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>
                   {copyStatus === "copied"
-                    ? "copied!"
+                    ? "Copied!"
                     : copyStatus === "error"
-                      ? "copy failed"
-                      : "copy command"}
+                      ? "Copy failed"
+                      : "Copy command"}
                 </p>
               </TooltipContent>
             </Tooltip>

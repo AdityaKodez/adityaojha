@@ -21,6 +21,11 @@ export interface SectionFlags {
   [key: string]: boolean;
 }
 
+export interface SectionNoteConfig {
+  text: string;
+  side: "left" | "right";
+}
+
 export interface SiteMetaConfig {
   url: string;
   title: string;
@@ -85,8 +90,38 @@ export interface HeroConfig {
   descriptionHighlight: string;
 }
 
+export interface ProfileBannerSticker {
+  id: "notebook" | "keyboard" | "plane" | "coffee";
+  src: string;
+  alt: string;
+  label: string;
+  tilt: number;
+  order: number;
+  soundSrc?: string;
+}
+
 export interface AboutConfig {
   title: string;
+  body: string;
+}
+
+export interface FooterConfig {
+  quote: string;
+  attribution: string;
+  credit: string;
+  artwork: {
+    src: string;
+    width: number;
+    height: number;
+  };
+}
+
+export type AboutGreetings = Record<"morning" | "afternoon" | "evening", string>;
+
+export interface AboutItem {
+  id: string;
+  lead: string;
+  illustration: "browser" | "notebook" | "plane";
   body: string;
 }
 
@@ -259,12 +294,12 @@ export interface Certification {
 export interface Sponsor {
   id: string;
   name: string;
-  /** Display date, shown in the hover tooltip. */
+  /** Optional date the supporter joined. */
   date?: string;
   url?: string;
-  /** Square logo image, shown inside the circle. Falls back to a generated avatar. */
+  /** Square logo image, shown in the supporter list. Falls back to a generated avatar. */
   logo?: string;
-  /** 0-based seat index on the orbit. */
+  /** 0-based supporter seat index. */
   seat: number;
   order: number;
   enabled?: boolean;
@@ -294,6 +329,8 @@ export interface SponsorsSectionConfig {
   label: string;
   heading: string;
   description: string;
+  supportLabel: string;
+  supportNote: string;
   seats: number;
   tiers: SponsorTier[];
 }

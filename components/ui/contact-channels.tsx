@@ -22,7 +22,7 @@ export interface ContactChannelItem {
   action?: ContactChannelAction;
   /** Text placed on the clipboard when `action` is `"copy"`. */
   copyValue?: string;
-  /** Tooltip label. Falls back to `"copy"` / the platform name. */
+  /** Tooltip label. Falls back to `"Copy"` / the platform name. */
   tooltip?: string;
   /** Single keyboard key that triggers the copy action. */
   shortcutKey?: string;
@@ -177,7 +177,7 @@ export function ContactChannels({
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  {isCopied ? "copied!" : item.tooltip ?? "copy"}
+                  {isCopied ? "Copied!" : item.tooltip ?? "Copy"}
                   {item.shortcutKey ? <Kbd>{item.shortcutKey}</Kbd> : null}
                 </p>
               </TooltipContent>

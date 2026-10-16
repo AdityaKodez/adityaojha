@@ -270,11 +270,11 @@ function BarChart({
 }
 
 /** Bars filled with etched horizontal rules. */
-export function ProgressBars({ ariaLabel = "progress bars", ...props }: ProgressBarsProps) {
+export function ProgressBars({ ariaLabel = "Progress bars", ...props }: ProgressBarsProps) {
   return <BarChart {...props} fill={LINE_FILL} ariaLabel={ariaLabel} />;
 }
 
 /** The same bars filled with a matrix of dots instead of rules. */
-export function DotProgress({ ariaLabel = "dot progress", ...props }: ProgressBarsProps) {
+export function DotProgress({ ariaLabel = "Dot progress", ...props }: ProgressBarsProps) {
   return <BarChart {...props} fill={DOT_FILL} ariaLabel={ariaLabel} />;
 }

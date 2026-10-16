@@ -472,7 +472,7 @@ export function DottedWorldMap({
       <svg
         viewBox={`0 0 ${width} ${height}`}
         role="img"
-        aria-label="world heatmap"
+        aria-label="World heatmap"
         className={cn("h-full w-full select-none", className)}
         preserveAspectRatio="xMidYMid meet"
       >
@@ -528,7 +528,7 @@ export function DottedWorldMap({
       </svg>
       {showLegend ? (
         <div className="flex items-center justify-end gap-1.5 text-[10px] text-muted-foreground">
-          <span>{legendLabels?.low ?? "less"}</span>
+          <span>{legendLabels?.low ?? "Less"}</span>
           {colorScale.map((color, index) => (
             <span
               key={index}
@@ -537,7 +537,7 @@ export function DottedWorldMap({
               style={{ backgroundColor: color }}
             />
           ))}
-          <span>{legendLabels?.high ?? "more"}</span>
+          <span>{legendLabels?.high ?? "More"}</span>
         </div>
       ) : null}
     </div>

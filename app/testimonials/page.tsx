@@ -1,5 +1,6 @@
 import { TestimonialsGrid } from "@/components/landing/testimonials-grid";
 import { SponsorsSection } from "@/components/landing/sponsors";
+import { Footer } from "@/components/landing/footer";
 import { getAllTestimonials } from "@/config/testimonials";
 import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
@@ -94,33 +95,36 @@ export default function TestimonialsPage() {
   const testimonials = getAllTestimonials();
 
   return (
-    <main
-      id="testimonials"
-      className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x border-b-2 bg-background pt-14 pb-[calc(60px+env(safe-area-inset-bottom))]"
-    >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(buildJsonLd(testimonials)).replace(
-            /</g,
-            "\\u003c",
-          ),
-        }}
-      />
+    <>
+      <main
+        id="testimonials"
+        className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x bg-background pt-14"
+      >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(buildJsonLd(testimonials)).replace(
+              /</g,
+              "\\u003c",
+            ),
+          }}
+        />
 
-      <section className="border-t border-dashed pt-4">
-        <p className="px-6 pb-4 text-xs">Testimonials</p>
-        <h1 className="section-heading">what people said.</h1>
+        <section className="border-t border-dashed pt-4">
+          <p className="px-6 pb-4 text-xs">Testimonials</p>
+          <h1 className="section-heading">what people said.</h1>
 
 
-      </section>
+        </section>
 
-      <section className="border-t border-dashed">
-        <h2 className="sr-only">all testimonials</h2>
-        <TestimonialsGrid testimonials={testimonials} />
-      </section>
+        <section className="border-t border-dashed">
+          <h2 className="sr-only">all testimonials</h2>
+          <TestimonialsGrid testimonials={testimonials} />
+        </section>
 
-      <SponsorsSection />
-    </main>
+        <SponsorsSection />
+      </main>
+      <Footer />
+    </>
   );
 }

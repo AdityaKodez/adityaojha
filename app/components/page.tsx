@@ -5,6 +5,7 @@ import { ComponentsShell } from "@/components/showcase/components-shell";
 import { RegistryStatus } from "@/components/showcase/registry-status";
 import { RotatingInstallCommand } from "@/components/showcase/rotating-install-command";
 import { SponsorsSection } from "@/components/landing/sponsors";
+import { Footer } from "@/components/landing/footer";
 import { componentSpotlightId, componentSpotlightLabel, findComponent, getEnabledComponents } from "@/config/components";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -37,51 +38,54 @@ export default function ComponentsPage() {
   const components = getEnabledComponents();
 
   return (
-    <ComponentsShell>
-      <section className="border-t border-dashed pt-14">
-        <div>
-          <p className="px-6 py-2 text-xs">
-            Components
-          </p>
-        </div>
-        <h1 className="section-heading">drop in.<br className="sm:hidden" /> customize. ship.</h1>
+    <>
+      <ComponentsShell>
+        <section className="border-t border-dashed pt-14">
+          <div>
+            <p className="px-6 py-2 text-xs">
+              Components
+            </p>
+          </div>
+          <h1 className="section-heading">drop in.<br className="sm:hidden" /> customize. ship.</h1>
 
-        <section className="px-6 py-2">
-          <RotatingInstallCommand
-            className="mt-4"
-            ids={components.map((c) => c.id)}
-          />
+          <section className="px-6 py-2">
+            <RotatingInstallCommand
+              className="mt-4"
+              ids={components.map((c) => c.id)}
+            />
+          </section>
+
+          {spotlight && SpotlightIcon && (
+            <section aria-labelledby="component-spotlight-title" className="relative mt-6 border-t border-dashed">
+              <p className="absolute top-0 left-4 -translate-y-1/2 rounded-sm bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
+                {componentSpotlightLabel}
+              </p>
+              <div className="flex min-h-[350px] items-center justify-center overflow-hidden px-6 py-2">
+                <ComponentDemo id={spotlight.id} />
+              </div>
+              <Link
+                href={`/components/${spotlight.id}`}
+                className="flex items-center gap-4 px-4 py-4 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+              >
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-background ring-1 ring-inset ring-muted-foreground/5">
+                  <SpotlightIcon aria-hidden="true" className="size-4" />
+                </span>
+                <h2 id="component-spotlight-title" className="text-sm font-medium tracking-tight">
+                  {spotlight.title}
+                </h2>
+              </Link>
+            </section>
+          )}
+
+          <h2 className="sr-only">Available Components</h2>
+          <ComponentsCatalog components={components} />
+
+          <RegistryStatus />
         </section>
 
-        {spotlight && SpotlightIcon && (
-          <section aria-labelledby="component-spotlight-title" className="relative mt-6 border-t border-dashed">
-            <p className="absolute top-0 left-4 -translate-y-1/2 rounded-sm bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
-              {componentSpotlightLabel}
-            </p>
-            <div className="flex min-h-[350px] items-center justify-center overflow-hidden px-6 py-2">
-              <ComponentDemo id={spotlight.id} />
-            </div>
-            <Link
-              href={`/components/${spotlight.id}`}
-              className="flex items-center gap-4 px-4 py-4 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
-            >
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-background ring-1 ring-inset ring-muted-foreground/5">
-                <SpotlightIcon aria-hidden="true" className="size-4" />
-              </span>
-              <h2 id="component-spotlight-title" className="text-sm font-medium tracking-tight">
-                {spotlight.title}
-              </h2>
-            </Link>
-          </section>
-        )}
-
-        <h2 className="sr-only">Available Components</h2>
-        <ComponentsCatalog components={components} />
-
-        <RegistryStatus />
-      </section>
-
-      <SponsorsSection />
-    </ComponentsShell>
+        <SponsorsSection />
+      </ComponentsShell>
+      <Footer />
+    </>
   );
 }

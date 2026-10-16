@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 /* Odometer digits roll inside a fixed-height cell. Same spring as the shared
    reveal helpers so the counter speaks the site's motion language. */
-const CELL_HEIGHT = "40px";
+const CELL_HEIGHT = "28px";
 const ROLL_SPRING = {
   type: "spring",
   stiffness: 420,
@@ -40,64 +40,18 @@ function Digit({ digit, animate }: { digit: number; animate: boolean }) {
   );
 }
 
-/* Palette mirrors the footer garden above (BLOOM_PINK / STEM / BLOOM_CREAM)
-   so the flower reads as part of the same bed of plants. */
-function Flower({ animate }: { animate: boolean }) {
-  return (
-    <motion.svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      style={{ transformOrigin: "50% 100%" }}
-      animate={animate ? { rotate: [-5, 5, -5] } : undefined}
-      transition={
-        animate ? { duration: 3.2, repeat: Infinity, ease: "easeInOut" } : undefined
-      }
-      className="mr-1.5 shrink-0"
-    >
-      <path
-        d="M12 15v7"
-        stroke="#98a265"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-      <ellipse
-        cx="9.4"
-        cy="18.4"
-        rx="2.4"
-        ry="1.1"
-        transform="rotate(-28 9.4 18.4)"
-        fill="#98a265"
-      />
-      {[
-        [12, 4.9],
-        [7.63, 8.08],
-        [9.3, 13.22],
-        [14.7, 13.22],
-        [16.37, 8.08],
-      ].map(([cx, cy]) => (
-        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="3.2" fill="#e06c9f" />
-      ))}
-      <circle cx="12" cy="9.5" r="2.4" fill="#cfc98d" />
-    </motion.svg>
-  );
-}
-
 export function VisitorCounterOdometer({ visitors }: { visitors: number }) {
   const reducedMotion = useReducedMotion();
   const chars = visitors.toLocaleString("en-US").split("");
 
   return (
     <p
-      className="flex flex-wrap items-center justify-center font-mono text-[11px] tracking-[0.15em] text-muted-foreground"
+      className="liquid-glass flex flex-wrap items-center justify-center rounded-full px-5 py-1.5 font-mono text-[11px] tracking-[0.15em] text-muted-foreground"
     >
       {/* The odometer stacks all numerals 0-9 per column to animate the roll,
           so assistive tech / crawlers would otherwise read the entire digit
           wheel. Hide the animated visual and expose the real number below. */}
       <span aria-hidden="true" className="flex flex-wrap items-center justify-center">
-        <Flower animate={!reducedMotion} />
         <span>Say hi, visitor</span>
         {/* tracking-normal plus an explicit gap: the digits are separate flex
             items, so inherited letter-spacing would space them unevenly. The

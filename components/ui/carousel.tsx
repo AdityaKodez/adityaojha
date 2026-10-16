@@ -33,7 +33,7 @@ const SWIPE_THRESHOLD = 48;
 
 export function Carousel({
   items,
-  ariaLabel = "carousel",
+  ariaLabel = "Carousel",
   className,
 }: CarouselProps) {
   const reduceMotion = useReducedMotion();

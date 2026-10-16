@@ -16,7 +16,6 @@ import { useCopy } from "@/lib/use-copy";
 import { cn } from "@/lib/utils";
 import {
   Activity,
-  Check,
   Code,
   Gamepad2,
   Music,
@@ -25,6 +24,7 @@ import {
   Tv,
 } from "@/components/shared/site-icons";
 import { useInView } from "motion/react";
+import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
@@ -192,11 +192,11 @@ function CopyHandleButton() {
       aria-label={`Copy Discord username ${discordSocial.copyValue}`}
       className="micro-transition inline-flex h-6 shrink-0 items-center gap-1 rounded-md px-1.5 font-mono text-[10px] text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 cursor-pointer"
     >
-      {status === "copied" ? (
-        <Check className="size-3 text-green-500" />
-      ) : (
-        <Image src="/discord.svg" alt="" width={12} height={12} />
-      )}
+      <CopyStatusIcon
+        status={status}
+        className="size-3"
+        idleIcon={<Image src="/discord.svg" alt="" width={12} height={12} />}
+      />
       <span className="hidden sm:inline" aria-live="polite">
         {label}
       </span>

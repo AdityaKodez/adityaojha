@@ -18,13 +18,13 @@ import type {
 export const sponsorTiers: SponsorTier[] = [
   {
     id: "seat",
-    name: "Orbit seat",
+    name: "Supporter spot",
     price: 5,
     duration: "one-time, permanent",
     description:
-      "Five dollars, once. Your name or logo takes a seat on the orbit and stays there.",
+      "Five dollars, once. Your name or logo joins the supporters and stays there.",
     perks: [
-      "Logo or initials on one of the six seats",
+      "Your name and logo in the supporter list",
       "Link to your site, repo, or profile",
       "Permanent, never rotated out",
     ],
@@ -34,16 +34,17 @@ export const sponsorTiers: SponsorTier[] = [
 ];
 
 /**
- * The sponsor orbit. Each enabled sponsor takes one seat around Bit; open
- * seats stay dashed with a plus. Paid seats are committed automatically:
+ * The supporter list. Paid seats are committed automatically:
  * the Dodo webhook writes to `sponsors.generated.json` via the GitHub API
  * and the deploy picks it up. Hand-edited sponsors stay in `sponsorsConfig`
  * below and are merged ahead of the generated ones.
  */
 export const sponsorsSectionConfig: SponsorsSectionConfig = {
-  label: "Sponsor",
-  heading: "join the orbit.",
-  description: "Built out of pocket. A seat is $5, once, and stays up for good.",
+  label: "Supporter",
+  heading: "Supported by",
+  description: "Kind people helping keep the work free and independent.",
+  supportLabel: "Become a supporter",
+  supportNote: "Once. Here for good.",
   seats: 6,
   tiers: sponsorTiers,
 };
@@ -56,9 +57,9 @@ export const sponsorsSectionConfig: SponsorsSectionConfig = {
  */
 export const sponsorPageConfig: SponsorPageConfig = {
   title: "Sponsor the work.",
-  tagline: "Take a seat beside Bit, for good.",
+  tagline: "A little support goes a long way.",
   description:
-    "Everything on this site is built and paid for out of pocket: the components, the case studies, the small experiments. A seat keeps it independent and ad free. Five dollars, once, and your name stays on the orbit.",
+    "Everything on this site is built and paid for out of pocket: the components, the case studies, the small experiments. Your support keeps it independent and ad free. Five dollars, once, and your name stays with the supporters.",
   mascotCaption: "Your host",
   whyHeading: "What a seat does",
   why: [
@@ -75,7 +76,7 @@ export const sponsorPageConfig: SponsorPageConfig = {
     {
       label: "Funds the weird stuff",
       description:
-        "Small experiments like this orbit exist because someone backed them early.",
+        "Small experiments and useful components exist because someone backed them early.",
     },
   ],
   tierHeading: "One tier, one price",
@@ -91,9 +92,9 @@ export const sponsorPageConfig: SponsorPageConfig = {
         "Right after payment, add your name, link, and logo on the claim page.",
     },
     {
-      label: "Live on the orbit",
+      label: "Join the supporters",
       description:
-        "One deploy later, your seat sits beside Bit on the home page, permanently.",
+        "One deploy later, your name joins the supporters on the home page, permanently.",
     },
   ],
   ctaHeading: "Ready when you are.",
@@ -115,7 +116,7 @@ export function getAllSponsors(): Sponsor[] {
   return [...sponsorsConfig, ...generated].sort((a, b) => a.order - b.order);
 }
 
-/** Only the claimed ones, clamped to the orbit so a stray index cannot escape it. */
+/** Enabled supporters within the configured seat range. */
 export function getEnabledSponsors(seats: number): Sponsor[] {
   return getAllSponsors().filter(
     (sponsor) => sponsor.enabled !== false && sponsor.seat < seats,

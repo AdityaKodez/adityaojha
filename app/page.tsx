@@ -20,7 +20,6 @@ import { SponsorsSection } from "@/components/landing/sponsors";
 import { Testimonials } from "@/components/landing/testimonials";
 import { Vader } from "@/components/landing/vader";
 import { PixelDissolve } from "@/components/ui/pixel-dissolve";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { SideNote } from "@/components/shared/side-note";
 import { projectsConfig, projectsSectionConfig } from "@/config/projects";
 import { sectionNotes } from "@/config/section-notes";
@@ -28,7 +27,6 @@ import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
 import type { ReactElement } from "react";
 import { Suspense } from "react";
-import { HomeAskAI } from "@/components/landing/home-ask-ai";
 import type { ProjectExplorerItem } from "@/components/project-explorer";
 
 /* The explorer never reads case-study content, tags, or metrics, so those
@@ -131,16 +129,8 @@ export default function Home() {
         ]}
       />
       <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-[var(--frame-max-w)]">
-        <ProgressiveBlur
-          position="bottom"
-          height="calc(80px + env(safe-area-inset-bottom))"
-        />
+        <div aria-hidden="true" className="bottom-blur" />
         <PixelDissolve />
-      </div>
-      <div className="pointer-events-none fixed bottom-6 left-0 right-0 z-50 mx-auto flex w-full max-w-[var(--frame-max-w)] justify-end px-4 sm:px-6">
-        <div className="pointer-events-auto">
-          <HomeAskAI />
-        </div>
       </div>
     </>
   );

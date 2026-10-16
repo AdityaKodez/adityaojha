@@ -1,6 +1,5 @@
 "use client";
 
-import { Check, Copy } from "@/components/shared/site-icons";
 import { useCallback, useRef, useState, type ReactNode } from "react";
 import { trackEvent } from "@/lib/analytics";
 import {
@@ -8,6 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 
 /**
  * Wraps a markdown-rendered <pre> with a copy button. The <pre> arrives via
@@ -51,18 +51,14 @@ export function ProseCodeBlock({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={handleCopy}
-                aria-label="copy code"
+                aria-label="Copy code"
                 className="absolute top-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-sm text-muted-foreground opacity-0 group-hover/prose-code:opacity-100 transition-opacity hover:bg-muted/40 hover:text-foreground focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >
-                {copied ? (
-                  <Check className="h-3.5 w-3.5 text-green-500" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5" />
-                )}
+                <CopyStatusIcon status={copied ? "copied" : "idle"} />
               </button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{copied ? "copied!" : "copy"}</p>
+              <p>{copied ? "Copied!" : "Copy"}</p>
             </TooltipContent>
           </Tooltip>
         </div>

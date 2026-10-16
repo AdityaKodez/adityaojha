@@ -7,7 +7,7 @@ import { ClaimForm } from "./claim-form";
 export const metadata: Metadata = {
   title: "claim your seat",
   description:
-    "You paid for an orbit seat. Add your display name, link, and logo.",
+    "You paid for a supporter spot. Add your display name, link, and logo.",
   robots: { index: false },
 };
 
@@ -49,17 +49,12 @@ export default function SponsorClaimPage() {
           <div className="min-w-0 flex-1">
             <p className="text-balance text-base font-medium tracking-tight">Make yourself at home.</p>
             <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
-              A little spot beside Bit, with your name on it. Add a link and a
-              logo so people know who’s keeping the orbit going.
+              A little support, with your name on it. Add a link and a logo so
+              people know who’s helping keep the work independent.
             </p>
           </div>
-          {/* Bit on a dotted ring with one satellite dot. The caption is a
-              normal line under the block, not an overlay, so it cannot
-              collide with the copy on narrow screens. */}
           <div className="w-24 shrink-0 sm:w-28">
             <div aria-hidden="true" className="relative flex size-24 items-center justify-center sm:size-28">
-              <div className="orbit-dot-ring absolute inset-0 rounded-[50%]" />
-              <span className="absolute right-0 top-1/2 size-2 -translate-y-1/2 rounded-full bg-primary ring-4 ring-background" />
               <BitBlob
                 awake
                 gaze="left"
@@ -67,7 +62,7 @@ export default function SponsorClaimPage() {
               />
             </div>
             <p aria-hidden="true" className="mt-1.5 text-center font-serif text-xs italic leading-tight text-muted-foreground">
-              Your neighbor
+              Thank you
             </p>
           </div>
         </div>

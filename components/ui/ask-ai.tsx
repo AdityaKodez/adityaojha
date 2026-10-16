@@ -374,7 +374,7 @@ export function AskAI({
                     </a>
                   </TooltipTrigger>
                   <TooltipContent className="text-xs">
-                    {provider.promptParam ? `open ${provider.name}` : `copy prompt & open ${provider.name}`}
+                    {provider.promptParam ? `Open ${provider.name}` : `Copy prompt & open ${provider.name}`}
                   </TooltipContent>
                 </Tooltip>
               );
@@ -386,7 +386,7 @@ export function AskAI({
             onClick={() => void copyPrompt()}
           >
             {copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
-            <span>{copied ? "copied!" : "copy the prompt instead"}</span>
+            <span>{copied ? "Copied!" : "Copy the prompt instead"}</span>
           </button>
 
           {fallbackPrompt && (

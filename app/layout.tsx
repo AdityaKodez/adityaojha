@@ -168,7 +168,7 @@ export default function RootLayout({
               <SiteHeader />
               <FrameGutters />
               <div className="relative mx-auto w-full max-w-[var(--frame-max-w)]">
-                <div className="relative w-full border-x bg-muted/20 px-2">
+                <div className="relative w-full border-x bg-muted/20">
                   {children}
                 </div>
                 <BottomNav />

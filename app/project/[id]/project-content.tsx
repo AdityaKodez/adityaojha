@@ -190,7 +190,7 @@ export function ProjectContent({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>visit live site</p>
+                  <p>Visit live site</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -220,7 +220,7 @@ export function ProjectContent({
       {project.content && (
         <motion.section
           variants={itemVariants}
-          aria-label="case study"
+          aria-label="Case study"
           className="border-t border-dashed px-6 py-6"
         >
           <div className="prose prose-neutral dark:prose-invert max-w-none">
@@ -241,7 +241,7 @@ export function ProjectContent({
       {/* Prev / next */}
       <motion.nav
         variants={itemVariants}
-        aria-label="more projects"
+        aria-label="More projects"
         className="border-t border-dashed px-6 py-6 flex items-start justify-between gap-4"
       >
         <div className="min-w-0 flex-1">
@@ -255,7 +255,7 @@ export function ProjectContent({
                   aria-hidden="true"
                   className="h-3 w-3 transition-transform group-hover:-translate-x-0.5"
                 />
-                prev
+                Prev
               </span>
               <span className="truncate text-sm font-medium group-hover:text-primary group-hover:underline group-hover:underline-offset-4">
                 {prev.title}
@@ -267,7 +267,7 @@ export function ProjectContent({
               className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
               <ArrowLeft aria-hidden="true" className="h-3 w-3" />
-              all work
+              All work
             </Link>
           )}
         </div>
@@ -278,7 +278,7 @@ export function ProjectContent({
               className="group inline-flex min-w-0 max-w-full flex-col items-end gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
               <span className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground">
-                next
+                Next
                 <ArrowRight
                   aria-hidden="true"
                   className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
@@ -293,7 +293,7 @@ export function ProjectContent({
               href="/#projects"
               className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
-              all work
+              All work
               <ArrowRight aria-hidden="true" className="h-3 w-3" />
             </Link>
           )}

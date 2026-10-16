@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, RotateCcw } from "@/components/shared/site-icons";
+import { RotateCcw } from "@/components/shared/site-icons";
 import { Slider as SliderPrimitive, Switch as SwitchPrimitive } from "radix-ui";
 import { useMemo, type ReactNode } from "react";
 
@@ -21,6 +21,7 @@ import type {
 import { trackEvent } from "@/lib/analytics";
 import { useCopy } from "@/lib/use-copy";
 import { cn } from "@/lib/utils";
+import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 
 /** Shared row: fixed label column, control, readout. */
 function ControlRow({
@@ -337,11 +338,7 @@ export function PropsPanel({
                   aria-label="Copy props"
                   className="flex items-center gap-1.5 rounded-sm px-2 py-1 text-xs text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
-                  {status === "copied" ? (
-                    <Check className="size-3.5 text-green-500" />
-                  ) : (
-                    <Copy className="size-3.5" />
-                  )}
+                  <CopyStatusIcon status={status} />
                   Copy
                 </button>
               </TooltipTrigger>

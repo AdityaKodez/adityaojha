@@ -158,7 +158,7 @@ const GitHubCalendar = ({
         </div>
       </div>
       <div className="mt-2 justify-center flex gap-1 text-[10px] text-gray-400 items-center">
-        <span>less</span>
+        <span>Less</span>
 
         {colors.map((color, index) => (
           <div
@@ -167,7 +167,7 @@ const GitHubCalendar = ({
             style={{ backgroundColor: color }}
           />
         ))}
-        <span>more</span>
+        <span>More</span>
       </div>
     </div>
   );

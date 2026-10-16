@@ -211,7 +211,7 @@ export default async function ComponentDetailPage({
             href="/components"
             className="text-foreground underline decoration-dashed underline-offset-4 transition-colors hover:text-primary"
           >
-            components page
+            Components page
           </Link>.
         </p>
       </section>

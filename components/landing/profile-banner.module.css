@@ -1,0 +1,103 @@
+.composition {
+  position: relative;
+  height: 164px;
+  isolation: isolate;
+}
+
+.sticker,
+.profile {
+  perspective: 650px;
+}
+
+.sticker {
+  position: absolute;
+}
+
+.sticker:hover,
+.sticker:focus-within,
+.profile:hover,
+.profile:focus-within {
+  z-index: 10;
+}
+
+.stickerButton {
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.notebook {
+  top: 0;
+  left: -2%;
+  width: 36%;
+  aspect-ratio: 1.35;
+}
+
+.keyboard {
+  top: 35%;
+  left: 20%;
+  width: 61%;
+  aspect-ratio: 2.4;
+}
+
+.plane {
+  top: 3%;
+  right: -1%;
+  width: 30%;
+  aspect-ratio: 1.6;
+}
+
+.coffee {
+  right: 0;
+  bottom: 0;
+  width: 25%;
+  aspect-ratio: 1.3;
+}
+
+.profile {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  margin-top: -24px;
+}
+
+@media (min-width: 640px) {
+  .composition {
+    height: auto;
+    aspect-ratio: 3;
+  }
+
+  .notebook {
+    top: 4%;
+    left: 0;
+    width: 30%;
+  }
+
+  .keyboard {
+    top: 26%;
+    left: 26%;
+    width: 54%;
+  }
+
+  .plane {
+    top: 0;
+    right: 0;
+    width: 25%;
+  }
+
+  .coffee {
+    width: 20%;
+  }
+
+  .profile {
+    width: 128px;
+    height: 128px;
+    margin-top: -40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticker,
+  .stickerButton {
+    transform: none !important;
+  }
+}

@@ -1,24 +1,27 @@
-import { siteConfig } from "@/config/site";
-import { splitSentences } from "@/lib/sentences";
-
-const sentences = splitSentences(siteConfig.about.body);
+import { aboutGreetings, aboutItems, siteConfig } from "@/config/site";
+import { AboutGreeting } from "./about-greeting";
+import { AboutIllustration } from "./about-illustration";
 
 export const About = () => {
   return (
     <section className="no-js-visible border-t border-dashed pt-6">
-      <h2 className="section-heading mb-3">{siteConfig.about.title}</h2>
-      <div className="px-2">
-        <div className="space-y-1 pl-4 md:pl-5">
-          {sentences.map((sentence, index) => (
-            <p
-              key={`${sentence}-${index}`}
-              className="micro-transition group relative text-base leading-8 text-muted-foreground hover:text-foreground focus-within:text-foreground"
-            >
-              {sentence}
-            </p>
-          ))}
-        </div>
-      </div>
+      <h2 className="section-heading mb-3 px-[21px] py-px font-serif text-[25px] leading-8 font-medium italic">
+        <AboutGreeting
+          fallback={siteConfig.about.title}
+          greetings={aboutGreetings}
+        />
+      </h2>
+      <ul className="list-disc space-y-2 px-6 pb-2 pl-10 marker:text-muted-foreground/40">
+        {aboutItems.map((item) => (
+          <li
+            key={item.id}
+            className="pl-1 text-base leading-8 text-muted-foreground"
+          >
+            <span className="font-medium text-foreground">{item.lead}</span>{" "}
+            <AboutIllustration kind={item.illustration} /> {item.body}
+          </li>
+        ))}
+      </ul>
     </section>
   );
 };

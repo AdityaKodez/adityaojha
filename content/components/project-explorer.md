@@ -38,13 +38,13 @@ export function PortfolioProjects() {
 
 ## Features & Anatomy
 
-The **Interactive Project Explorer** organizes work chronologically with an IDE / file-explorer design language.
+The **Interactive Project Explorer** organizes work chronologically with paper-cut folders and newspaper-style image previews.
 
-- **Year Folders with Animated Expansion.** Projects are categorized by year in collapsible folder groups with dynamic `FolderOpen` / `FolderClosed` Lucide icons and accent tint cycling.
-- **Spring-Physics Cursor Image Preview.** Hovering or focusing any project row triggers a floating preview card that follows the cursor using smooth Motion spring values (`stiffness: 260, damping: 26`) with edge-boundary detection.
+- **Year folders with animated expansion.** Projects are categorized by year in collapsible folder groups with illustrated open and closed folders, halftone shading, and paper-cut year labels. Accent colors cycle between years, and hover movement respects reduced motion.
+- **Spring cursor image preview.** Hovering or focusing any project row triggers a newspaper-style clipping with irregular edges, a subtle print texture, and a serif caption. It follows the cursor using smooth Motion spring values (`stiffness: 260, damping: 26`) with edge-boundary detection.
 - **Configurable Hover Preview & Image Fallback.** Toggle cursor preview via `showHoverPreview`. When enabled on items without an image URL, a clean Lucide `ImageIcon` fallback placeholder is rendered automatically.
 - **Status Pills.** Highlights project release states such as `building...` (with animated radar ping indicator), `new`, and `shipped`.
-- **Flat, Bare Rows.** No dividers or tree guides — each row is a single hoverable target with responsive category tags (`// fullstack`, `// ai-agent`). Hierarchy reads through indentation alone.
+- **Flat, bare rows.** Each row shows the project name, subtitle, status, and link arrow. Hierarchy reads through indentation, without dividers or category tags.
 - **Full Accessibility & Reduced-Motion.** Disables cursor floating previews gracefully when `prefers-reduced-motion` is detected or on non-hover touch devices.
 
 ## Props & Options

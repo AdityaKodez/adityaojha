@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
-import { Check, Copy } from "@/components/shared/site-icons";
 import {
   type ReactNode,
   useCallback,
@@ -15,6 +14,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 
 type Tab = "preview" | "code";
 
@@ -126,18 +126,14 @@ export function PreviewBox({
               <button
                 type="button"
                 onClick={handleCopy}
-                aria-label="copy source to clipboard"
+                aria-label="Copy source to clipboard"
                 className="flex h-7 w-7 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground"
               >
-                {copied ? (
-                  <Check className="h-3.5 w-3.5 text-green-500" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5" />
-                )}
+                <CopyStatusIcon status={copied ? "copied" : "idle"} />
               </button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{copied ? "copied!" : "copy source"}</p>
+              <p>{copied ? "Copied!" : "Copy source"}</p>
             </TooltipContent>
           </Tooltip>
         </div>

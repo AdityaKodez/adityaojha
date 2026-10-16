@@ -5,7 +5,7 @@ import { SponsorPage } from "./sponsor-page";
 const PAGE_URL = `${siteConfig.meta.url}/sponsor`;
 
 const PAGE_DESCRIPTION =
-  "A $5 seat on the orbit, paid once and kept for good. Your name, link, and logo beside Bit.";
+  "Support independent work with $5, paid once. Your name, link, and logo stay in the supporter list for good.";
 
 export const metadata: Metadata = {
   title: "sponsor",

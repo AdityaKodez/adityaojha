@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, Copy, X } from "@/components/shared/site-icons";
+import { ChevronDown } from "@/components/shared/site-icons";
 import { useId, useState } from "react";
 import { SiReact } from "react-icons/si";
 
@@ -12,6 +12,7 @@ import {
 import { trackEvent } from "@/lib/analytics";
 import { useCopy } from "@/lib/use-copy";
 import { cn } from "@/lib/utils";
+import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 
 export type SourceCodeFile = {
   /** Destination path in a consumer project, shown as the block header. */
@@ -146,13 +147,7 @@ export function SourceCodeBlock({
                   aria-label="Copy file to clipboard"
                   className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
-                  {status === "copied" ? (
-                    <Check className="size-3.5 text-green-500" />
-                  ) : status === "error" ? (
-                    <X className="size-3.5 text-destructive" />
-                  ) : (
-                    <Copy className="size-3.5" />
-                  )}
+                  <CopyStatusIcon status={status} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>

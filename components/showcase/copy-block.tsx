@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion, type Transition } from "motion/react";
-import { Check, Copy, X } from "@/components/shared/site-icons";
 import { type ReactNode, useId, useSyncExternalStore } from "react";
 
 import {
@@ -15,7 +14,8 @@ import {
 } from "@/config/registry";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-import { useCopy, type CopyStatus } from "@/lib/use-copy";
+import { useCopy } from "@/lib/use-copy";
+import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 import { PM_ICONS } from "@/components/showcase/pm-icons";
 
 const STORAGE_KEY = "akoder:package-manager";
@@ -76,18 +76,6 @@ export function usePackageManager(): PackageManager {
   );
 }
 
-type CopyIconProps = { status: CopyStatus };
-
-function CopyIcon({ status }: CopyIconProps) {
-  if (status === "copied") {
-    return <Check className="size-3.5 text-green-500" />;
-  }
-  if (status === "error") {
-    return <X className="size-3.5 text-destructive" />;
-  }
-  return <Copy className="size-3.5" />;
-}
-
 /** Shared chrome: dual-border frame, mono code line, copy affordance. */
 function CodeShell({
   children,
@@ -132,7 +120,7 @@ export function CopyBlock({
   value,
   display,
   className,
-  copyLabel = "copy",
+  copyLabel = "Copy",
   location = "component_doc",
 }: CopyBlockProps) {
   const { status, copy } = useCopy();
@@ -159,15 +147,15 @@ export function CopyBlock({
               aria-label={copyLabel}
               className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
-              <CopyIcon status={status} />
+              <CopyStatusIcon status={status} />
             </button>
           </TooltipTrigger>
           <TooltipContent>
             <p>
               {status === "copied"
-                ? "copied!"
+                ? "Copied!"
                 : status === "error"
-                  ? "copy failed"
+                  ? "Copy failed"
                   : copyLabel}
             </p>
           </TooltipContent>
@@ -297,19 +285,19 @@ export function InstallCommand({
               <button
                 type="button"
                 onClick={handleCopy}
-                aria-label="copy install command"
+                aria-label="Copy install command"
                 className="flex size-7 shrink-0 items-center justify-center rounded-sm text-muted-foreground micro-transition hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >
-                <CopyIcon status={status} />
+                <CopyStatusIcon status={status} />
               </button>
             </TooltipTrigger>
             <TooltipContent>
               <p>
                 {status === "copied"
-                  ? "copied!"
+                  ? "Copied!"
                   : status === "error"
-                    ? "copy failed"
-                    : "copy command"}
+                    ? "Copy failed"
+                    : "Copy command"}
               </p>
             </TooltipContent>
           </Tooltip>

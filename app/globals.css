@@ -168,28 +168,6 @@ body {
     @apply text-xl font-semibold border-y border-dashed bg-muted/20 px-6 py-2;
   }
 
-  /* Dotted ring for the sponsor orbit: the same radial-gradient dot pattern
-     used by the character headings, revealed only along the ellipse edge.
-     The tile is square so dots fall evenly on the flat and curved arcs. */
-  .orbit-dot-ring {
-    background-image: radial-gradient(
-      circle,
-      color-mix(in oklch, var(--muted-foreground) 60%, transparent) 2px,
-      transparent 2.5px
-    );
-    background-size: 10px 10px;
-    background-position: center;
-    background-repeat: repeat;
-    opacity: 0.8;
-    mask-image: radial-gradient(
-      farthest-side,
-      transparent calc(100% - 4.5px),
-      #000 calc(100% - 3.5px),
-      #000 calc(100% - 0.5px),
-      transparent 100%
-    );
-  }
-
   .micro-transition {
     transition-property: transform, background-color, border-color, color, opacity, box-shadow;
     transition-duration: var(--motion-duration-base);
@@ -211,6 +189,58 @@ body {
   .micro-press:active {
     transform: scale(0.992);
   }
+  /* -------------------------------------------------------------------------
+     Liquid glass (components/landing/visitor-counter-odometer.tsx)
+
+     The no-WebGL take on Apple's liquid glass. The pane is a tinted frost:
+     a translucent theme background with a short blur and a saturation boost,
+     so the footer garden behind it bleeds through as color instead of shape.
+     The specular rim is inset shadows, one highlight per edge, so no border
+     is added (§10). Chromium also paints SVG filter references inside
+     backdrop-filter, so there the backdrop bends through a turbulence
+     displacement map for the refraction. Everywhere else the tint and the
+     rim still read as glass, just without the wobble.
+  ------------------------------------------------------------------------- */
+  .liquid-glass {
+    background-color: color-mix(in oklab, var(--background) 55%, transparent);
+    -webkit-backdrop-filter: blur(3px) saturate(160%);
+    backdrop-filter: blur(3px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 255 255 / 0.35),
+      inset 0 -1px 0 0 rgb(255 255 255 / 0.14),
+      0 10px 28px -12px rgb(0 0 0 / 0.35);
+  }
+
+  /* The refraction pass, taken only by engines that paint SVG filter
+     references in backdrop-filter. The frost above is the fallback. */
+  @supports (backdrop-filter: url("#glass-refraction")) {
+    .liquid-glass {
+      -webkit-backdrop-filter: blur(2px) saturate(180%) url("#glass-refraction");
+      backdrop-filter: blur(2px) saturate(180%) url("#glass-refraction");
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     Bottom blur (app/page.tsx)
+
+     One masked backdrop blur for the fixed bottom fade, replacing the old
+     stacked progressive-blur layers: the same dissolve into the screen edge
+     from a single element. The mask ramps the blur in from the top of the
+     band so content leaves softly instead of hitting a hard line.
+  ------------------------------------------------------------------------- */
+  .bottom-blur {
+    pointer-events: none;
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 10;
+    height: calc(80px + env(safe-area-inset-bottom));
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 78%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 78%);
+  }
+
   .blueprint-bg {
     background-image:
       repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.015) 10px, rgba(0,0,0,0.015) 11px),
@@ -748,17 +778,6 @@ code[data-theme*=" "] span,
   50% { transform: rotate(10deg); }
   60% { transform: rotate(0deg); }
   100% { transform: rotate(0deg); }
-}
-
-/* Sponsor orbit: seats bob gently on staggered phases, transform only. */
-@keyframes seat-bob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
 }
 
 @utility no-scrollbar {

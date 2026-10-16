@@ -5,7 +5,6 @@ import type { SocialIcon, SocialLink } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
-import { Check, Copy } from "@/components/shared/site-icons";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,6 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
+import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 
 const contactChannels = siteConfig.contact.channels
   .filter((item) => item.enabled !== false)
@@ -79,7 +79,7 @@ export function CTA() {
               }}
             >
               <X data-icon="inline-start" />
-              follow @AdiKodez
+              Follow @AdiKodez
             </Link>
           </Button>
         </div>
@@ -101,11 +101,10 @@ export function CTA() {
                 </div>
                 {channel.action === "copy" ? (
                   <div className="relative z-10 ml-auto">
-                    {copiedField === channel.id ? (
-                      <Check className="h-3.5 w-3.5 text-green-500" />
-                    ) : (
-                      <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    )}
+                    <CopyStatusIcon
+                      status={copiedField === channel.id ? "copied" : "idle"}
+                      className="text-muted-foreground transition-colors group-hover:text-foreground"
+                    />
                   </div>
                 ) : null}
               </div>
@@ -120,7 +119,7 @@ export function CTA() {
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{copiedField === channel.id ? "copied!" : channel.tooltipDefault}</p>
+                    <p>{copiedField === channel.id ? "Copied!" : channel.tooltipDefault}</p>
                   </TooltipContent>
                 </Tooltip>
               );

@@ -1,0 +1,68 @@
+.illustration {
+  /* Keep the hover target still while the little objects inside it move. */
+  isolation: isolate;
+}
+
+.object {
+  transform-origin: 28px 28px;
+}
+
+.badge {
+  transform-origin: 46px 31px;
+}
+
+.pencil {
+  transform: rotate(24deg);
+  transform-origin: 43px 21px;
+}
+
+.shadow {
+  transform-origin: 28px 35px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .illustration:hover .shadow,
+  .illustration:hover .trail {
+    opacity: 0.5;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .object,
+    .badge,
+    .pencil,
+    .shadow,
+    .trail {
+      transition:
+        transform var(--motion-duration-base) var(--motion-ease-standard),
+        opacity var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .illustration[data-kind="browser"]:hover .object {
+      transform: translateY(-3px) rotate(4deg);
+    }
+
+    .illustration:hover .badge {
+      transform: scale(1.14) rotate(-8deg);
+    }
+
+    .illustration[data-kind="notebook"]:hover .object {
+      transform: translateY(-2px) rotate(-5deg);
+    }
+
+    .illustration:hover .pencil {
+      transform: translate(2px, -3px) rotate(8deg);
+    }
+
+    .illustration[data-kind="plane"]:hover .object {
+      transform: translate(4px, -4px) rotate(-8deg);
+    }
+
+    .illustration:hover .shadow {
+      transform: scaleX(0.85);
+    }
+
+    .illustration:hover .trail {
+      transform: translate(-2px, 2px);
+    }
+  }
+}
