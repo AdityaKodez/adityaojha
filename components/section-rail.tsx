@@ -63,73 +63,98 @@ export function SectionRail({
   useEffect(() => {
     if (scrollIds.length === 0) return;
 
-    const scrollRoot = scrollRootRef?.current ?? null;
-    const findTarget = (id: string) => {
-      const target = document.getElementById(id);
-      if (!target) return null;
-      return scrollRoot && !scrollRoot.contains(target) ? null : target;
-    };
+    const startTracking = () => {
+      const scrollRoot = scrollRootRef?.current ?? null;
+      const findTarget = (id: string) => {
+        const target = document.getElementById(id);
+        if (!target) return null;
+        return scrollRoot && !scrollRoot.contains(target) ? null : target;
+      };
 
-    // Track every target currently inside the center band and keep the one
-    // closest to its midpoint active — deterministic even when several small
-    // targets intersect at once.
-    const visible = new Map<string, number>();
-    const pickClosest = () => {
-      const rootTop = scrollRoot?.getBoundingClientRect().top ?? 0;
-      const rootHeight = scrollRoot?.clientHeight ?? window.innerHeight;
-      const bandCenter = rootTop + rootHeight * 0.4;
-      let best: string | null = null;
-      let bestDistance = Number.POSITIVE_INFINITY;
-      for (const [id, top] of visible) {
-        const distance = Math.abs(top - bandCenter);
-        if (distance < bestDistance) {
-          best = id;
-          bestDistance = distance;
-        }
-      }
-      if (best) setTracked(best);
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            visible.set(entry.target.id, entry.boundingClientRect.top);
-          } else {
-            visible.delete(entry.target.id);
+      // Track every target currently inside the center band and keep the one
+      // closest to its midpoint active: deterministic even when several small
+      // targets intersect at once.
+      const visible = new Map<string, number>();
+      const pickClosest = () => {
+        const rootTop = scrollRoot?.getBoundingClientRect().top ?? 0;
+        const rootHeight = scrollRoot?.clientHeight ?? window.innerHeight;
+        const bandCenter = rootTop + rootHeight * 0.4;
+        let best: string | null = null;
+        let bestDistance = Number.POSITIVE_INFINITY;
+        for (const [id, top] of visible) {
+          const distance = Math.abs(top - bandCenter);
+          if (distance < bestDistance) {
+            best = id;
+            bestDistance = distance;
           }
         }
-        pickClosest();
-      },
-      {
-        root: scrollRoot,
-        rootMargin: "-25% 0px -45% 0px",
-        threshold: 0,
+        if (best) setTracked(best);
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              visible.set(entry.target.id, entry.boundingClientRect.top);
+            } else {
+              visible.delete(entry.target.id);
+            }
+          }
+          pickClosest();
+        },
+        {
+          root: scrollRoot,
+          rootMargin: "-25% 0px -45% 0px",
+          threshold: 0,
+        }
+      );
+
+      for (const id of scrollIds) {
+        const element = findTarget(id);
+        if (element) observer.observe(element);
       }
-    );
 
-    for (const id of scrollIds) {
-      const element = findTarget(id);
-      if (element) observer.observe(element);
-    }
+      // The last section can be too short to cross the center band at max scroll.
+      const onScroll = () => {
+        const remaining = scrollRoot
+          ? scrollRoot.scrollHeight - scrollRoot.scrollTop - scrollRoot.clientHeight
+          : document.documentElement.scrollHeight -
+            window.scrollY -
+            window.innerHeight;
+        if (remaining < 4) setTracked(scrollIds[scrollIds.length - 1]);
+      };
+      const scrollSource: Window | HTMLElement = scrollRoot ?? window;
+      scrollSource.addEventListener("scroll", onScroll, { passive: true });
 
-    // The last section can be too short to cross the center band at max scroll.
-    const onScroll = () => {
-      const remaining = scrollRoot
-        ? scrollRoot.scrollHeight - scrollRoot.scrollTop - scrollRoot.clientHeight
-        : document.documentElement.scrollHeight -
-          window.scrollY -
-          window.innerHeight;
-      if (remaining < 4) setTracked(scrollIds[scrollIds.length - 1]);
+      return () => {
+        observer.disconnect();
+        scrollSource.removeEventListener("scroll", onScroll);
+      };
     };
-    const scrollSource: Window | HTMLElement = scrollRoot ?? window;
-    scrollSource.addEventListener("scroll", onScroll, { passive: true });
+
+    // Contained rails are always visible and always track. The viewport rail
+    // is display:none below the lg breakpoint, so its observer and scroll
+    // listener stay parked until the breakpoint shows the rail.
+    if (variant !== "viewport") return startTracking();
+
+    const query = window.matchMedia("(min-width: 64rem)");
+    let teardown: (() => void) | null = null;
+    const syncTracking = () => {
+      if (query.matches && !teardown) {
+        teardown = startTracking();
+      } else if (!query.matches && teardown) {
+        teardown();
+        teardown = null;
+      }
+    };
+    syncTracking();
+    query.addEventListener("change", syncTracking);
 
     return () => {
-      observer.disconnect();
-      scrollSource.removeEventListener("scroll", onScroll);
+      query.removeEventListener("change", syncTracking);
+      teardown?.();
     };
-  }, [scrollIds, scrollRootRef]);
+  }, [scrollIds, scrollRootRef, variant]);
 
   const scrollTo = (id: string) => {
     const scrollRoot = scrollRootRef?.current ?? null;
@@ -160,7 +185,7 @@ export function SectionRail({
 
   return (
     <nav
-      aria-label="sections"
+      aria-label="Sections"
       className={cn(
         "top-1/2 left-0 z-30 -translate-y-1/2 flex-col items-start gap-2",
         variant === "contained" ? "absolute flex" : "fixed hidden lg:flex",

@@ -135,7 +135,9 @@ function Artwork({ presence }: { presence: Presence }) {
             alt=""
             width={28}
             height={28}
-            unoptimized
+            /* Local artwork rides the optimizer; remote Discord and Spotify
+               images keep their direct URLs. */
+            unoptimized={!presence.image!.startsWith("/")}
             className={cn(
               "size-full object-cover",
               presence.status === "offline" && "grayscale",
@@ -202,14 +204,14 @@ function CopyHandleButton() {
   );
 }
 
-function PresenceCard() {
+function PresenceCard({ poll }: { poll: boolean }) {
   const { data, error, isLoading } = useQuery<LanyardData>(
     "discord-status",
     fetchDiscordStatus,
     {
       staleTime: 60_000,
       gcTime: 600_000,
-      refetchInterval: 30_000,
+      refetchInterval: poll ? 30_000 : undefined,
       refetchOnWindowFocus: true,
     },
   );
@@ -258,10 +260,19 @@ function PresenceSkeleton() {
    only mounts once the card is about to enter the viewport. */
 export function DiscordStatus() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "200px" });
+  const mounted = useInView(ref, { once: true, margin: "200px" });
+  /* Polls stay active only while the card sits near the viewport; the card
+     itself stays mounted so the cached presence never flashes a skeleton. */
+  const nearViewport = useInView(ref, { margin: "200px" });
 
   return (
-    <div ref={ref}>{inView ? <PresenceCard /> : <PresenceSkeleton />}</div>
+    <div ref={ref}>
+      {mounted ? (
+        <PresenceCard poll={nearViewport} />
+      ) : (
+        <PresenceSkeleton />
+      )}
+    </div>
   );
 }
 

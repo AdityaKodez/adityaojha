@@ -139,6 +139,9 @@ export function useQuery<T>(
 
     const intervalId = refetchInterval
       ? window.setInterval(() => {
+          // A hidden tab skips its tick; the visibility handler below
+          // refreshes the query when the tab becomes visible again.
+          if (document.hidden) return;
           void fetchQuery(key, queryFn).catch(() => {});
         }, refetchInterval)
       : undefined;
@@ -156,7 +159,17 @@ export function useQuery<T>(
       }
     };
 
+    const visibilityHandler = () => {
+      if (document.hidden || !refetchInterval) return;
+
+      const latest = getOrCreateQueryState<T>(key);
+      if (Date.now() - latest.updatedAt > refetchInterval) {
+        void fetchQuery(key, queryFn).catch(() => {});
+      }
+    };
+
     window.addEventListener("focus", focusHandler);
+    document.addEventListener("visibilitychange", visibilityHandler);
 
     return () => {
       const latest = getOrCreateQueryState<T>(key);
@@ -168,6 +181,7 @@ export function useQuery<T>(
       }
 
       window.removeEventListener("focus", focusHandler);
+      document.removeEventListener("visibilitychange", visibilityHandler);
     };
   }, [gcTime, key, queryFn, refetchInterval, refetchOnWindowFocus, staleTime]);
 

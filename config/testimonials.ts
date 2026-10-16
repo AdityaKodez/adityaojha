@@ -1,7 +1,7 @@
 import type { Testimonial } from "@/config/types";
 
 export const testimonialsSectionConfig = {
-  seeMoreLabel: "view all",
+  seeMoreLabel: "View all",
 };
 
 export const testimonialsConfig: Testimonial[] = [
@@ -12,7 +12,7 @@ export const testimonialsConfig: Testimonial[] = [
     content:
       "This is great. Most of the portfolios people post here are doing WAY too much. Yours here shows off just enough skill and an eye for design and doesn’t look like a boiler plate template to me at least. So great work. No notes.",
     avatar: "NM",
-    image: "/testimonial/natey.png",
+    image: "/testimonial/natey.webp",
     order: 1,
     enabled: true,
   },
@@ -22,7 +22,7 @@ export const testimonialsConfig: Testimonial[] = [
     role: "Redditor",
     content: "You've got a good eye for design",
     avatar: "EB",
-    image: "/testimonial/elongated.png",
+    image: "/testimonial/elongated.webp",
     order: 2,
     enabled: true,
   },
@@ -32,7 +32,7 @@ export const testimonialsConfig: Testimonial[] = [
     role: "Creator of animbits.dev.",
     content: "I like the minimalistic look good work.",
     avatar: "GJ",
-    image: "/testimonial/garvit.png",
+    image: "/testimonial/garvit.webp",
     order: 3,
     enabled: true,
   },
@@ -99,7 +99,7 @@ export const testimonialsConfig: Testimonial[] = [
     content:
       "Your portfolio UI looks good, well which tech stack and state management you have used ?",
     avatar: "VS",
-    image: "/testimonial/vishal.png",
+    image: "/testimonial/vishal.webp",
     order: 9,
     enabled: false,
   },
@@ -109,7 +109,7 @@ export const testimonialsConfig: Testimonial[] = [
     role: "CoFounder at Digia",
     content: "Congrats on your launch. Looking forward",
     avatar: "VS",
-    image: "/testimonial/vivek.png",
+    image: "/testimonial/vivek.webp",
     order: 10,
     enabled: false,
   },
@@ -119,7 +119,7 @@ export const testimonialsConfig: Testimonial[] = [
     role: "Frontend Developer",
     content: "Just took a look And i love it",
     avatar: "TL",
-    image: "/testimonial/tolani.png",
+    image: "/testimonial/tolani.webp",
     order: 11,
     enabled: false,
   },
@@ -129,7 +129,7 @@ export const testimonialsConfig: Testimonial[] = [
     role: "Developer",
     content: "Cool bro",
     avatar: "SA",
-    image: "/testimonial/sahil.png",
+    image: "/testimonial/sahil.webp",
     order: 12,
     enabled: false,
   },

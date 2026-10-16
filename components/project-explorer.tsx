@@ -3,8 +3,6 @@
 import { cn } from "@/lib/utils";
 import {
   ArrowUpRight,
-  FolderClosedIcon,
-  FolderOpenIcon,
   ImageIcon,
 } from "lucide-react";
 import {
@@ -15,7 +13,7 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useId, useMemo, useState, useSyncExternalStore } from "react";
 
 export type ProjectStatus = "building" | "new" | "shipped";
 
@@ -85,26 +83,85 @@ const getHoverSnapshot = () => window.matchMedia(HOVER_QUERY).matches;
 const getServerSnapshot = () => false;
 
 const folderColors = [
-  {
-    icon: "fill-blue-500/20 text-blue-600 dark:text-blue-400",
-    text: "text-blue-600 dark:text-blue-400",
-  },
-  {
-    icon: "fill-amber-500/20 text-amber-600 dark:text-amber-400",
-    text: "text-amber-600 dark:text-amber-400",
-  },
-  {
-    icon: "fill-emerald-500/20 text-emerald-600 dark:text-emerald-400",
-    text: "text-emerald-600 dark:text-emerald-400",
-  },
-  {
-    icon: "fill-rose-500/20 text-rose-600 dark:text-rose-400",
-    text: "text-rose-600 dark:text-rose-400",
-  },
+  "text-blue-600 dark:text-blue-400",
+  "text-amber-600 dark:text-amber-400",
+  "text-emerald-600 dark:text-emerald-400",
+  "text-rose-600 dark:text-rose-400",
 ];
 
 const PREVIEW_WIDTH = 300;
-const PREVIEW_HEIGHT = 210;
+const PREVIEW_HEIGHT = 240;
+const PAPER_EDGE =
+  "polygon(1% 2%, 12% 0.5%, 25% 1.5%, 38% 0%, 54% 1%, 69% 0.5%, 83% 1.5%, 98% 0%, 99% 14%, 98.5% 31%, 100% 48%, 99% 65%, 99.5% 82%, 98% 99%, 84% 98%, 70% 100%, 55% 98.5%, 40% 99.5%, 25% 98%, 11% 99.5%, 0% 98%, 1% 82%, 0% 65%, 1.5% 48%, 0.5% 31%, 1% 15%)";
+const PAPER_TEXTURE = {
+  backgroundImage:
+    "radial-gradient(var(--foreground, #171717) 0.45px, transparent 0.65px)",
+  backgroundSize: "3px 3px",
+};
+
+function PaperFolderIcon({
+  open,
+  className,
+}: {
+  open: boolean;
+  className?: string;
+}) {
+  const patternId = useId();
+  const front = open
+    ? "M4 17 15 16 18 18 43 15 37 33 8 34Z"
+    : "M7 15 18 14 21 16 39 15 38 33 8 34Z";
+
+  return (
+    <svg
+      viewBox="0 0 48 40"
+      aria-hidden="true"
+      focusable="false"
+      className={cn("h-8 w-10 shrink-0 overflow-visible", className)}
+      strokeLinejoin="round"
+    >
+      <defs>
+        <pattern
+          id={patternId}
+          width="2.5"
+          height="2.5"
+          patternUnits="userSpaceOnUse"
+        >
+          <circle cx="0.8" cy="0.8" r="0.4" className="fill-foreground/40" />
+        </pattern>
+      </defs>
+      <path
+        d="m4 7 15-2 5 5 17-1 2 5 3 1-6 21-33 1-3-5Z"
+        className="fill-background stroke-background"
+        strokeWidth="3"
+      />
+      <path
+        d="m6 9 12-2 5 5 16-1-1 21-30 2Z"
+        className="fill-muted stroke-foreground"
+        strokeWidth="1.1"
+      />
+      <path d="m8 10 9-1 3 3-12 1Z" className="fill-current" />
+      {open && (
+        <path
+          d="m12 17 1-7 20 2 2 8m-18-6 12 1m-12 2 9 1"
+          className="fill-background stroke-foreground/60"
+          strokeWidth="0.8"
+        />
+      )}
+      <path
+        d={front}
+        className="fill-background stroke-foreground"
+        strokeWidth="1.2"
+      />
+      <path d={front} fill={`url(#${patternId})`} />
+      <path
+        d="m12 28 20-1m-20 3 14-1"
+        className="stroke-foreground/60"
+        strokeWidth="0.7"
+      />
+      <path d="m12 21 10-1v4l-10 1Z" className="fill-current" opacity="0.75" />
+    </svg>
+  );
+}
 
 function StatusBadge({ status }: { status: ProjectStatus }) {
   if (status === "shipped") return null;
@@ -182,7 +239,7 @@ function WorkRow({
         <span className="min-w-0 flex-1 truncate text-sm font-medium transition-colors group-hover:text-primary group-focus-visible:text-primary">
           {subtitle ? (
             <>
-              <span className="hidden font-medium text-foreground group-hover:text-primary group-focus-visible:text-primary md:inline">
+                <span className="inline font-medium text-foreground group-hover:text-primary group-focus-visible:text-primary">
                 {name}
               </span>
               <span className="inline font-normal text-muted-foreground md:ml-4">
@@ -195,13 +252,6 @@ function WorkRow({
         </span>
 
         {project.status ? <StatusBadge status={project.status} /> : null}
-
-        {project.category ? (
-          <span className="ml-auto hidden shrink-0 font-mono text-xs text-muted-foreground/70 sm:block">
-            {"// "}
-            {project.category}
-          </span>
-        ) : null}
 
         <ArrowUpRight
           aria-hidden="true"
@@ -364,7 +414,6 @@ export function ProjectExplorer({
       >
         {projectsByYear.map((group, groupIndex) => {
           const isOpen = openYears[group.year] ?? true;
-          const FolderIcon = isOpen ? FolderOpenIcon : FolderClosedIcon;
 
           return (
             <div key={group.year}>
@@ -372,18 +421,26 @@ export function ProjectExplorer({
                 type="button"
                 onClick={() => toggleYear(group.year)}
                 aria-expanded={isOpen}
-                className="group mb-1 flex items-center gap-2 rounded-sm px-1 py-0.5 font-sans text-sm hover:bg-muted/30 focus-visible:bg-muted/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 transition-colors cursor-pointer select-none"
+                className="group mb-1 flex min-h-10 cursor-pointer select-none items-center gap-1.5 rounded-sm px-1 py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/40"
               >
-                <FolderIcon
-                  aria-hidden="true"
+                <PaperFolderIcon
+                  open={isOpen}
                   className={cn(
-                    "size-4 transition-transform",
-                    folderColors[groupIndex % folderColors.length].icon,
+                    "-rotate-6 transition-transform duration-200 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:-rotate-12 motion-safe:group-focus-visible:-translate-y-0.5 motion-safe:group-focus-visible:-rotate-12 motion-reduce:rotate-0 motion-reduce:transition-none",
+                    folderColors[groupIndex % folderColors.length],
                   )}
                 />
-                <span
-                  className={folderColors[groupIndex % folderColors.length].text}
-                >
+                <span className="relative isolate -rotate-2 px-2.5 py-1 font-serif text-xl italic leading-none text-foreground transition-transform duration-200 motion-safe:group-hover:rotate-0 motion-safe:group-focus-visible:rotate-0 motion-reduce:rotate-0 motion-reduce:transition-none">
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 -z-10 bg-muted/70"
+                    style={{ clipPath: PAPER_EDGE }}
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 -z-10 opacity-[0.08]"
+                    style={{ ...PAPER_TEXTURE, clipPath: PAPER_EDGE }}
+                  />
                   {group.year}
                 </span>
               </button>
@@ -425,24 +482,45 @@ export function ProjectExplorer({
             exit={{ opacity: 0, scale: 0.95, rotate: 0 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             style={{ x: springX, y: springY }}
-            className="pointer-events-none fixed left-0 top-0 z-50 w-[300px]"
+            className="pointer-events-none fixed left-0 top-0 z-50 w-[300px] drop-shadow-[2px_4px_6px_var(--border)]"
           >
-            <div className="overflow-hidden rounded-md border bg-background shadow-xl shadow-black/10">
-              {hasImage ? (
-                <Image
-                  src={activeProject.image!}
-                  alt={activeProject.imageAlt ?? ""}
-                  width={600}
-                  height={338}
-                  className="aspect-video w-full object-cover"
+            <div
+              className="relative isolate bg-card p-3 text-card-foreground"
+              style={{ clipPath: PAPER_EDGE }}
+            >
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 -z-10 opacity-[0.08]"
+                style={PAPER_TEXTURE}
+              />
+              <div className="relative overflow-hidden bg-muted/40">
+                {hasImage ? (
+                  <Image
+                    src={activeProject.image!}
+                    alt={activeProject.imageAlt ?? ""}
+                    width={600}
+                    height={338}
+                    sizes="276px"
+                    className="aspect-video w-full object-cover saturate-[0.7]"
+                  />
+                ) : (
+                  <div className="flex aspect-video w-full items-center justify-center text-muted-foreground">
+                    <ImageIcon aria-hidden="true" className="size-8 stroke-[1.25]" />
+                  </div>
+                )}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-multiply dark:mix-blend-screen"
+                  style={PAPER_TEXTURE}
                 />
-              ) : (
-                <div className="flex aspect-video w-full flex-col items-center justify-center gap-1.5 bg-muted/40 text-muted-foreground">
-                  <ImageIcon className="size-8 stroke-[1.25] text-muted-foreground/60" />
+              </div>
+              <div className="flex items-start gap-3 pt-2">
+                <div className="line-clamp-2 min-w-0 flex-1 font-serif text-lg italic leading-5">
+                  {activeProject.title}
                 </div>
-              )}
-              <div className="border-t rounded-t-lg px-3 py-1.5  text-[11px] text-muted-foreground">
-                {activeProject.title}
+                <span className="shrink-0 pt-1 font-mono text-[10px] text-muted-foreground">
+                  {activeProject.year}
+                </span>
               </div>
             </div>
           </motion.div>

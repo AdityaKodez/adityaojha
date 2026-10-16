@@ -4,6 +4,19 @@ import { getPostHog } from "@/lib/analytics";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, Suspense, type ReactNode } from "react";
 
+/** Resolves once deferred initialization has been triggered, so the first
+    page view rides the load-and-idle schedule instead of starting the
+    PostHog import during hydration. */
+let triggerInitialization: (() => void) | null = null;
+const initializationStarted = new Promise<void>((resolve) => {
+  triggerInitialization = resolve;
+});
+
+function initializeOnSchedule() {
+  triggerInitialization?.();
+  void getPostHog();
+}
+
 function PostHogPageView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -15,12 +28,14 @@ function PostHogPageView() {
       if (searchStr) {
         url = `${url}?${searchStr}`;
       }
-      void getPostHog().then((posthog) => {
-        posthog?.capture("$pageview", {
-          $current_url: url,
-          pathname,
+      void initializationStarted
+        .then(() => getPostHog())
+        .then((posthog) => {
+          posthog?.capture("$pageview", {
+            $current_url: url,
+            pathname,
+          });
         });
-      });
     }
   }, [pathname, searchParams]);
 
@@ -48,17 +63,18 @@ export function PostHogProvider({ children }: { children: ReactNode }) {
           "[PostHog] NEXT_PUBLIC_POSTHOG_KEY is not defined. Events will not be sent to PostHog.",
         );
       }
+      triggerInitialization?.();
       return;
     }
 
     // Wait for the window load event, then an idle slot, so the PostHog
     // bundle never competes with hydration or first paint.
     if (document.readyState === "complete") {
-      return onIdle(() => void getPostHog());
+      return onIdle(initializeOnSchedule);
     }
 
     const onLoad = () => {
-      onIdle(() => void getPostHog());
+      onIdle(initializeOnSchedule);
     };
     window.addEventListener("load", onLoad, { once: true });
     return () => window.removeEventListener("load", onLoad);
