@@ -1,11 +1,11 @@
 import { siteConfig } from "@/config/site";
+import { openGraphConfig } from "@/config/opengraph";
 import { Metadata } from "next";
 import { SponsorPage } from "./sponsor-page";
 
 const PAGE_URL = `${siteConfig.meta.url}/sponsor`;
 
-const PAGE_DESCRIPTION =
-  "Support independent work with $5, paid once. Your name, link, and logo stay in the supporter list for good.";
+const PAGE_DESCRIPTION = openGraphConfig.routes.sponsor.description;
 
 export const metadata: Metadata = {
   title: "sponsor",
@@ -19,13 +19,11 @@ export const metadata: Metadata = {
     description: PAGE_DESCRIPTION,
     url: PAGE_URL,
     siteName: siteConfig.meta.shortTitle,
-    images: [siteConfig.meta.ogImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "sponsor — aditya ojha",
     description: PAGE_DESCRIPTION,
-    images: [siteConfig.meta.ogImage.url],
   },
 };
 

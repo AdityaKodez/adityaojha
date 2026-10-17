@@ -226,6 +226,10 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 - Shared utility classes: `.section-heading`, `.micro-transition`,
   `.liquid-glass`, `.bottom-blur`, and the blueprint background used on card
   hover. Prefer these over repeating the utility stack.
+- Public inner-route OG cards use the homepage OG's light palette, centered
+  Instrument Serif heading, and paper-cut garden from `config/opengraph.ts`.
+  Keep route descriptions, URLs, and install commands readable above the
+  artwork, with no dark grid or heavy panel. The homepage OG stays unchanged.
 - The shared footer on `/`, `/components`, and `/testimonials` stays within the centered page frame, with a compact,
   transparent paper-cut garden that matches the hero's halftone artwork. Keep
   its quote, credit, and artwork reference in `footerConfig` in `config/site.ts`.

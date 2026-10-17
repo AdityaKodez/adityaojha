@@ -2,13 +2,13 @@ import { TestimonialsGrid } from "@/components/landing/testimonials-grid";
 import { SponsorsSection } from "@/components/landing/sponsors";
 import { Footer } from "@/components/landing/footer";
 import { getAllTestimonials } from "@/config/testimonials";
+import { openGraphConfig } from "@/config/opengraph";
 import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
 
 const PAGE_URL = `${siteConfig.meta.url}/testimonials`;
 
-const PAGE_DESCRIPTION =
-  "in their own words. From designers, developers, and founders who took a look at the work.";
+const PAGE_DESCRIPTION = openGraphConfig.routes.testimonials.description;
 
 export const metadata: Metadata = {
   title: "testimonials",
@@ -22,13 +22,11 @@ export const metadata: Metadata = {
     description: PAGE_DESCRIPTION,
     url: PAGE_URL,
     siteName: siteConfig.meta.shortTitle,
-    images: [siteConfig.meta.ogImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "testimonials — aditya ojha",
     description: PAGE_DESCRIPTION,
-    images: [siteConfig.meta.ogImage.url],
   },
 };
 

@@ -7,27 +7,25 @@ import { RotatingInstallCommand } from "@/components/showcase/rotating-install-c
 import { SponsorsSection } from "@/components/landing/sponsors";
 import { Footer } from "@/components/landing/footer";
 import { componentSpotlightId, componentSpotlightLabel, findComponent, getEnabledComponents } from "@/config/components";
+import { openGraphConfig } from "@/config/opengraph";
 import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Components",
-  description:
-    "A growing set of reusable building blocks — lightweight, themable, and easy to drop into any project.",
+  title: openGraphConfig.routes.components.title,
+  description: openGraphConfig.routes.components.description,
   alternates: {
     canonical: "/components",
   },
   openGraph: {
     title: "components — aditya ojha",
-    description:
-      "A growing set of reusable building blocks — lightweight, themable, and easy to drop into any project.",
+    description: openGraphConfig.routes.components.description,
     url: "/components",
   },
   twitter: {
     card: "summary_large_image",
     title: "components — aditya ojha",
-    description:
-      "A growing set of reusable building blocks — lightweight, themable, and easy to drop into any project.",
+    description: openGraphConfig.routes.components.description,
   },
 };
 

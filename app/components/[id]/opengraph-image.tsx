@@ -37,7 +37,7 @@ export default async function Image({
   return new ImageResponse(
     (
       <OgCard
-        eyebrow="shadcn registry item"
+        eyebrow="Shadcn registry item"
         title={title}
         description={description}
         footer={`npx shadcn@latest add ${registryConfig.namespace}/${id}`}

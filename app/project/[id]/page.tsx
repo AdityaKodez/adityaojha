@@ -25,9 +25,6 @@ export async function generateMetadata({
   }
 
   const url = `${siteConfig.meta.url}/project/${project.id}`;
-  const ogImage = project.image.startsWith("http")
-    ? project.image
-    : `${siteConfig.meta.url}${project.image}`;
 
   return {
     title: project.title,
@@ -47,20 +44,11 @@ export async function generateMetadata({
       title: project.title,
       description: project.description,
       siteName: siteConfig.meta.shortTitle,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: project.imageAlt,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: project.title,
       description: project.description,
-      images: [ogImage],
       creator: siteConfig.meta.twitterCreator,
     },
   };
