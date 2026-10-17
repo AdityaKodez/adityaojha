@@ -242,7 +242,7 @@ function WorkRow({
                 <span className="inline font-medium text-foreground group-hover:text-primary group-focus-visible:text-primary">
                 {name}
               </span>
-              <span className="inline font-normal text-muted-foreground md:ml-4">
+              <span className="ml-2 inline font-normal text-muted-foreground md:ml-4">
                 {subtitle}
               </span>
             </>
