@@ -186,8 +186,9 @@ export function FooterScene({ children }: { children: ReactNode }) {
 
         {/* The visitor count floats centered over the panorama as a glass
             pill. A sibling of the parallaxing artwork, not a child of it, so
-            the garden shifts behind still glass. */}
-        <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
+            the garden shifts behind still glass. The inset wrapper lets the
+            pill size against the full stage instead of half its width. */}
+        <div className="absolute inset-x-4 top-1/2 z-10 flex -translate-y-1/2 justify-center">
           {children}
         </div>
       </motion.div>
