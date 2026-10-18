@@ -24,17 +24,18 @@ export function ComponentHighlights() {
             <Link
               key={component.id}
               href={`/components/${component.id}`}
-              className="group relative flex items-stretch"
+              className="group group/component-card relative flex items-stretch"
             >
               <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5 transition-colors hover:bg-muted/10">
-                <div className="relative flex size-10 shrink-0 items-center justify-center rounded-sm text-muted-foreground transition-colors group-hover:text-foreground">
-                  <Icon className="h-4 w-4" />
-                  <div className="pointer-events-none absolute inset-0 rounded-sm ring-1 ring-inset ring-muted-foreground/5" />
+                <div className="micro-transition relative flex size-[33.3px] shrink-0 items-center justify-center text-muted-foreground motion-safe:pointer-fine:group-hover/component-card:[transform:translateY(-2px)_rotate(6deg)]">
+                  <Icon className="size-full" />
                   {component.new && (
                     <span
-                      className="absolute -top-1 -right-1 size-2 rounded-full bg-sky-500 ring-2 ring-background"
+                      className="absolute -right-1 top-0 -rotate-6 rounded-full bg-primary px-1.5 py-0.5 font-mono text-[9px] leading-3 font-medium text-primary-foreground"
                       aria-label="New component"
-                    />
+                    >
+                      New
+                    </span>
                   )}
                 </div>
                 <div className="flex min-w-0 grow flex-col">

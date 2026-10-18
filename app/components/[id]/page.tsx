@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { createElement } from "react";
 import { MarkdownAsync } from "react-markdown";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
@@ -75,6 +76,9 @@ export default async function ComponentDetailPage({
     notFound();
   }
 
+  const componentIcon = createElement(getComponentIcon(component.icon), {
+    className: "size-4 shrink-0 text-muted-foreground",
+  });
   const root = process.cwd();
 
   // Demo source (raw + syntax-highlighted HTML).
@@ -150,7 +154,10 @@ export default async function ComponentDetailPage({
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>{component.title}</BreadcrumbPage>
+              <BreadcrumbPage className="inline-flex items-center gap-1.5">
+                {componentIcon}
+                {component.title}
+              </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

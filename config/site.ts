@@ -202,16 +202,19 @@ export const siteConfig: PortfolioConfig = {
         label: "Scope",
         description:
           "We agree on one core workflow, fixed deliverables, and what is explicitly out of scope.",
+        icon: "scope",
       },
       {
         label: "Communication",
         description:
           "You get short async updates, working demos, and clear blockers instead of vague progress.",
+        icon: "communication",
       },
       {
         label: "Handoff",
         description:
           "I ship clean code, deployment support, and next-step recommendations after the first release.",
+        icon: "handoff",
       },
     ],
   },

@@ -1,16 +1,12 @@
 import type { ComponentDoc } from "./types";
 
-/** Registry entry featured above the components catalog. */
-export const componentSpotlightId = "prompt-bar";
-export const componentSpotlightLabel = "Featured";
-
 /** Home page teaser for the /components showcase. */
 export const componentsSectionConfig = {
   title: "Components",
   /** How many registry entries the home page previews before "See all". */
   previewCount: 4,
   seeMoreLabel: "See all",
-  /** Copy for the catalog's suggestion CTA, dialog, and submit feedback. */
+  /** Copy for the suggestion entry point, dialog, and submit feedback. */
   suggestion: {
     cardTitle: "Suggest a component",
     cardDescription: "The next block lands in this slot. Tell it what to be.",
@@ -79,7 +75,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/todo-list.md",
     order: -2,
     enabled: true,
-    new: true,
   },
   {
     id: "theme-switcher",
@@ -91,7 +86,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/theme-switcher.md",
     order: -1,
     enabled: true,
-    new: true,
   },
   {
     id: "prompt-bar",
@@ -103,7 +97,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/prompt-bar.md",
     order: 0,
     enabled: true,
-    new: true,
   },
   {
     id: "ask-ai",
@@ -292,7 +285,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/stack-rolodex.md",
     order: 19,
     enabled: true,
-    new: true,
   },
   {
     id: "progressive-blur",

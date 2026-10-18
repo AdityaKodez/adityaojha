@@ -1,15 +1,14 @@
 import { ComponentsCatalog } from "@/components/showcase/components-catalog";
-import { ComponentDemo } from "@/components/showcase/component-demo";
-import { getComponentIcon } from "@/components/showcase/component-icons";
 import { ComponentsShell } from "@/components/showcase/components-shell";
 import { RegistryStatus } from "@/components/showcase/registry-status";
 import { RotatingInstallCommand } from "@/components/showcase/rotating-install-command";
 import { SponsorsSection } from "@/components/landing/sponsors";
 import { Footer } from "@/components/landing/footer";
-import { componentSpotlightId, componentSpotlightLabel, findComponent, getEnabledComponents } from "@/config/components";
+import { SideNote } from "@/components/shared/side-note";
+import { getEnabledComponents } from "@/config/components";
 import { openGraphConfig } from "@/config/opengraph";
+import { sectionNotes } from "@/config/section-notes";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: openGraphConfig.routes.components.title,
@@ -29,11 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
-const spotlight = findComponent(componentSpotlightId);
-const SpotlightIcon = spotlight ? getComponentIcon(spotlight.icon) : null;
-
 export default function ComponentsPage() {
   const components = getEnabledComponents();
+  const note = sectionNotes.components;
 
   return (
     <>
@@ -53,30 +50,16 @@ export default function ComponentsPage() {
             />
           </section>
 
-          {spotlight && SpotlightIcon && (
-            <section aria-labelledby="component-spotlight-title" className="relative mt-6 border-t border-dashed">
-              <p className="absolute top-0 left-4 -translate-y-1/2 rounded-sm bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
-                {componentSpotlightLabel}
-              </p>
-              <div className="flex min-h-[350px] items-center justify-center overflow-hidden px-6 py-2">
-                <ComponentDemo id={spotlight.id} />
-              </div>
-              <Link
-                href={`/components/${spotlight.id}`}
-                className="flex items-center gap-4 px-4 py-4 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
-              >
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-background ring-1 ring-inset ring-muted-foreground/5">
-                  <SpotlightIcon aria-hidden="true" className="size-4" />
-                </span>
-                <h2 id="component-spotlight-title" className="text-sm font-medium tracking-tight">
-                  {spotlight.title}
-                </h2>
-              </Link>
-            </section>
-          )}
+          <div
+            aria-hidden="true"
+            className="blueprint-bg h-5 border-t"
+          />
 
-          <h2 className="sr-only">Available Components</h2>
-          <ComponentsCatalog components={components} />
+          <section className="relative">
+            {note && <SideNote side={note.side}>{note.text}</SideNote>}
+            <h2 className="sr-only">Available Components</h2>
+            <ComponentsCatalog components={components} />
+          </section>
 
           <RegistryStatus />
         </section>

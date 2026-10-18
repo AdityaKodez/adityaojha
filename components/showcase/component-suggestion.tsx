@@ -50,10 +50,7 @@ const ACCEPTED_IMAGE_TYPES = ["image/png", "image/jpeg", "image/webp"];
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
 /**
- * The catalog's trailing slot. What used to be a dead "next block on the
- * bench" filler is now the entry point for suggesting that block: a CTA in
- * the same grid position that opens the suggestion dialog on desktop
- * and a bottom drawer on mobile.
+ * Suggestion entry point with a dialog on desktop and a bottom drawer on mobile.
  */
 export function ComponentSuggestion() {
   const [open, setOpen] = useState(false);

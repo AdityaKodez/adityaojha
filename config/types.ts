@@ -239,9 +239,12 @@ export interface ListSectionConfig {
   items: string[];
 }
 
+export type WorkflowIcon = "scope" | "communication" | "handoff";
+
 export interface WorkflowItem {
   label: string;
   description: string;
+  icon?: WorkflowIcon;
 }
 
 export interface PricingAnchor {
@@ -357,6 +360,7 @@ export interface SponsorPageConfig {
 }
 
 export type ComponentIcon =
+  | "home"
   | "testimonial"
   | "reactions"
   | "todo"
@@ -465,6 +469,14 @@ export interface PlaygroundSchema {
     values: PlaygroundValues,
     palette: PlaygroundPalette,
   ) => Record<string, unknown>;
+}
+
+export interface SiteNavigationItem {
+  id: string;
+  label: string;
+  href: string;
+  icon: ComponentIcon;
+  order: number;
 }
 
 export interface PortfolioConfig {

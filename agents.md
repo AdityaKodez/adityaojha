@@ -215,14 +215,29 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   opacity with the ease `[0.22, 1, 0.36, 1]` plus a settle spring on `y`. Only
   `opacity` and `transform` are animated, never `filter` (animated blur forces
   a repaint of the whole subtree per frame), and `whileInView` fires once
-  rather than on every scroll pass. The hero greeting and footer quote words
-  are deliberate exceptions and keep their blur-to-sharp resolve. The footer
+  rather than on every scroll pass. The header logo's SVG stroke drawing is a
+  scoped exception: it plays once when the logo is hovered, then settles
+  into the original solid mark. It stays still on load, touch, keyboard focus,
+  and reduced motion. Keep the logo SVG overflow visible and its wrapper from
+  shrinking so the rounded tile is not clipped. The hero greeting and footer
+  quote words are deliberate exceptions and keep their blur-to-sharp resolve. The footer
   also has a slower one-time staggered entrance for its text and live status.
   The garden reveals independently once it clears the bottom fade, with a
   120px viewport inset. It follows pointer movement with subtle spring-driven
   parallax, resets on leave, and stays still for touch and reduced motion.
   Animated elements use `data-reveal` for the reduced-motion override, with a
   no-JavaScript fallback.
+- The shared header uses separate rounded label and icon pieces, with one link
+  and one focus target per pair. Desktop uses the logo for Home and shows
+  Components, Testimonials, and Sponsor as direct links. GitHub stays a separate header control
+  with its star count, alongside search and theme. Mobile keeps the compact
+  header and a matching bottom Menu trigger. Navigation copy and destinations
+  live in `config/navigation.ts`; the mobile menu uses the shared Popover primitive.
+  The menu is one opaque rounded panel with paper-cut icons on the left and
+  a subtle active row. Home uses the shared paper-cut illustration in the menu,
+  while the header retains the compact animated logo. Header label and icon
+  faces are 28.8px tall. Header controls and menu rows retain 44px click targets.
+  Hover icon motion is limited to fine pointers without reduced motion.
 - Shared utility classes: `.section-heading`, `.micro-transition`,
   `.liquid-glass`, `.bottom-blur`, and the blueprint background used on card
   hover. Prefer these over repeating the utility stack.
@@ -408,9 +423,17 @@ Rules:
 - `config/components.ts` holds `componentRegistry` plus two helpers:
   `findComponent(id)` skips disabled entries, and `getEnabledComponents()`
   returns enabled entries sorted by `order`.
-- The catalog's trailing slot is the suggestion CTA
-  (`components/showcase/component-suggestion.tsx`): a dialog on desktop and a
-  Vaul drawer on mobile. It POSTs to `/api/component-suggestion`, which
+- A 20px spacer using the existing `.blueprint-bg` utility separates the
+  installation command from the catalog, with no featured preview section or
+  spotlight configuration. The spacer owns its top border; the catalog supplies
+  the bottom edge.
+- The catalog reuses the home components section's `SideNote` and
+  `sectionNotes.components` copy. The shared note stays in the page margin from
+  80rem upward, with the route shell allowing overflow at that breakpoint.
+- The suggestion flow (`components/showcase/component-suggestion.tsx`) is
+  currently kept out of the catalog while its entry point is reconsidered.
+  It uses a dialog on desktop and a Vaul drawer on mobile, and POSTs to
+  `/api/component-suggestion`, which
   moderates (heuristics plus Jev when `TYPESAFE_API_KEY` is set) and forwards
   to the Discord webhook. Moderation rejects answer 200 with a fake success
   so abusers get no signal. The X handle is required; success copy says we
@@ -420,6 +443,22 @@ Rules:
 - `getComponentIcon(name)` in `components/showcase/component-icons.tsx` maps an
   `icon` key onto its icon component. Both the showcase and the home teaser use
   it, do not write a second switch.
+  Component detail breadcrumbs show that shared icon beside the current title.
+- Catalog icons are bespoke paper-cut SVG illustrations, with muted ink outlines,
+  paper edges, offset print shadows, small halftone details, and restrained blue
+  and warm accents from the semantic color tokens.
+  The catalog and home teaser show them at 33.3px without a bordered icon box.
+  Hovering an individual component card lifts and tilts its icon through the
+  named `component-card` group and shared `.micro-transition`. Keep this motion
+  limited to fine pointers and visitors without reduced-motion preferences.
+  Keep their strokes light so the text leads. Only the two newest entries carry
+  the `new` flag in `config/components.ts`.
+  The `New` pill overlaps the artwork directly. Keep the shared icon mapping
+  for the smaller navigation placements too.
+  The How I Work rows reuse the same `PaperCutIcon` base for their
+  scope, communication, and handoff icons, keyed by the item`s `icon` field.
+  The project explorer`s year folders draw with the same paper-cut recipe (offset
+  shadow, paper edge, blue wash, halftone dots) instead of per-year color fills.
 - Set `enabled: false` to hide an entry without deleting it.
 - To add a component: write the doc file, write the demo file, add the catalog
   entry, and, if it should be installable, add the file to `registry.json`.

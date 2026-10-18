@@ -1,67 +1,142 @@
+.tab {
+  --tab-fill: var(--secondary);
+  --tab-ink: var(--secondary-foreground);
+  display: inline-flex;
+  height: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 3px;
+  border-radius: var(--radius-xl);
+  color: var(--tab-ink);
+  outline-offset: 2px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab:focus-visible,
+.utility:focus-visible {
+  outline: 2px solid var(--ring);
+}
+
+.label,
+.tile {
+  display: inline-flex;
+  height: 28.8px;
+  align-items: center;
+  justify-content: center;
+  background: var(--tab-fill);
+}
+
 .label {
+  padding-inline: 12.6px;
+  border-radius: var(--radius-4xl);
+  font-size: 11.7px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.tile {
+  width: 28.8px;
+  border-radius: var(--radius-lg);
+}
+
+.tile > svg {
+  width: 23.4px;
+  height: 23.4px;
+  transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.accent {
+  --tab-fill: color-mix(in oklch, var(--primary) 12%, var(--background));
+  --tab-ink: var(--primary);
+}
+
+.tab[data-active="true"],
+.tab[data-state="open"],
+.mobileTrigger {
+  --tab-fill: var(--foreground);
+  --tab-ink: var(--background);
+}
+
+.accent[data-active="true"] {
+  --tab-fill: var(--primary);
+  --tab-ink: var(--primary-foreground);
+}
+
+.tab[data-state="open"] .plus {
+  transform: rotate(45deg);
+}
+
+.tile > .plus {
+  width: 14.4px;
+  height: 14.4px;
+}
+
+.utility {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xl);
+  color: var(--muted-foreground);
+  outline-offset: 2px;
+}
+
+.utilityFace {
+  display: flex;
   position: relative;
-  display: inline-block;
+  width: 28.8px;
+  height: 28.8px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--secondary);
 }
 
-.label::before,
-.label::after {
-  content: attr(data-label);
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  opacity: 0;
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-.label::before {
-  background-image: linear-gradient(
-    110deg,
-    color-mix(in oklch, var(--primary) 80%, var(--foreground)),
-    var(--primary) 45%,
-    color-mix(in oklch, var(--primary) 75%, var(--background))
-  );
-}
-
-.label::after {
-  background-image: linear-gradient(
-    110deg,
-    color-mix(in oklch, var(--primary) 75%, var(--background)),
-    var(--primary) 55%,
-    color-mix(in oklch, var(--primary) 80%, var(--foreground))
-  );
-}
-
-.componentsLink:is(:hover, :focus-visible) .label::before {
-  opacity: 1;
-}
-
-.componentsLink:is(:hover, :focus-visible) .label::after {
-  animation: blue-gradient 1.8s ease-in-out infinite alternate;
-}
-
-@keyframes blue-gradient {
-  from {
-    opacity: 0;
+@media (width < 48rem) {
+  .searchUtility {
+    display: none;
   }
-  to {
-    opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tab:hover {
+    --tab-fill: color-mix(in oklch, var(--secondary) 88%, var(--foreground));
+  }
+
+  .accent:hover {
+    --tab-fill: color-mix(in oklch, var(--primary) 20%, var(--background));
+  }
+
+  .tab[data-active="true"]:hover,
+  .tab[data-state="open"]:hover,
+  .mobileTrigger:hover {
+    --tab-fill: var(--foreground);
+  }
+
+  .accent[data-active="true"]:hover {
+    --tab-fill: var(--primary);
+  }
+
+  .utility:hover {
+    color: var(--foreground);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tab:hover .tile > svg:not(.plus) {
+    transform: translateY(-2px) rotate(-7deg);
+  }
+
+  .tab:active .label,
+  .tab:active .tile {
+    transform: translateY(1px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .label::before,
-  .label::after {
-    animation: none !important;
+  .tile > svg {
     transition: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .label::before,
-  .label::after {
-    display: none;
   }
 }

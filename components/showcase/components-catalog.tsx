@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import type { ComponentDoc } from "@/config/types";
 import { getComponentIcon } from "@/components/showcase/component-icons";
-import { ComponentSuggestion } from "@/components/showcase/component-suggestion";
 
 interface ComponentsCatalogProps {
   components: ComponentDoc[];
@@ -17,17 +16,18 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
           <Link
             key={c.id}
             href={`/components/${c.id}`}
-            className="group relative flex items-stretch border-b sm:border-b-0"
+            className="group group/component-card relative flex items-stretch border-b sm:border-b-0"
           >
             <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5 transition-colors hover:bg-muted/10">
-              <div className="relative flex size-10 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground transition-colors group-hover:text-foreground">
-                <Icon className="h-4 w-4" />
-                <div className="pointer-events-none absolute inset-0 rounded-sm ring-1 ring-inset ring-muted-foreground/5" />
+              <div className="micro-transition relative flex size-[33.3px] shrink-0 items-center justify-center text-muted-foreground motion-safe:pointer-fine:group-hover/component-card:[transform:translateY(-2px)_rotate(6deg)]">
+                <Icon className="size-full" />
                 {c.new && (
                   <span
-                    className="absolute -top-1 -right-1 size-2 rounded-full bg-sky-500 ring-2 ring-background"
+                    className="absolute -right-1 top-0 -rotate-6 rounded-full bg-primary px-1.5 py-0.5 font-mono text-[9px] leading-3 font-medium text-primary-foreground"
                     aria-label="New component"
-                  />
+                  >
+                    New
+                  </span>
                 )}
               </div>
               <div className="flex min-w-0 grow flex-col">
@@ -44,12 +44,6 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
           </Link>
         );
       })}
-
-      {/* The trailing slot. It squares off an odd row exactly like the
-          old filler did, and when the count is even it simply opens the
-          next one, because the suggestion CTA is a permanent fixture,
-          not a gap-filler. */}
-      <ComponentSuggestion />
     </div>
   );
 }

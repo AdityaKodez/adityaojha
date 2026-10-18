@@ -82,13 +82,6 @@ function subscribeHoverCapability(callback: () => void) {
 const getHoverSnapshot = () => window.matchMedia(HOVER_QUERY).matches;
 const getServerSnapshot = () => false;
 
-const folderColors = [
-  "text-blue-600 dark:text-blue-400",
-  "text-amber-600 dark:text-amber-400",
-  "text-emerald-600 dark:text-emerald-400",
-  "text-rose-600 dark:text-rose-400",
-];
-
 const PREVIEW_WIDTH = 300;
 const PREVIEW_HEIGHT = 240;
 const PAPER_EDGE =
@@ -107,6 +100,7 @@ function PaperFolderIcon({
   className?: string;
 }) {
   const patternId = useId();
+  const silhouette = "m4 7 15-2 5 5 17-1 2 5 3 1-6 21-33 1-3-5Z";
   const front = open
     ? "M4 17 15 16 18 18 43 15 37 33 8 34Z"
     : "M7 15 18 14 21 16 39 15 38 33 8 34Z";
@@ -116,49 +110,76 @@ function PaperFolderIcon({
       viewBox="0 0 48 40"
       aria-hidden="true"
       focusable="false"
-      className={cn("h-8 w-10 shrink-0 overflow-visible", className)}
+      color="var(--cutout-ink, var(--foreground))"
+      className={cn(
+        "h-8 w-10 shrink-0 overflow-visible",
+        "[--cutout-paper:var(--background)] dark:[--cutout-paper:var(--foreground)] dark:[--cutout-ink:var(--background)]",
+        className,
+      )}
+      fill="none"
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <defs>
         <pattern
           id={patternId}
-          width="2.5"
-          height="2.5"
+          width="3"
+          height="3"
           patternUnits="userSpaceOnUse"
         >
-          <circle cx="0.8" cy="0.8" r="0.4" className="fill-foreground/40" />
+          <circle cx="1" cy="1" r="0.5" className="fill-current opacity-30" />
         </pattern>
       </defs>
-      <path
-        d="m4 7 15-2 5 5 17-1 2 5 3 1-6 21-33 1-3-5Z"
-        className="fill-background stroke-background"
-        strokeWidth="3"
-      />
-      <path
-        d="m6 9 12-2 5 5 16-1-1 21-30 2Z"
-        className="fill-muted stroke-foreground"
-        strokeWidth="1.1"
-      />
-      <path d="m8 10 9-1 3 3-12 1Z" className="fill-current" />
-      {open && (
+      <g stroke="currentColor">
         <path
-          d="m12 17 1-7 20 2 2 8m-18-6 12 1m-12 2 9 1"
-          className="fill-background stroke-foreground/60"
+          d={silhouette}
+          transform="translate(1 2)"
+          fill="currentColor"
+          strokeWidth="4"
+          opacity="0.1"
+        />
+        <path
+          d={silhouette}
+          fill="var(--cutout-paper, var(--background))"
+          stroke="var(--cutout-paper, var(--background))"
+          strokeWidth="4"
+        />
+        <path
+          d={silhouette}
+          fill="color-mix(in oklch, var(--chart-2, #3b82f6) 14%, var(--cutout-paper, var(--background)))"
+        />
+        {open && (
+          <path
+            d="m7 12 12-2 5 5 15-1-1 19-29 2Z"
+            fill="currentColor"
+            fillOpacity="0.12"
+            strokeWidth="1"
+          />
+        )}
+        <path
+          d="m8 10 9-1 3 3-12 1Z"
+          fill="var(--chart-2, #3b82f6)"
+          fillOpacity="0.85"
           strokeWidth="0.8"
         />
-      )}
-      <path
-        d={front}
-        className="fill-background stroke-foreground"
-        strokeWidth="1.2"
-      />
-      <path d={front} fill={`url(#${patternId})`} />
-      <path
-        d="m12 28 20-1m-20 3 14-1"
-        className="stroke-foreground/60"
-        strokeWidth="0.7"
-      />
-      <path d="m12 21 10-1v4l-10 1Z" className="fill-current" opacity="0.75" />
+        <path
+          d={front}
+          fill="var(--cutout-paper, var(--background))"
+          strokeWidth="1.2"
+        />
+        <path d={front} fill={`url(#${patternId})`} stroke="none" />
+        <path
+          d="m12 21 10-1v4l-10 1Z"
+          fill="var(--chart-1, #f97316)"
+          fillOpacity="0.7"
+          stroke="none"
+        />
+        <path
+          d="m12 28 20-1m-20 3 14-1"
+          strokeWidth="0.7"
+          opacity="0.55"
+        />
+      </g>
     </svg>
   );
 }
@@ -412,7 +433,7 @@ export function ProjectExplorer({
         onMouseMove={handleMouseMove}
         onMouseLeave={handlePreviewEnd}
       >
-        {projectsByYear.map((group, groupIndex) => {
+        {projectsByYear.map((group) => {
           const isOpen = openYears[group.year] ?? true;
 
           return (
@@ -425,10 +446,7 @@ export function ProjectExplorer({
               >
                 <PaperFolderIcon
                   open={isOpen}
-                  className={cn(
-                    "-rotate-6 transition-transform duration-200 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:-rotate-12 motion-safe:group-focus-visible:-translate-y-0.5 motion-safe:group-focus-visible:-rotate-12 motion-reduce:rotate-0 motion-reduce:transition-none",
-                    folderColors[groupIndex % folderColors.length],
-                  )}
+                  className="-rotate-6 transition-transform duration-200 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:-rotate-12 motion-safe:group-focus-visible:-translate-y-0.5 motion-safe:group-focus-visible:-rotate-12 motion-reduce:rotate-0 motion-reduce:transition-none"
                 />
                 <span className="relative isolate -rotate-2 px-2.5 py-1 font-serif text-xl italic leading-none text-foreground transition-transform duration-200 motion-safe:group-hover:rotate-0 motion-safe:group-focus-visible:rotate-0 motion-reduce:rotate-0 motion-reduce:transition-none">
                   <span
