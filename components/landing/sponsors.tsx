@@ -172,7 +172,7 @@ export function SponsorsSection() {
 
   return (
     <section className="border-t border-dashed pt-6">
-      <div className="section-heading flex items-center px-0 py-0 pr-[17px]">
+      <div className="section-heading flex items-center bg-transparent px-0 py-0 pr-[17px]">
         <h2 className="no-js-visible shrink-0 px-[21px] py-px font-serif text-[25px] leading-8 font-medium italic">
           {heading}
         </h2>

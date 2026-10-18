@@ -2,13 +2,13 @@
 
 import { InfiniteSlider } from "@/components/motion-primitives/infinite-slider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   getAllTestimonials,
   getEnabledTestimonials,
   testimonialsSectionConfig,
 } from "@/config/testimonials";
 import type { Testimonial } from "@/config/types";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { BsArrowUpRightCircle } from "react-icons/bs";
 
@@ -21,51 +21,46 @@ const marqueeTop = enabledTestimonials.slice(0, marqueeSplit);
 const marqueeBottom = enabledTestimonials.slice(marqueeSplit);
 
 function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
-  const card = (
-      <Card className="h-full bg-background hover:bg-muted/50 transition-colors rounded-none">
-        <CardContent className="p-3 flex flex-col gap-2 h-full">
-          <p className="text-sm text-muted-foreground leading-tight flex-1">
-            &quot;{testimonial.content}&quot;
-          </p>
-
-          <div className="flex items-center gap-3 mt-auto">
-            <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={testimonial.image}
-                alt={testimonial.name}
-              />
-              <AvatarFallback>{testimonial.avatar}</AvatarFallback>
-            </Avatar>
-
-            <div className="flex flex-col">
-              <span className="text-sm font-medium leading-none">
-                {testimonial.name}
-              </span>
-              <span className="text-xs text-muted-foreground mt-1 font-sans">
-                {testimonial.role}
-              </span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-  );
-
   return (
-    <div className="w-85 md:w-87.5 py-2.5 md:py-3">
-      {testimonial.href ? (
-        <a
-          href={testimonial.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block h-full"
-          aria-label={`Open original post from ${testimonial.name}`}
-        >
-          {card}
-        </a>
-      ) : (
-        card
+    <figure
+      className={cn(
+        "group relative flex w-85 shrink-0 flex-col border-x border-border p-5 transition-colors hover:bg-muted/10 md:w-87.5",
+        testimonial.href && "cursor-pointer",
       )}
-    </div>
+    >
+      <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-50 transition-opacity group-hover:opacity-100" />
+
+      <div className="relative z-10 flex flex-1 flex-col">
+        {testimonial.href ? (
+          <a
+            href={testimonial.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute inset-0 z-20"
+            aria-label={`Open original post from ${testimonial.name}`}
+          />
+        ) : null}
+        <blockquote className="text-sm leading-snug text-muted-foreground">
+          {testimonial.content}
+        </blockquote>
+
+        <figcaption className="mt-auto flex items-center gap-4 pt-5">
+          <Avatar className="size-9">
+            <AvatarImage src={testimonial.image} alt={testimonial.name} />
+            <AvatarFallback>{testimonial.avatar}</AvatarFallback>
+          </Avatar>
+
+          <div className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-medium tracking-tight">
+              {testimonial.name}
+            </span>
+            <span className="truncate font-mono text-[10px] tracking-wider text-muted-foreground/60">
+              {testimonial.role}
+            </span>
+          </div>
+        </figcaption>
+      </div>
+    </figure>
   );
 }
 
@@ -78,10 +73,11 @@ function TestimonialsTrack({
 }) {
   return (
     <InfiniteSlider
-      gap={0}
+      gap={15}
       speed={MARQUEE_SPEED}
       speedOnHover={MARQUEE_SPEED_HOVER}
       reverse={reverse}
+      className="border-y border-border"
     >
       {items.map((testimonial) => (
         <TestimonialSlide key={testimonial.id} testimonial={testimonial} />
@@ -96,7 +92,7 @@ export function Testimonials() {
       <h2 className="no-js-visible section-heading mb-3">
         Community
       </h2>
-      <div className="relative px-6">
+      <div className="relative mb-[15px] flex flex-col gap-[15px]">
         <TestimonialsTrack items={marqueeTop} />
         {marqueeBottom.length > 0 && (
           <TestimonialsTrack items={marqueeBottom} reverse />
