@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import styles from "./site-header.module.css";
 
 /**
  * Sticky floating header shared by every route.
@@ -49,9 +50,11 @@ export function SiteHeader() {
                 <Link
                   href="/components"
                   aria-label="Components"
-                  className="flex h-8 items-center justify-center rounded-md px-2.5 font-mono text-[10px] font-medium leading-none outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-ring"
+                  className={`${styles.componentsLink} flex h-8 items-center justify-center rounded-md px-2.5 font-mono text-[10px] font-medium leading-none outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-ring`}
                 >
-                  UI
+                  <span aria-hidden="true" className={styles.label} data-label="UI">
+                    UI
+                  </span>
                 </Link>
               </TooltipTrigger>
               <TooltipContent><p>Components</p></TooltipContent>

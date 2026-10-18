@@ -1,0 +1,67 @@
+.label {
+  position: relative;
+  display: inline-block;
+}
+
+.label::before,
+.label::after {
+  content: attr(data-label);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.label::before {
+  background-image: linear-gradient(
+    110deg,
+    color-mix(in oklch, var(--primary) 80%, var(--foreground)),
+    var(--primary) 45%,
+    color-mix(in oklch, var(--primary) 75%, var(--background))
+  );
+}
+
+.label::after {
+  background-image: linear-gradient(
+    110deg,
+    color-mix(in oklch, var(--primary) 75%, var(--background)),
+    var(--primary) 55%,
+    color-mix(in oklch, var(--primary) 80%, var(--foreground))
+  );
+}
+
+.componentsLink:is(:hover, :focus-visible) .label::before {
+  opacity: 1;
+}
+
+.componentsLink:is(:hover, :focus-visible) .label::after {
+  animation: blue-gradient 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes blue-gradient {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label::before,
+  .label::after {
+    animation: none !important;
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .label::before,
+  .label::after {
+    display: none;
+  }
+}
