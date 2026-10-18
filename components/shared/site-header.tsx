@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
+import { revealOnMount } from "@/lib/motion";
 import styles from "./site-header.module.css";
 
 export function SiteHeader() {
@@ -16,7 +17,11 @@ export function SiteHeader() {
 
   return (
     <header className="pointer-events-none sticky top-3 z-40 mx-auto -mb-11 flex h-11 w-full max-w-[var(--frame-max-w)] items-center justify-between gap-4 px-6 sm:top-4">
-      <nav aria-label={navigationConfig.label} className="pointer-events-auto flex items-center gap-2">
+      <motion.nav
+        {...revealOnMount({ y: -10 })}
+        aria-label={navigationConfig.label}
+        className="pointer-events-auto flex items-center gap-2"
+      >
         <Link
           href="/"
           aria-label="Home"
@@ -53,7 +58,7 @@ export function SiteHeader() {
             );
           })}
         </div>
-      </nav>
+      </motion.nav>
       <HeaderActions />
     </header>
   );
