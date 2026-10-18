@@ -233,6 +233,17 @@ export const testimonialsConfig: Testimonial[] = [
     order: 21,
     enabled: true,
   },
+  {
+    id: "daniel-sinewe",
+    name: "Daniel Sinewe",
+    role: "Indie Builder",
+    content: "coolest!",
+    avatar: "DS",
+    image: "/testimonial/daniel-sinewe.jpg",
+    href: "https://peerlist.io/scroll/post/ACTHOK8L87OR7B8KMHP7GJ97GEEPBQ?commentId=CHA9EKENJO7Q6NL2J6RP9JDLLMN9",
+    order: 22,
+    enabled: true,
+  },
 ];
 
 /** Every testimonial in authored order. Used by the /testimonials page. */

@@ -9,9 +9,8 @@ import { motion } from "motion/react";
 /**
  * Two-column quote grid for /testimonials.
  *
- * Same cell idiom as the bookmarks and certifications grids: zero gap, each
- * cell drawing its own inset ring, with the blueprint hatch and a top-edge
- * highlight that both resolve on hover. Quotes are real figure/blockquote
+ * Row borders continue through the gutters to form a continuous grid, with
+ * a blueprint hatch that resolves on hover. Quotes are real figure/blockquote
  * markup so each note is addressable on its own.
  */
 export function TestimonialsGrid({
@@ -20,57 +19,66 @@ export function TestimonialsGrid({
   testimonials: Testimonial[];
 }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2">
-      {testimonials.map((testimonial, index) => (
-        <motion.figure
-          key={testimonial.id}
-          {...reveal({
-            y: 8,
-            delay: revealDelay(index, 0.04),
-          })}
-          className={cn(
-            "group relative flex flex-col px-4 py-5 transition-colors hover:bg-muted/10",
-            testimonial.href && "cursor-pointer",
-          )}
+    <div className="relative flex flex-col gap-[15px]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-[15px] -translate-x-1/2 border-x border-border sm:block"
+      />
+      {Array.from({ length: Math.ceil(testimonials.length / 2) }, (_, rowIndex) => (
+        <div
+          key={testimonials[rowIndex * 2].id}
+          className="contents sm:grid sm:grid-cols-2 sm:gap-[15px] sm:border-y sm:border-border"
         >
-          <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5" />
-          <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-50 transition-opacity group-hover:opacity-100" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-foreground/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+          {testimonials.slice(rowIndex * 2, rowIndex * 2 + 2).map((testimonial, columnIndex) => (
+            <motion.figure
+              key={testimonial.id}
+              {...reveal({
+                y: 8,
+                delay: revealDelay(rowIndex * 2 + columnIndex, 0.04),
+              })}
+              className={cn(
+                "group relative flex flex-col border-y border-border p-5 transition-colors hover:bg-muted/10 sm:border-0",
+                testimonial.href && "cursor-pointer",
+              )}
+            >
+              <div className="blueprint-bg pointer-events-none absolute inset-0 opacity-50 transition-opacity group-hover:opacity-100" />
 
-          <div className="relative z-10 flex flex-1 flex-col">
-            {testimonial.href ? (
-              <a
-                href={testimonial.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute inset-0 z-20"
-                aria-label={`Open original post from ${testimonial.name}`}
-              />
-            ) : null}
-            <blockquote className="text-sm leading-snug text-muted-foreground">
-              &ldquo;{testimonial.content}&rdquo;
-            </blockquote>
+              <div className="relative z-10 flex flex-1 flex-col">
+                {testimonial.href ? (
+                  <a
+                    href={testimonial.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute inset-0 z-20"
+                    aria-label={`Open original post from ${testimonial.name}`}
+                  />
+                ) : null}
+                <blockquote className="text-sm leading-snug text-muted-foreground">
+                  {testimonial.content}
+                </blockquote>
 
-            <figcaption className="mt-auto pt-3 flex items-center gap-3">
-              <Avatar className="size-8">
-                <AvatarImage
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                />
-                <AvatarFallback>{testimonial.avatar}</AvatarFallback>
-              </Avatar>
+                <figcaption className="mt-auto pt-5 flex items-center gap-4">
+                  <Avatar className="size-9">
+                    <AvatarImage
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                    />
+                    <AvatarFallback>{testimonial.avatar}</AvatarFallback>
+                  </Avatar>
 
-              <div className="flex min-w-0 flex-col">
-                <span className="truncate text-sm font-medium tracking-tight">
-                  {testimonial.name}
-                </span>
-                <span className="truncate font-mono text-[10px] tracking-wider text-muted-foreground/60">
-                  {testimonial.role}
-                </span>
+                  <div className="flex min-w-0 flex-col">
+                    <span className="truncate text-sm font-medium tracking-tight">
+                      {testimonial.name}
+                    </span>
+                    <span className="truncate font-mono text-[10px] tracking-wider text-muted-foreground/60">
+                      {testimonial.role}
+                    </span>
+                  </div>
+                </figcaption>
               </div>
-            </figcaption>
-          </div>
-        </motion.figure>
+            </motion.figure>
+          ))}
+        </div>
       ))}
     </div>
   );
