@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion, useSpring } from "motion/react";
 import {
   useEffect,
   useMemo,
@@ -42,7 +43,38 @@ export type SectionRailProps = {
   className?: string;
 };
 
-const WAVE_WIDTHS = ["w-14", "w-11", "w-9", "w-7"];
+const WAVE_SCALES = [1, 44 / 56, 36 / 56, 28 / 56];
+
+function RailDash({ scale, isActive }: { scale: number; isActive: boolean }) {
+  const scaleX = useSpring(scale, { stiffness: 260, damping: 30, mass: 0.8 });
+
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateScale = () => {
+      if (query.matches) {
+        scaleX.jump(scale);
+      } else {
+        scaleX.set(scale);
+      }
+    };
+    updateScale();
+    query.addEventListener("change", updateScale);
+    return () => query.removeEventListener("change", updateScale);
+  }, [scale, scaleX]);
+
+  return (
+    <motion.span
+      aria-hidden
+      className={cn(
+        "block h-0.5 w-full origin-left rounded-full transition-colors duration-300 ease-out motion-reduce:transition-none",
+        isActive
+          ? "bg-foreground"
+          : "bg-muted-foreground/40 group-hover:bg-muted-foreground"
+      )}
+      style={{ scaleX }}
+    />
+  );
+}
 
 export function SectionRail({
   items,
@@ -199,19 +231,13 @@ export function SectionRail({
       {items.map((item, index) => {
         const isActive = active === item.id;
         const distanceFromActive = Math.abs(activeIndex - index);
+        const scale =
+          WAVE_SCALES[Math.min(distanceFromActive, WAVE_SCALES.length - 1)];
         // The dash stays 2px tall; a 14px row around it (offset by -my-1.5 so
         // the visible gap is unchanged) is what you actually click.
         const rowClass = cn(
-          "group -my-1.5 flex cursor-pointer items-center py-1.5 transition-[width] duration-300 ease-out",
-          "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-          "motion-reduce:transition-none",
-          WAVE_WIDTHS[Math.min(distanceFromActive, WAVE_WIDTHS.length - 1)]
-        );
-        const dashClass = cn(
-          "block h-0.5 w-full rounded-full transition-colors duration-300 ease-out motion-reduce:transition-none",
-          isActive
-            ? "bg-foreground"
-            : "bg-muted-foreground/40 group-hover:bg-muted-foreground"
+          "group -my-1.5 flex w-14 cursor-pointer items-center py-1.5",
+          "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         );
         return (
           <Tooltip key={item.id}>
@@ -223,7 +249,7 @@ export function SectionRail({
                   aria-current={isActive ? "page" : undefined}
                   className={rowClass}
                 >
-                  <span aria-hidden className={dashClass} />
+                  <RailDash scale={scale} isActive={isActive} />
                 </Link>
               ) : (
                 <button
@@ -233,7 +259,7 @@ export function SectionRail({
                   onClick={() => scrollTo(item.id)}
                   className={rowClass}
                 >
-                  <span aria-hidden className={dashClass} />
+                  <RailDash scale={scale} isActive={isActive} />
                 </button>
               )}
             </TooltipTrigger>

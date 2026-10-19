@@ -101,8 +101,9 @@ Items with an `href` navigate instead of scrolling. Pass `activeId` to pin the c
 ## Notes & features
 
 - **Scroll tracking.** An intersection observer selects the target nearest the center reading band.
+- **Spring-smoothed marks.** Motion's `useSpring` eases the waveform between sections with transform-only scaling, keeping the click targets steady.
 - **Reliable final section.** Reaching the bottom of the viewport or contained scroller activates the last item even when it is short.
-- **Reduced motion.** Section jumps honor `prefers-reduced-motion`.
+- **Reduced motion.** Section jumps and waveform changes are instant with `prefers-reduced-motion`.
 - **Accessible controls.** Scroll marks are buttons, links stay links, and `aria-current` identifies the active destination.
 - **Stable targets.** IDs must be unique in the document. When `scrollRootRef` is provided, targets outside that element are ignored.
 - **Tooltip setup.** Mount shadcn's `TooltipProvider` once near the root of your application.

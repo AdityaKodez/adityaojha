@@ -498,7 +498,8 @@
         "accessibility"
       ],
       "dependencies": [
-        "radix-ui"
+        "radix-ui",
+        "motion"
       ],
       "registryDependencies": [
         "tooltip"
