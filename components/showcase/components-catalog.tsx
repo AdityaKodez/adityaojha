@@ -31,11 +31,11 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
                 )}
               </div>
               <div className="flex min-w-0 grow flex-col">
-                <h3 className="truncate text-sm font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
+                <h3 className="truncate text-sm font-medium tracking-tight text-foreground">
                   {c.title}
                 </h3>
-                <p className="mt-1 line-clamp-2 text-xs text-muted-foreground/80">
-                  {c.description}
+                <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+                  {c.summary ?? c.description}
                 </p>
               </div>
             </div>

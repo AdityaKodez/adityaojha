@@ -37,8 +37,8 @@ export type RotatingInstallCommandProps = {
  * affordance, same monospace treatment — only the trailing id rotates.
  *
  * Pauses on hover/focus so users can read or copy without the value jumping.
- * Respects `prefers-reduced-motion` by dropping the per-swap transition while
- * keeping the rotation cycle itself intact.
+ * Touch interaction pauses the cycle for the rest of the visit. Reduced
+ * motion keeps the example static.
  */
 export function RotatingInstallCommand({
   ids,
@@ -46,23 +46,26 @@ export function RotatingInstallCommand({
   className,
 }: RotatingInstallCommandProps) {
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [touched, setTouched] = useState(false);
   const manager = usePackageManager();
   const { status, copy } = useCopy();
   const reduced = useReducedMotion();
 
-  const safeIds = useMemo(() => (ids.length > 0 ? ids : [""]), [ids]);
-  const currentId = safeIds[index % safeIds.length];
+  const safeIds = useMemo(() => ids.filter(Boolean), [ids]);
+  const currentId = safeIds[index % safeIds.length] ?? "";
   const commands = useMemo(() => getAddCommands(currentId), [currentId]);
   const command = commands[manager] ?? commands.npm;
+  const paused = hovered || focused || touched || status !== "idle";
 
   useEffect(() => {
-    if (paused || safeIds.length < 2) return;
+    if (paused || reduced || safeIds.length < 2) return;
     const timer = window.setInterval(() => {
       setIndex((current) => (current + 1) % safeIds.length);
     }, intervalMs);
     return () => window.clearInterval(timer);
-  }, [paused, safeIds.length, intervalMs]);
+  }, [paused, reduced, safeIds.length, intervalMs]);
 
   if (safeIds.length === 0) return null;
 
@@ -87,12 +90,14 @@ export function RotatingInstallCommand({
   return (
     <div
       className={cn("relative", className)}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => setPaused(false)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onTouchStart={() => setTouched(true)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+      }}
     >
-
       {/* Package manager tabs — same shape as InstallCommand. */}
       <div className="mb-2 flex items-center gap-1">
         {PACKAGE_MANAGERS.map((pm) => {

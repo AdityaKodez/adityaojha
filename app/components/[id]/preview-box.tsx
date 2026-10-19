@@ -144,7 +144,7 @@ export function PreviewBox({
       <div className="preview-body relative mx-1 mb-1 overflow-hidden rounded-xl border bg-background shadow-xs">
         <div
           data-active={activeTab === "preview"}
-          className="preview-pane flex px-4 py-6 sm:px-6 sm:py-8"
+          className="preview-pane flex px-4 py-4 sm:px-6 sm:py-5"
         >
           {/* m-auto centers small demos in both axes, but degrades to
               top-aligned when the content overflows — flexbox centering

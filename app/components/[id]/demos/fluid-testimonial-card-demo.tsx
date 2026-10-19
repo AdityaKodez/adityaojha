@@ -7,7 +7,7 @@ import {
 
 export function FluidTestimonialCardDemo(props: Partial<FluidTestimonialCardProps> = {}) {
   return (
-    <div className="flex w-full justify-center px-2 py-8">
+    <div className="flex w-full justify-center">
       <FluidTestimonialCard
         quote="Collaborating with Tanj was a game changer for us."
         description="We turned vague ideas into actionable plans and designs in record time."

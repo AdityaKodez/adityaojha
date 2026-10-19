@@ -146,8 +146,8 @@ export const siteConfig: PortfolioConfig = {
     githubUsername: "AdityaKodez",
   },
   sectionOrder: [
-    "socials",
     "projects",
+    "socials",
     "components",
     "skills",
     "about",

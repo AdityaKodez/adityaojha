@@ -310,7 +310,7 @@ body {
   }
 
   .preview-body {
-    --preview-min-h: clamp(240px, 42vh, 420px);
+    --preview-min-h: clamp(200px, 30vh, 300px);
     /* Ceiling — tall demos scroll inside the pane instead of stretching the
        box, so every component gets a similar-sized stage. */
     --preview-max-h: clamp(420px, 62vh, 560px);
@@ -324,7 +324,7 @@ body {
   /* `svh` (not `vh`) so mobile URL-bar collapse can't resize the box. */
   @supports (height: 1svh) {
     .preview-body {
-      --preview-min-h: clamp(240px, 42svh, 420px);
+      --preview-min-h: clamp(200px, 30svh, 300px);
       --preview-max-h: clamp(420px, 62svh, 560px);
     }
   }

@@ -159,9 +159,10 @@ The home page is a loop, not a hand-written layout.
 - `github` is special: it is server-fetched, wrapped in React Suspense with
   `components/skeletons/github-skeleton.tsx`, and only rendered when
   `GITHUB_TOKEN` is present.
-- The current order is projects, components, skills, about, github,
-  testimonials, bookmarks, socials, sponsors. Certifications, experience,
-  services, workflow and contact exist but are flagged off. The `sponsors`
+- The current order is projects, socials, components, skills, about, sponsors,
+  github, testimonials, bookmarks, certifications. Work follows the hero so
+  visitors reach projects before the six social rows. Experience, services,
+  workflow and contact exist but are flagged off. The `sponsors`
   section is a compact, single-row logo strip with one invitation, not an orbit
   or a grid of empty seats. On the home page it sits directly after About.
   Supporter names appear in tooltips on hover and keyboard focus. Logo hover
@@ -423,6 +424,15 @@ Rules:
 - `config/components.ts` holds `componentRegistry` plus two helpers:
   `findComponent(id)` skips disabled entries, and `getEnabledComponents()`
   returns enabled entries sorted by `order`.
+- Cards and the home teaser use the optional `summary` field for short copy,
+  with foreground titles and muted descriptions. The full `description` remains
+  the source for detail pages and metadata.
+- The catalog install example uses `RotatingInstallCommand`, with package
+  manager tabs directly above the cycling command and no extra component label
+  or selector. Rotation pauses on hover, focus, and touch, and stays static for
+  reduced motion. Preserve the existing install analytics event names and location.
+- Detail previews use a compact, content-sized stage with a bounded maximum
+  height. The stage owns demo padding; avoid duplicating it in small demos.
 - A 20px spacer using the existing `.blueprint-bg` utility separates the
   installation command from the catalog, with no featured preview section or
   spotlight configuration. The spacer owns its top border; the catalog supplies

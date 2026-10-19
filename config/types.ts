@@ -390,6 +390,8 @@ export interface ComponentDoc {
   id: string;
   title: string;
   description: string;
+  /** Short copy for catalog cards and the home page teaser. */
+  summary?: string;
   icon: ComponentIcon;
   /** Path (relative to project root) of the tsx file used as the live preview. */
   demoPath: string;

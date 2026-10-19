@@ -44,6 +44,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "fluid-testimonial-card",
     title: "Fluid testimonial card",
+    summary: "A testimonial card with a flowing gradient and hover lift.",
     description:
       "A compact testimonial card that lifts on hover, with a warm, flowing gradient behind its serif quote and author.",
     icon: "testimonial",
@@ -56,6 +57,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "emoji-reactions",
     title: "Emoji reactions",
+    summary: "A reaction picker with spring feedback and saved selections.",
     description:
       "A compact emoji reaction picker that swaps the emoji on your message with a short spring bounce, persistent selection, and keyboard navigation.",
     icon: "reactions",
@@ -68,6 +70,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "todo-list",
     title: "Todo list",
+    summary: "Task rows that animate completed items to the bottom.",
     description:
       "Content-sized task rows with completion checks in your primary color, an animated strike-through, and spring reordering that moves finished tasks to the bottom.",
     icon: "todo",
@@ -79,6 +82,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "theme-switcher",
     title: "Theme switcher",
+    summary: "Light, dark, and system themes with visual previews.",
     description:
       "A visual Light, Dark, and System theme selector with textured previews, an animated selection outline, and keyboard navigation.",
     icon: "appearance",
@@ -90,6 +94,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "prompt-bar",
     title: "Prompt Bar",
+    summary: "A prompt input with context chips and send, stop, and retry states.",
     description:
       "A compact prompt input with removable context chips, a toolbar slot for your model picker, and async send, stop, and retry states.",
     icon: "prompt",
@@ -101,6 +106,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "ask-ai",
     title: "Ask AI",
+    summary: "Send a prompt to your AI provider from a compact popover.",
     description:
       "A popover prompt launcher with an animated mascot trigger, one-click query links for major AI providers, and instant clipboard fallback.",
     icon: "sparkles",
@@ -113,6 +119,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "model-picker",
     title: "Model Picker",
+    summary: "Choose a model from a list filtered by provider.",
     description:
       "A chat-style model switcher. Provider icons on a side rail filter the list to models available from that provider.",
     icon: "models",
@@ -124,6 +131,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "glyph-card",
     title: "Glyph Card",
+    summary: "A card that gathers tiny marks into a glyph on hover.",
     description:
       "A hairline card whose background resolves into tiny plus marks on hover, gathering inside the glyph. Draws itself from a single SVG path on a 24x24 grid.",
     icon: "stack",
@@ -135,6 +143,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "command-palette",
     title: "Command Palette",
+    summary: "A keyboard command menu with nested pages and recent actions.",
     description:
       "A keyboard-first ⌘K palette with grouped actions, drill-down pages, recent items, and directional motion, built on cmdk inside a self-contained dialog shell.",
     icon: "command",
@@ -146,6 +155,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "progress-bars",
     title: "Progress Bars",
+    summary: "Textured bar charts with line or dot fills and tooltips.",
     description:
       "A minimal textured bar chart with vertical and horizontal layouts, shipping a line fill and a dot matrix fill. Each item needs only a value, with an optional label and tooltip.",
     icon: "bars",
@@ -157,6 +167,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "section-rail",
     title: "Section Rail",
+    summary: "Section navigation with scroll tracking and hover previews.",
     description:
       "A responsive section navigation rail with scroll tracking, smooth anchor jumps, link mode, and optional rich hover previews.",
     icon: "rail",
@@ -168,6 +179,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "project-explorer",
     title: "Interactive Project Explorer",
+    summary: "Year folders with project status badges and image previews.",
     description:
       "An IDE-style project explorer with collapsible year folders, status badges, and floating cursor image previews.",
     icon: "folder",
@@ -179,6 +191,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "dotted-world-map",
     title: "Dotted World Map",
+    summary: "An SVG world map with dots colored by your data.",
     description:
       "A lightweight SVG world map made of dots, each tinted by a value. Drop it into analytics, hero sections, or anywhere you need a quiet global pulse.",
     icon: "globe",
@@ -190,6 +203,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "copy-command-block",
     title: "Copy Command Block",
+    summary: "Copy install commands with saved package manager preferences.",
     description:
       "A multi-package manager terminal command box with tab switcher (npm, pnpm, yarn, bun), persistent storage, copy feedback animation, and blueprint styling.",
     icon: "terminal",
@@ -201,6 +215,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "interactive-skill-cloud",
     title: "Interactive Skill Cloud",
+    summary: "Draggable skill pills that fall, collide, and bounce.",
     description:
       "A draggable physics pill cloud powered by matter.js, pills rain down, pile at the bottom, and collide; grab one and fling it.",
     icon: "pills",
@@ -212,6 +227,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "github-map",
     title: "GitHub Heatmap",
+    summary: "A contribution calendar with themed colors and date tooltips.",
     description:
       "An interactive 52-week contribution activity graph with date-fns interval calculation, theme-aware level colors, and date tooltips.",
     icon: "git",
@@ -223,6 +239,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "carousel",
     title: "Fluid Carousel",
+    summary: "A spring carousel with touch, keyboard, and pagination controls.",
     description:
       "Accessible touch-swipeable slide carousel with directional spring animations, keyboard arrow navigation, and pagination indicators.",
     icon: "carousel",
@@ -234,6 +251,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "contact-channels",
     title: "Contact Channels",
+    summary: "A contact grid with copy actions and keyboard shortcuts.",
     description:
       "A hairline grid of contact cells with copy-to-clipboard actions, single-key shortcuts, tooltips, and blueprint hover styling.",
     icon: "channels",
@@ -245,6 +263,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "mode-toggler",
     title: "Mode Toggler",
+    summary: "A compact theme toggle with an optional click sound.",
     description:
       "A minimal Sun ↔ Moon theme toggle button built on next-themes. Supports an optional click sound, composable className, and dynamic aria-label.",
     icon: "theme",
@@ -256,6 +275,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "workflow-status",
     title: "Workflow Status",
+    summary: "Workflow badges with custom states, icons, and colors.",
     description:
       "Compact workflow badges with semantic defaults, custom states, icon and colour overrides, two sizes, and an icon-only form.",
     icon: "status",
@@ -267,6 +287,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "snake",
     title: "Snake",
+    summary: "A dot-grid snake game with keyboard and swipe controls.",
     description:
       "A monochrome snake game on a dot-lattice field. Steer with the arrow keys, WASD, or a swipe, eat to grow by one segment, and wrap around the edges.",
     icon: "snake",
@@ -278,6 +299,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "stack-rolodex",
     title: "Stack Rolodex",
+    summary: "A rotating pill stack with depth and edge fading.",
     description:
       "A rotating vertical pill stack that cycles through a list rolodex-style, with depth scaling, edge fading, and an optional side label.",
     icon: "rolodex",
@@ -289,6 +311,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "progressive-blur",
     title: "Progressive Blur",
+    summary: "A layered backdrop blur with directional masking.",
     description:
       "Multi-layered gradient backdrop blur overlay with exponential Gaussian steps and directional masking for sticky navbars and cards.",
     icon: "blur",
@@ -300,6 +323,7 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "infinite-slider",
     title: "Infinite Slider",
+    summary: "A looping slider with adjustable speed and hover slowdown.",
     description:
       "A continuous looping marquee slider powered by Motion and React Use Measure with custom gap, speed, direction, and hover deceleration.",
     icon: "slider",

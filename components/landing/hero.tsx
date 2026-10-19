@@ -161,14 +161,16 @@ export function Hero() {
             animate={{ y: 0 }}
             transition={{ ...entryTransition, delay: 0.08 }}
           >
-            <span className="block">{heroConfig.headlineBefore}</span>
-            <span className="underline decoration-border/50 underline-offset-4 sm:hidden">
-              {heroConfig.highlightedPhrases[0]}
-            </span>
-            <span className="hidden sm:inline">
-              <WritingUnderline delay={0.22}>
+            <span className="whitespace-nowrap">
+              {heroConfig.headlineBefore}{" "}
+              <span className="underline decoration-border/50 underline-offset-4 sm:hidden">
                 {heroConfig.highlightedPhrases[0]}
-              </WritingUnderline>
+              </span>
+              <span className="hidden sm:inline">
+                <WritingUnderline delay={0.22}>
+                  {heroConfig.highlightedPhrases[0]}
+                </WritingUnderline>
+              </span>
             </span>{" "}
             <span className="whitespace-nowrap">
               in{" "}
@@ -206,7 +208,7 @@ export function Hero() {
           >
             <Tooltip onOpenChange={setIsLocationTooltipOpen}>
               <TooltipTrigger
-                className="micro-transition flex items-center gap-1.5 rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground"
+                className="micro-transition flex items-center gap-1.5 rounded-sm py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground"
                 onMouseEnter={() => setIsLocationHovered(true)}
                 onMouseLeave={() => setIsLocationHovered(false)}
                 onFocus={() => setIsLocationHovered(true)}
