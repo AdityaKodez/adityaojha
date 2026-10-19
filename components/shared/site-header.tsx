@@ -39,7 +39,27 @@ export function SiteHeader() {
         </Link>
 
         <div className="hidden items-center gap-1.5 md:flex">
-          <span aria-hidden="true" className="mx-1 h-px w-3 bg-border" />
+          <svg
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+            focusable="false"
+            className="mx-0.5 size-4 shrink-0 text-muted-foreground/60"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="3" cy="4" r="1.25" fill="currentColor" stroke="none" />
+            <path d="M7.5 4H13M3 9v3h5" />
+            <circle
+              cx="12.5"
+              cy="12"
+              r="1.25"
+              className="fill-primary/70"
+              stroke="none"
+            />
+          </svg>
           {siteNavigationItems.filter((item) => item.id !== "home").map((item) => {
             const active = isNavigationItemActive(item, pathname);
             return (

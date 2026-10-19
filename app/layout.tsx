@@ -1,4 +1,5 @@
 import { BottomNav } from "@/components/landing/bottom-nav";
+import { BackToTop } from "@/components/shared/back-to-top";
 import { FrameGutters } from "@/components/shared/frame-gutters";
 import { PostHogProvider } from "@/components/shared/posthog-provider";
 import { SiteHeader } from "@/components/shared/site-header";
@@ -172,6 +173,7 @@ export default function RootLayout({
                   {children}
                 </div>
                 <BottomNav />
+                <BackToTop />
               </div>
             </PostHogProvider>
           </TooltipProvider>

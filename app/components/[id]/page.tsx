@@ -144,7 +144,7 @@ export default async function ComponentDetailPage({
       className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x border-b-2 bg-background pt-14 pb-12"
     >
       {/* Breadcrumb */}
-      <div className="px-6 pt-4 border-t border-dashed">
+      <div className="px-6 pt-4">
         <Breadcrumb>
           <BreadcrumbList className="text-xs">
             <BreadcrumbItem>
@@ -164,7 +164,7 @@ export default async function ComponentDetailPage({
       </div>
 
       {/* Title bar */}
-      <div className="section-heading flex flex-wrap items-center justify-between gap-2">
+      <div className="section-heading border-t-0 flex flex-wrap items-center justify-between gap-2">
         <h1>{component.title}</h1>
         <CopyPageMenu
           componentId={component.id}

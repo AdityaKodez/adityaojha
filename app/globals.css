@@ -241,6 +241,12 @@ body {
     mask-image: linear-gradient(to bottom, transparent 0%, #000 78%);
   }
 
+  @media (width < 48rem) {
+    .bottom-blur {
+      height: calc(24px + env(safe-area-inset-bottom));
+    }
+  }
+
   .blueprint-bg {
     background-image:
       repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.015) 10px, rgba(0,0,0,0.015) 11px),

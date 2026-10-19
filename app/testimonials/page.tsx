@@ -108,9 +108,9 @@ export default function TestimonialsPage() {
           }}
         />
 
-        <section className="border-t border-dashed pt-4">
+        <section className="pt-4">
           <p className="px-6 pb-4 text-xs">Testimonials</p>
-          <h1 className="section-heading">what people said.</h1>
+          <h1 className="section-heading border-t-0">what people said.</h1>
 
 
         </section>

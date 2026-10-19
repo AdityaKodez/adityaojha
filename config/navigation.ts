@@ -5,6 +5,7 @@ export const navigationConfig = {
   menu: "Menu",
   close: "Close navigation",
   search: "Open command palette",
+  backToTop: "Back to top",
   githubLabel: "View source on GitHub (opens in a new tab)",
 };
 
