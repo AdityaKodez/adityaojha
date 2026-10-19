@@ -1,6 +1,7 @@
-import { GitHubCalendar } from "@/components/ui/github-map";
+import { GitHubActivity } from "@/components/landing/github-activity";
 import { siteConfig } from "@/config/site";
 import { fetchGithubData } from "@/lib/github";
+import { buildActivityCalendar } from "@/lib/github-activity";
 import { revealOnMount } from "@/lib/motion";
 import * as motion from "motion/react-client";
 
@@ -9,21 +10,20 @@ export async function GitHubSection() {
     siteConfig.personal.githubUsername,
   );
 
-  if (contributions.length === 0) {
+  const calendar = buildActivityCalendar(contributions);
+  if (!calendar) {
     return null;
   }
 
-  // GitHubCalendar is a bare registry component, so the home page's section
-  // rule belongs here rather than in the published component.
   return (
-    <div className="border-t border-dashed">
+    <div className="border-t border-dashed p-2">
       <motion.div
         className="no-js-visible"
         {...revealOnMount({ y: 0 })}
         initial={{ opacity: 0, scale: 0.99 }}
         animate={{ opacity: 1, scale: 1 }}
       >
-        <GitHubCalendar data={contributions} />
+        <GitHubActivity key={calendar.end} calendar={calendar} />
       </motion.div>
     </div>
   );
