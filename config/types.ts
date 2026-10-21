@@ -13,6 +13,7 @@ export type SectionId =
   | "workflow"
   | "github"
   | "bookmarks"
+  | "bookshelf"
   | "certifications"
   | "sponsors"
   | "contact";
@@ -283,6 +284,24 @@ export interface Bookmark {
   title: string;
   domain: string;
   icon?: LinkCardIcon;
+}
+
+export interface Book {
+  id: string;
+  title: string;
+  author: string;
+  cover: { src: string; width: number; height: number; alt: string };
+  /** Original book page and the exact source of the locally stored artwork. */
+  sourceUrl: string;
+  coverSourceUrl: string;
+  spine: {
+    src: string;
+    height: number;
+    width: number;
+    sourceUrl?: string;
+  };
+  order: number;
+  enabled?: boolean;
 }
 
 export interface Certification {

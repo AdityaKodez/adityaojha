@@ -9,4 +9,8 @@ export const sectionNotes: Partial<Record<SectionId, SectionNoteConfig>> = {
     text: "Big thanks\nto these folks",
     side: "left",
   },
+  bookshelf: {
+    text: "Books I keep\ncoming back to",
+    side: "right",
+  },
 };

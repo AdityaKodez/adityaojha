@@ -94,6 +94,7 @@ component.
 | `config/types.ts` | Every shared type, plus the `SectionId` union |
 | `config/site.ts` | The root `siteConfig` object, meta, personal info, section order, section flags, banner, about, services, workflow, contact |
 | `config/hero.ts` | `heroConfig`, hero copy |
+| `config/books.ts` | Bookshelf copy and ordered books, local covers, source URLs, and spine presentation |
 | `config/skills.ts` | `skillsSectionConfig` + `skillsConfig` |
 | `config/socials.ts` | `socialSectionConfig` + `socialsConfig` |
 | `config/projects.ts` | `projectsSectionConfig` + `projectsConfig` |
@@ -160,7 +161,7 @@ The home page is a loop, not a hand-written layout.
   `components/skeletons/github-skeleton.tsx`, and only rendered when
   `GITHUB_TOKEN` is present.
 - The current order is projects, socials, components, skills, about, sponsors,
-  github, testimonials, bookmarks, certifications. Work follows the hero so
+  github, testimonials, bookshelf, bookmarks, certifications. Work follows the hero so
   visitors reach projects before the six social rows. Experience, services,
   workflow and contact exist but are flagged off. The `sponsors`
   section is a compact, single-row logo strip with one invitation, not an orbit
@@ -493,6 +494,35 @@ Rules:
   the stacked containers line up on both edges.
 
 ## 16. Environment
+
+### Bookshelf
+
+- The bookshelf is a home section directly before Bookmarks, with `/#bookshelf`
+  in the command palette and no standalone route. Its data lives in
+  `config/books.ts`; optimized cover assets
+  live in `public/images/books/`, with their original sources in the config.
+- The shelf opens `bookshelfConfig.defaultBookId` on first render. Hover lifts
+  a closed book gently with a spring, without changing the selected cover.
+  Opening a book eases it back onto the shelf; open covers never lift. Click,
+  tap, Enter, or Space selects a cover; activating it again, clicking outside,
+  or Escape closes it. Focus alone never opens a book. Keep the shelves free
+  of drop shadows; disable the lift for touch and reduced motion.
+- All books share one continuous row at every width. Narrow screens scroll
+  horizontally instead of splitting the collection onto more shelves.
+  The mobile ledge spans the full section width and uses the `rounded-lg` radius.
+- Covers and spines use local SVG paths, preserving each edition's lettering
+  and colors. Photographic cover artwork is interpreted as layered vector
+  illustrations, never embedded raster images. Keep original artwork source
+  URLs in the book config. Reveal the flat cover with an opacity transition,
+  not perspective rotation, skew, baked-in mockup shadows, or 3D page planes.
+- Keep cover images mounted and eagerly loaded before selection. Clip hidden
+  artwork inside each book so preloaded covers cannot widen the scroll rail.
+- Books reveal once on scroll with the shared reveal helper: a 28px rise,
+  60ms stagger, and 120px bottom viewport inset to clear the fixed fade.
+  This is a deliberate exception to the immediate home-section rendering rule.
+  Keep the reduced-motion and no-JavaScript fallbacks. No title, author, or
+  hint caption appears below the shelf; each button retains its accessible label.
+- Keep the header navigation and garden-footer routes unchanged.
 
 | Variable | Used by | Behaviour when missing |
 | --- | --- | --- |

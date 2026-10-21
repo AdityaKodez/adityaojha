@@ -1,0 +1,165 @@
+.shelf {
+  --book-scale: 1;
+  margin: 0 auto;
+  padding: 8px 0 24px;
+}
+
+.rail {
+  position: relative;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  /* A cover opening changes the row width, so the bar would flicker for the
+     length of the animation. The shelf still scrolls by wheel, trackpad, touch,
+     and keyboard focus. */
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.books {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  width: max-content;
+  min-height: calc(320px * var(--book-scale));
+  margin: 0 auto;
+  padding: 24px 32px 0;
+}
+
+.book {
+  --depth: calc(var(--spine-width) * var(--book-scale));
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: calc(var(--depth) + 4px);
+  height: calc(var(--book-height) * var(--book-scale));
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition-property: none;
+  outline: none;
+}
+
+.reveal {
+  flex: 0 0 auto;
+}
+
+.book[data-open="true"] {
+  width: calc(var(--book-height) * var(--book-scale) * var(--cover-ratio) + 5px);
+  z-index: 1;
+}
+
+.book:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 5px;
+  border-radius: var(--radius-sm);
+}
+
+.artwork {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.volume {
+  position: absolute;
+  inset: 0 auto 0 2px;
+  display: block;
+  width: calc(var(--book-height) * var(--book-scale) * var(--cover-ratio));
+  pointer-events: none;
+}
+
+.cover,
+.spine {
+  position: absolute;
+  display: block;
+}
+
+.cover {
+  inset: 0;
+  overflow: hidden;
+  background: var(--card);
+  border-radius: 0 calc(var(--radius-sm) / 2) calc(var(--radius-sm) / 2) 0;
+}
+
+.coverImage,
+.spineImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.coverImage {
+  object-fit: cover;
+}
+
+.spine {
+  inset: 0 auto 0 2px;
+  width: var(--depth);
+  overflow: hidden;
+  border-radius: calc(var(--radius-sm) / 2);
+  pointer-events: none;
+}
+
+.cover::after,
+.spine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--border);
+  pointer-events: none;
+}
+
+.baseline {
+  margin: 0 24px;
+  height: 8px;
+  border-radius: var(--radius-lg);
+  background: var(--border);
+}
+
+.fallback {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.fallback span:last-child {
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .artwork {
+    transform: none !important;
+  }
+}
+
+@media (width < 480px) {
+  .shelf {
+    --book-scale: 0.78;
+    padding-top: 28px;
+  }
+
+  .books {
+    gap: 2px;
+    padding-inline: 24px;
+  }
+
+  .baseline {
+    margin-inline: 0;
+    border-radius: var(--radius);
+  }
+}

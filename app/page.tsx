@@ -1,5 +1,6 @@
 import { About } from "@/components/landing/about";
 import { Bookmarks } from "@/components/landing/bookmarks";
+import { Bookshelf } from "@/components/landing/bookshelf";
 import { Campfire } from "@/components/landing/campfire";
 import { Certifications } from "@/components/landing/certifications";
 import { ComponentHighlights } from "@/components/landing/component-highlights";
@@ -22,6 +23,7 @@ import { Vader } from "@/components/landing/vader";
 import { PixelDissolve } from "@/components/ui/pixel-dissolve";
 import { SideNote } from "@/components/shared/side-note";
 import { projectsConfig, projectsSectionConfig } from "@/config/projects";
+import { getEnabledBooks } from "@/config/books";
 import { sectionNotes } from "@/config/section-notes";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
@@ -61,6 +63,7 @@ const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   ),
   components: <ComponentHighlights />,
   bookmarks: <Bookmarks />,
+  bookshelf: <Bookshelf books={getEnabledBooks()} />,
   certifications: <Certifications />,
   sponsors: <SponsorsSection />,
   experience: <Experience />,

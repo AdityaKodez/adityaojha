@@ -2,6 +2,7 @@
 
 import {
   Contrast,
+  BookmarkCheckIcon,
   FolderOpen,
   HeartHandshake,
   Home,
@@ -25,6 +26,7 @@ import {
   type CommandPalettePage,
 } from "@/components/ui/command-palette";
 import { getEnabledComponents } from "@/config/components";
+import { bookshelfConfig } from "@/config/books";
 import { projectsConfig } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 
@@ -91,6 +93,13 @@ export function SiteCommandPalette({
             icon: <MessageSquareQuote className="size-4" />,
             keywords: ["community", "kind words", "feedback", "quotes"],
             onSelect: go("/testimonials"),
+          },
+          {
+            id: "go-bookshelf",
+            label: bookshelfConfig.title,
+            icon: <BookmarkCheckIcon className="size-4" />,
+            keywords: ["books", "reading", "library", "shelf"],
+            onSelect: go(bookshelfConfig.href),
           },
           {
             id: "go-sponsor",
