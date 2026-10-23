@@ -169,6 +169,8 @@ The home page is a loop, not a hand-written layout.
   Supporter names appear in tooltips on hover and keyboard focus. Logo hover
   motion uses the banner's 0.35s spring with 0.3 bounce and respects reduced
   motion. The invitation's hover uses secondary colors, never primary.
+  The invitation links directly to `/api/sponsor-checkout` with a plain anchor
+  so visitors continue to Dodo's hosted checkout.
   Its “Supported by” heading matches
   About's greeting: Instrument Serif italic, 25px with a 32px line height,
   21px horizontal and 1px vertical padding, and 24px above the heading band.

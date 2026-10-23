@@ -19,9 +19,7 @@ import { cn } from "@/lib/utils";
 import { Plus } from "@/components/shared/site-icons";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
-import Link from "next/link";
 
-const MotionLink = motion.create(Link);
 const badgeSpring = { type: "spring", duration: 0.35, bounce: 0.3 } as const;
 const SEAT_PRICE_LABEL = `$${sponsorTiers.find((tier) => tier.enabled !== false)?.price ?? sponsorTiers[0]?.price ?? 5}`;
 
@@ -140,8 +138,8 @@ function SponsorList({ sponsors }: { sponsors: Sponsor[] }) {
         <li className="shrink-0">
           <Tooltip>
             <TooltipTrigger asChild>
-              <MotionLink
-                href="/sponsor"
+              <motion.a
+                href="/api/sponsor-checkout"
                 aria-label={supportLabel}
                 className={cn(
                   badgeClass,
@@ -150,7 +148,7 @@ function SponsorList({ sponsors }: { sponsors: Sponsor[] }) {
                 {...gestures}
               >
                 <Plus className="size-4" aria-hidden />
-              </MotionLink>
+              </motion.a>
             </TooltipTrigger>
             <TooltipContent sideOffset={8} className="flex-col gap-0.5 font-mono text-[11px] font-normal">
               <span>{supportLabel}</span>
