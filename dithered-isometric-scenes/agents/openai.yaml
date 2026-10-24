@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dithered Isometric Scenes"
+  short_description: "Dithered miniature scenes, from loops to long stories"
+  default_prompt: "Use $dithered-isometric-scenes to create an isometric miniature with a staged 45-second story, crisp dithered shading, and a composed ending."

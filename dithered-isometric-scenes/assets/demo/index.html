@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Small worlds - a dithered isometric study</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root { color-scheme: light; --ink:#35413c; --muted:#7e877e; --line:#e7eae3; }
+    * { box-sizing:border-box; }
+    [hidden] { display:none !important; }
+    body { margin:0; background:#fff; color:var(--ink); font-family:Arial,Helvetica,sans-serif; -webkit-font-smoothing:antialiased; }
+    main { max-width:1200px; min-height:100svh; margin:auto; padding:38px 48px 24px; display:flex; flex-direction:column; }
+    header { display:flex; justify-content:space-between; gap:24px; align-items:baseline; }
+    .wordmark { font:500 22px Georgia,serif; letter-spacing:-.7px; }
+    .edition { font:11px ui-monospace,monospace; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; }
+    .stage { min-height:330px; height:min(68svh,650px); width:100%; position:relative; margin:12px 0 0; }
+    .stage > p { position:absolute; top:40%; left:10%; width:80%; max-width:500px; color:var(--muted); font-size:14px; line-height:1.7; }
+    .caption { display:flex; justify-content:space-between; align-items:end; gap:28px; padding:6px 0 26px; }
+    .title-line { display:flex; gap:14px; align-items:baseline; }
+    .number { color:var(--muted); font:11px ui-monospace,monospace; }
+    h1 { font:400 32px Georgia,serif; margin:0; letter-spacing:-.7px; }
+    .description { margin:10px 0 0 30px; font-size:13px; line-height:1.6; color:var(--muted); }
+    .controls { display:flex; gap:8px; align-items:center; }
+    select { min-height:44px; max-width:190px; padding:0 30px 0 15px; border:1px solid var(--line);border-radius:24px;background:#fff;color:var(--ink);font:12px Arial,sans-serif;cursor:pointer; }
+    select:focus-visible { outline:2px solid #68775c;outline-offset:4px; }
+    button { font:12px Arial,sans-serif; color:var(--muted); border:1px solid transparent; background:transparent; padding:0 15px; min-height:44px; border-radius:24px; cursor:pointer; white-space:nowrap; }
+    button[aria-pressed="true"] { color:var(--ink); background:#f2f4ee; }
+    button:hover { color:var(--ink); border-color:var(--line); }
+    button:focus-visible,a:focus-visible { outline:2px solid #68775c; outline-offset:4px; }
+    #play { border-color:var(--line); color:var(--ink); min-width:90px; }
+    .timeline { display:flex; align-items:center; gap:14px; padding:0 0 18px; }
+    .timeline input { flex:1; min-width:40px; height:44px; accent-color:#68775c; cursor:pointer; }
+    .timeline input:focus-visible { outline:2px solid #68775c; outline-offset:3px; }
+    .timeline output { min-width:80px; font:11px ui-monospace,monospace; color:var(--muted); }
+    .phase { min-width:160px; font-size:12px; color:var(--muted); }
+    #loop { min-width:84px; border-color:var(--line); }
+    .rule { height:1px; background:var(--line); }
+    footer { display:flex; justify-content:space-between; gap:20px; font:11px/1.8 Arial,sans-serif; color:var(--muted); padding:20px 0 0; }
+    a { color:inherit; text-underline-offset:3px; }
+    @media(max-width:700px) {
+      main { padding:24px 20px 20px; }
+      header { gap:16px; }
+      .wordmark { font-size:21px; }
+      .edition { font-size:9px; letter-spacing:.7px; }
+      .stage { height:55svh; min-height:300px; margin:10px 0 0; }
+      .caption { flex-direction:column; align-items:start; gap:20px; padding-bottom:20px; }
+      h1 { font-size:28px; }
+      .description { max-width:290px; font-size:12px; }
+      .controls { width:100%; justify-content:space-between; gap:2px; }
+      button { padding:0 11px; }
+      footer { flex-direction:column; gap:4px; padding-top:16px; }
+      .timeline { flex-wrap:wrap; gap:6px 12px; }
+      .phase { width:100%; order:4; min-width:0; margin-top:3px; }
+      .timeline output { font-size:10px; min-width:75px; }
+      #loop { min-width:75px; padding:0 8px; }
+    }
+    @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto; } }
+  </style>
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+</head>
+<body>
+  <main>
+    <header><div class="wordmark">small worlds.</div><div class="edition">An isometric study / 2026</div></header>
+    <div class="stage" id="stage" aria-describedby="scene-description"></div>
+    <section class="caption" aria-label="Scene information and controls">
+      <div><div class="title-line"><span class="number" id="number">01</span><h1 id="title">After the rain.</h1></div><p class="description" id="scene-description">A warm bowl. A small shelter. Nowhere else to be.</p></div>
+      <div class="controls" aria-label="Scene controls">
+        <select id="scene-select" aria-label="Choose scene"></select>
+        <button id="play" aria-label="Pause animation">Pause</button>
+      </div>
+    </section>
+    <div class="timeline" aria-label="Sequence playback">
+      <input id="timeline" type="range" min="0" max="45" step="0.1" value="0" aria-label="Scene position">
+      <output id="time" for="timeline">00:00 / 00:45</output>
+      <button id="loop" aria-pressed="false" aria-label="Loop entire sequence">Loop off</button>
+      <span class="phase" id="phase">Rain outside</span>
+    </div>
+    <div class="rule"></div>
+    <footer><span>A study of tiny places and everyday rituals.</span><span>Inspired by <a href="https://x.com/dhruvtwt_/status/2113621514235138388">Dhruv</a> &amp; <a href="https://x.com/zzzzshawn/status/2111546123546661289">Shawn</a>. Original scene code.</span></footer>
+  </main>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

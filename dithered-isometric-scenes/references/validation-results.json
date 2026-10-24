@@ -1,0 +1,607 @@
+{
+  "date": "2026-10-23",
+  "environment": "Codex in-app Chromium, WebGL2; desktop emulation for narrow viewports",
+  "runtime": {
+    "normal": {
+      "checks": [
+        "PASS Initial motion preference: reduced=false, playing=true",
+        "PASS Animation advances: 12 -> 28",
+        "PASS Pause stops updates and freezes pose",
+        "PASS Resume has no long elapsed-time jump",
+        "PASS Single low-resolution canvas with accessible description: 300 logical / 600 CSS pixels",
+        "PASS Container resize updates logical resolution: 140 x 155",
+        "PASS Scene replacement disposes geometry and keeps one canvas",
+        "PASS Offscreen stage stops frame updates",
+        "PASS Visible stage resumes frame updates",
+        "PASS Context loss shows a fallback and hides canvas",
+        "PASS Context recovery restores the stage",
+        "PASS Ramen includes real readable sign textures: 4 texture planes",
+        "PASS Front sign faces the camera without being occluded: {\"position\":[0,3.48,1.35],\"type\":\"PlaneGeometry\"}, {\"position\":[0,3.48,1.28],\"type\":\"BoxGeometry\"}",
+        "PASS Ramen animation stays finite across the whole 45-second story",
+        "PASS Ramen motion fits its framing envelope across 45 seconds: {\"min\":[-4.261753082275391,-0.30000001192092896,-3.5887839794158936],\"max\":[4.1858906745910645,5.329999923706055,3.5593225955963135]}",
+        "PASS Basketball motion fits its framing envelope across 45 seconds: 0 escaping samples",
+        "PASS Ramen has a finite 45-second sequence with distinct phases",
+        "PASS Ramen seeking is deterministic in both directions",
+        "PASS Ramen full-sequence loop returns to its starting pose: max transform difference 2.220446049250313e-15",
+        "PASS Ramen phase boundaries keep transforms continuous: max boundary difference 0.000018859547038174718",
+        "PASS Basketball has a finite 45-second sequence with distinct phases",
+        "PASS Basketball seeking is deterministic in both directions",
+        "PASS Basketball full-sequence loop returns to its starting pose: max transform difference 9.43689570931383e-16",
+        "PASS Basketball phase boundaries keep transforms continuous: max boundary difference 0.0003034198355832962",
+        "PASS Finite playback reaches its end once and stops",
+        "PASS Ending holds without continuous callbacks",
+        "PASS Paused seek restores an earlier pose without playing",
+        "PASS Seek to ending does not fire completion",
+        "PASS Replay restarts the master timeline",
+        "PASS Explicit loop wraps the entire duration without completing",
+        "PASS Invalid seek is rejected explicitly",
+        "PASS Master timeline supports scenes longer than a minute",
+        "PASS Long sequence clamps and holds its own ending",
+        "PASS Disposal removes canvas and stops callbacks"
+      ],
+      "failed": "0",
+      "summary": "34/34 checks passed (normal motion)."
+    },
+    "reduced": {
+      "checks": [
+        "PASS Initial motion preference: reduced=true, playing=false",
+        "PASS Animation advances: 17 -> 31",
+        "PASS Pause stops updates and freezes pose",
+        "PASS Resume has no long elapsed-time jump",
+        "PASS Single low-resolution canvas with accessible description: 300 logical / 600 CSS pixels",
+        "PASS Container resize updates logical resolution: 140 x 155",
+        "PASS Scene replacement disposes geometry and keeps one canvas",
+        "PASS Offscreen stage stops frame updates",
+        "PASS Visible stage resumes frame updates",
+        "PASS Context loss shows a fallback and hides canvas",
+        "PASS Context recovery restores the stage",
+        "PASS Ramen includes real readable sign textures: 4 texture planes",
+        "PASS Front sign faces the camera without being occluded: {\"position\":[0,3.48,1.35],\"type\":\"PlaneGeometry\"}, {\"position\":[0,3.48,1.28],\"type\":\"BoxGeometry\"}",
+        "PASS Ramen animation stays finite across the whole 45-second story",
+        "PASS Ramen motion fits its framing envelope across 45 seconds: {\"min\":[-4.261753082275391,-0.30000001192092896,-3.5887839794158936],\"max\":[4.1858906745910645,5.329999923706055,3.5593225955963135]}",
+        "PASS Basketball motion fits its framing envelope across 45 seconds: 0 escaping samples",
+        "PASS Ramen has a finite 45-second sequence with distinct phases",
+        "PASS Ramen seeking is deterministic in both directions",
+        "PASS Ramen full-sequence loop returns to its starting pose: max transform difference 2.220446049250313e-15",
+        "PASS Ramen phase boundaries keep transforms continuous: max boundary difference 0.000018859547038174718",
+        "PASS Basketball has a finite 45-second sequence with distinct phases",
+        "PASS Basketball seeking is deterministic in both directions",
+        "PASS Basketball full-sequence loop returns to its starting pose: max transform difference 9.43689570931383e-16",
+        "PASS Basketball phase boundaries keep transforms continuous: max boundary difference 0.0003034198355832962",
+        "PASS Finite playback reaches its end once and stops",
+        "PASS Ending holds without continuous callbacks",
+        "PASS Paused seek restores an earlier pose without playing",
+        "PASS Seek to ending does not fire completion",
+        "PASS Replay restarts the master timeline",
+        "PASS Explicit loop wraps the entire duration without completing",
+        "PASS Invalid seek is rejected explicitly",
+        "PASS Master timeline supports scenes longer than a minute",
+        "PASS Long sequence clamps and holds its own ending",
+        "PASS Disposal removes canvas and stops callbacks"
+      ],
+      "failed": "0",
+      "summary": "34/34 checks passed (reduced motion)."
+    }
+  },
+  "installedSceneChecks": [
+    {
+      "scene": "forest",
+      "checks": [
+        "PASS Explicit finite story contract",
+        "PASS Timeline phases cover beginning to ending",
+        "PASS Transforms stay finite over the entire story: 208 sampled times",
+        "PASS Complete visible scene fits declared bounds: 0 escaping samples",
+        "PASS Forward and backward seeking reconstruct identical state",
+        "PASS Full-sequence loop returns to starting pose: max visible transform/material difference 4.440892098500626e-16",
+        "PASS Story transitions preserve continuity: max boundary difference 0.000047435741311385726",
+        "PASS Authored poses change across the long timeline",
+        "PASS Scene renders a named, low-resolution canvas",
+        "PASS Finite ending is held by the runtime",
+        "PASS Paused seek moves back from the ending"
+      ],
+      "details": "{\n  \"measured\": {\n    \"min\": [\n      -5.263769888009037,\n      -0.22499999403953552,\n      -4.853434751983336\n    ],\n    \"max\": [\n      5.000969262509415,\n      4.182943352825327,\n      4.489999771118164\n    ]\n  },\n  \"declared\": {\n    \"min\": [\n      -5.36,\n      -0.3,\n      -4.95\n    ],\n    \"max\": [\n      5.12,\n      4.36,\n      4.66\n    ]\n  }\n}",
+      "failed": "0",
+      "summary": "11/11 checks passed.",
+      "title": "Forest river: 45-second scene checks"
+    },
+    {
+      "scene": "station",
+      "checks": [
+        "PASS Explicit finite story contract",
+        "PASS Timeline phases cover beginning to ending",
+        "PASS Transforms stay finite over the entire story: 208 sampled times",
+        "PASS Complete visible scene fits declared bounds: 0 escaping samples",
+        "PASS Forward and backward seeking reconstruct identical state",
+        "PASS Full-sequence loop returns to starting pose: max visible transform/material difference 0",
+        "PASS Story transitions preserve continuity: max boundary difference 0.00006253293149438566",
+        "PASS Authored poses change across the long timeline",
+        "PASS Scene renders a named, low-resolution canvas",
+        "PASS Finite ending is held by the runtime",
+        "PASS Paused seek moves back from the ending"
+      ],
+      "details": "{\n  \"measured\": {\n    \"min\": [\n      -6.8145890055938025,\n      -0.2199999988079071,\n      -2.791354585324555\n    ],\n    \"max\": [\n      5.818983516777934,\n      2.8424854949116707,\n      3.1797042695595508\n    ]\n  },\n  \"declared\": {\n    \"min\": [\n      -6.9,\n      -0.27,\n      -2.9\n    ],\n    \"max\": [\n      5.95,\n      3,\n      3.3\n    ]\n  }\n}",
+      "failed": "0",
+      "summary": "11/11 checks passed.",
+      "title": "Station: 45-second scene checks"
+    },
+    {
+      "scene": "coast",
+      "checks": [
+        "PASS Explicit finite story contract",
+        "PASS Timeline phases cover beginning to ending",
+        "PASS Transforms stay finite over the entire story: 208 sampled times",
+        "PASS Complete visible scene fits declared bounds: 0 escaping samples",
+        "PASS Forward and backward seeking reconstruct identical state",
+        "PASS Full-sequence loop returns to starting pose: max visible transform/material difference 1.7145055188062944e-15",
+        "PASS Story transitions preserve continuity: max boundary difference 0.000021002015969528898",
+        "PASS Authored poses change across the long timeline",
+        "PASS Scene renders a named, low-resolution canvas",
+        "PASS Finite ending is held by the runtime",
+        "PASS Paused seek moves back from the ending"
+      ],
+      "details": "{\n  \"measured\": {\n    \"min\": [\n      -4.480000019073486,\n      -0.18000000715255737,\n      -3.299999952316284\n    ],\n    \"max\": [\n      5.059999942779541,\n      6.27,\n      4.339907694444888\n    ]\n  },\n  \"declared\": {\n    \"min\": [\n      -4.65,\n      -0.24,\n      -3.46\n    ],\n    \"max\": [\n      5.22,\n      6.43,\n      4.43\n    ]\n  }\n}",
+      "failed": "0",
+      "summary": "11/11 checks passed.",
+      "title": "Coastal lighthouse: 45-second scene checks"
+    },
+    {
+      "scene": "ramen",
+      "checks": [
+        "PASS Explicit finite story contract",
+        "PASS Timeline phases cover beginning to ending",
+        "PASS Transforms stay finite over the entire story: 202 sampled times",
+        "PASS Complete visible scene fits declared bounds: 0 escaping samples",
+        "PASS Forward and backward seeking reconstruct identical state",
+        "PASS Full-sequence loop returns to starting pose: max visible transform/material difference 2.220446049250313e-15",
+        "PASS Story transitions preserve continuity: max boundary difference 0.00006723403930664062",
+        "PASS Authored poses change across the long timeline",
+        "PASS Scene renders a named, low-resolution canvas",
+        "PASS Finite ending is held by the runtime",
+        "PASS Paused seek moves back from the ending"
+      ],
+      "details": "{\n  \"measured\": {\n    \"min\": [\n      -4.261753082275391,\n      -0.30000001192092896,\n      -3.5887839794158936\n    ],\n    \"max\": [\n      4.1858906745910645,\n      5.329891681671143,\n      3.5593225955963135\n    ]\n  },\n  \"declared\": {\n    \"min\": [\n      -4.4,\n      -0.32,\n      -3.6\n    ],\n    \"max\": [\n      4.4,\n      5.35,\n      3.6\n    ]\n  }\n}",
+      "failed": "0",
+      "summary": "11/11 checks passed.",
+      "title": "Ramen stall: 45-second scene checks"
+    },
+    {
+      "scene": "basketball",
+      "checks": [
+        "PASS Explicit finite story contract",
+        "PASS Timeline phases cover beginning to ending",
+        "PASS Transforms stay finite over the entire story: 208 sampled times",
+        "PASS Complete visible scene fits declared bounds: 0 escaping samples",
+        "PASS Forward and backward seeking reconstruct identical state",
+        "PASS Full-sequence loop returns to starting pose: max visible transform/material difference 9.43689570931383e-16",
+        "PASS Story transitions preserve continuity: max boundary difference 0.0003034198355832962",
+        "PASS Authored poses change across the long timeline",
+        "PASS Scene renders a named, low-resolution canvas",
+        "PASS Finite ending is held by the runtime",
+        "PASS Paused seek moves back from the ending"
+      ],
+      "details": "{\n  \"measured\": {\n    \"min\": [\n      -5.14907169342041,\n      -0.112000000000001,\n      -4.466443061828613\n    ],\n    \"max\": [\n      5.173623561859131,\n      3.9678465474201468,\n      4.468787670135498\n    ]\n  },\n  \"declared\": {\n    \"min\": [\n      -5.25,\n      -0.14,\n      -4.56\n    ],\n    \"max\": [\n      5.25,\n      4.2,\n      4.56\n    ]\n  }\n}",
+      "failed": "0",
+      "summary": "11/11 checks passed.",
+      "title": "Basketball: 45-second scene checks"
+    }
+  ],
+  "completePlaythroughs": [
+    {
+      "scene": "ramen",
+      "duration": 45,
+      "wallSeconds": 54.20389999999851,
+      "frames": 1641,
+      "recordedStoryFrames": 8,
+      "phasesSeen": [
+        "Rain outside",
+        "A little preparation",
+        "Two bowls, freshly served",
+        "The first bite",
+        "A quiet conversation",
+        "One last sip",
+        "The counter settles"
+      ],
+      "reversals": 0,
+      "completions": 1,
+      "ended": true,
+      "playing": false,
+      "currentTime": 45,
+      "stoppedAtEnding": true
+    },
+    {
+      "scene": "basketball",
+      "duration": 45,
+      "wallSeconds": 55.562,
+      "frames": 1996,
+      "recordedStoryFrames": 10,
+      "phasesSeen": [
+        "Read the court",
+        "Draw the defender",
+        "Find the open wing",
+        "Step in and set the shot",
+        "Up and through the hoop",
+        "Follow the bounce",
+        "Return the ball",
+        "Good shot",
+        "Reset and settle"
+      ],
+      "reversals": 0,
+      "completions": 1,
+      "ended": true,
+      "playing": false,
+      "currentTime": 45,
+      "stoppedAtEnding": true
+    },
+    {
+      "scene": "forest",
+      "duration": 45,
+      "wallSeconds": 46.42140000000224,
+      "frames": 1683,
+      "recordedStoryFrames": 10,
+      "phasesSeen": [
+        "Read the trail map beneath the cabin eaves",
+        "Collect the canteen from the porch shelf",
+        "Follow the trail and cross the arched timber bridge",
+        "Crouch on the river stone, uncap and refill",
+        "Stand, lift the canteen and take a drink",
+        "Close the lid and watch a dipper dive for food",
+        "Return over the bridge to the trail cabin",
+        "Put the canteen back on its shelf",
+        "Check the route once more and settle"
+      ],
+      "reversals": 0,
+      "completions": 1,
+      "ended": true,
+      "playing": false,
+      "currentTime": 45,
+      "stoppedAtEnding": true
+    },
+    {
+      "scene": "station",
+      "duration": 45,
+      "wallSeconds": 47.61360000000149,
+      "frames": 1683,
+      "recordedStoryFrames": 10,
+      "phasesSeen": [
+        "A quiet halt; the attendant hears the branch train",
+        "Railcar emerges from the stone tunnel and brakes",
+        "Doors slide apart; the passenger steps onto the platform",
+        "Passenger approaches and presents a ticket",
+        "The attendant clips the ticket; a small nod",
+        "Passenger returns aboard and the doorway closes",
+        "A raised paddle clears the returning branch service",
+        "Railcar retreats into the tunnel; the attendant walks back",
+        "The attendant sits; the little station settles"
+      ],
+      "reversals": 0,
+      "completions": 1,
+      "ended": true,
+      "playing": false,
+      "currentTime": 45,
+      "stoppedAtEnding": true
+    },
+    {
+      "scene": "coast",
+      "duration": 45,
+      "wallSeconds": 99.4258999999985,
+      "frames": 6074,
+      "recordedStoryFrames": 10,
+      "phasesSeen": [
+        "Row into the sheltered inlet",
+        "Stow oars and step onto the jetty",
+        "Climb the two coastal stairways",
+        "Open the cabinet and wind the beacon",
+        "Close and latch the winding cabinet",
+        "Descend to the waiting skiff",
+        "Recover the painter and board",
+        "Row out and turn beside the buoy",
+        "Settle into the starting composition"
+      ],
+      "reversals": 0,
+      "completions": 1,
+      "ended": true,
+      "playing": false,
+      "currentTime": 45,
+      "stoppedAtEnding": true
+    }
+  ],
+  "responsive": [
+    {
+      "width": 320,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "A miniature ramen stall with two diners, a cook, rising steam and falling rain.",
+      "canvasWidth": 147,
+      "clientWidth": 305,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 320,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "ramen",
+      "scrollWidth": 305,
+      "time": "0",
+      "title": "After the rain.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    },
+    {
+      "width": 320,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "An isometric outdoor basketball court with a pass, a shot, a rebound and three friends.",
+      "canvasWidth": 147,
+      "clientWidth": 305,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 320,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "basketball",
+      "scrollWidth": 305,
+      "time": "0",
+      "title": "One more game.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    },
+    {
+      "width": 320,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "A miniature forest river landscape with trees, a footbridge, a shelter and a visitor.",
+      "canvasWidth": 147,
+      "clientWidth": 305,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 320,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "forest",
+      "scrollWidth": 305,
+      "time": "0",
+      "title": "By the river.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    },
+    {
+      "width": 320,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "A miniature rocky coastal landscape with a lighthouse, a small boat and a sea inlet.",
+      "canvasWidth": 147,
+      "clientWidth": 305,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 320,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "coast",
+      "scrollWidth": 305,
+      "time": "0",
+      "title": "A light on the headland.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    },
+    {
+      "width": 320,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "A miniature station with a platform, waiting passengers and a train arriving and departing.",
+      "canvasWidth": 147,
+      "clientWidth": 305,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 320,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "station",
+      "scrollWidth": 305,
+      "time": "0",
+      "title": "The next stop.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "A miniature ramen stall with two diners, a cook, rising steam and falling rain.",
+      "canvasWidth": 194,
+      "clientWidth": 390,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 390,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "ramen",
+      "scrollWidth": 390,
+      "time": "0",
+      "title": "After the rain.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "An isometric outdoor basketball court with a pass, a shot, a rebound and three friends.",
+      "canvasWidth": 194,
+      "clientWidth": 390,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 390,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "basketball",
+      "scrollWidth": 390,
+      "time": "0",
+      "title": "One more game.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "A miniature forest river landscape with trees, a footbridge, a shelter and a visitor.",
+      "canvasWidth": 194,
+      "clientWidth": 390,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 390,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "forest",
+      "scrollWidth": 390,
+      "time": "0",
+      "title": "By the river.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "A miniature rocky coastal landscape with a lighthouse, a small boat and a sea inlet.",
+      "canvasWidth": 194,
+      "clientWidth": 390,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 390,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "coast",
+      "scrollWidth": 390,
+      "time": "0",
+      "title": "A light on the headland.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "canvasCount": 1,
+      "canvasHeight": 258,
+      "canvasLabel": "A miniature station with a platform, waiting passengers and a train arriving and departing.",
+      "canvasWidth": 186,
+      "clientWidth": 375,
+      "controlHeights": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "innerWidth": 390,
+      "optionCount": 5,
+      "playLabel": "Play animation",
+      "scene": "station",
+      "scrollWidth": 375,
+      "time": "0",
+      "title": "The next stop.",
+      "ending": {
+        "label": "Replay sequence",
+        "time": "45"
+      },
+      "pass": true
+    }
+  ],
+  "reducedMotionStills": [
+    {
+      "phase": "The first bite",
+      "playLabel": "Play animation",
+      "reduced": true,
+      "scene": "ramen",
+      "time": "24"
+    },
+    {
+      "phase": "Up and through the hoop",
+      "playLabel": "Play animation",
+      "reduced": true,
+      "scene": "basketball",
+      "time": "18.7"
+    },
+    {
+      "phase": "Crouch on the river stone, uncap and refill",
+      "playLabel": "Play animation",
+      "reduced": true,
+      "scene": "forest",
+      "time": "18.7"
+    },
+    {
+      "phase": "Open the cabinet and wind the beacon",
+      "playLabel": "Play animation",
+      "reduced": true,
+      "scene": "coast",
+      "time": "20"
+    },
+    {
+      "phase": "The attendant clips the ticket; a small nod",
+      "playLabel": "Play animation",
+      "reduced": true,
+      "scene": "station",
+      "time": "21"
+    }
+  ]
+}

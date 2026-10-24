@@ -161,7 +161,7 @@ export default function RootLayout({
         className={`${geistMono.variable} antialiased`}
       >
         <noscript>
-          <style>{`.no-js-visible { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; stroke-dasharray: none !important; }`}</style>
+          <style>{`.no-js-visible { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important; stroke-dasharray: none !important; }`}</style>
         </noscript>
         <ThemeProvider>
           <TooltipProvider>

@@ -223,8 +223,13 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   scoped exception: it plays once when the logo is hovered, then settles
   into the original solid mark. It stays still on load, touch, keyboard focus,
   and reduced motion. Keep the logo SVG overflow visible and its wrapper from
-  shrinking so the rounded tile is not clipped. The hero greeting and footer
-  quote words are deliberate exceptions and keep their blur-to-sharp resolve. The footer
+  shrinking so the rounded tile is not clipped. The hero text and footer
+  quote words are deliberate exceptions and keep their blur-to-sharp resolve.
+  Hero text reveals once on mount with a 3px blur, an 8px rise, and a 0.5s
+  ease-out. Its greeting words stagger by 40ms; the headline, description, and
+  location follow with short overlapping delays. Animate only the text, keeping
+  the hero shell and banner still. Reduced motion and no JavaScript show the
+  text immediately, sharp and fully visible. The footer
   also has a slower one-time staggered entrance for its text and live status.
   The garden reveals independently once it clears the bottom fade, with a
   120px viewport inset. It follows pointer movement with subtle spring-driven
