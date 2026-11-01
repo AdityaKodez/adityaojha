@@ -8,9 +8,17 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-vader-black: var(--vader-black);
+  --color-vader-ink: var(--vader-ink);
+  --color-vader-shell: var(--vader-shell);
+  --color-vader-silver: var(--vader-silver);
+  --color-vader-shine: var(--vader-shine);
   --color-diwali-flame: var(--diwali-flame);
   --color-diwali-gold: var(--diwali-gold);
   --color-diwali-petal: var(--diwali-petal);
+  --color-halloween-spider-ink: var(--halloween-spider-ink);
+  --color-halloween-spider-shell: var(--halloween-spider-shell);
+  --color-halloween-spider-shine: var(--halloween-spider-shine);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-serif);
@@ -102,12 +110,22 @@
   --heatmap-level-4: oklch(0.379 0.146 265.522);
   --scrollbar-thumb: oklch(0.87 0 0);
   --scrollbar-thumb-hover: oklch(0.78 0 0);
+  --vader-black: oklch(0.1 0.002 265);
+  --vader-ink: oklch(0.19 0.004 265);
+  --vader-shell: oklch(0.38 0.006 265);
+  --vader-silver: oklch(0.69 0.006 265);
+  --vader-shine: oklch(0.94 0.004 265);
+  --halloween-spider-ink: oklch(0.16 0.012 265);
+  --halloween-spider-shell: oklch(0.34 0.018 265);
+  --halloween-spider-shine: oklch(0.86 0.012 255);
   --diwali-flame: oklch(0.77 0.17 65);
   --diwali-gold: oklch(0.88 0.12 85);
   --diwali-petal: oklch(0.7 0.15 355);
 }
 
 .dark {
+  --vader-shell: oklch(0.43 0.006 265);
+  --vader-silver: oklch(0.77 0.006 265);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);

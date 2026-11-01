@@ -1,3 +1,44 @@
+.homeLink {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.logoStage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28.8px;
+  height: 28.8px;
+  flex-shrink: 0;
+  perspective: 180px;
+}
+
+.logoFlip {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--motion-duration-slow) cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.logoFront,
+.logoBack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+}
+
+.logoBack {
+  transform: rotateY(180deg);
+}
+
+.homeLink[data-vader="true"]:focus-visible .logoFlip {
+  transform: rotateY(180deg);
+  transition: none;
+}
+
 .tab {
   --tab-fill: var(--secondary);
   --tab-ink: var(--secondary-foreground);
@@ -101,6 +142,10 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .homeLink[data-vader="true"]:hover .logoFlip {
+    transform: rotateY(180deg);
+  }
+
   .tab:hover {
     --tab-fill: color-mix(in oklch, var(--secondary) 88%, var(--foreground));
   }
@@ -136,7 +181,35 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .logoFlip {
+    transition: none;
+  }
+
+  .homeLink[data-vader="true"]:is(:hover, :focus-visible) .logoFlip,
+  .logoBack {
+    transform: none;
+  }
+
+  .logoBack,
+  .homeLink[data-vader="true"]:focus-visible .logoFront {
+    visibility: hidden;
+  }
+
+  .homeLink[data-vader="true"]:focus-visible .logoBack {
+    visibility: visible;
+  }
+
   .tile > svg {
     transition: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
+  .homeLink[data-vader="true"]:hover .logoFront {
+    visibility: hidden;
+  }
+
+  .homeLink[data-vader="true"]:hover .logoBack {
+    visibility: visible;
   }
 }

@@ -1,19 +1,20 @@
 "use client";
 
 import { HeaderActions } from "@/components/shared/header-actions";
+import { DarthVaderMask } from "@/components/shared/darth-vader-mask";
 import { Logo } from "@/components/shared/logo";
 import { siteNavigationItems, isNavigationItemActive } from "@/components/shared/site-navigation";
 import { navigationConfig } from "@/config/navigation";
+import { halloweenConfig } from "@/config/halloween";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { revealOnMount } from "@/lib/motion";
 import styles from "./site-header.module.css";
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const reduceMotion = useReducedMotion();
 
   return (
     <header className="pointer-events-none sticky top-3 z-40 mx-auto -mb-11 flex h-11 w-full max-w-[var(--frame-max-w)] items-center justify-between gap-4 px-6 sm:top-4">
@@ -26,16 +27,24 @@ export function SiteHeader() {
           href="/"
           aria-label="Home"
           aria-current={pathname === "/" ? "page" : undefined}
-          className="flex size-11 shrink-0 items-center justify-center rounded-xl outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          data-vader={halloweenConfig.enabled}
+          className={cn(
+            "flex size-11 shrink-0 items-center justify-center rounded-xl outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+            styles.homeLink,
+          )}
         >
-          <motion.span
-            className={styles.utilityFace}
-            initial={false}
-            animate="rest"
-            whileHover={reduceMotion ? undefined : "hover"}
-          >
-            <Logo size={20.736} />
-          </motion.span>
+          <span aria-hidden="true" className={styles.logoStage}>
+            <span className={styles.logoFlip}>
+              <span className={styles.logoFront}>
+                <Logo size={23.4} />
+              </span>
+              {halloweenConfig.enabled && (
+                <span className={styles.logoBack}>
+                  <DarthVaderMask />
+                </span>
+              )}
+            </span>
+          </span>
         </Link>
 
         <div className="hidden items-center gap-1.5 md:flex">

@@ -1,7 +1,6 @@
 import { About } from "@/components/landing/about";
 import { Bookmarks } from "@/components/landing/bookmarks";
 import { Bookshelf } from "@/components/landing/bookshelf";
-import { Campfire } from "@/components/landing/campfire";
 import { Certifications } from "@/components/landing/certifications";
 import { ComponentHighlights } from "@/components/landing/component-highlights";
 import { CTA } from "@/components/landing/cta";
@@ -82,7 +81,6 @@ export default function Home() {
 
   return (
     <>
-      <Campfire />
       <main
         id="main-content"
         className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x bg-background pt-8 xl:overflow-x-visible"
