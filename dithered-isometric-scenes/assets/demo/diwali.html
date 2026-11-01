@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>A courtyard full of light | Diwali miniature</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root { color-scheme: light; --background: #fff; --foreground: #343646; --muted-foreground: #84828c; --border: #eae8e9; --accent: #f4f0ed; --ring: #a26848; }
+    @media (prefers-color-scheme: dark) {
+      :root { color-scheme: dark; --background: #0b0b0b; --foreground: #e6e2dc; --muted-foreground: #a4a0a9; --border: #29272d; --accent: #1b191f; --ring: #e0af6e; }
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; background: var(--background); color: var(--foreground); font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
+    main { max-width: 1000px; margin: auto; padding: 30px 40px 24px; }
+    header { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+    .wordmark { font: italic 22px Georgia, serif; letter-spacing: -.7px; }
+    .edition { color: var(--muted-foreground); font-size: 12px; }
+    #stage { width: 100%; height: min(73svh, 720px); min-height: 360px; position: relative; }
+    #stage > p { position: absolute; inset: 42% 18% auto; margin: 0; text-align: center; color: var(--muted-foreground); font-size: 14px; line-height: 1.6; }
+    .caption { display: flex; justify-content: space-between; align-items: center; gap: 28px; margin: -12px 0 0; padding-bottom: 24px; }
+    .eyebrow { margin: 0 0 10px; font-size: 11px; color: var(--muted-foreground); }
+    h1 { margin: 0; font: 400 35px/1.16 Georgia, serif; letter-spacing: -1.2px; }
+    .description { color: var(--muted-foreground); font-size: 13px; line-height: 1.6; margin: 12px 0 0; }
+    button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-width: 108px; min-height: 44px; border: 1px solid var(--border); border-radius: 999px; color: var(--foreground); background: var(--background); font: 12px Arial, sans-serif; cursor: pointer; }
+    button:hover { background: var(--accent); }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
+    button:disabled { cursor: default; opacity: .5; }
+    .pause-mark { display: inline-flex; gap: 3px; width: 12px; height: 10px; align-items: center; }
+    .pause-mark::before, .pause-mark::after { content: ''; height: 9px; width: 2px; background: currentColor; }
+    button[data-paused=true] .pause-mark::before { width: 0; height: 0; border-left: 7px solid currentColor; border-top: 5px solid transparent; border-bottom: 5px solid transparent; background: transparent; }
+    button[data-paused=true] .pause-mark::after { display: none; }
+    footer { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--border); padding-top: 17px; color: var(--muted-foreground); font-size: 11px; line-height: 1.7; }
+    a { color: inherit; text-underline-offset: 3px; }
+    @media (max-width: 650px) {
+      main { padding: 24px 20px; }
+      .wordmark { font-size: 21px; }
+      .edition { font-size: 10px; }
+      #stage { height: min(48svh, 390px); min-height: 320px; margin: 12px 0; }
+      .caption { align-items: flex-start; gap: 16px; margin-top: 0; }
+      h1 { font-size: 28px; letter-spacing: -.8px; }
+      .description { max-width: 240px; font-size: 12px; }
+      button { min-width: 80px; flex-shrink: 0; margin-top: 24px; }
+      footer { flex-direction: column; gap: 4px; }
+    }
+  </style>
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+</head>
+<body>
+  <main>
+    <header><span class="wordmark">small worlds.</span><span class="edition">Diwali, after dusk</span></header>
+    <div id="stage" aria-describedby="description"><p id="loading" role="status">Lighting the courtyard...</p></div>
+    <section class="caption" aria-label="Scene and playback">
+      <div><p class="eyebrow">A little festival of light</p><h1>A courtyard full of light.</h1><p class="description" id="description">A sparkler celebration, rangoli petals, and a watchful cat.</p></div>
+      <button id="play" type="button" disabled aria-label="Pause animation"><span class="pause-mark" aria-hidden="true"></span><span id="play-label">Pause</span></button>
+    </section>
+    <footer><span>A tiny world, lit one diya at a time.</span><span>Visual studies inspired by <a href="https://x.com/dhruvtwt_/status/2113621514235138388">Dhruv</a> &amp; <a href="https://x.com/zzzzshawn/status/2111546123546661289">Shawn</a>.</span></footer>
+  </main>
+  <noscript><p>This miniature needs JavaScript. A visitor walks into a moonlit Diwali courtyard and waves a sparkler while another person arranges rangoli petals. Lanterns sway and a cat lifts its head to watch.</p></noscript>
+  <script type="module" src="./diwali-preview.js"></script>
+</body>
+</html>

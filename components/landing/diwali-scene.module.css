@@ -1,0 +1,90 @@
+.decoration {
+  display: none;
+  position: absolute;
+  top: -2rem;
+  left: calc(100% + 16px);
+  z-index: 10;
+  width: 220px;
+  aspect-ratio: 1.12;
+}
+
+.trigger {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-xl);
+  background: transparent;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.trigger:disabled {
+  pointer-events: none;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color-scheme: light dark;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.frame[data-ready="true"] {
+  visibility: visible;
+}
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.petal {
+  position: absolute;
+  width: 6px;
+  height: 11px;
+  border-radius: 70% 20% 70% 20%;
+  animation: petal-burst var(--petal-duration) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes petal-burst {
+  0% {
+    transform: translate(0, 0) rotate(var(--petal-rotation));
+    opacity: 1;
+  }
+  35% {
+    transform: translate(calc(var(--petal-x) * 0.65), var(--petal-rise))
+      rotate(calc(var(--petal-rotation) + 90deg));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--petal-x), var(--petal-fall))
+      rotate(calc(var(--petal-rotation) + 240deg));
+    opacity: 0;
+  }
+}
+
+@media (min-width: 80rem) {
+  .decoration {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+}

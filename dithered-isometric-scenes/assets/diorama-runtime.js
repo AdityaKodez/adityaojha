@@ -42,6 +42,7 @@ function disposeWorld(world) {
   const paints = new Set();
   const textures = new Set();
   world.traverse(node => {
+    if (node.isInstancedMesh) node.dispose();
     if (node.geometry) geometries.add(node.geometry);
     for (const paint of Array.isArray(node.material) ? node.material : node.material ? [node.material] : []) {
       paints.add(paint);
@@ -85,14 +86,16 @@ const fragmentShader = /* glsl */ `
   }
 
   void main() {
-    vec3 color = clamp(toSRGB(texture2D(tScene, vUv).rgb), 0.0, 1.0);
+    vec4 sampleColor = texture2D(tScene, vUv);
+    if (sampleColor.a < 0.001) { gl_FragColor = vec4(0.0); return; }
+    vec3 color = clamp(toSRGB(sampleColor.rgb / sampleColor.a), 0.0, 1.0);
     if (min(min(color.r, color.g), color.b) > 0.999) {
-      gl_FragColor = vec4(1.0);
+      gl_FragColor = vec4(vec3(1.0), sampleColor.a);
       return;
     }
     float threshold = ((bayer(gl_FragCoord.xy) + 0.5) / 16.0 - 0.5) * dither;
     color = floor(color * levels + 0.5 + threshold) / levels;
-    gl_FragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
+    gl_FragColor = vec4(clamp(color, 0.0, 1.0), sampleColor.a);
   }
 `;
 
@@ -100,12 +103,13 @@ const fragmentShader = /* glsl */ `
 export function createDiorama(container, options = {}) {
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false, powerPreference: 'low-power' });
+    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, premultipliedAlpha: false, powerPreference: 'low-power' });
   } catch (error) {
     options.onError?.('This browser could not start WebGL2. Please use a browser with graphics support.');
     throw error;
   }
   renderer.setPixelRatio(1);
+  renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NoToneMapping;
   renderer.shadowMap.enabled = true;
@@ -117,8 +121,9 @@ export function createDiorama(container, options = {}) {
   container.append(canvas);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#ffffff');
-  scene.add(new THREE.HemisphereLight('#f8f1df', '#8b9992', 1.8));
+  scene.background = options.transparent ? null : new THREE.Color('#ffffff');
+  const fill = new THREE.HemisphereLight('#f8f1df', '#8b9992', 1.8);
+  scene.add(fill);
   const key = new THREE.DirectionalLight('#fff4df', 2.5);
   key.position.set(-5, 9, 5);
   key.castShadow = true;
@@ -158,6 +163,7 @@ export function createDiorama(container, options = {}) {
   let frame = 0;
   let last = 0;
   let visible = true;
+  let hostVisible = true;
   let lost = false;
   let disposed = false;
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -214,7 +220,7 @@ export function createDiorama(container, options = {}) {
 
   function tick(now) {
     frame = 0;
-    if (disposed || lost || !playing || !visible || document.hidden) { last = 0; return; }
+    if (disposed || lost || !playing || !visible || !hostVisible || document.hidden) { last = 0; return; }
     if (last) time += Math.min((now - last) / 1000, 0.05);
     last = now;
     if (Number.isFinite(duration) && time >= duration) {
@@ -237,12 +243,12 @@ export function createDiorama(container, options = {}) {
   }
 
   function schedule() {
-    if (!frame && !disposed && !lost && playing && visible && !document.hidden && world) frame = requestAnimationFrame(tick);
+    if (!frame && !disposed && !lost && playing && visible && hostVisible && !document.hidden && world) frame = requestAnimationFrame(tick);
   }
 
   function visibilityChanged() {
     cancel();
-    if (visible && !document.hidden) { render(); schedule(); }
+    if (visible && hostVisible && !document.hidden) { render(); schedule(); }
   }
 
   const resize = new ResizeObserver(() => { fit(); render(); });
@@ -328,10 +334,23 @@ export function createDiorama(container, options = {}) {
       bounds = settings.bounds?.clone() || new THREE.Box3().setFromObject(world);
       if (bounds.isEmpty()) throw new Error('The miniature needs visible geometry.');
       scene.add(world);
+      // Scene-owned lighting stays independent of the host background.
+      const lighting = settings.lighting || {};
+      fill.color.set(lighting.sky || '#f8f1df');
+      fill.groundColor.set(lighting.ground || '#8b9992');
+      fill.intensity = lighting.fill ?? 1.8;
+      key.color.set(lighting.key || '#fff4df');
+      key.intensity = lighting.intensity ?? 2.5;
+      key.position.set(...(lighting.position || [-5, 9, 5]));
       fit();
       render();
       options.onPlayingChange?.(playing);
       schedule();
+    },
+    setVisible(value) {
+      if (disposed) return;
+      hostVisible = Boolean(value);
+      visibilityChanged();
     },
     setPlaying(value) {
       if (disposed) return;

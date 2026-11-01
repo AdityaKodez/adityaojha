@@ -8,6 +8,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-diwali-flame: var(--diwali-flame);
+  --color-diwali-gold: var(--diwali-gold);
+  --color-diwali-petal: var(--diwali-petal);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-serif);
@@ -99,6 +102,9 @@
   --heatmap-level-4: oklch(0.379 0.146 265.522);
   --scrollbar-thumb: oklch(0.87 0 0);
   --scrollbar-thumb-hover: oklch(0.78 0 0);
+  --diwali-flame: oklch(0.77 0.17 65);
+  --diwali-gold: oklch(0.88 0.12 85);
+  --diwali-petal: oklch(0.7 0.15 355);
 }
 
 .dark {

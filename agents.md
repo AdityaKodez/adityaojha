@@ -250,6 +250,26 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 - Shared utility classes: `.section-heading`, `.micro-transition`,
   `.liquid-glass`, `.bottom-blur`, and the blueprint background used on card
   hover. Prefer these over repeating the utility stack.
+- `config/diwali.ts` controls the dithered courtyard decoration beside About,
+  outside the home page's right content edge in the former lightsaber slot.
+  It appears from 80rem upward, like the previous margin decorations, and does
+  not replace the header's Vader hover. Hover and keyboard focus show the shared
+  "Happy Diwali" tooltip; hover or activation releases a short paper-petal burst.
+  Reduced motion keeps the scene still and skips confetti. The transparent
+  illustration under `public/diwali/` mounts once when it first nears the viewport
+  on desktop. Keep that iframe and WebGL context mounted while scrolling, pause
+  its rendering offscreen, and resume the same timeline on return. Never mount
+  it below 80rem; dispose it if the viewport crosses into that smaller layout.
+  Render the live scene only, without a fallback image.
+  Reveal it once ready with `revealOnMount`, an 8px upward settle and opacity,
+  never scale. Reduced motion shows the composed live frame immediately.
+  Keep the action disabled while loading or unavailable and retain its accessible
+  scene description. Hide the unavailable artwork instead of substituting a bitmap.
+  Keep the stage at a fixed 220px width, with no viewport-based scaling or camera
+  zoom. Its complete 20-second loop includes a visitor walking forward, waving
+  a sparkler, and walking back, alongside articulated petal placement, swaying
+  lanterns, and a cat reacting. The live canvas preserves transparency in light
+  and dark mode.
 - Public inner-route OG cards use the homepage OG's light palette, centered
   Instrument Serif heading, and paper-cut garden from `config/opengraph.ts`.
   Keep route descriptions, URLs, and install commands readable above the

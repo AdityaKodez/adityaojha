@@ -5,6 +5,7 @@ import { Campfire } from "@/components/landing/campfire";
 import { Certifications } from "@/components/landing/certifications";
 import { ComponentHighlights } from "@/components/landing/component-highlights";
 import { CTA } from "@/components/landing/cta";
+import { DiwaliScene } from "@/components/landing/diwali-scene";
 import { Experience } from "@/components/landing/experience";
 import { Footer } from "@/components/landing/footer";
 import { GitHubSection } from "@/components/landing/github-section";
@@ -19,11 +20,11 @@ import { Skills } from "@/components/landing/skills";
 import Social from "@/components/landing/social";
 import { SponsorsSection } from "@/components/landing/sponsors";
 import { Testimonials } from "@/components/landing/testimonials";
-import { Vader } from "@/components/landing/vader";
 import { PixelDissolve } from "@/components/ui/pixel-dissolve";
 import { SideNote } from "@/components/shared/side-note";
 import { projectsConfig, projectsSectionConfig } from "@/config/projects";
 import { getEnabledBooks } from "@/config/books";
+import { diwaliConfig } from "@/config/diwali";
 import { sectionNotes } from "@/config/section-notes";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
@@ -114,7 +115,7 @@ export default function Home() {
               id={sectionId}
               className="relative bg-background scroll-mt-20"
             >
-              {sectionId === "about" && <Vader />}
+              {sectionId === "about" && diwaliConfig.enabled && <DiwaliScene />}
               {note && <SideNote side={note.side}>{note.text}</SideNote>}
               {content}
             </div>
