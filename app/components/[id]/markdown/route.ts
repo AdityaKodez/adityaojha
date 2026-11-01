@@ -14,7 +14,15 @@ export async function GET(
     return new Response("Component not found.", { status: 404 });
   }
 
-  const docs = await readFile(path.join(process.cwd(), component.docPath), "utf8");
+  const docs = await readFile(
+    path.join(
+      process.cwd(),
+      "content",
+      "components",
+      path.basename(component.docPath),
+    ),
+    "utf8",
+  );
   return new Response(formatComponentPageMarkdown(component, docs), {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
