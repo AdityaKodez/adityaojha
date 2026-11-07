@@ -12,11 +12,11 @@ export const alt = `${siteConfig.personal.fullName}, ${openGraphConfig.locationL
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const SERIF = "Instrument Serif";
+const SERIF = "Geist Serif";
 const SANS = "Geist";
 const { colors, artwork } = openGraphConfig;
 const [font, locationFont, garden] = await Promise.all([
-  readFile(path.join(process.cwd(), "lib/fonts/InstrumentSerif-Regular.ttf")),
+  readFile(path.join(process.cwd(), "lib/fonts/GeistSerif-Regular.ttf")),
   readFile(path.join(process.cwd(), "lib/fonts/Geist-Regular.ttf")),
   readFile(path.join(process.cwd(), "public", artwork.src), "base64"),
 ]);

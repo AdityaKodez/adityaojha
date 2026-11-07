@@ -46,7 +46,7 @@ database, no auth, no payments. All content is typed configuration.
 | Primitives | Radix UI and Base UI, vendored into `components/ui/`; Vaul for the mobile suggestion drawer |
 | Motion | Motion 12 |
 | Icons | HugeIcons for site controls via `components/shared/site-icons.tsx`; `lucide-react` remains in shared UI, published components, and demos; `react-icons` and local assets supply brand icons |
-| Fonts | Geist (sans, mono) and Instrument Serif (`lib/fonts/`) |
+| Fonts | DM Sans (body), Geist Mono, and Geist Serif (`geist/font/serif/variable`); OG TTFs in `lib/fonts/` |
 | Theming | `next-themes`, class-based dark mode |
 | Dates | `date-fns` 4 with `date-fns-tz` |
 | Markdown | `react-markdown` on the client surface, `next-mdx-remote` with Shiki on the server surface |
@@ -173,7 +173,7 @@ The home page is a loop, not a hand-written layout.
   The invitation links directly to `/api/sponsor-checkout` with a plain anchor
   so visitors continue to Dodo's hosted checkout.
   Its “Supported by” heading matches
-  About's greeting: Instrument Serif italic, 25px with a 32px line height,
+  About's greeting: Geist Serif italic, 25px with a 32px line height,
   21px horizontal and 1px vertical padding, and 24px above the heading band.
   The section also renders at the bottom of `/components` and `/testimonials`.
   `/sponsor` explains support and reuses the list. Keep the payment product id
@@ -294,7 +294,7 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   lanterns, and a cat reacting. The live canvas preserves transparency in light
   and dark mode.
 - Public inner-route OG cards use the homepage OG's light palette, centered
-  Instrument Serif heading, and paper-cut garden from `config/opengraph.ts`.
+  Geist Serif heading, and paper-cut garden from `config/opengraph.ts`.
   Keep route descriptions, URLs, and install commands readable above the
   artwork, with no dark grid or heavy panel. The homepage OG stays unchanged.
 - The shared footer on `/`, `/components`, and `/testimonials` stays within the centered page frame, with a compact,
@@ -388,7 +388,7 @@ Deliberately **excluded**, leave these as authored:
   few section headings only; nothing is heavier than 600 anywhere.
 - Mono is Geist Mono, 10–12.5px, for meta labels, keyboard hints, and code.
 - Pixel accents used to use `font-pixel` (Geist Pixel Grid); they now use
-  `font-sans` (DM Sans). Serif accents use `font-serif` (Instrument Serif) and
+  `font-sans` (DM Sans). Serif accents use `font-serif` (Geist Serif) and
   appear sparingly.
 - Section headings use the `.section-heading` class rather than ad-hoc sizes.
 - Supplemental section notes use `components/shared/side-note.tsx` with Caveat

@@ -7,7 +7,7 @@ import { createElement } from "react";
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 export const OG_CONTENT_TYPE = "image/png";
 
-const SERIF = "Instrument Serif";
+const SERIF = "Geist Serif";
 const SANS = "Geist";
 const MONO = "Geist Mono";
 const { colors, artwork } = openGraphConfig;
@@ -19,7 +19,7 @@ export function getOgFonts() {
   return [
     {
       name: SERIF,
-      data: loadFont("InstrumentSerif-Regular.ttf"),
+      data: loadFont("GeistSerif-Regular.ttf"),
       style: "normal" as const,
       weight: 400 as const,
     },

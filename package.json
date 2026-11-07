@@ -26,7 +26,7 @@
     "cn": "^0.2.5",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
-    "geist": "^1.7.0",
+    "geist": "^1.9.2",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.563.0",
     "matter-js": "^0.20.0",

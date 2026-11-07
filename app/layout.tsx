@@ -12,7 +12,8 @@ import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/next";
 import { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { DM_Sans, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { DM_Sans, Geist_Mono } from "next/font/google";
+import { GeistSerif } from "geist/font/serif/variable";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -28,14 +29,6 @@ export const viewport: Viewport = {
 const DmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
   display: "swap",
 });
 
@@ -149,7 +142,7 @@ export default function RootLayout({
       className={cn(
         "bg-background font-sans",
         DmSans.variable,
-        instrumentSerif.variable,
+        GeistSerif.variable,
       )}
       suppressHydrationWarning
     >
