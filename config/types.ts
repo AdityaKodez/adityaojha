@@ -321,8 +321,8 @@ export interface Sponsor {
   url?: string;
   /** Square logo image, shown in the supporter list. Falls back to a generated avatar. */
   logo?: string;
-  /** 0-based supporter seat index. */
-  seat: number;
+  /** 0-based paid supporter seat index. Omitted for hand-edited supporters. */
+  seat?: number;
   order: number;
   enabled?: boolean;
   /** Dodo payment id, present on sponsors added through the payment webhook. */

@@ -157,7 +157,7 @@ export type EventMap = {
   };
   sponsor_link_clicked: {
     sponsor_name: string;
-    seat: number;
+    seat?: number;
     url: string;
     location: string;
   };

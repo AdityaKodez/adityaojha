@@ -108,6 +108,14 @@ export const orbitSeatProductId = process.env.DODO_ORBIT_SEAT_PRODUCT_ID ?? "";
 export const sponsorsConfig: Sponsor[] = [
   // Hand-edited sponsors. `logo` is an optional square image src; paid
   // sponsors that have not claimed yet fall back to an Avvvatars shape.
+  {
+    id: "talvess",
+    name: "Talvess",
+    url: "https://talvess.app",
+    logo: "/sponsors/talvess.svg",
+    order: 0,
+    enabled: true,
+  },
 ];
 
 /** Every sponsor in authored order: hand-edited first, then webhook-paid. */
@@ -116,9 +124,11 @@ export function getAllSponsors(): Sponsor[] {
   return [...sponsorsConfig, ...generated].sort((a, b) => a.order - b.order);
 }
 
-/** Enabled supporters within the configured seat range. */
+/** Enabled hand-edited supporters and paid supporters within the seat range. */
 export function getEnabledSponsors(seats: number): Sponsor[] {
   return getAllSponsors().filter(
-    (sponsor) => sponsor.enabled !== false && sponsor.seat < seats,
+    (sponsor) =>
+      sponsor.enabled !== false &&
+      (sponsor.seat === undefined || sponsor.seat < seats),
   );
 }
