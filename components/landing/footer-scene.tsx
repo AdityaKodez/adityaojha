@@ -94,7 +94,7 @@ export function FooterScene({ children }: { children: ReactNode }) {
       >
         <figure className="max-w-sm text-center">
           <motion.blockquote
-            className="text-balance font-serif text-[1.75rem] italic leading-snug text-foreground sm:text-[2rem]"
+            className="text-balance font-serif text-2xl italic leading-snug text-foreground"
             variants={{ visible: { transition: { staggerChildren: 0.075 } } }}
           >
             <p>
