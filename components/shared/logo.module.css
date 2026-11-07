@@ -1,0 +1,104 @@
+.logo {
+  transform: translateY(-12%);
+}
+
+.light,
+.reflection {
+  opacity: 0;
+  transition: opacity 220ms var(--motion-ease-standard);
+  pointer-events: none;
+}
+
+.ignition,
+.wind,
+.flame,
+.core {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+.ignition {
+  transform: scale(0.65, 0.2);
+  transition: transform 180ms var(--motion-ease-standard);
+}
+
+.halo {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+:global(a:focus-visible) .logo :is(.light, .reflection) {
+  opacity: 1;
+}
+
+:global(a:focus-visible) .logo .ignition {
+  transform: scale(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :global(a:hover) .logo :is(.light, .reflection) {
+    opacity: 1;
+  }
+
+  :global(a:hover) .logo .ignition {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .flame {
+    animation: flame-waver 1.37s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  .core {
+    animation: core-flicker 0.73s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  .halo {
+    animation: light-spill 1.91s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  :global(a:focus-visible) .logo :is(.flame, .core, .halo) {
+    animation-play-state: running;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :global(a:hover) .logo :is(.flame, .core, .halo) {
+    animation-play-state: running;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light,
+  .reflection,
+  .ignition {
+    transition: none;
+  }
+}
+
+@keyframes flame-waver {
+  0%, 100% { transform: skewX(-3deg) scale(0.94, 1); }
+  13% { transform: skewX(7deg) scale(0.88, 1.12); }
+  29% { transform: skewX(-9deg) scale(1.05, 0.9); }
+  43% { transform: skewX(4deg) scale(0.91, 1.06); }
+  58% { transform: skewX(-5deg) scale(0.97, 0.94); }
+  74% { transform: skewX(10deg) scale(0.87, 1.14); }
+  88% { transform: skewX(-6deg) scale(1.03, 0.96); }
+}
+
+@keyframes core-flicker {
+  0%, 100% { transform: skewX(4deg) scale(1, 0.94); opacity: 0.94; }
+  31% { transform: skewX(-8deg) scale(0.86, 1.1); opacity: 1; }
+  67% { transform: skewX(6deg) scale(1.06, 0.9); opacity: 0.9; }
+}
+
+@keyframes light-spill {
+  0%, 100% { transform: scale(0.96); opacity: 0.8; }
+  22% { transform: scale(1.06, 1); opacity: 0.98; }
+  49% { transform: scale(0.98, 1.04); opacity: 0.86; }
+  71% { transform: scale(1.04, 0.98); opacity: 0.95; }
+}

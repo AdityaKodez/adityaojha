@@ -94,7 +94,6 @@ component.
 | `config/types.ts` | Every shared type, plus the `SectionId` union |
 | `config/site.ts` | The root `siteConfig` object, meta, personal info, section order, section flags, banner, about, services, workflow, contact |
 | `config/hero.ts` | `heroConfig`, hero copy |
-| `config/halloween.ts` | Shared Halloween decoration flag and spider action label |
 | `config/books.ts` | Bookshelf copy and ordered books, local covers, source URLs, and spine presentation |
 | `config/skills.ts` | `skillsSectionConfig` + `skillsConfig` |
 | `config/socials.ts` | `socialSectionConfig` + `socialsConfig` |
@@ -202,13 +201,9 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 - Colors come from semantic tokens only, `background`, `foreground`, `card`,
   `popover`, `muted`, `muted-foreground`, `primary`, `secondary`, `accent`,
   `destructive`, `border`, `input`, `ring`, and `chart-1` through `chart-5`.
-  The header's Darth Vader mask uses the `--vader-black`, `--vader-ink`,
-  `--vader-shell`, `--vader-silver`, and `--vader-shine` tokens.
-  They are declared as raw custom properties on `:root` and `.dark`, then
-  re-exported through the `@theme inline` block in `app/globals.css`. Never
-  hardcode a hex value in a component. The spider uses shared
-  `--halloween-spider-ink`, `--halloween-spider-shell`, and
-  `--halloween-spider-shine` tokens for its dark body and silver highlights.
+  The header's candle logo uses the `--logo-wax-*`, `--logo-flame`,
+  `--logo-flame-core`, and `--logo-wick` tokens declared in `app/globals.css`.
+  Never hardcode a hex value in a component.
 - Radii derive from a single `--radius` (0.45rem) as `sm`, `md`, `lg` and up.
   Use the tokens rather than literal values.
 - Dark mode is class-based: `@custom-variant dark (&:is(.dark *))` plus
@@ -227,26 +222,18 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   opacity with the ease `[0.22, 1, 0.36, 1]` plus a settle spring on `y`. Only
   `opacity` and `transform` are animated, never `filter` (animated blur forces
   a repaint of the whole subtree per frame), and `whileInView` fires once
-  rather than on every scroll pass. The header logo is the mountain-shaped A
-  on a transparent background, with no tile behind it. While
-  `halloweenConfig.enabled` is true, hovering the Home link with a fine pointer
-  flips the mark 180 degrees around its vertical axis to reveal the detailed
-  Darth Vader SVG mask. Keyboard focus reveals the mask immediately. Reduced
-  motion swaps the faces without rotation, and touch keeps the A and normal
-  Home navigation. Keep both faces free of backgrounds, their SVG overflow
-  visible, and the Home link's 44px target intact. The standalone Vader and
-  campfire decorations are removed from the home page.
-  The same flag enables the web and spider
-  at the page's top-right corner, outside the centered content frame. The
-  scene fades in once on mount with an 8px downward settle using
-  `revealOnMount`, with reduced-motion and no-JavaScript fallbacks. The
-  web has fine, irregular silk strands; the dark spider has shaded volume,
-  silver leg highlights, and a small red marking. The scene is 80% of its
-  original size, with a 144px web on desktop and a 67.2px web on narrow screens.
-  The spider button retains a minimum 44px target. Keep the artwork compact
-  on narrow screens and clear of header controls. Hover or activation makes the spider
-  drop briefly and retreat. Its thread uses scale rather than changing height,
-  and it stays still with reduced motion. The hero text and footer
+  rather than on every scroll pass. The header logo is a golden wax,
+  mountain-shaped A with an orange side face, a wax drip, and an unlit wick
+  on a transparent background, with no tile behind it. Hovering the Home link
+  with a fine pointer or focusing it with the keyboard ignites the candle.
+  Layered flame and core motion create irregular flicker, while pointer position
+  bends the flame through a spring to suggest moving air. A soft amber halo
+  spills beyond the flame and reflects light onto the A. Leaving extinguishes
+  the flame and fades its glow. Animate only transform and opacity, with the
+  flicker paused while unlit. Reduced motion shows a still flame on hover or
+  focus. Touch keeps the unlit golden A and normal Home navigation. Keep the SVG
+  overflow visible and the Home link's 44px target intact. The Vader swap and
+  corner spider web are removed. The hero text and footer
   quote words are deliberate exceptions and keep their blur-to-sharp resolve.
   Hero text reveals once on mount with a 3px blur, an 8px rise, and a 0.5s
   ease-out. Its greeting words stagger by 40ms; the headline, description, and
@@ -275,8 +262,8 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   hover. Prefer these over repeating the utility stack.
 - `config/diwali.ts` controls the dithered courtyard decoration beside About,
   outside the home page's right content edge in the former lightsaber slot.
-  It appears from 80rem upward, like the previous margin decorations, and does
-  not replace the header's Vader hover. Hover and keyboard focus show the shared
+  It appears from 80rem upward, like the previous margin decorations, and
+  remains independent of the header's candle hover. Hover and keyboard focus show the shared
   "Happy Diwali" tooltip; hover or activation releases a short paper-petal burst.
   Reduced motion keeps the scene still and skips confetti. The transparent
   illustration under `public/diwali/` mounts once when it first nears the viewport

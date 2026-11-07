@@ -1,11 +1,9 @@
 "use client";
 
 import { HeaderActions } from "@/components/shared/header-actions";
-import { DarthVaderMask } from "@/components/shared/darth-vader-mask";
 import { Logo } from "@/components/shared/logo";
 import { siteNavigationItems, isNavigationItemActive } from "@/components/shared/site-navigation";
 import { navigationConfig } from "@/config/navigation";
-import { halloweenConfig } from "@/config/halloween";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -27,23 +25,13 @@ export function SiteHeader() {
           href="/"
           aria-label="Home"
           aria-current={pathname === "/" ? "page" : undefined}
-          data-vader={halloweenConfig.enabled}
           className={cn(
             "flex size-11 shrink-0 items-center justify-center rounded-xl outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
             styles.homeLink,
           )}
         >
           <span aria-hidden="true" className={styles.logoStage}>
-            <span className={styles.logoFlip}>
-              <span className={styles.logoFront}>
-                <Logo size={23.4} />
-              </span>
-              {halloweenConfig.enabled && (
-                <span className={styles.logoBack}>
-                  <DarthVaderMask />
-                </span>
-              )}
-            </span>
+            <Logo size={34} />
           </span>
         </Link>
 
