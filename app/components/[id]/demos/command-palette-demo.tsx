@@ -21,6 +21,7 @@ import {
   type CommandPaletteGroup,
   type CommandPalettePage,
 } from "@/components/ui/command-palette";
+import { playCopySound } from "@/lib/copy-sound";
 
 const INSTALL_COMMAND =
   "npx shadcn@latest add https://akoder.xyz/r/command-palette.json";
@@ -38,7 +39,10 @@ export function CommandPaletteDemo() {
   const copy = useCallback(
     (value: string, label: string) => {
       if (typeof navigator !== "undefined" && navigator.clipboard) {
-        navigator.clipboard.writeText(value).catch(() => {});
+        navigator.clipboard
+          .writeText(value)
+          .then(() => playCopySound())
+          .catch(() => {});
       }
       report(label);
     },

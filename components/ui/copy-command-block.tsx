@@ -67,6 +67,18 @@ const RUNNERS: Record<PackageManagerType, string> = {
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+function playCopySound(src?: string) {
+  if (!src || typeof window === "undefined") return;
+
+  try {
+    const audio = new Audio(src);
+    audio.volume = 0.35;
+    void audio.play().catch(() => {});
+  } catch {
+    // Audio is optional feedback; clipboard success must not depend on it.
+  }
+}
+
 /**
  * Clipboard feedback for the copy button. The glyph morphs between states
  * instead of snapping: the outgoing icon fades and shrinks away while the
@@ -141,6 +153,8 @@ export interface CopyCommandBlockProps {
   showTabs?: boolean;
   /** Show the terminal `$` prompt. */
   showPrompt?: boolean;
+  /** Optional public URL for a sound played after a successful copy. */
+  copySoundSrc?: string;
   /** Extra class names. */
   className?: string;
 }
@@ -151,6 +165,7 @@ export function CopyCommandBlock({
   storageKey = "akoder:package-manager",
   showTabs = true,
   showPrompt = true,
+  copySoundSrc,
   className,
 }: CopyCommandBlockProps) {
   const [activePm, setActivePm] = useState<PackageManagerType>(() => {
@@ -199,13 +214,14 @@ export function CopyCommandBlock({
     }
     try {
       await navigator.clipboard.writeText(activeCommand);
+      playCopySound(copySoundSrc);
       setCopyStatus("copied");
       setTimeout(() => setCopyStatus("idle"), 2000);
     } catch {
       setCopyStatus("error");
       setTimeout(() => setCopyStatus("idle"), 2000);
     }
-  }, [activeCommand]);
+  }, [activeCommand, copySoundSrc]);
 
   const reducedMotion = useReducedMotion();
   // Per-instance id: several blocks can share a page, and a shared layoutId

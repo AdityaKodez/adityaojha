@@ -1,32 +1,26 @@
-/* Lifetime visitor count from Vercel Web Analytics. The count endpoint only
-   covers production data, which is what the counter wants. The Data Cache
-   entry below is the only cache layer, so the rendered number is at most
-   ~60s behind the real total. */
+/* Lifetime visitor count from the Talvess Stats API. The key is website-scoped
+   and server-only. Talvess caches matching reports for 900 seconds, so the
+   Data Cache entry below uses the same window. */
 
-const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
-const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID;
-const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID;
+const TALVESS_STATS_KEY = process.env.TALVESS_STATS_KEY;
+const TALVESS_ORIGIN = process.env.TALVESS_ORIGIN ?? "https://talvess.app";
 
 export async function getVisitorCount(): Promise<number | null> {
-  // Without credentials the counter stays hidden in the UI instead of
-  // erroring, so local dev and forks keep working.
-  if (!VERCEL_TOKEN || !VERCEL_PROJECT_ID) return null;
-
-  const params = new URLSearchParams({ projectId: VERCEL_PROJECT_ID });
-  if (VERCEL_TEAM_ID) {
-    params.set("teamId", VERCEL_TEAM_ID);
-  }
+  // Without a key the counter stays hidden in the UI instead of erroring, so
+  // local dev and forks keep working.
+  if (!TALVESS_STATS_KEY) return null;
 
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
+    const origin = TALVESS_ORIGIN.replace(/\/+$/, "");
 
     const response = await fetch(
-      `https://api.vercel.com/v1/query/web-analytics/visits/count?${params}`,
+      `${origin}/api/v1/stats/visitors?period=lifetime`,
       {
-        next: { revalidate: 60 },
+        next: { revalidate: 900 },
         headers: {
-          Authorization: `Bearer ${VERCEL_TOKEN}`,
+          Authorization: `Bearer ${TALVESS_STATS_KEY}`,
           Accept: "application/json",
         },
         signal: controller.signal,
@@ -36,10 +30,10 @@ export async function getVisitorCount(): Promise<number | null> {
     if (!response.ok) return null;
 
     const data = (await response.json()) as {
-      data?: { visitors?: number; pageviews?: number };
+      data?: { count?: number };
     };
 
-    const visitors = data.data?.visitors;
+    const visitors = data.data?.count;
     return typeof visitors === "number" && visitors > 0 ? visitors : null;
   } catch {
     return null;

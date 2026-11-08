@@ -20,11 +20,6 @@
   z-index: 10;
 }
 
-.stickerButton {
-  touch-action: pan-y;
-  -webkit-tap-highlight-color: transparent;
-}
-
 .notebook {
   top: 0;
   left: -2%;
@@ -96,8 +91,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sticker,
-  .stickerButton {
+  .sticker {
     transform: none !important;
   }
 }

@@ -56,7 +56,11 @@ export function ContactChannelsDemo({
 }: Partial<ContactChannelsProps> = {}) {
   return (
     <div className="w-full max-w-xl">
-      <ContactChannels items={sampleChannels} columns={columns} />
+      <ContactChannels
+        items={sampleChannels}
+        columns={columns}
+        copySoundSrc="/keyboard-click.mp3"
+      />
     </div>
   );
 }

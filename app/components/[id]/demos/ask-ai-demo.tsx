@@ -22,6 +22,7 @@ export function AskAIDemo({
         title="ask an ai about me"
         description="a fresh perspective, from your favorite assistant."
         prompt="Hi! I'm on Aditya Ojha's portfolio (https://akoder.xyz). Based on this page, introduce him: what he builds, his stack, and what he is looking for. Then suggest what I should ask him about next."
+        copySoundSrc="/keyboard-click.mp3"
       />
     </div>
   );

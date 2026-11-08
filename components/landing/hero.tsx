@@ -1,6 +1,7 @@
 "use client";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { VerseText } from "@/components/verse-text";
 import { WritingUnderline } from "./writing-underline";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
@@ -8,17 +9,9 @@ import { trackEvent } from "@/lib/analytics";
 import { MOTION_EASE } from "@/lib/motion";
 import { RotatingGlobe } from "./rotating-globe";
 import { motion, type Variants } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useHaptic } from "react-haptic";
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.04,
-    },
-  },
-};
 // Keep blur on the text itself, so the banner and section shell stay sharp.
 const textVariants: Variants = {
   hidden: {
@@ -58,6 +51,11 @@ export function Hero() {
   const [beforeHighlight, afterHighlight] = heroConfig.description.split(
     heroConfig.descriptionHighlight,
   );
+  const headlineAfter = heroConfig.headlineAfter
+    ? /^[.,!?;:]/.test(heroConfig.headlineAfter)
+      ? heroConfig.headlineAfter
+      : ` ${heroConfig.headlineAfter}`
+    : "";
 
   const handleWaveAudio = (play: boolean, interactionType: "hover" | "touch" = "hover") => {
     const audio = vibrateAudio.current;
@@ -109,29 +107,28 @@ export function Hero() {
       initial="hidden"
       animate="visible"
     >
-      <div className="flex flex-col items-start gap-6">
-        <div className="space-y-2">
-          <motion.p
-            className="no-js-visible mb-4 flex flex-wrap gap-x-1.5 gap-y-1 items-center text-lg font-mono font-semibold tracking-wide"
-            variants={containerVariants}
-          >
-            {heroConfig.greeting.split(" ").map((word, index) => (
-              <motion.span
-                key={index}
-                data-reveal=""
-                variants={textVariants}
-                className="no-js-visible font-serif inline-block"
-              >
-                {word}
-              </motion.span>
-            ))}
+      <div className="flex flex-col items-start gap-2">
+        <div className="w-full min-w-0 space-y-2">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1 max-sm:justify-between">
+            <div className="flex min-w-0 items-center gap-1 text-xl  font-mono font-semibold tracking-wide sm:text-2xl">
+            <VerseText
+              text={heroConfig.greeting}
+              className="font-serif"
+              style={
+                {
+                  "--vt-ink": "var(--foreground)",
+                  "--vt-blend": "var(--verse-text-blend, multiply)",
+                  "--vt-leading": "inherit",
+                } as CSSProperties
+              }
+            />
             <motion.span
               data-reveal=""
               variants={textVariants}
               className="no-js-visible inline-block"
             >
               <span
-                className="inline-block text-2xl hover:animate-wave"
+                className="inline-block text-xl hover:animate-wave"
                 onMouseEnter={() => {
                   vibrate();
                   handleWaveAudio(true, "hover");
@@ -150,11 +147,40 @@ export function Hero() {
                 )}
               </span>
             </motion.span>
-          </motion.p>
+            </div>
+            <span className="size-2 rounded-full bg-muted ring-1 ring-inset ring-muted max-sm:hidden">
+
+            </span>
+            <Tooltip onOpenChange={setIsLocationTooltipOpen}>
+              <TooltipTrigger
+                className="micro-transition flex min-h-4 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-sm text-xs text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground sm:text-sm"
+                onMouseEnter={() => setIsLocationHovered(true)}
+                onMouseLeave={() => setIsLocationHovered(false)}
+                onFocus={() => setIsLocationHovered(true)}
+                onBlur={() => setIsLocationHovered(false)}
+              >
+
+                <RotatingGlobe isHovered={isLocationHovered} />
+                <motion.span
+                  data-reveal=""
+                  className="no-js-visible inline-block font-sans"
+                  variants={textVariants}
+                  custom={0.26}
+                >
+                  {siteConfig.personal.location.label}
+                </motion.span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span className="font-sans text-xs tracking-wider">
+                  {locationTime ?? "--:--:--"}
+                </span>
+              </TooltipContent>
+            </Tooltip>
+          </div>
 
           <motion.h1
             data-reveal=""
-            className="no-js-visible text-lg sm:text-xl md:text-2xl font-semibold leading-[1.05] tracking-tight text-balance"
+            className="no-js-visible text-lg sm:text-sm md:text-lg font-semibold leading-[1.05] tracking-tight text-balance"
             variants={textVariants}
             custom={0.1}
           >
@@ -174,13 +200,13 @@ export function Hero() {
               <WritingUnderline delay={0.36}>
                 {heroConfig.highlightedPhrases[1]}
               </WritingUnderline>
-            </span>{" "}
-            {heroConfig.headlineAfter}
+            </span>
+            {headlineAfter}
           </motion.h1>
 
           <motion.p
             data-reveal=""
-            className="no-js-visible mt-4 text-sm text-muted-foreground max-sm:text-sm"
+            className="no-js-visible mt-2 text-sm text-muted-foreground max-sm:text-xs"
             variants={textVariants}
             custom={0.18}
           >
@@ -197,34 +223,6 @@ export function Hero() {
             )}
           </motion.p>
 
-          <div
-            className="mt-4 flex items-center gap-3 text-sm text-muted-foreground"
-          >
-            <Tooltip onOpenChange={setIsLocationTooltipOpen}>
-              <TooltipTrigger
-                className="micro-transition flex items-center gap-1.5 rounded-sm py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground"
-                onMouseEnter={() => setIsLocationHovered(true)}
-                onMouseLeave={() => setIsLocationHovered(false)}
-                onFocus={() => setIsLocationHovered(true)}
-                onBlur={() => setIsLocationHovered(false)}
-              >
-                <RotatingGlobe isHovered={isLocationHovered} />
-                <motion.span
-                  data-reveal=""
-                  className="no-js-visible inline-block font-sans"
-                  variants={textVariants}
-                  custom={0.26}
-                >
-                  {siteConfig.personal.location.label}
-                </motion.span>
-              </TooltipTrigger>
-              <TooltipContent>
-                <span className="font-sans text-xs tracking-wider">
-                  {locationTime ?? "--:--:--"}
-                </span>
-              </TooltipContent>
-            </Tooltip>
-          </div>
         </div>
       </div>
 

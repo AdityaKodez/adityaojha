@@ -22,6 +22,7 @@ export function CopyCommandBlockDemo({
         <CopyCommandBlock
           showTabs={showTabs}
           showPrompt={showPrompt}
+          copySoundSrc="/keyboard-click.mp3"
           commands={{
             npm: "npx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
             pnpm: "pnpm dlx shadcn@latest add https://akoder.xyz/r/dotted-world-map.json",
@@ -38,6 +39,7 @@ export function CopyCommandBlockDemo({
         <CopyCommandBlock
           showTabs={showTabs}
           showPrompt={showPrompt}
+          copySoundSrc="/keyboard-click.mp3"
           command="git clone https://github.com/AdityaKodez/adityaojha.git"
         />
       </div>

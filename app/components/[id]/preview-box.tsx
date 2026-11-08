@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
+import { playCopySound } from "@/lib/copy-sound";
 import {
   type ReactNode,
   useCallback,
@@ -71,6 +72,7 @@ export function PreviewBox({
     navigator.clipboard
       .writeText(rawCode)
       .then(() => {
+        playCopySound();
         setCopied(true);
         trackEvent("component_demo_source_copied", {
           component_id: componentId,

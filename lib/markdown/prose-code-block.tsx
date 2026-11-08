@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState, type ReactNode } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { playCopySound } from "@/lib/copy-sound";
 import {
   Tooltip,
   TooltipContent,
@@ -26,6 +27,7 @@ export function ProseCodeBlock({ children }: { children: ReactNode }) {
     navigator.clipboard
       .writeText(text)
       .then(() => {
+        playCopySound();
         setCopied(true);
         trackEvent("prose_code_copied", {
           page_path: typeof window !== "undefined" ? window.location.pathname : undefined,

@@ -46,7 +46,7 @@ database, no auth, no payments. All content is typed configuration.
 | Primitives | Radix UI and Base UI, vendored into `components/ui/`; Vaul for the mobile suggestion drawer |
 | Motion | Motion 12 |
 | Icons | HugeIcons for site controls via `components/shared/site-icons.tsx`; `lucide-react` remains in shared UI, published components, and demos; `react-icons` and local assets supply brand icons |
-| Fonts | DM Sans (body), Geist Mono, and Geist Serif (`geist/font/serif/variable`); OG TTFs in `lib/fonts/` |
+| Fonts | DM Sans (body), Geist Mono, and Instrument Serif; OG TTFs in `lib/fonts/` |
 | Theming | `next-themes`, class-based dark mode |
 | Dates | `date-fns` 4 with `date-fns-tz` |
 | Markdown | `react-markdown` on the client surface, `next-mdx-remote` with Shiki on the server surface |
@@ -172,7 +172,7 @@ The home page is a loop, not a hand-written layout.
   The invitation links directly to `/api/sponsor-checkout` with a plain anchor
   so visitors continue to Dodo's hosted checkout.
   Its “Supported by” heading matches
-  About's greeting: Geist Serif italic, 25px with a 32px line height,
+  About's greeting: Instrument Serif italic, 25px with a 32px line height,
   21px horizontal and 1px vertical padding, and 24px above the heading band.
   The section also renders at the bottom of `/components` and `/testimonials`.
   `/sponsor` explains support and reuses the list. Keep the payment product id
@@ -235,14 +235,18 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   overflow visible and the Home link's 44px target intact. The Vader swap and
   corner spider web are removed. The hero text and footer
   quote words are deliberate exceptions and keep their blur-to-sharp resolve.
-  Hero text reveals once on mount with a 3px blur, an 8px rise, and a 0.5s
-  ease-out. Its greeting words stagger by 40ms; the headline, description, and
-  location follow with short overlapping delays. Animate only the text, keeping
+  The portrait overlaps the banner at its lower-left edge, with the intro
+  text aligned below it in the original GitHub layout.
+  The hero name uses the supplied `VerseText` component for its comic print
+  and idle glitch, with the foreground and `--verse-text-blend` theme tokens.
+  Keep its built-in reduced-motion and offscreen pauses. The headline,
+  description, and location reveal once on mount with a 3px blur, an 8px rise,
+  and a 0.5s ease-out, with short overlapping delays. Animate only the text, keeping
   the hero shell and banner still. Reduced motion and no JavaScript show the
   text immediately, sharp and fully visible. The footer
   also has a slower one-time staggered entrance for its text and live status.
-  The garden reveals independently once it clears the bottom fade, with a
-  120px viewport inset. It follows pointer movement with subtle spring-driven
+  The Earth reveals independently once it clears the bottom fade, with a
+  80px viewport inset. It follows pointer movement with subtle spring-driven
   parallax, resets on leave, and stays still for touch and reduced motion.
   Animated elements use `data-reveal` for the reduced-motion override, with a
   no-JavaScript fallback.
@@ -284,17 +288,20 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   Geist Serif heading, and paper-cut garden from `config/opengraph.ts`.
   Keep route descriptions, URLs, and install commands readable above the
   artwork, with no dark grid or heavy panel. The homepage OG stays unchanged.
-- The shared footer on `/`, `/components`, and `/testimonials` stays within the centered page frame, with a compact,
-  transparent paper-cut garden that matches the hero's halftone artwork. Keep
-  its quote, credit, and artwork reference in `footerConfig` in `config/site.ts`.
-  The quote, live Discord status, and credit sit above a continuous botanical
-  panorama, clear of the fixed bottom controls. The visitor count floats
-  centered over the panorama as a liquid-glass pill (`.liquid-glass`, with the
-  displacement map rendered by `footer-scene.tsx`). Preserve
-  the artwork's aspect ratio, cropping its sides on narrow screens.
+- The shared footer on `/`, `/components`, and `/testimonials` stays within the centered page frame, with a
+  code-rendered, blue dithered Earth rising from the bottom. Keep its quote and
+  credit in `footerConfig` in `config/site.ts`. The Earth turns slowly while
+  visible and stays still for reduced motion. The quote, live Discord status,
+  and credit sit above it, clear of the fixed bottom controls. The visitor count
+  floats centered over the Earth as a liquid-glass pill (`.liquid-glass`, with
+  the displacement map rendered by `footer-scene.tsx`).
   The footer is a sibling of each page's main, with no
-  opening border or nested frame. The garden stage is 280px tall on mobile and
-  320px from the small breakpoint, with a 720px minimum artwork width.
+  opening border or nested frame. The Earth stage is 192px tall on mobile and
+  208px from the small breakpoint, with a 720px minimum artwork width. The
+  land coordinates come from Natural Earth's public-domain 1:110m land dataset.
+  A small blue satellite follows a 32-second tilted orbit above the Earth and
+  disappears behind its far side. Its transform and opacity animation shares
+  the Earth's visibility pause and holds a visible pose for reduced motion.
   Keep it off other inner routes and preserve the intentional heading styles.
 
 ## 10. Borders
@@ -375,7 +382,7 @@ Deliberately **excluded**, leave these as authored:
   few section headings only; nothing is heavier than 600 anywhere.
 - Mono is Geist Mono, 10–12.5px, for meta labels, keyboard hints, and code.
 - Pixel accents used to use `font-pixel` (Geist Pixel Grid); they now use
-  `font-sans` (DM Sans). Serif accents use `font-serif` (Geist Serif) and
+  `font-sans` (DM Sans). Serif accents use `font-serif` (Instrument Serif) and
   appear sparingly.
 - Section headings use the `.section-heading` class rather than ad-hoc sizes.
 - Supplemental section notes use `components/shared/side-note.tsx` with Caveat
@@ -559,15 +566,14 @@ Rules:
   This is a deliberate exception to the immediate home-section rendering rule.
   Keep the reduced-motion and no-JavaScript fallbacks. No title, author, or
   hint caption appears below the shelf; each button retains its accessible label.
-- Keep the header navigation and garden-footer routes unchanged.
+- Keep the header navigation and footer routes unchanged.
 
 | Variable | Used by | Behaviour when missing |
 | --- | --- | --- |
 | `GITHUB_TOKEN` | `lib/github.ts`, `app/page.tsx` | The GitHub section is skipped entirely, by design, not a bug |
 | `DISCORD_USER_ID` | `app/api/discord-status/route.ts` | Falls back to a hardcoded user id |
-| `VERCEL_TOKEN` | `app/api/visitor-count/route.ts` | The footer visitor counter stays hidden (the route returns null counts) |
-| `VERCEL_PROJECT_ID` | `app/api/visitor-count/route.ts` | Same as above; both vars are required to query the Web Analytics count endpoint |
-| `VERCEL_TEAM_ID` | `app/api/visitor-count/route.ts` | Optional, only needed when the project lives under a Vercel team |
+| `TALVESS_STATS_KEY` | `lib/visitor-count.ts` | The footer visitor counter stays hidden |
+| `TALVESS_ORIGIN` | `lib/visitor-count.ts` | Defaults to `https://talvess.app` |
 | `DODO_PAYMENTS_API_KEY` | `app/api/sponsor-checkout/route.ts`, `app/api/sponsor-claim/route.ts` | The claim-a-seat CTA degrades and the claim route refuses to verify payments |
 | `DODO_WEBHOOK_KEY` | `app/api/dodo-webhook/route.ts` | The webhook rejects everything with a 500, so Dodo retries |
 | `SPONSOR_GITHUB_TOKEN` | `lib/sponsor-store.ts` | Paid seats cannot be committed; nothing rendered changes |

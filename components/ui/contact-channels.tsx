@@ -33,6 +33,8 @@ export interface ContactChannelsProps {
   items: ContactChannelItem[];
   /** Grid column count (collapses to one column on small screens). */
   columns?: 1 | 2 | 3;
+  /** Optional public URL for a sound played after a successful copy. */
+  copySoundSrc?: string;
   className?: string;
 }
 
@@ -51,9 +53,22 @@ function Kbd({ children }: { children: ReactNode }) {
   );
 }
 
+function playCopySound(src?: string) {
+  if (!src || typeof window === "undefined") return;
+
+  try {
+    const audio = new Audio(src);
+    audio.volume = 0.35;
+    void audio.play().catch(() => {});
+  } catch {
+    // Audio is optional feedback; clipboard success must not depend on it.
+  }
+}
+
 export function ContactChannels({
   items,
   columns = 2,
+  copySoundSrc,
   className,
 }: ContactChannelsProps) {
   const [copied, setCopied] = useState<Record<string, boolean>>({});
@@ -67,13 +82,16 @@ export function ContactChannels({
     if (!item.copyValue) {
       return;
     }
-    navigator.clipboard.writeText(item.copyValue);
+    navigator.clipboard
+      .writeText(item.copyValue)
+      .then(() => playCopySound(copySoundSrc))
+      .catch(() => {});
     setCopied((prev) => ({ ...prev, [item.id]: true }));
     window.setTimeout(
       () => setCopied((prev) => ({ ...prev, [item.id]: false })),
       2000,
     );
-  }, []);
+  }, [copySoundSrc]);
 
   // Single-key copy shortcuts. Ignored while typing in editable targets.
   useEffect(() => {

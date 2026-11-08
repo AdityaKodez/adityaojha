@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { Fragment, type ReactNode } from "react";
 import { motion, useReducedMotion, useSpring, type Variants } from "motion/react";
 import { DiscordStatus } from "@/components/landing/discord-status";
+import { FooterEarth } from "@/components/landing/footer-earth";
 import { footerConfig } from "@/config/site";
 import { MOTION_EASE } from "@/lib/motion";
 
@@ -15,7 +15,7 @@ const itemVariants: Variants = {
     transition: { duration: 0.55, ease: MOTION_EASE },
   },
 };
-const gardenVariants: Variants = {
+const earthVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
@@ -40,7 +40,7 @@ export function FooterScene({ children }: { children: ReactNode }) {
   const y = useSpring(0, parallaxSpring);
   const rotate = useSpring(0, parallaxSpring);
 
-  const resetGarden = () => {
+  const resetEarth = () => {
     x.set(0);
     y.set(0);
     rotate.set(0);
@@ -146,10 +146,10 @@ export function FooterScene({ children }: { children: ReactNode }) {
       <motion.div
         aria-hidden="true"
         data-reveal=""
-        variants={gardenVariants}
+        variants={earthVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.35, margin: "0px 0px -120px 0px" }}
+        viewport={{ once: true, amount: 0.1, margin: "0px 0px -80px 0px" }}
         onPointerMove={(event) => {
           if (reducedMotion || event.pointerType === "touch") return;
           const bounds = event.currentTarget.getBoundingClientRect();
@@ -159,9 +159,9 @@ export function FooterScene({ children }: { children: ReactNode }) {
           y.set(vertical * 8);
           rotate.set(horizontal * 1.2);
         }}
-        onPointerLeave={resetGarden}
-        onPointerCancel={resetGarden}
-        className="relative -mt-6 h-70 select-none overflow-hidden sm:-mt-12 sm:h-80"
+        onPointerLeave={resetEarth}
+        onPointerCancel={resetEarth}
+        className="relative mt-2 h-48 select-none overflow-hidden sm:h-52"
       >
         <div className="relative left-1/2 h-full w-[calc(100%+24px)] min-w-180 -translate-x-1/2">
           <motion.div
@@ -172,22 +172,10 @@ export function FooterScene({ children }: { children: ReactNode }) {
               rotate: reducedMotion ? 0 : rotate,
             }}
           >
-            <Image
-              src={footerConfig.artwork.src}
-              alt=""
-              width={footerConfig.artwork.width}
-              height={footerConfig.artwork.height}
-              sizes="(max-width: 719px) 720px, 792px"
-              className="block h-auto w-full max-w-none"
-              draggable={false}
-            />
+            <FooterEarth />
           </motion.div>
         </div>
 
-        {/* The visitor count floats centered over the panorama as a glass
-            pill. A sibling of the parallaxing artwork, not a child of it, so
-            the garden shifts behind still glass. The inset wrapper lets the
-            pill size against the full stage instead of half its width. */}
         <div className="absolute inset-x-4 top-1/2 z-10 flex -translate-y-1/2 justify-center">
           {children}
         </div>

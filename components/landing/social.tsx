@@ -7,6 +7,7 @@ import { ArrowRightIcon } from "@/components/shared/site-icons";
 import { socialSectionConfig, socialsConfig } from "@/config/socials";
 import type { SocialIcon, SocialLink } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
+import { playCopySound } from "@/lib/copy-sound";
 import Peerlist from "@/public/peerlist";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
@@ -66,7 +67,10 @@ const Social = () => {
       return;
     }
 
-    navigator.clipboard.writeText(social.copyValue);
+    navigator.clipboard
+      .writeText(social.copyValue)
+      .then(() => playCopySound())
+      .catch(() => {});
     trackEvent("social_handle_copied", {
       platform: social.platform,
       handle: social.handle,

@@ -29,6 +29,7 @@ import { getEnabledComponents } from "@/config/components";
 import { bookshelfConfig } from "@/config/books";
 import { projectsConfig } from "@/config/projects";
 import { siteConfig } from "@/config/site";
+import { playCopySound } from "@/lib/copy-sound";
 
 /**
  * The site-wide command palette, mounted once in the header. Every route is a
@@ -132,6 +133,7 @@ export function SiteCommandPalette({
             onSelect: () => {
               navigator.clipboard
                 ?.writeText(siteConfig.meta.url)
+                .then(() => playCopySound())
                 .catch(() => {});
             },
           },

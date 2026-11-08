@@ -3,6 +3,7 @@
 import { siteConfig } from "@/config/site";
 import type { SocialIcon, SocialLink } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
+import { playCopySound } from "@/lib/copy-sound";
 import Gmail from "@/public/stacks/gmail";
 import X from "@/public/x-icon";
 import { motion } from "motion/react";
@@ -41,6 +42,7 @@ export function CTA() {
     navigator.clipboard
       .writeText(channel.copyValue)
       .then(() => {
+        playCopySound();
         trackEvent("social_handle_copied", {
           platform: channel.platform,
           handle: channel.handle,

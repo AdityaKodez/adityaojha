@@ -203,6 +203,18 @@ export function getProviderUrl(provider: AIProvider, prompt: string) {
   return url.toString();
 }
 
+function playCopySound(src?: string) {
+  if (!src || typeof window === "undefined") return;
+
+  try {
+    const audio = new Audio(src);
+    audio.volume = 0.35;
+    void audio.play().catch(() => {});
+  } catch {
+    // Audio is optional feedback; clipboard success must not depend on it.
+  }
+}
+
 export type AskAIProps = {
   prompt: string;
   title?: string;
@@ -214,6 +226,8 @@ export type AskAIProps = {
   blobOnly?: boolean;
   /** Optional custom mascot node, rendered in place of the default blob. */
   mascot?: ReactNode;
+  /** Optional public URL for a sound played after a successful copy. */
+  copySoundSrc?: string;
   providers?: readonly AIProvider[];
   size?: "default" | "compact";
   side?: "top" | "bottom" | "left" | "right";
@@ -233,6 +247,7 @@ export function AskAI({
   tooltip,
   blobOnly = false,
   mascot,
+  copySoundSrc,
   providers = defaultAIProviders,
   size = "default",
   side = "top",
@@ -268,6 +283,7 @@ export function AskAI({
   async function copyPrompt() {
     try {
       await navigator.clipboard.writeText(prompt);
+      playCopySound(copySoundSrc);
       setCopied(true);
       setFallbackPrompt(false);
       if (resetTimeout.current) clearTimeout(resetTimeout.current);

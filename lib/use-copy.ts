@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { playCopySound } from "@/lib/copy-sound";
 
 export type CopyStatus = "idle" | "copied" | "error";
 
@@ -12,6 +13,7 @@ export function useCopy() {
     }
     try {
       await navigator.clipboard.writeText(value);
+      playCopySound();
       setStatus("copied");
     } catch {
       // Clipboard is unavailable over plain HTTP or when permission is denied.

@@ -13,7 +13,7 @@
   --color-diwali-petal: var(--diwali-petal);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-geist-serif);
+  --font-serif: var(--font-instrument-serif);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -95,6 +95,7 @@
   --sidebar-ring: oklch(0.708 0 0);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
+  --verse-text-blend: multiply;
   --heatmap-level-0: oklch(0.92 0 0);
   --heatmap-level-1: oklch(0.882 0.057 254.128);
   --heatmap-level-2: oklch(0.707 0.165 254.624);
@@ -112,11 +113,16 @@
   --diwali-flame: oklch(0.77 0.17 65);
   --diwali-gold: oklch(0.88 0.12 85);
   --diwali-petal: oklch(0.7 0.15 355);
+  --footer-earth-deep: 19 54 103;
+  --footer-earth-ocean: 35 112 190;
+  --footer-earth-light: 169 220 249;
+  --footer-earth-cloud: 246 251 255;
 }
 
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
+  --verse-text-blend: screen;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -207,7 +213,7 @@ body {
 
      The no-WebGL take on Apple's liquid glass. The pane is a tinted frost:
      a translucent theme background with a short blur and a saturation boost,
-     so the footer garden behind it bleeds through as color instead of shape.
+     so the footer artwork behind it bleeds through as color instead of shape.
      The specular rim is inset shadows, one highlight per edge, so no border
      is added (§10). Chromium also paints SVG filter references inside
      backdrop-filter, so there the backdrop bends through a turbulence
