@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { findComponent } from "@/config/components";
-import { formatComponentPageMarkdown } from "@/lib/component-page-markdown";
+import { formatComponentPageMarkdown } from "@/lib/markdown/component-page-markdown";
 
 export async function GET(
   _request: Request,

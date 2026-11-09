@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { githubSectionConfig as copy } from "@/config/github";
-import { activityColor, type ActivityCalendar } from "@/lib/github-activity";
+import { activityColor, type ActivityCalendar } from "@/lib/github/github-activity";
 import { cn } from "@/lib/utils";
 
 const dateFormat = new Intl.DateTimeFormat("en-GB", {

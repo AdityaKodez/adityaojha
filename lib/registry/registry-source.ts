@@ -10,7 +10,7 @@ import "server-only";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { highlightCode } from "@/lib/highlight";
+import { highlightCode } from "@/lib/markdown/highlight";
 
 type RegistryFileEntry = {
   path: string;

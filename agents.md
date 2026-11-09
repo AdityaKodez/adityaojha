@@ -76,7 +76,7 @@ There is no typecheck script; run `npx tsc --noEmit` directly.
 | `components/skeletons/` | Loading placeholders |
 | `config/` | The data layer, one file per domain, plus `types.ts` and `playground.ts` (preview props panel schemas) |
 | `content/` | Markdown docs for the showcase |
-| `lib/` | `utils.ts` (the `cn` helper), `github.ts`, `discord-status.ts`, `highlight.ts`, `markdown/` (shared Markdown rendering helpers), `react-query.ts`, `fonts/` |
+| `lib/` | `utils.ts` (the `cn` helper), `github/` (GitHub data and activity), `registry/` (registry health and source), `discord-status.ts`, `markdown/` (shared Markdown rendering and highlighting), `react-query.ts`, `fonts/` |
 | `public/` | Static assets; `public/r/` holds generated registry JSON |
 | `scripts/` | `build-registry.mjs` |
 | `plans/` | Private planning docs, gitignored |
@@ -444,7 +444,7 @@ Rules:
   `npm run registry:build`, or the published JSON goes stale.
 - The directory entry is also an input, not just an output. shadcn monitors it
   and publishes a `health` object per registry at
-  `ui.shadcn.com/r/registries.json`. `lib/registry-health.ts` (server-only)
+  `ui.shadcn.com/r/registries.json`. `lib/registry/registry-health.ts` (server-only)
   fetches that index hourly and `config/registry-health.ts` holds the shared
   types, labels, and points per breakdown component, so the pill strip under
   the catalog on `/components` is the published record rather than a claim. If
@@ -580,7 +580,7 @@ Rules:
 
 | Variable | Used by | Behaviour when missing |
 | --- | --- | --- |
-| `GITHUB_TOKEN` | `lib/github.ts`, `app/page.tsx` | The GitHub section is skipped entirely, by design, not a bug |
+| `GITHUB_TOKEN` | `lib/github/github.ts`, `app/page.tsx` | The GitHub section is skipped entirely, by design, not a bug |
 | `DISCORD_USER_ID` | `app/api/discord-status/route.ts` | Falls back to a hardcoded user id |
 | `TALVESS_STATS_KEY` | `lib/visitor-count.ts` | The footer visitor counter stays hidden |
 | `TALVESS_ORIGIN` | `lib/visitor-count.ts` | Defaults to `https://talvess.app` |

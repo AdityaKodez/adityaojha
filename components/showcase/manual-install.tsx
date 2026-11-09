@@ -4,7 +4,7 @@ import {
   getDependencyCommands,
   getPrimitiveCommands,
 } from "@/config/registry";
-import { getRegistrySource } from "@/lib/registry-source";
+import { getRegistrySource } from "@/lib/registry/registry-source";
 
 /**
  * The paste-it-yourself path for a registry item.

@@ -7,7 +7,7 @@
  * back instead of asserting a badge nobody can verify.
  *
  * Lives in `config/` because the client pill group needs the labels, not just
- * the fetcher: `lib/registry-health.ts` is `server-only` and cannot be
+ * the fetcher: `lib/registry/registry-health.ts` is `server-only` and cannot be
  * imported for runtime values.
  */
 

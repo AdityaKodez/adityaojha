@@ -1,5 +1,5 @@
 import type { RegistryHealth } from "@/config/registry-health";
-import { fetchRegistryHealth } from "@/lib/registry-health";
+import { fetchRegistryHealth } from "@/lib/registry/registry-health";
 import { RegistryStatusPills } from "@/components/showcase/registry-status-pills";
 
 /**

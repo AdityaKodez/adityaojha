@@ -1,7 +1,7 @@
 import { GitHubActivity } from "@/components/landing/github-activity";
 import { siteConfig } from "@/config/site";
-import { fetchGithubData } from "@/lib/github";
-import { buildActivityCalendar } from "@/lib/github-activity";
+import { fetchGithubData } from "@/lib/github/github";
+import { buildActivityCalendar } from "@/lib/github/github-activity";
 import { revealOnMount } from "@/lib/motion";
 import * as motion from "motion/react-client";
 

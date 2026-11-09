@@ -26,9 +26,9 @@ import {
 import { findComponent, getEnabledComponents } from "@/config/components";
 import { getAddCommands, repoBlobUrl } from "@/config/registry";
 import { siteConfig } from "@/config/site";
-import { highlightCode } from "@/lib/highlight";
-import { formatComponentPageMarkdown } from "@/lib/component-page-markdown";
-import { getRegistrySourceUrl } from "@/lib/registry-source";
+import { highlightCode } from "@/lib/markdown/highlight";
+import { formatComponentPageMarkdown } from "@/lib/markdown/component-page-markdown";
+import { getRegistrySourceUrl } from "@/lib/registry/registry-source";
 import { ComponentPlayground } from "./playground";
 
 export async function generateStaticParams() {
