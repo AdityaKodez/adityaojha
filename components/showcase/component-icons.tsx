@@ -101,6 +101,18 @@ function TestimonialIcon(props: ComponentIconProps) {
   );
 }
 
+function BookshelfIcon(props: ComponentIconProps) {
+  return (
+    <PaperCutIcon {...props} tilt={-5} silhouette="M10 50V19H20V12H32V18L43 14 54 47H57V54H7V50Z">
+      <path d="M10 20h10v30H10Z" fill="var(--cutout-accent)" strokeWidth="2" />
+      <path d="M20 13h12v37H20Z" fill="var(--cutout-paper)" strokeWidth="2" />
+      <path d="m33 19 10-4 11 32-10 3Z" fill="var(--chart-1)" strokeWidth="2" />
+      <path d="M14 27h2m8-6h4m-4 22h4m13-18 4 12M8 51h48" strokeWidth="2" />
+      <PrintDots x={22} y={28} />
+    </PaperCutIcon>
+  );
+}
+
 function ReactionsIcon(props: ComponentIconProps) {
   return (
     <PaperCutIcon {...props} accent="var(--chart-1)" tilt={8} silhouette="M52 32C53 44 44 53 32 53S10 45 10 32 19 11 31 11 51 19 52 32Z">
@@ -347,6 +359,7 @@ export function RolodexIcon(props: ComponentIconProps) {
 
 const componentIcons: Record<ComponentIcon, ComponentType<ComponentIconProps>> = {
   home: HomeIcon,
+  bookshelf: BookshelfIcon,
   testimonial: TestimonialIcon,
   reactions: ReactionsIcon,
   todo: TodoIcon,

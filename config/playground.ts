@@ -88,6 +88,23 @@ export function findPalette(id: string): PlaygroundPalette {
  * snippet reads like the props table.
  */
 const PLAYGROUNDS: Record<string, PlaygroundSchema> = {
+  bookshelf: {
+    componentName: "Bookshelf",
+    controls: [
+      {
+        kind: "slider",
+        key: "liftAmount",
+        label: "Hover lift",
+        min: 0,
+        max: 20,
+        step: 2,
+        default: 10,
+        format: (value) => `${value}px`,
+      },
+    ],
+    // The demo owns the book collection and initial selection.
+    resolve: (values) => ({ liftAmount: values.liftAmount }),
+  },
   "fluid-testimonial-card": {
     componentName: "FluidTestimonialCard",
     controls: [

@@ -42,6 +42,19 @@ export const componentsSectionConfig = {
 
 export const componentRegistry: ComponentDoc[] = [
   {
+    id: "bookshelf",
+    title: "Bookshelf",
+    summary: "An interactive shelf with book spines and expanding covers.",
+    description:
+      "A single-row bookshelf with spring hover lift, flat cover reveals, keyboard selection, and horizontal scrolling on narrow screens.",
+    icon: "bookshelf",
+    demoPath: "app/components/[id]/demos/bookshelf-demo.tsx",
+    docPath: "content/components/bookshelf.md",
+    order: -5,
+    enabled: true,
+    new: true,
+  },
+  {
     id: "fluid-testimonial-card",
     title: "Fluid testimonial card",
     summary: "A testimonial card with a flowing gradient and hover lift.",
@@ -65,7 +78,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/emoji-reactions.md",
     order: -3,
     enabled: true,
-    new: true,
   },
   {
     id: "todo-list",
