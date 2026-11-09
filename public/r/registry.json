@@ -4,6 +4,42 @@
   "homepage": "https://akoder.xyz",
   "items": [
     {
+      "name": "bookshelf",
+      "type": "registry:ui",
+      "title": "Bookshelf",
+      "description": "A single-row bookshelf with spring hover lift, flat cover reveals, keyboard selection, and horizontal scrolling on narrow screens.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "books",
+        "animation",
+        "interactive",
+        "accessibility"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "docs": "https://akoder.xyz/components/bookshelf",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/bookshelf.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/bookshelf.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/bookshelf.module.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn add @akoder/bookshelf\n```\n\nPass your own book data and cover/spine image URLs to Bookshelf. No portfolio config or artwork is required. The CSS module and motion helper are installed together. See https://akoder.xyz/components/bookshelf for a complete usage example and props reference."
+    },
+    {
       "name": "fluid-testimonial-card",
       "type": "registry:ui",
       "title": "Fluid testimonial card",

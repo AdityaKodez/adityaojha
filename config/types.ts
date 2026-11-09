@@ -380,6 +380,7 @@ export interface SponsorPageConfig {
 
 export type ComponentIcon =
   | "home"
+  | "bookshelf"
   | "testimonial"
   | "reactions"
   | "todo"

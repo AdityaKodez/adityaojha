@@ -458,7 +458,7 @@ Rules:
   components still follow §9.
 - Keep UI copy inside published components in sentence case too. It is part of the
   design language consumers are installing. Avoid uppercase shouting there as well.
-- Current items: dotted-world-map, copy-command-block, github-map,
+- Current items: bookshelf, dotted-world-map, copy-command-block, github-map,
   project-explorer, progressive-blur, infinite-slider, carousel, mode-toggler,
   interactive-skill-cloud, contact-channels, section-rail, progress-bars,
   command-palette, ask-ai, model-picker, glyph-card, snake, stack-rolodex,
@@ -540,6 +540,16 @@ Rules:
 ## 16. Environment
 
 ### Bookshelf
+
+- The reusable shelf lives in `components/ui/bookshelf.tsx` with its adjacent
+  CSS module. The home section in `components/landing/bookshelf.tsx` supplies
+  config copy, the initial book, the section rule, and scroll reveal. The
+  `/components/bookshelf` demo reuses the same book data without a second rule.
+- The public `bookshelf` registry item ships the component, CSS module, and
+  `lib/motion.ts`. It accepts book data and accessible copy as props, with no
+  config imports or bundled cover assets. The default is all books closed,
+  a 10px hover lift, and no entrance; the homepage opts into its original
+  selected book and entrance. The playground controls `liftAmount`.
 
 - The bookshelf is a home section directly before Bookmarks, with `/#bookshelf`
   in the command palette and no standalone route. Its data lives in
