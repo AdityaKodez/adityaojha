@@ -185,7 +185,7 @@ export function SponsorsSection() {
         <SponsorList sponsors={getEnabledSponsors(seats)} />
       </div>
       <Signature
-        className="pointer-events-none absolute right-6 top-1/2 h-12 w-auto -translate-y-1/2 text-foreground/80 max-sm:bottom-6 max-sm:top-auto max-sm:h-10 max-sm:translate-y-0"
+        className="pointer-events-none absolute right-6 top-1/2 h-12 w-auto -translate-y-1/2 text-foreground/80 max-sm:hidden"
         viewport={{ amount: 0.1 }}
       />
     </section>
