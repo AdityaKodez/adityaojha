@@ -1,4 +1,9 @@
-import { motion, useAnimation, type ViewportOptions } from "motion/react";
+import {
+  motion,
+  useAnimation,
+  useReducedMotion,
+  type ViewportOptions,
+} from "motion/react";
 
 interface SignatureProps {
   className?: string;
@@ -7,6 +12,8 @@ interface SignatureProps {
 }
 
 export function Signature({ className, controls, viewport }: SignatureProps) {
+  const reducedMotion = useReducedMotion();
+
   return (
     <svg
       width="115"
@@ -23,10 +30,16 @@ export function Signature({ className, controls, viewport }: SignatureProps) {
         strokeLinecap="round"
         initial={{ pathLength: 0, opacity: 0.8 }}
         animate={controls}
-        whileInView={!controls ? { pathLength: 1, opacity: 1 } : undefined}
-        className="no-js-visible"
+        whileInView={
+          !controls && !reducedMotion
+            ? { pathLength: 1, opacity: 1 }
+            : undefined
+        }
+        className="no-js-visible signature-path"
         viewport={{ once: true, amount: 0.2, ...viewport }}
-        transition={{ duration: 2, ease: "easeInOut" }}
+        transition={
+          reducedMotion ? { duration: 0 } : { duration: 2, ease: "easeInOut" }
+        }
       />
     </svg>
   );

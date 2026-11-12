@@ -110,6 +110,26 @@
   --logo-flame: oklch(0.7 0.2 43);
   --logo-flame-core: oklch(0.99 0.035 100);
   --logo-wick: oklch(0.3 0.04 48);
+  --mascot-teal: oklch(0.86 0.065 205);
+  --mascot-teal-shade: oklch(0.65 0.085 215);
+  --mascot-sun: oklch(0.91 0.105 93);
+  --mascot-sun-shade: oklch(0.76 0.15 84);
+  --mascot-peach: oklch(0.82 0.095 48);
+  --mascot-peach-shade: oklch(0.66 0.135 42);
+  --mascot-mint: oklch(0.83 0.065 166);
+  --mascot-mint-shade: oklch(0.62 0.075 172);
+  --mascot-lilac: oklch(0.73 0.12 295);
+  --mascot-lilac-shade: oklch(0.54 0.17 292);
+  --mascot-ink: oklch(0.23 0.02 265);
+  --mascot-glint: oklch(0.99 0.01 95);
+  --mascot-blush: oklch(0.72 0.13 15);
+  --mascot-claude: oklch(0.7 0.15 48);
+  --mascot-claude-shade: oklch(0.55 0.14 42);
+  --mascot-claude-snout: oklch(0.86 0.07 55);
+  --mascot-hat: oklch(0.34 0.045 55);
+  --mascot-hat-shade: oklch(0.25 0.035 55);
+  --mascot-glass: oklch(0.62 0.012 250);
+  --mascot-glass-lens: oklch(0.92 0.02 220 / 0.35);
   --diwali-flame: oklch(0.77 0.17 65);
   --diwali-gold: oklch(0.88 0.12 85);
   --diwali-petal: oklch(0.7 0.15 355);
@@ -871,6 +891,14 @@ code[data-theme*=" "] span,
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
+  }
+
+  /* The signature draws itself on scroll. Reduced motion shows the finished
+     stroke immediately, including before hydration. */
+  .signature-path {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
   }
 }
 

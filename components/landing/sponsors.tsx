@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { Plus } from "@/components/shared/site-icons";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
+import { Signature } from "./signature";
 
 const badgeSpring = { type: "spring", duration: 0.35, bounce: 0.3 } as const;
 const SEAT_PRICE_LABEL = `$${sponsorTiers.find((tier) => tier.enabled !== false)?.price ?? sponsorTiers[0]?.price ?? 5}`;
@@ -65,32 +66,32 @@ function SponsorList({ sponsors }: { sponsors: Sponsor[] }) {
     transition: badgeSpring,
   } as const;
   const badgeClass =
-    "relative flex size-10 shrink-0 items-center justify-center rounded-lg outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+    "relative flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xl outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
   return (
     <TooltipProvider delayDuration={100} disableHoverableContent>
-      <ul className="no-scrollbar flex min-w-0 flex-1 items-center gap-2 overflow-x-auto px-1 py-2.5">
+      <ul className="flex flex-wrap items-center gap-3">
         {sponsors.map((sponsor) => {
           const url = sponsor.url;
           const logo = (
-            <span className="block size-9 overflow-hidden rounded-md [&>div]:!size-full">
+            <span className="block size-full [&>div]:!size-full">
               {sponsor.logo ? (
                 <Image
                   src={sponsor.logo}
                   alt=""
-                  width={36}
-                  height={36}
+                  width={56}
+                  height={56}
                   unoptimized
                   className="size-full object-cover"
                 />
               ) : (
-                <Avvvatars value={sponsor.id} style="shape" size={36} />
+                <Avvvatars value={sponsor.id} style="shape" size={56} radius={1} />
               )}
             </span>
           );
           const className = cn(
             badgeClass,
-            "bg-card p-0.5 shadow-xs shadow-foreground/10 ring-1 ring-inset ring-border/70",
+            "bg-card shadow-xs shadow-foreground/10 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:ring-foreground/10",
           );
 
           return (
@@ -143,11 +144,11 @@ function SponsorList({ sponsors }: { sponsors: Sponsor[] }) {
                 aria-label={supportLabel}
                 className={cn(
                   badgeClass,
-                  "border border-muted-foreground/30 bg-background/60 text-muted-foreground transition-colors hover:border-border hover:bg-secondary hover:text-secondary-foreground",
+                  "bg-background text-muted-foreground ring-1 ring-inset ring-border transition-colors hover:bg-secondary hover:text-secondary-foreground",
                 )}
                 {...gestures}
               >
-                <Plus className="size-4" aria-hidden />
+                <Plus className="size-5" aria-hidden />
               </motion.a>
             </TooltipTrigger>
             <TooltipContent sideOffset={8} className="flex-col gap-0.5 font-mono text-[11px] font-normal">
@@ -162,20 +163,31 @@ function SponsorList({ sponsors }: { sponsors: Sponsor[] }) {
 }
 
 export function SponsorsSection() {
-  const { seats: configuredSeats, heading } = sponsorsSectionConfig;
+  const {
+    seats: configuredSeats,
+    heading,
+    description,
+  } = sponsorsSectionConfig;
   const seats = Math.max(
     configuredSeats,
     getAllSponsors().filter((sponsor) => sponsor.enabled !== false).length,
   );
 
   return (
-    <section className="border-t border-dashed pt-6">
-      <div className="section-heading flex items-center bg-transparent px-0 py-0 pr-[17px]">
-        <h2 className="no-js-visible shrink-0 px-[21px] py-px font-serif text-[25px] leading-8 font-medium italic">
-          {heading}
-        </h2>
+    <section className="relative border-t border-dashed pt-6">
+      <h2 className="no-js-visible section-heading px-[21px] py-px font-serif text-[25px] leading-8 font-medium italic">
+        {heading}
+      </h2>
+      <div className="flex flex-col gap-6 px-6 py-6">
+        <p className="max-w-md text-pretty text-sm leading-relaxed text-muted-foreground">
+          {description}
+        </p>
         <SponsorList sponsors={getEnabledSponsors(seats)} />
       </div>
+      <Signature
+        className="pointer-events-none absolute right-6 top-1/2 h-12 w-auto -translate-y-1/2 text-foreground/80 max-sm:bottom-6 max-sm:top-auto max-sm:h-10 max-sm:translate-y-0"
+        viewport={{ amount: 0.1 }}
+      />
     </section>
   );
 }

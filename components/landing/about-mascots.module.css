@@ -1,0 +1,282 @@
+.mascot {
+  position: absolute;
+  top: -56px;
+  z-index: 1;
+  width: 80px;
+  height: 70px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mascot[data-side="left"] {
+  left: 14px;
+}
+
+.mascot[data-side="right"] {
+  right: 24px;
+}
+
+.mascot:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.art {
+  display: block;
+  width: 80px;
+  height: 70px;
+  overflow: visible;
+}
+
+.art[data-tone="teal"] {
+  --mascot-base: var(--mascot-teal);
+  --mascot-shade: var(--mascot-teal-shade);
+}
+
+.art[data-tone="sun"] {
+  --mascot-base: var(--mascot-sun);
+  --mascot-shade: var(--mascot-sun-shade);
+}
+
+.art[data-tone="peach"] {
+  --mascot-base: var(--mascot-peach);
+  --mascot-shade: var(--mascot-peach-shade);
+}
+
+.art[data-tone="mint"] {
+  --mascot-base: var(--mascot-mint);
+  --mascot-shade: var(--mascot-mint-shade);
+}
+
+.art[data-tone="lilac"] {
+  --mascot-base: var(--mascot-lilac);
+  --mascot-shade: var(--mascot-lilac-shade);
+}
+
+.art[data-tone="claude"] {
+  --mascot-base: var(--mascot-claude);
+  --mascot-shade: var(--mascot-claude-shade);
+}
+
+.base .bodyFill {
+  fill: var(--mascot-claude);
+  stroke: var(--mascot-claude);
+}
+
+.base .hatFill {
+  fill: var(--mascot-hat);
+  stroke: var(--mascot-hat);
+}
+
+.shade .bodyFill {
+  fill: var(--mascot-claude-shade);
+  stroke: var(--mascot-claude-shade);
+}
+
+.shade .hatFill {
+  fill: var(--mascot-hat-shade);
+  stroke: var(--mascot-hat-shade);
+}
+
+.rim .hatFill {
+  stroke: var(--mascot-hat-shade);
+}
+
+.face .snoutFill {
+  fill: var(--mascot-claude-snout);
+}
+
+.glassHandle {
+  fill: none;
+  stroke: var(--mascot-hat);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+
+.glassLens {
+  fill: var(--mascot-glass-lens);
+  stroke: var(--mascot-glass);
+  stroke-width: 2.2;
+}
+
+.glassGlint {
+  fill: none;
+  stroke: var(--mascot-glint);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.9;
+}
+
+.base,
+.shade {
+  stroke-width: 3.4;
+  stroke-linejoin: round;
+}
+
+.knuckles {
+  fill: none;
+  stroke: var(--mascot-shade);
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+
+.base {
+  fill: var(--mascot-base);
+  stroke: var(--mascot-base);
+}
+
+.shade {
+  fill: var(--mascot-shade);
+  stroke: var(--mascot-shade);
+}
+
+.lightStop {
+  stop-color: var(--mascot-glint);
+}
+
+.darkStop {
+  stop-color: var(--mascot-ink);
+}
+
+.grain {
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+}
+
+.flecks {
+  opacity: 0.1;
+}
+
+.rim {
+  fill: none;
+  stroke: var(--mascot-shade);
+  stroke-width: 2.2;
+  opacity: 0.55;
+}
+
+.body {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+.face {
+  fill: var(--mascot-ink);
+  transform: translate(
+    calc(var(--look-x, 0) * 2.4px),
+    calc(var(--look-y, 0) * 1.6px)
+  );
+}
+
+.glint {
+  fill: var(--mascot-glint);
+  opacity: 0.85;
+}
+
+.line,
+.brows {
+  fill: none;
+  stroke: var(--mascot-ink);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.brows {
+  stroke-width: 1.2;
+  opacity: 0.75;
+}
+
+.cheek {
+  fill: var(--mascot-blush);
+  opacity: 0;
+}
+
+.blink {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.mascot:focus-visible .cheek {
+  opacity: 0.6;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mascot:hover .cheek {
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .body {
+    transition: transform 460ms cubic-bezier(0.34, 1.7, 0.64, 1);
+    animation: mascot-rise 760ms cubic-bezier(0.34, 1.5, 0.64, 1) backwards;
+    animation-delay: var(--mascot-delay);
+  }
+
+  .hands {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    transition: transform 240ms var(--motion-ease-standard);
+  }
+
+  .face {
+    transition: transform 140ms ease-out;
+  }
+
+  .cheek {
+    transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+  }
+
+  .blink {
+    animation: mascot-blink 5.8s infinite;
+    animation-delay: calc(var(--mascot-delay) * 6);
+  }
+
+  .mascot:active .hands {
+    transform: scale(1.06, 0.86);
+  }
+
+  .mascot:focus-visible .body {
+    transform: translateY(-3px);
+  }
+
+  .mascot[data-ducking] .hands {
+    transform: scale(0.94, 0.82);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .mascot:hover .body {
+      transform: translateY(-3.5px) rotate(-3deg);
+    }
+
+    .mascot[data-side="right"]:hover .body {
+      transform: translateY(-3.5px) rotate(3deg);
+    }
+  }
+
+  .mascot[data-ducking] .body,
+  .mascot[data-ducking]:hover .body {
+    transform: translateY(40px);
+    transition: transform 190ms cubic-bezier(0.55, 0, 1, 0.45);
+  }
+}
+
+@keyframes mascot-rise {
+  from {
+    transform: translateY(40px);
+  }
+}
+
+@keyframes mascot-blink {
+  0%,
+  91%,
+  97%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  94% {
+    transform: scaleY(0.12);
+  }
+}

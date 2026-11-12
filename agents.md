@@ -164,14 +164,16 @@ The home page is a loop, not a hand-written layout.
   github, testimonials, bookshelf, bookmarks, certifications. Work follows the hero so
   visitors reach projects before the six social rows. Experience, services,
   workflow and contact exist but are flagged off. The `sponsors`
-  section is a compact, single-row logo strip with one invitation, not an orbit
-  or a grid of empty seats. On the home page it sits directly after About.
+  section has a heading band, short intro copy, wrapping 56px logo tiles with
+  one invitation, and a thank-you note with the shared signature. Logo tiles and
+  the invitation use inset rings, not borders. It is not an orbit or a grid of
+  empty seats. On the home page it sits directly after About.
   Supporter names appear in tooltips on hover and keyboard focus. Logo hover
   motion uses the banner's 0.35s spring with 0.3 bounce and respects reduced
   motion. The invitation's hover uses secondary colors, never primary.
   The invitation links directly to `/api/sponsor-checkout` with a plain anchor
   so visitors continue to Dodo's hosted checkout.
-  Its “Supported by” heading matches
+  Its “Sponsors” heading matches
   About's greeting: Instrument Serif italic, 25px with a 32px line height,
   21px horizontal and 1px vertical padding, and 24px above the heading band.
   The section also renders at the bottom of `/components` and `/testimonials`.
@@ -213,6 +215,13 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   render immediately without scroll entrances. About, Skills, and
   ComponentHighlights stay Server Components. About's greeting is a small client
   component that uses the visitor's local time, with a stable server fallback.
+  Two textured SVG mascots peek over that greeting band from
+  `components/landing/about-mascots.tsx`. The left one defaults to the Claude
+  detective, built with the same vector shape, offset shade, and grain pipeline
+  as the others; clicking either ducks and swaps it between cube, star, cloud,
+  blob, flower, and Claude variants. Eye tracking is limited to fine pointers,
+  and reduced motion swaps instantly without peeking motion. The About section
+  has 56px top padding to clear them.
   Keep interaction motion such as
   folder expansion, hover previews, and the testimonial slider. The GitHub
   contribution calendar fades in with a subtle scale settle when its server-loaded

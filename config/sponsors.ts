@@ -41,8 +41,10 @@ export const sponsorTiers: SponsorTier[] = [
  */
 export const sponsorsSectionConfig: SponsorsSectionConfig = {
   label: "Supporter",
-  heading: "Supported by",
-  description: "Kind people helping keep the work free and independent.",
+  heading: "Sponsors",
+  description:
+    "You just scrolled to the most important section of the site. This tiny project is sponsored by:",
+  thanks: "Thank you all.",
   supportLabel: "Become a supporter",
   supportNote: "Once. Here for good.",
   seats: 6,

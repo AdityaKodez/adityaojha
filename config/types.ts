@@ -351,6 +351,7 @@ export interface SponsorsSectionConfig {
   label: string;
   heading: string;
   description: string;
+  thanks: string;
   supportLabel: string;
   supportNote: string;
   seats: number;

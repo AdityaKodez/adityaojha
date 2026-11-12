@@ -1,16 +1,20 @@
 import { aboutGreetings, aboutItems, siteConfig } from "@/config/site";
 import { AboutGreeting } from "./about-greeting";
 import { AboutIllustration } from "./about-illustration";
+import { AboutMascots } from "./about-mascots";
 
 export const About = () => {
   return (
-    <section className="no-js-visible border-t border-dashed pt-6">
-      <h2 className="section-heading mb-3 px-[21px] py-px font-serif text-[25px] leading-8 font-medium italic">
-        <AboutGreeting
-          fallback={siteConfig.about.title}
-          greetings={aboutGreetings}
-        />
-      </h2>
+    <section className="no-js-visible border-t border-dashed pt-14">
+      <div className="relative mb-3">
+        <AboutMascots />
+        <h2 className="section-heading px-[21px] py-px font-serif text-[25px] leading-8 font-medium italic">
+          <AboutGreeting
+            fallback={siteConfig.about.title}
+            greetings={aboutGreetings}
+          />
+        </h2>
+      </div>
       <ul className="list-disc space-y-2 px-6 pb-2 pl-10 marker:text-muted-foreground/40">
         {aboutItems.map((item) => (
           <li
