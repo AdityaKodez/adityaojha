@@ -304,6 +304,12 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   and credit sit above it, clear of the fixed bottom controls. The visitor count
   floats centered over the Earth as a liquid-glass pill (`.liquid-glass`, with
   the displacement map rendered by `footer-scene.tsx`).
+  Its historical snapshot lives in `config/visitor-count.ts`: Vercel through
+  October 26, 2026, plus Talvess from October 27 through the recorded snapshot.
+  Add only the increase above the saved Talvess lifetime count. Keep the saved
+  combined total visible when the key is missing or the API fails, and reject
+  invalid counts or counts below the saved Talvess snapshot. Update both
+  snapshot totals together after reconciliation, never sum overlapping history.
   The footer is a sibling of each page's main, with no
   opening border or nested frame. The Earth stage is 192px tall on mobile and
   208px from the small breakpoint, with a 720px minimum artwork width. The
@@ -591,7 +597,7 @@ Rules:
 | --- | --- | --- |
 | `GITHUB_TOKEN` | `lib/github/github.ts`, `app/page.tsx` | The GitHub section is skipped entirely, by design, not a bug |
 | `DISCORD_USER_ID` | `app/api/discord-status/route.ts` | Falls back to a hardcoded user id |
-| `TALVESS_STATS_KEY` | `lib/visitor-count.ts` | The footer visitor counter stays hidden |
+| `TALVESS_STATS_KEY` | `lib/visitor-count.ts` | The footer shows the saved historical total without live growth |
 | `TALVESS_ORIGIN` | `lib/visitor-count.ts` | Defaults to `https://talvess.app` |
 | `DODO_PAYMENTS_API_KEY` | `app/api/sponsor-checkout/route.ts`, `app/api/sponsor-claim/route.ts` | The claim-a-seat CTA degrades and the claim route refuses to verify payments |
 | `DODO_WEBHOOK_KEY` | `app/api/dodo-webhook/route.ts` | The webhook rejects everything with a 500, so Dodo retries |
