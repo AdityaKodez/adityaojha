@@ -26,6 +26,7 @@ import {
   Link01Icon,
   LiveStreaming01Icon,
   Loading03Icon,
+  Message01Icon,
   MessageSquareQuoteIcon,
   Moon02Icon,
   MusicNote03Icon,
@@ -93,6 +94,7 @@ export const Link = createSiteIcon(Link01Icon);
 export const ListTodo = createSiteIcon(Task01Icon);
 export const Loader2 = createSiteIcon(Loading03Icon);
 export const LockKeyhole = createSiteIcon(SquareLock02Icon);
+export const Message = createSiteIcon(Message01Icon);
 export const MessageSquareQuote = createSiteIcon(MessageSquareQuoteIcon);
 export const Monitor = createSiteIcon(ComputerIcon);
 export const Moon = createSiteIcon(Moon02Icon);

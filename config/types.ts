@@ -377,6 +377,17 @@ export interface SponsorPageConfig {
   steps: SponsorPagePoint[];
   ctaHeading: string;
   ctaDescription: string;
+/** A tile in the second sponsors row, linking to a place visitors can support or reach out. */
+export interface SponsorSupportLink {
+  id: string;
+  /** Accessible name, and the text shown beside the custom cursor on hover. */
+  label: string;
+  href: string;
+  icon: "coffee" | "x";
+  order: number;
+  enabled?: boolean;
+}
+
 }
 
 export type ComponentIcon =

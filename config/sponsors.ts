@@ -2,6 +2,7 @@ import generatedSponsors from "@/config/sponsors.generated.json";
 import type {
   Sponsor,
   SponsorPageConfig,
+  SponsorSupportLink,
   SponsorTier,
   SponsorsSectionConfig,
 } from "@/config/types";
@@ -107,6 +108,26 @@ export const sponsorPageConfig: SponsorPageConfig = {
 /** Dodo product id for the $5 orbit seat, used to create checkout sessions. */
 export const orbitSeatProductId = process.env.DODO_ORBIT_SEAT_PRODUCT_ID ?? "";
 
+/** Tiles under the supporter list: a tip jar and a direct line to the author. */
+export const sponsorSupportLinks: SponsorSupportLink[] = [
+  {
+    id: "buy-me-a-coffee",
+    label: "Buy me a coffee",
+    href: "https://buymeacoffee.com/adikodez",
+    icon: "coffee",
+    order: 1,
+    enabled: true,
+  },
+  {
+    id: "talk-on-x",
+    label: "Talk on X",
+    href: "https://x.com/i/chat/1740734892550291456-1740734892550291456",
+    icon: "x",
+    order: 2,
+    enabled: true,
+  },
+];
+
 export const sponsorsConfig: Sponsor[] = [
   // Hand-edited sponsors. `logo` is an optional square image src; paid
   // sponsors that have not claimed yet fall back to an Avvvatars shape.
@@ -133,4 +154,10 @@ export function getEnabledSponsors(seats: number): Sponsor[] {
       sponsor.enabled !== false &&
       (sponsor.seat === undefined || sponsor.seat < seats),
   );
+}
+
+export function getEnabledSupportLinks(): SponsorSupportLink[] {
+  return sponsorSupportLinks
+    .filter((link) => link.enabled !== false)
+    .sort((a, b) => a.order - b.order);
 }
