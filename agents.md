@@ -209,8 +209,8 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 - Colors come from semantic tokens only, `background`, `foreground`, `card`,
   `popover`, `muted`, `muted-foreground`, `primary`, `secondary`, `accent`,
   `destructive`, `border`, `input`, `ring`, and `chart-1` through `chart-5`.
-  The header's candle logo uses the `--logo-wax-*`, `--logo-flame`,
-  `--logo-flame-core`, and `--logo-wick` tokens declared in `app/globals.css`.
+  The header's dithered blue logo reuses the `--footer-earth-*` palette
+  declared in `app/globals.css`.
   Never hardcode a hex value in a component.
 - Radii derive from a single `--radius` (0.45rem) as `sm`, `md`, `lg` and up.
   Use the tokens rather than literal values.
@@ -237,17 +237,13 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   opacity with the ease `[0.22, 1, 0.36, 1]` plus a settle spring on `y`. Only
   `opacity` and `transform` are animated, never `filter` (animated blur forces
   a repaint of the whole subtree per frame), and `whileInView` fires once
-  rather than on every scroll pass. The header logo is a golden wax,
-  mountain-shaped A with an orange side face, a wax drip, and an unlit wick
-  on a transparent background, with no tile behind it. Hovering the Home link
-  with a fine pointer or focusing it with the keyboard ignites the candle.
-  Layered flame and core motion create irregular flicker, while pointer position
-  bends the flame through a spring to suggest moving air. A soft amber halo
-  spills beyond the flame and reflects light onto the A. Leaving extinguishes
-  the flame and fades its glow. Animate only transform and opacity, with the
-  flicker paused while unlit. Reduced motion shows a still flame on hover or
-  focus. Touch keeps the unlit golden A and normal Home navigation. Keep the SVG
-  overflow visible and the Home link's 44px target intact. The Vader swap and
+  rather than on every scroll pass. The header logo is a blue dithered,
+  mountain-shaped A with a shaded side face on a transparent background,
+  with no tile behind it. It uses the footer Earth's four blue shades and
+  ordered 4 by 4 Bayer pattern, rendered as crisp SVG pixels. Hovering the
+  Home link with a fine pointer or focusing it with the keyboard lifts the
+  mark by 1px. Reduced motion and touch keep it still. Keep the Home link's
+  44px target intact. The candle flame, wax drip, Vader swap, and
   corner spider web are removed. The hero text and footer
   quote words are deliberate exceptions and keep their blur-to-sharp resolve.
   The portrait overlaps the banner at its lower-left edge, with the intro
@@ -282,7 +278,7 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 - `config/diwali.ts` controls the dithered courtyard decoration beside About,
   outside the home page's right content edge in the former lightsaber slot.
   It appears from 80rem upward, like the previous margin decorations, and
-  remains independent of the header's candle hover. Hover and keyboard focus show the shared
+  remains independent of the header logo. Hover and keyboard focus show the shared
   "Happy Diwali" tooltip; hover or activation releases a short paper-petal burst.
   Reduced motion keeps the scene still and skips confetti. The transparent
   illustration under `public/diwali/` mounts once when it first nears the viewport
