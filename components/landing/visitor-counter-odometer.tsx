@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { AppBadgeSticker } from "stick-it-up";
 
 /* Odometer digits roll inside a fixed-height cell. Same spring as the shared
    reveal helpers so the counter speaks the site's motion language. */
@@ -52,11 +53,19 @@ export function VisitorCounterOdometer({ visitors }: { visitors: number }) {
           so assistive tech / crawlers would otherwise read the entire digit
           wheel. Hide the animated visual and expose the real number below. */}
       <span aria-hidden="true" className="flex flex-wrap items-center justify-center">
-        <span>Say hi, visitor</span>
+        <span>Say hi to</span>
+        <AppBadgeSticker
+          width={37}
+          height={18}
+          className="ml-1 mr-2"
+          aria-hidden="true"
+          focusable="false"
+        />
         {/* tracking-normal plus an explicit gap: the digits are separate flex
             items, so inherited letter-spacing would space them unevenly. The
             gap mirrors the 0.15em rhythm of the surrounding text. */}
         <span className="ml-2 flex items-center gap-[0.15em] font-medium tracking-normal text-foreground">
+          <span className="leading-none">+</span>
           {chars.map((char, index) =>
             char >= "0" && char <= "9" ? (
               <Digit
@@ -71,9 +80,10 @@ export function VisitorCounterOdometer({ visitors }: { visitors: number }) {
             ),
           )}
         </span>
+        <span className="ml-1.5">peeps</span>
       </span>
       <span className="sr-only">
-        Say hi, visitor {visitors.toLocaleString("en-US")}
+        Say hi to {visitors.toLocaleString("en-US")} peeps
       </span>
     </p>
   );

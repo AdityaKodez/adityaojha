@@ -6,6 +6,7 @@ import { DiscordStatus } from "@/components/landing/discord-status";
 import { FooterEarth } from "@/components/landing/footer-earth";
 import { footerConfig } from "@/config/site";
 import { MOTION_EASE } from "@/lib/motion";
+import { CoffeeSticker } from "stick-it-up";
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 12 },
@@ -139,6 +140,12 @@ export function FooterScene({ children }: { children: ReactNode }) {
         >
           <p className="text-center font-mono text-[11px] leading-relaxed tracking-[0.06em] text-muted-foreground">
             {footerConfig.credit}
+            <CoffeeSticker
+              size="1.6em"
+              className="ml-1.5 align-middle"
+              aria-hidden="true"
+              focusable="false"
+            />
           </p>
         </motion.div>
       </motion.div>

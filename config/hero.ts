@@ -1,9 +1,9 @@
 import type { HeroConfig } from "@/config/types";
-import { MdWavingHand } from "react-icons/md";
+import { PeaceHandSticker } from "stick-it-up";
 
 export const heroConfig: HeroConfig = {
   greeting: "Aditya Ojha",
-  waveEmoji: MdWavingHand,
+  waveEmoji: PeaceHandSticker,
   headlineBefore: "I build",
   highlightedPhrases: ["software", "public"],
   headlineAfter: ".",

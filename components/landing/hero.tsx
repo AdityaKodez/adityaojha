@@ -2,7 +2,6 @@
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { VerseText } from "@/components/verse-text";
-import { WritingUnderline } from "./writing-underline";
 import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
@@ -125,10 +124,10 @@ export function Hero() {
             <motion.span
               data-reveal=""
               variants={textVariants}
-              className="no-js-visible inline-block"
+              className="no-js-visible flex items-center"
             >
               <span
-                className="inline-block text-xl hover:animate-wave"
+                className="inline-block text-xl leading-none"
                 onMouseEnter={() => {
                   vibrate();
                   handleWaveAudio(true, "hover");
@@ -138,12 +137,22 @@ export function Hero() {
                 onBlur={() => handleWaveAudio(false)}
                 onTouchStart={() => handleWaveAudio(true, "touch")}
                 onTouchEnd={() => handleWaveAudio(false)}
-                style={{ transformOrigin: "70% 70%" }}
               >
                 {typeof heroConfig.waveEmoji === "string" ? (
-                  heroConfig.waveEmoji
+                  <span
+                    className="inline-block hover:animate-wave"
+                    style={{ transformOrigin: "70% 70%" }}
+                  >
+                    {heroConfig.waveEmoji}
+                  </span>
                 ) : (
-                  <heroConfig.waveEmoji className="fill-current" />
+                  <heroConfig.waveEmoji
+                    size="1em"
+                    style={{ display: "block" }}
+                    className="transition-transform duration-200 ease-out motion-safe:hover:scale-110 motion-reduce:transition-none"
+                    aria-hidden="true"
+                    focusable="false"
+                  />
                 )}
               </span>
             </motion.span>
@@ -185,21 +194,10 @@ export function Hero() {
             custom={0.1}
           >
             <span className="whitespace-nowrap">
-              {heroConfig.headlineBefore}{" "}
-              <span className="underline decoration-border/50 underline-offset-4 sm:hidden">
-                {heroConfig.highlightedPhrases[0]}
-              </span>
-              <span className="hidden sm:inline">
-                <WritingUnderline delay={0.22}>
-                  {heroConfig.highlightedPhrases[0]}
-                </WritingUnderline>
-              </span>
+              {heroConfig.headlineBefore} {heroConfig.highlightedPhrases[0]}
             </span>{" "}
             <span className="whitespace-nowrap">
-              in{" "}
-              <WritingUnderline delay={0.36}>
-                {heroConfig.highlightedPhrases[1]}
-              </WritingUnderline>
+              in {heroConfig.highlightedPhrases[1]}
             </span>
             {headlineAfter}
           </motion.h1>

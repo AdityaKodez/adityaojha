@@ -17,6 +17,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { navigationConfig } from "@/config/navigation";
+import { StarBurstSticker } from "stick-it-up";
 import styles from "./site-header.module.css";
 
 const SiteCommandPalette = dynamic(
@@ -27,26 +28,6 @@ const SiteCommandPalette = dynamic(
   { ssr: false },
 );
 
-const STAR_OUTLINE =
-  "M12 1.5L14.47 8.6L21.99 8.76L15.99 13.3L18.17 20.49L12 16.2L5.83 20.49L8.01 13.3L2.01 8.76L9.53 8.6Z";
-
-// Each star point is split into a lit and a shaded half, which reads as a bevel.
-const STAR_LIT_FACETS = [
-  "M12 12L9.53 8.6L12 1.5Z",
-  "M12 12L14.47 8.6L21.99 8.76Z",
-  "M12 12L15.99 13.3L18.17 20.49Z",
-  "M12 12L12 16.2L5.83 20.49Z",
-  "M12 12L8.01 13.3L2.01 8.76Z",
-];
-
-const STAR_SHADED_FACETS = [
-  "M12 12L12 1.5L14.47 8.6Z",
-  "M12 12L21.99 8.76L15.99 13.3Z",
-  "M12 12L18.17 20.49L12 16.2Z",
-  "M12 12L5.83 20.49L8.01 13.3Z",
-  "M12 12L2.01 8.76L9.53 8.6Z",
-];
-
 function OpenSourceStarIcon() {
   return (
     <span aria-hidden className="relative block size-[16.2px] shrink-0 perspective-near">
@@ -55,32 +36,12 @@ function OpenSourceStarIcon() {
           <OpenSrc size="16.2" />
         </span>
         <span className="absolute inset-0 rotate-y-180 backface-hidden">
-          <svg
-            viewBox="0 0 24 24"
-            width="16.2"
-            height="16.2"
-            className="overflow-visible drop-shadow-sm"
-          >
-            <path
-              d={STAR_OUTLINE}
-              transform="translate(0 1.1)"
-              className="fill-amber-700"
-              strokeLinejoin="round"
-            />
-            {STAR_LIT_FACETS.map((d) => (
-              <path key={d} d={d} className="fill-yellow-300" />
-            ))}
-            {STAR_SHADED_FACETS.map((d) => (
-              <path key={d} d={d} className="fill-amber-500" />
-            ))}
-            <path
-              d={STAR_OUTLINE}
-              fill="none"
-              strokeWidth="0.6"
-              strokeLinejoin="round"
-              className="stroke-amber-600"
-            />
-          </svg>
+          <StarBurstSticker
+            size={16.2}
+            style={{ display: "block" }}
+            aria-hidden="true"
+            focusable="false"
+          />
         </span>
       </span>
     </span>
