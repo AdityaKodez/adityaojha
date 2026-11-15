@@ -228,7 +228,7 @@ export function SponsorsSection() {
   );
 
   return (
-    <section className="relative border-t border-dashed pt-6">
+    <section className="relative border-y border-dashed pt-6">
       <h2 className="no-js-visible section-heading px-[21px] py-px font-serif text-[25px] leading-8 font-medium italic">
         {heading}
       </h2>
