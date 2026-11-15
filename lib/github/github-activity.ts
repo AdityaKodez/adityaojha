@@ -2,8 +2,11 @@ import type { Contribution } from "./github";
 
 const DAY_MS = 86_400_000;
 
-/** Build complete Sunday-first weeks from the returned dates, not the client clock. */
-export function buildActivityCalendar(data: Contribution[]) {
+/**
+ * Build complete Sunday-first weeks from the returned dates, not the client clock.
+ * `minWeeks` pads the grid forward with upcoming days so it fills its frame.
+ */
+export function buildActivityCalendar(data: Contribution[], minWeeks = 0) {
   if (data.length === 0) return null;
 
   const byDate = new Map<string, number>();
@@ -29,7 +32,7 @@ export function buildActivityCalendar(data: Contribution[]) {
   const last = Date.parse(`${end}T00:00:00Z`);
   const firstIndex = new Date(first).getUTCDay();
   const lastIndex = firstIndex + Math.round((last - first) / DAY_MS);
-  const weekCount = Math.ceil((lastIndex + 1) / 7);
+  const weekCount = Math.max(Math.ceil((lastIndex + 1) / 7), minWeeks);
   const gridStart = first - firstIndex * DAY_MS;
   const days = Array.from({ length: weekCount * 7 }, (_, index) => {
     const date = new Date(gridStart + index * DAY_MS)
@@ -40,10 +43,11 @@ export function buildActivityCalendar(data: Contribution[]) {
       // Missing records stay unknown. Padding outside the returned range is blank.
       count: byDate.get(date) ?? null,
       inRange: index >= firstIndex && index <= lastIndex,
+      upcoming: index > lastIndex,
     };
   });
   const months: { date: string; column: number }[] = [];
-  for (let index = firstIndex; index <= lastIndex; index++) {
+  for (let index = firstIndex; index < days.length; index++) {
     const date = days[index].date;
     if (index === firstIndex || date.endsWith("-01")) {
       const column = Math.floor(index / 7);

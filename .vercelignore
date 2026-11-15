@@ -1,0 +1,6 @@
+/adityaojha
+/plans
+/app/widget-stack-qa
+.env
+.env.*
+!.env.example

@@ -21,6 +21,15 @@ const monthFormat = new Intl.DateTimeFormat("en-GB", {
   timeZone: "UTC",
 });
 
+type Phase = "idle" | "armed" | "shown";
+
+const dotMotion =
+  "group-data-[phase=armed]/cal:opacity-0 group-data-[phase=shown]/cal:animate-in group-data-[phase=shown]/cal:fade-in group-data-[phase=shown]/cal:zoom-in group-data-[phase=shown]/cal:fill-mode-both group-data-[phase=shown]/cal:duration-500 group-data-[phase=shown]/cal:ease-[cubic-bezier(0.34,1.56,0.64,1)]";
+
+function dotDelay(column: number, row: number) {
+  return `${column * 14 + row * 24}ms`;
+}
+
 function dayLabel(day: ActivityCalendar["days"][number]) {
   const count =
     day.count === null
@@ -32,6 +41,8 @@ function dayLabel(day: ActivityCalendar["days"][number]) {
 export function GitHubActivity({ calendar }: { calendar: ActivityCalendar }) {
   const [selectedIndex, setSelectedIndex] = useState(calendar.lastIndex);
   const [tooltipIndex, setTooltipIndex] = useState<number | null>(null);
+  const [phase, setPhase] = useState<Phase>("idle");
+  const grid = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
   const buttons = useRef(new Map<number, HTMLButtonElement>());
   const hintId = useId();
@@ -40,6 +51,28 @@ export function GitHubActivity({ calendar }: { calendar: ActivityCalendar }) {
     if (scroller.current)
       scroller.current.scrollLeft = scroller.current.scrollWidth;
   }, [calendar.end]);
+
+  useEffect(() => {
+    const node = grid.current;
+    if (
+      !node ||
+      typeof IntersectionObserver === "undefined" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      node.getBoundingClientRect().top < window.innerHeight
+    )
+      return;
+    setPhase("armed");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setPhase("shown");
+        observer.disconnect();
+      },
+      { threshold: 0.4 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   function selectDay(index: number, focus = false) {
     if (index < calendar.firstIndex || index > calendar.lastIndex) return;
@@ -117,9 +150,12 @@ export function GitHubActivity({ calendar }: { calendar: ActivityCalendar }) {
             ))}
           </div>
           <div
+            ref={grid}
             role="grid"
             aria-label={copy.calendarLabel}
             aria-describedby={hintId}
+            data-phase={phase}
+            className="group/cal"
           >
             {copy.weekdays.map((weekday, row) => (
               <div
@@ -136,8 +172,18 @@ export function GitHubActivity({ calendar }: { calendar: ActivityCalendar }) {
                     <div
                       key={day.date}
                       role="gridcell"
-                      className="size-[13px] shrink-0"
+                      className="flex size-[13px] shrink-0 items-center justify-center"
                     >
+                      {day.upcoming && (
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            "size-[9px] rounded-full ring-1 ring-inset ring-border",
+                            dotMotion,
+                          )}
+                          style={{ animationDelay: dotDelay(column, row) }}
+                        />
+                      )}
                       {day.inRange && (
                         <Tooltip
                           open={tooltipIndex === index}
@@ -174,16 +220,15 @@ export function GitHubActivity({ calendar }: { calendar: ActivityCalendar }) {
                                   "size-[9px] rounded-full group-hover:outline group-hover:outline-1 group-hover:outline-offset-1 group-hover:outline-muted-foreground",
                                   day.count === null &&
                                     "ring-1 ring-inset ring-border",
+                                  dotMotion,
                                 )}
-                                style={
-                                  day.count === null
-                                    ? undefined
-                                    : {
-                                        backgroundColor: activityColor(
-                                          day.count,
-                                        ),
-                                      }
-                                }
+                                style={{
+                                  animationDelay: dotDelay(column, row),
+                                  backgroundColor:
+                                    day.count === null
+                                      ? undefined
+                                      : activityColor(day.count),
+                                }}
                               />
                             </button>
                           </TooltipTrigger>

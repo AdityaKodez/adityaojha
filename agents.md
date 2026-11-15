@@ -208,7 +208,7 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
 
 - Colors come from semantic tokens only, `background`, `foreground`, `card`,
   `popover`, `muted`, `muted-foreground`, `primary`, `secondary`, `accent`,
-  `destructive`, `border`, `input`, `ring`, and `chart-1` through `chart-5`.
+  `destructive`, `success`, `border`, `input`, `ring`, and `chart-1` through `chart-5`.
   The header's dithered blue logo reuses the `--footer-earth-*` palette
   declared in `app/globals.css`.
   Never hardcode a hex value in a component.
@@ -231,7 +231,11 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   Keep interaction motion such as
   folder expansion, hover previews, and the testimonial slider. The GitHub
   contribution calendar fades in with a subtle scale settle when its server-loaded
-  content mounts inside the existing Suspense boundary. Entrances on other
+  content mounts inside the existing Suspense boundary. The calendar pads forward
+  with faint outlined upcoming days to `githubSectionConfig.minWeeks` columns so
+  it fills the frame. When it first scrolls into view, its dots pop in as a
+  left-to-right wave (scale and opacity only); reduced motion, no JavaScript,
+  and a calendar already in view on load show it immediately. Entrances on other
   surfaces use the shared reveal helpers in
   `lib/motion.ts` (`reveal`, `revealOnMount`, `revealVariants`): a 0.18s
   opacity with the ease `[0.22, 1, 0.36, 1]` plus a settle spring on `y`. Only
@@ -248,6 +252,11 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   quote words are deliberate exceptions and keep their blur-to-sharp resolve.
   The portrait overlaps the banner at its lower-left edge, with the intro
   text aligned below it in the original GitHub layout.
+  The profile uses the transparent spiky-haired mascot sticker at
+  `public/images/profile-mascot-sticker.webp`, configured by `personal.avatar`.
+  Its static grayscale, contrast, brightness, and drop-shadow filters live in
+  `profile-banner.module.css`; dark mode softens the paper without inverting
+  the black hair or white face. Keep the cutout free of a background tile.
   The hero name uses the supplied `VerseText` component for its comic print
   and idle glitch, with the foreground and `--verse-text-blend` theme tokens.
   Keep its built-in reduced-motion and offscreen pauses. The headline,
@@ -529,6 +538,11 @@ Rules:
   for the smaller navigation placements too.
   The How I Work rows reuse the same `PaperCutIcon` base for their
   scope, communication, and handoff icons, keyed by the item`s `icon` field.
+  Discord activity fallback icons in `components/landing/discord-activity-icons.tsx`
+  reuse `PaperCutIcon` and `PrintDots` for music, watching, gaming, streaming,
+  coding, competition, and other activities. Keep the 28px illustrations free
+  of background tiles, with the same paper edges, ink, tilt, and accent wash.
+  Activity artwork and album covers still take priority when available.
   The project explorer`s year folders draw with the same paper-cut recipe (offset
   shadow, paper edge, blue wash, halftone dots) instead of per-year color fills.
 - Set `enabled: false` to hide an entry without deleting it.

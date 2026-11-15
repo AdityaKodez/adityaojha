@@ -66,7 +66,7 @@ export function PaperCutIcon({
   );
 }
 
-function PrintDots({ x, y }: { x: number; y: number }) {
+export function PrintDots({ x, y }: { x: number; y: number }) {
   return (
     <g transform={`translate(${x} ${y})`} fill="currentColor" stroke="none" opacity="0.35">
       <circle r="0.8" />

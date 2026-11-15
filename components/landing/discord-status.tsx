@@ -15,18 +15,26 @@ import { useQuery } from "@/lib/react-query";
 import { useCopy } from "@/lib/use-copy";
 import { cn } from "@/lib/utils";
 import {
-  Activity,
-  Code,
-  Gamepad2,
-  Music,
-  Radio,
-  Swords,
-  Tv,
-} from "@/components/shared/site-icons";
-import { useInView } from "motion/react";
+  CodingActivityIcon,
+  CompetingActivityIcon,
+  GenericActivityIcon,
+  MusicActivityIcon,
+  PlayingActivityIcon,
+  StreamingActivityIcon,
+  WatchingActivityIcon,
+} from "@/components/landing/discord-activity-icons";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "motion/react";
 import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
+import type { CopyStatus } from "@/lib/use-copy";
 import Image from "next/image";
 import { useRef, useState } from "react";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const fetchDiscordStatus = async (): Promise<LanyardData> => {
   const response = await fetch("/api/discord-status");
@@ -42,13 +50,13 @@ const fetchDiscordStatus = async (): Promise<LanyardData> => {
    handle instead, from the same socials config entry the rest of the site uses. */
 const discordSocial = socialsConfig.find((social) => social.id === "discord");
 
-const activityTypeIcons: Record<number, typeof Activity> = {
-  [ActivityType.PLAYING]: Gamepad2,
-  [ActivityType.STREAMING]: Radio,
-  [ActivityType.LISTENING]: Music,
-  [ActivityType.WATCHING]: Tv,
-  [ActivityType.COMPETING]: Swords,
-  [ActivityType.CUSTOM]: Activity,
+const activityTypeIcons: Record<number, typeof GenericActivityIcon> = {
+  [ActivityType.PLAYING]: PlayingActivityIcon,
+  [ActivityType.STREAMING]: StreamingActivityIcon,
+  [ActivityType.LISTENING]: MusicActivityIcon,
+  [ActivityType.WATCHING]: WatchingActivityIcon,
+  [ActivityType.COMPETING]: CompetingActivityIcon,
+  [ActivityType.CUSTOM]: GenericActivityIcon,
 };
 
 const codingApps = new Set(["Visual Studio Code", "Code", "Cursor", "Zed"]);
@@ -58,13 +66,15 @@ type Presence = {
   title: string;
   subtitle: string;
   image: string | null;
-  fallbackIcon: typeof Activity | null;
+  fallbackIcon: typeof GenericActivityIcon | null;
+  listening: boolean;
 };
 
 function describePresence(data: LanyardData | undefined): Presence {
   const avatar = {
     image: siteConfig.personal.avatar.src,
     fallbackIcon: null,
+    listening: false,
   };
 
   if (!data) {
@@ -84,7 +94,8 @@ function describePresence(data: LanyardData | undefined): Presence {
       title: spotify.song,
       subtitle: spotify.artist,
       image: spotify.album_art_url,
-      fallbackIcon: Music,
+      fallbackIcon: MusicActivityIcon,
+      listening: true,
     };
   }
 
@@ -99,8 +110,9 @@ function describePresence(data: LanyardData | undefined): Presence {
       subtitle: [activity.details, activity.state].filter(Boolean).join(" · "),
       image: getActivityImageUrl(activity),
       fallbackIcon: isCoding
-        ? Code
-        : (activityTypeIcons[activity.type] ?? Activity),
+        ? CodingActivityIcon
+        : (activityTypeIcons[activity.type] ?? GenericActivityIcon),
+      listening: activity.type === ActivityType.LISTENING,
     };
   }
 
@@ -121,48 +133,117 @@ function describePresence(data: LanyardData | undefined): Presence {
   };
 }
 
-function Artwork({ presence }: { presence: Presence }) {
+function Artwork({ presence, active }: { presence: Presence; active: boolean }) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
-  const FallbackIcon = presence.fallbackIcon ?? Activity;
+  const reducedMotion = useReducedMotion();
+  const FallbackIcon = presence.fallbackIcon ?? GenericActivityIcon;
   const showImage = presence.image && failedSrc !== presence.image;
 
   return (
     <div className="relative size-7 shrink-0">
-      <div className="flex size-full items-center justify-center overflow-hidden rounded-md bg-muted text-muted-foreground">
-        {showImage ? (
-          <Image
-            src={presence.image!}
-            alt=""
-            width={28}
-            height={28}
-            /* Local artwork rides the optimizer; remote Discord and Spotify
-               images keep their direct URLs. */
-            unoptimized={!presence.image!.startsWith("/")}
-            className={cn(
-              "size-full object-cover",
-              presence.status === "offline" && "grayscale",
-            )}
-            onError={() => setFailedSrc(presence.image)}
-          />
-        ) : (
-          <FallbackIcon className="size-3.5" />
-        )}
-      </div>
-      {presence.status && (
-        <span
-          aria-hidden="true"
-          className={cn(
-            "absolute -bottom-0.5 -right-0.5 size-2 rounded-full ring-[1.5px] ring-background",
-            statusDotColorMap[presence.status],
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={presence.image ?? presence.title}
+          className="absolute inset-0 flex items-center justify-center text-muted-foreground"
+          initial={reducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.86 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.86 }}
+          transition={
+            reducedMotion ? { duration: 0 } : { duration: 0.2, ease: EASE }
+          }
+        >
+          {showImage ? (
+            <Image
+              src={presence.image!}
+              alt=""
+              width={28}
+              height={28}
+              /* Local artwork rides the optimizer; remote Discord and Spotify
+                 images keep their direct URLs. */
+              unoptimized={!presence.image!.startsWith("/")}
+              className={cn(
+                "size-full rounded-md object-cover",
+                presence.status === "offline" && "grayscale",
+              )}
+              onError={() => setFailedSrc(presence.image)}
+            />
+          ) : (
+            <FallbackIcon size={28} className="size-7" />
           )}
-        />
+        </motion.div>
+      </AnimatePresence>
+      {presence.status && (
+        <span aria-hidden="true" className="absolute -bottom-0.5 -right-0.5 size-2">
+          {presence.status === "online" && active && !reducedMotion && (
+            /* A slow halo says "live" without pulling focus from the quote. */
+            <motion.span
+              className={cn(
+                "absolute inset-0 rounded-full",
+                statusDotColorMap.online,
+              )}
+              initial={{ opacity: 0.45, scale: 1 }}
+              animate={{ opacity: 0, scale: 2.4 }}
+              transition={{
+                duration: 1.6,
+                ease: "easeOut",
+                repeat: Infinity,
+                repeatDelay: 1.4,
+              }}
+            />
+          )}
+          <motion.span
+            key={presence.status}
+            className={cn(
+              "absolute inset-0 rounded-full ring-[1.5px] ring-background",
+              statusDotColorMap[presence.status],
+            )}
+            initial={reducedMotion ? false : { scale: 0.4 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 520, damping: 22 }}
+          />
+        </span>
       )}
     </div>
   );
 }
 
+function ListeningBars({ active }: { active: boolean }) {
+  const reducedMotion = useReducedMotion();
+  const moving = active && !reducedMotion;
+
+  return (
+    <span aria-hidden="true" className="inline-flex h-2 shrink-0 items-end gap-px">
+      {[0, 1, 2].map((bar) => (
+        <motion.span
+          key={bar}
+          className="h-full w-0.5 origin-bottom rounded-full bg-success"
+          initial={{ scaleY: 0.5 }}
+          animate={
+            moving
+              ? { scaleY: [0.35, 1, 0.55, 0.85, 0.35] }
+              : { scaleY: [0.5, 0.9, 0.65][bar] }
+          }
+          transition={
+            moving
+              ? {
+                  duration: 1.1,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  delay: bar * 0.16,
+                }
+              : { duration: 0 }
+          }
+        />
+      ))}
+    </span>
+  );
+}
+
+const copyLabelOrder: CopyStatus[] = ["idle", "copied", "error"];
+
 function CopyHandleButton() {
   const { status, copy } = useCopy();
+  const reducedMotion = useReducedMotion();
 
   if (!discordSocial?.copyValue) {
     return null;
@@ -178,33 +259,69 @@ function CopyHandleButton() {
     });
   };
 
-  const label =
-    status === "copied"
-      ? "Copied!"
-      : status === "error"
-        ? "Copy failed"
-        : discordSocial.handle;
+  const labels: Record<CopyStatus, string> = {
+    idle: discordSocial.handle,
+    copied: "Copied!",
+    error: "Copy failed",
+  };
+  const activeIndex = copyLabelOrder.indexOf(status);
 
   return (
-    <button
-      type="button"
-      onClick={handleCopy}
-      aria-label={`Copy Discord username ${discordSocial.copyValue}`}
-      className="micro-transition inline-flex h-6 shrink-0 items-center gap-1 rounded-md px-1.5 font-mono text-[10px] text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 cursor-pointer"
-    >
-      <CopyStatusIcon
-        status={status}
-        className="size-3"
-        idleIcon={<Image src="/discord.svg" alt="" width={12} height={12} />}
-      />
-      <span className="hidden sm:inline" aria-live="polite">
-        {label}
+    <>
+      <motion.button
+        type="button"
+        onClick={handleCopy}
+        aria-label={`Copy Discord username ${discordSocial.copyValue}`}
+        whileTap={reducedMotion ? undefined : { scale: 0.95 }}
+        transition={{ type: "spring", stiffness: 600, damping: 32 }}
+        className="micro-transition inline-flex h-6 shrink-0 cursor-pointer items-center gap-1 rounded-md px-1.5 font-mono text-[10px] text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20"
+      >
+        <CopyStatusIcon
+          status={status}
+          className="size-3"
+          idleIcon={<Image src="/discord.svg" alt="" width={12} height={12} />}
+        />
+        {/* Every label shares one grid cell, so the pill keeps the width of
+            the longest label and the row never shifts while they roll. */}
+        <span aria-hidden="true" className="hidden overflow-hidden sm:grid">
+          {copyLabelOrder.map((labelStatus, index) => {
+            const isActive = labelStatus === status;
+            const offset = index < activeIndex ? -10 : 10;
+
+            return (
+              <motion.span
+                key={labelStatus}
+                className={cn(
+                  "col-start-1 row-start-1 whitespace-nowrap",
+                  labelStatus === "copied" && "text-success",
+                  labelStatus === "error" && "text-destructive",
+                )}
+                initial={false}
+                animate={{
+                  opacity: isActive ? 1 : 0,
+                  y: isActive || reducedMotion ? 0 : offset,
+                }}
+                transition={
+                  reducedMotion
+                    ? { duration: 0 }
+                    : { duration: 0.18, ease: EASE }
+                }
+              >
+                {labels[labelStatus]}
+              </motion.span>
+            );
+          })}
+        </span>
+      </motion.button>
+      <span className="sr-only" aria-live="polite">
+        {status === "idle" ? "" : labels[status]}
       </span>
-    </button>
+    </>
   );
 }
 
 function PresenceCard({ poll }: { poll: boolean }) {
+  const reducedMotion = useReducedMotion();
   const { data, error, isLoading } = useQuery<LanyardData>(
     "discord-status",
     fetchDiscordStatus,
@@ -224,16 +341,29 @@ function PresenceCard({ poll }: { poll: boolean }) {
 
   return (
     <div className="flex items-center gap-2.5">
-      <Artwork key={presence.image ?? "none"} presence={presence} />
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-xs font-medium leading-tight tracking-tight text-foreground">
-          {presence.title}
-        </p>
-        {presence.subtitle && (
-          <p className="truncate text-[11px] leading-tight text-muted-foreground">
-            {presence.subtitle}
-          </p>
-        )}
+      <Artwork presence={presence} active={poll} />
+      <div className="relative min-w-0 flex-1">
+        <AnimatePresence initial={false} mode="popLayout">
+          <motion.div
+            key={`${presence.title}\n${presence.subtitle}`}
+            initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -5 }}
+            transition={
+              reducedMotion ? { duration: 0 } : { duration: 0.22, ease: EASE }
+            }
+          >
+            <p className="truncate text-xs font-medium leading-tight tracking-tight text-foreground">
+              {presence.title}
+            </p>
+            {presence.subtitle && (
+              <p className="flex min-w-0 items-center gap-1.5 text-[11px] leading-tight text-muted-foreground">
+                {presence.listening && <ListeningBars active={poll} />}
+                <span className="truncate">{presence.subtitle}</span>
+              </p>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
       <CopyHandleButton />
     </div>

@@ -135,8 +135,8 @@ export const siteConfig: PortfolioConfig = {
     fullName: "Aditya Ojha",
     firstName: "Aditya",
     avatar: {
-      src: "/images/profile-cutout.webp",
-      alt: "Pixel-art portrait of Aditya holding a trophy",
+      src: "/images/profile-mascot-sticker.webp",
+      alt: "Paper-cut sticker of Aditya's spiky-haired avatar",
       fallback: "AK",
     },
     location: {

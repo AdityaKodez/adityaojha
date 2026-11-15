@@ -1,5 +1,6 @@
 export const githubSectionConfig = {
   calendarLabel: "Daily GitHub contributions",
+  minWeeks: 57,
   keyboardHint:
     "Use arrow keys to explore days. Left and right move by week. Home and End move to the first and last week in a row. Control Home and Control End move to the first and last day.",
   less: "Less",
