@@ -10,5 +10,15 @@
     "claimed": true,
     "url": "https://vakh.com/",
     "logo": "/sponsors/pay_0NnVTVxfMVfkEoLNcqhwx.webp"
+  },
+  {
+    "id": "pay_0Nrz8A7y7OLbCFQGFEDz6",
+    "name": "Anubhav Choubey",
+    "date": "2026-11-15",
+    "seat": 1,
+    "order": 2,
+    "enabled": true,
+    "paymentId": "pay_0Nrz8A7y7OLbCFQGFEDz6",
+    "claimed": false
   }
 ]
