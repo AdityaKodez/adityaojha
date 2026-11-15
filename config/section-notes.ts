@@ -5,6 +5,10 @@ export const sectionNotes: Partial<Record<SectionId, SectionNoteConfig>> = {
     text: "Copy, paste,\nmake it yours",
     side: "right",
   },
+  insights: {
+    text: "Visitors and views\nover the last 7 days",
+    side: "right",
+  },
   testimonials: {
     text: "Big thanks\nto these folks",
     side: "left",
