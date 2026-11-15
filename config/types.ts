@@ -26,6 +26,7 @@ export interface SectionFlags {
 export interface InsightPoint {
   date: string;
   visitors: number;
+  pageviews: number;
 }
 
 export interface InsightSummary {

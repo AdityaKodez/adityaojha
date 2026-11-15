@@ -85,7 +85,9 @@ export async function getInsights(): Promise<InsightReport | null> {
       return null;
     }
     if (!Array.isArray(series) || series.length !== dates.length) {
-      console.error(`Insights report must contain ${insightsConfig.days} daily points`);
+      console.error(
+        `Insights report must contain ${insightsConfig.days} daily points`,
+      );
       return null;
     }
 
@@ -94,14 +96,17 @@ export async function getInsights(): Promise<InsightReport | null> {
       if (
         !isRecord(point) ||
         point.date !== dates[index] ||
-        typeof point.visitors !== "number" ||
-        !Number.isSafeInteger(point.visitors) ||
-        point.visitors < 0
+        !isCount(point.visitors) ||
+        !isCount(point.pageviews)
       ) {
         console.error("Insights report contains an invalid daily point");
         return null;
       }
-      points.push({ date: point.date, visitors: point.visitors });
+      points.push({
+        date: point.date,
+        visitors: point.visitors,
+        pageviews: point.pageviews,
+      });
     }
     return { points, summary, previous };
   } catch (error) {
@@ -112,7 +117,9 @@ export async function getInsights(): Promise<InsightReport | null> {
     console.error(
       "Insights request failed:",
       error instanceof Error ? error.name : "Unknown error",
-      cause ? `(${cause}) at ${process.env.TALVESS_ORIGIN ?? "https://talvess.app"}` : "",
+      cause
+        ? `(${cause}) at ${process.env.TALVESS_ORIGIN ?? "https://talvess.app"}`
+        : "",
     );
     return null;
   }

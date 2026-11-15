@@ -40,7 +40,7 @@ export function Insights() {
           <div
             role="status"
             aria-label={insightsConfig.loading}
-            className="mt-2.5 h-[348px] border-y border-border motion-safe:animate-pulse sm:h-[253px]"
+            className="mt-2.5 h-[367px] border-y border-border motion-safe:animate-pulse sm:h-[272px]"
           >
             <div className="blueprint-bg h-[175px] opacity-50 sm:h-20" />
           </div>

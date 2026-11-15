@@ -15,11 +15,18 @@ import { cn } from "@/lib/utils";
 const FALLBACK_WIDTH = 720;
 const HEIGHT = 117;
 const TOP = 36;
-const PIXEL = 2;
-// Ordered 4 by 4 Bayer matrix, shared with the header logo and footer Earth.
-const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
-// Dither density per horizontal band, from the top of the chart down.
-const BANDS = [9, 6, 4, 2, 1];
+const SERIES = [
+  {
+    key: "visitors",
+    label: insightsConfig.visitorsLabel,
+    color: "rgb(var(--footer-earth-ocean))",
+  },
+  {
+    key: "pageviews",
+    label: insightsConfig.viewsLabel,
+    color: "var(--foreground)",
+  },
+] as const;
 const shortDate = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
   month: "short",
@@ -64,30 +71,6 @@ function linePath(points: PlotPoint[]) {
   }, "");
 }
 
-function DitherPattern({ id, density }: { id: string; density: number }) {
-  return (
-    <pattern
-      id={id}
-      width={PIXEL * 4}
-      height={PIXEL * 4}
-      patternUnits="userSpaceOnUse"
-    >
-      {BAYER.map((threshold, index) =>
-        threshold < density ? (
-          <rect
-            key={index}
-            x={(index % 4) * PIXEL}
-            y={Math.floor(index / 4) * PIXEL}
-            width={PIXEL}
-            height={PIXEL}
-            fill="rgb(var(--footer-earth-ocean))"
-          />
-        ) : null,
-      )}
-    </pattern>
-  );
-}
-
 export function InsightsChart({ points }: { points: InsightPoint[] }) {
   const id = useId().replace(/:/g, "");
   const frame = useRef<HTMLDivElement>(null);
@@ -103,7 +86,7 @@ export function InsightsChart({ points }: { points: InsightPoint[] }) {
     if (next !== null) setHeldIndex(next);
   }
 
-  // The chart draws in real pixels so the dither stays crisp at every width.
+  // Keep the chart and its interaction markers aligned at every width.
   useEffect(() => {
     const node = frame.current;
     if (!node) return;
@@ -115,15 +98,19 @@ export function InsightsChart({ points }: { points: InsightPoint[] }) {
     return () => observer.disconnect();
   }, []);
 
-  const maximum = Math.max(1, ...points.map((point) => point.visitors));
+  const maximum = Math.max(
+    1,
+    ...points.flatMap((point) => [point.visitors, point.pageviews]),
+  );
   const step = width / Math.max(1, points.length - 1);
-  const plot = points.map((point, index) => ({
-    x: index * step,
-    y: HEIGHT - 4 - (point.visitors / maximum) * (HEIGHT - 20),
-  }));
-  const path = linePath(plot);
-  const area = path ? `${path} L ${width} ${HEIGHT} L 0 ${HEIGHT} Z` : "";
-  const bandHeight = HEIGHT / BANDS.length;
+  const series = SERIES.map((metric) => {
+    const plot = points.map((point, index) => ({
+      x: index * step,
+      y: HEIGHT - 4 - (point[metric.key] / maximum) * (HEIGHT - 20),
+    }));
+    return { ...metric, plot, path: linePath(plot) };
+  });
+  const plot = series[0].plot;
   const peakIndex = points.reduce(
     (best, point, index) =>
       point.visitors > points[best].visitors ? index : best,
@@ -133,7 +120,7 @@ export function InsightsChart({ points }: { points: InsightPoint[] }) {
   const selected = points[heldIndex] ?? points[points.length - 1];
   const marker = plot[heldIndex] ?? plot[plot.length - 1];
   const motion = gliding ? GLIDE : FADE;
-  const pillX = Math.min(Math.max(marker?.x ?? 0, 48), width - 48);
+  const pillX = Math.min(Math.max(marker?.x ?? 0, 132), width - 132);
   const dotX = Math.min(Math.max(marker?.x ?? 0, 5), width - 5);
   const sliderIndex = activeIndex ?? points.length - 1;
   const sliderPoint = points[sliderIndex];
@@ -186,8 +173,22 @@ export function InsightsChart({ points }: { points: InsightPoint[] }) {
 
   return (
     <figure className="mt-5 min-w-0">
-      <figcaption id={`${id}-instructions`} className="sr-only">
-        {insightsConfig.chartLabel}. {insightsConfig.instructions}
+      <figcaption className="mb-1 flex items-center gap-4 px-4.5 text-[10px] text-muted-foreground">
+        {SERIES.map((metric) => (
+          <span key={metric.key} className="inline-flex items-center gap-1.5">
+            <svg aria-hidden="true" width="16" height="8" viewBox="0 0 16 8">
+              <path
+                d="M0 4H16"
+                stroke={metric.color}
+                strokeWidth={2}
+              />
+            </svg>
+            {metric.label}
+          </span>
+        ))}
+        <span id={`${id}-instructions`} className="sr-only">
+          {insightsConfig.chartLabel}. {insightsConfig.instructions}
+        </span>
       </figcaption>
       <div
         ref={frame}
@@ -198,7 +199,7 @@ export function InsightsChart({ points }: { points: InsightPoint[] }) {
         aria-valuemin={0}
         aria-valuemax={points.length - 1}
         aria-valuenow={sliderIndex}
-        aria-valuetext={`${fullDate.format(new Date(`${sliderPoint.date}T00:00:00Z`))} UTC, ${number.format(sliderPoint.visitors)} ${sliderPoint.visitors === 1 ? insightsConfig.visitor : insightsConfig.visitors}`}
+        aria-valuetext={`${fullDate.format(new Date(`${sliderPoint.date}T00:00:00Z`))} UTC, ${number.format(sliderPoint.visitors)} ${sliderPoint.visitors === 1 ? insightsConfig.visitor : insightsConfig.visitors}, ${number.format(sliderPoint.pageviews)} ${sliderPoint.pageviews === 1 ? insightsConfig.view : insightsConfig.views}`}
         className="relative touch-pan-y outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
         style={{ height: TOP + HEIGHT }}
         onPointerMove={selectAtPointer}
@@ -220,21 +221,10 @@ export function InsightsChart({ points }: { points: InsightPoint[] }) {
           aria-hidden="true"
           viewBox={`0 0 ${width} ${HEIGHT}`}
           preserveAspectRatio="none"
-          shapeRendering="crispEdges"
           className="pointer-events-none absolute inset-x-0 bottom-0 w-full fill-none"
           style={{ height: HEIGHT }}
         >
           <defs>
-            {BANDS.map((density, band) => (
-              <DitherPattern
-                key={band}
-                id={`${id}-dither-${band}`}
-                density={density}
-              />
-            ))}
-            <clipPath id={`${id}-area`}>
-              <path d={area} />
-            </clipPath>
             <clipPath id={`${id}-highlight`}>
               <rect
                 x={-step}
@@ -246,45 +236,26 @@ export function InsightsChart({ points }: { points: InsightPoint[] }) {
               />
             </clipPath>
           </defs>
-          <g
-            clipPath={`url(#${id}-area)`}
-            className={cn(
-              "transition-opacity duration-150 motion-reduce:transition-none",
-              active ? "opacity-45" : "opacity-100",
-            )}
-          >
-            {BANDS.map((_, band) => (
-              <rect
-                key={band}
-                x={0}
-                y={band * bandHeight}
-                width={width}
-                height={bandHeight + 1}
-                fill={`url(#${id}-dither-${band})`}
+          {series.map((metric) => (
+            <g
+              key={metric.key}
+              stroke={metric.color}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path
+                d={metric.path}
+                strokeWidth={2}
+                className={cn(FADE, active && "opacity-40")}
               />
-            ))}
-          </g>
-          <path
-            d={path}
-            stroke="rgb(var(--footer-earth-ocean))"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            shapeRendering="geometricPrecision"
-            className={cn(
-              "transition-opacity duration-150 motion-reduce:transition-none",
-              active && "opacity-40",
-            )}
-          />
-          <path
-            d={path}
-            stroke="rgb(var(--footer-earth-ocean))"
-            strokeWidth={2.5}
-            strokeLinecap="round"
-            shapeRendering="geometricPrecision"
-            clipPath={`url(#${id}-highlight)`}
-            className={cn(FADE, active ? "opacity-100" : "opacity-0")}
-          />
+              <path
+                d={metric.path}
+                strokeWidth={2.5}
+                clipPath={`url(#${id}-highlight)`}
+                className={cn(FADE, active ? "opacity-100" : "opacity-0")}
+              />
+            </g>
+          ))}
         </svg>
 
         <div aria-hidden="true" className="pointer-events-none select-none">
@@ -337,18 +308,30 @@ export function InsightsChart({ points }: { points: InsightPoint[] }) {
                 {selected.visitors === 1
                   ? insightsConfig.visitor
                   : insightsConfig.visitors}
-                , {shortDate.format(new Date(`${selected.date}T00:00:00Z`))}
+                {" · "}
+              </span>
+              {number.format(selected.pageviews)}{" "}
+              <span className="font-normal opacity-70">
+                {selected.pageviews === 1
+                  ? insightsConfig.view
+                  : insightsConfig.views}
+                {", "}
+                {shortDate.format(new Date(`${selected.date}T00:00:00Z`))}
               </span>
             </span>
-            <span
-              className={cn(
-                "absolute left-0 top-0 size-2.5 rounded-full bg-[rgb(var(--footer-earth-ocean))] ring-[3px] ring-background",
-                motion,
-              )}
-              style={{
-                transform: `translate(${dotX - 5}px, ${TOP + marker.y - 5}px)`,
-              }}
-            />
+            {series.map((metric) => (
+              <span
+                key={metric.key}
+                className={cn(
+                  "absolute left-0 top-0 size-2.5 rounded-full ring-[3px] ring-background",
+                  motion,
+                )}
+                style={{
+                  backgroundColor: metric.color,
+                  transform: `translate(${dotX - 5}px, ${TOP + (metric.plot[heldIndex] ?? metric.plot[metric.plot.length - 1]).y - 5}px)`,
+                }}
+              />
+            ))}
           </span>
         </div>
       </div>

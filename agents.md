@@ -194,12 +194,13 @@ The home page is a loop, not a hand-written layout.
   `see all n components` link to `/components`. Keep it that way, the full
   catalog lives on the route, not on the home page.
 
-Insights sits directly after Sponsors and shows one visitor trend line for the
-last 7 UTC days. The line touches both frame edges, with
-no axes, grid, or legend. The area under it uses the footer Earth's ocean blue
-and ordered 4 by 4 Bayer dither, denser toward the top, drawn at real pixel
-width so it stays crisp. A small label marks the best day, and a dot marks
-today. Above the chart, visitors, sessions, views, and average time sit in KPI
+Insights sits directly after Sponsors and shows visitor and view trend lines for
+the last 7 UTC days on a shared count scale. Both lines touch the frame edges,
+with no axes, grid, or area fill. Visitors use the footer Earth's ocean blue;
+views use `foreground`, black in light mode and white in dark mode. Both strokes
+are solid. A compact legend identifies both lines.
+A small label marks the best visitor day, and a dot marks today.
+Above the chart, visitors, sessions, views, and average time sit in KPI
 cards styled like the testimonial grid: continuous solid row lines, bordered
 15px gutters, and the blueprint hatch resolving on hover. Each card holds only
 a label, the value, and an inline trend against the previous 7 days, with no
@@ -208,9 +209,10 @@ below it.
 Use the `success` token for increases and `destructive` for decreases. The
 section has no attribution or date range row.
 Hover, touch, and keyboard selection reveal a local line highlight, point,
-vertical guide, date pill, and daily visitor count. `lib/insights.ts` fetches
+vertical guide, date pill, and both daily counts. `lib/insights.ts` fetches
 Talvess server-side with `TALVESS_STATS_KEY`, caches reports for 15 minutes,
-and validates all 7 daily points plus the current and previous summaries.
+and validates visitor and view counts for all 7 daily points plus the current
+and previous summaries.
 Missing credentials or failed reports show
 an unavailable message, never sample traffic or zero-filled invented data.
 
