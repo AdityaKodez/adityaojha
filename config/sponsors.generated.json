@@ -19,6 +19,8 @@
     "order": 2,
     "enabled": true,
     "paymentId": "pay_0Nrz8A7y7OLbCFQGFEDz6",
-    "claimed": false
+    "claimed": true,
+    "url": "https://anubhavchoubey.com/",
+    "logo": "/sponsors/pay_0Nrz8A7y7OLbCFQGFEDz6.jpg"
   }
 ]
