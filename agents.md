@@ -104,6 +104,7 @@ component.
 | `config/components.ts` | `componentsSectionConfig` (home teaser), `componentRegistry` plus `findComponent()` and `getEnabledComponents()` |
 | `config/registry.ts` | Registry helpers, `getAddCommands()` (`@akoder/<id>` per package manager), `getItemUrl()` and `registryConfig.itemUrlPattern` for the direct-URL fallback |
 | `config/world-cities.ts` | City coordinates used by the dotted world map |
+| `config/insights.ts` | Home Insights heading, 7-day range, and accessible chart copy |
 | `config/sponsors.ts` | `sponsorsSectionConfig` (supporter copy, seat count, CTAs) + `sponsorsConfig`, one entry per supporter |
 
 Pattern to copy: every domain exports a section config object (heading text) and
@@ -161,7 +162,7 @@ The home page is a loop, not a hand-written layout.
   `components/skeletons/github-skeleton.tsx`, and only rendered when
   `GITHUB_TOKEN` is present.
 - The current order is projects, socials, components, skills, about, sponsors,
-  github, testimonials, bookshelf, bookmarks, certifications. Work follows the hero so
+  insights, github, testimonials, bookshelf, bookmarks, certifications. Work follows the hero so
   visitors reach projects before the six social rows. Experience, services,
   workflow and contact exist but are flagged off. The `sponsors`
   section has a heading band, short intro copy, wrapping 56px logo tiles with
@@ -192,6 +193,26 @@ The home page is a loop, not a hand-written layout.
   `componentsSectionConfig.previewCount` registry entries and ends in a
   `see all n components` link to `/components`. Keep it that way, the full
   catalog lives on the route, not on the home page.
+
+Insights sits directly after Sponsors and shows one visitor trend line for the
+last 7 UTC days. The line touches both frame edges, with
+no axes, grid, or legend. The area under it uses the footer Earth's ocean blue
+and ordered 4 by 4 Bayer dither, denser toward the top, drawn at real pixel
+width so it stays crisp. A small label marks the best day, and a dot marks
+today. Above the chart, visitors, sessions, views, and average time sit in KPI
+cards styled like the testimonial grid: continuous solid row lines, bordered
+15px gutters, and the blueprint hatch resolving on hover. Each card holds only
+a label, the value, and an inline trend against the previous 7 days, with no
+extra caption. They show four across from the small breakpoint and two by two
+below it.
+Use the `success` token for increases and `destructive` for decreases. The
+section has no attribution or date range row.
+Hover, touch, and keyboard selection reveal a local line highlight, point,
+vertical guide, date pill, and daily visitor count. `lib/insights.ts` fetches
+Talvess server-side with `TALVESS_STATS_KEY`, caches reports for 15 minutes,
+and validates all 7 daily points plus the current and previous summaries.
+Missing credentials or failed reports show
+an unavailable message, never sample traffic or zero-filled invented data.
 
 To add a section:
 

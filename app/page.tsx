@@ -9,6 +9,7 @@ import { Experience } from "@/components/landing/experience";
 import { Footer } from "@/components/landing/footer";
 import { GitHubSection } from "@/components/landing/github-section";
 import { Hero } from "@/components/landing/hero";
+import { Insights } from "@/components/landing/insights";
 import { ProfileBanner } from "@/components/landing/profile-banner";
 import { HowIWork } from "@/components/landing/how-i-work";
 import { HomeProjectExplorer } from "@/components/landing/home-project-explorer";
@@ -65,6 +66,7 @@ const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
   bookmarks: <Bookmarks />,
   bookshelf: <Bookshelf books={getEnabledBooks()} />,
   certifications: <Certifications />,
+  insights: <Insights />,
   sponsors: <SponsorsSection />,
   experience: <Experience />,
   services: <Services />,

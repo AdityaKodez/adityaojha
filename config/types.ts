@@ -15,11 +15,30 @@ export type SectionId =
   | "bookmarks"
   | "bookshelf"
   | "certifications"
+  | "insights"
   | "sponsors"
   | "contact";
 
 export interface SectionFlags {
   [key: string]: boolean;
+}
+
+export interface InsightPoint {
+  date: string;
+  visitors: number;
+}
+
+export interface InsightSummary {
+  visitors: number;
+  sessions: number;
+  pageviews: number;
+  averageEngagedSeconds: number | null;
+}
+
+export interface InsightReport {
+  points: InsightPoint[];
+  summary: InsightSummary;
+  previous: InsightSummary;
 }
 
 export interface SectionNoteConfig {
