@@ -308,7 +308,10 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   Geist Serif heading, and paper-cut garden from `config/opengraph.ts`.
   Keep route descriptions, URLs, and install commands readable above the
   artwork, with no dark grid or heavy panel. The homepage OG stays unchanged.
-- The shared footer on `/`, `/components`, and `/testimonials` stays within the centered page frame, with a
+- The 404 page uses a scenery illustration up to 360px wide, clipped
+  to an opaque asymmetric torn-paper edge without blur or pixel fading.
+  Sponsors follows the 404 content inside main, with the shared footer after main.
+- The shared footer on `/`, `/components`, `/testimonials`, and the 404 page stays within the centered page frame, with a
   code-rendered, blue dithered Earth rising from the bottom. Keep its quote and
   credit in `footerConfig` in `config/site.ts`. The Earth turns slowly while
   visible and stays still for reduced motion. The quote, live Discord status,

@@ -1,0 +1,54 @@
+.scene {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  /* One opaque, uneven paper tear clips the scenery, car, and label together. */
+  clip-path: polygon(
+    3% 13%, 8% 12%, 7% 9%, 15% 10%, 19% 6%, 22% 7%,
+    28% 4%, 33% 5%, 38% 2%, 41% 4%, 48% 3%, 53% 6%,
+    59% 4%, 63% 7%, 70% 6%, 73% 9%, 81% 8%, 80% 12%,
+    87% 14%, 85% 18%, 91% 21%, 90% 27%, 95% 30%, 93% 35%,
+    97% 40%, 94% 45%, 96% 52%, 92% 55%, 94% 62%, 90% 66%,
+    92% 72%, 88% 76%, 89% 82%, 83% 83%, 81% 89%, 74% 87%,
+    70% 92%, 63% 91%, 58% 96%, 53% 94%, 47% 97%, 43% 93%,
+    37% 95%, 33% 92%, 26% 93%, 23% 89%, 17% 90%, 18% 84%,
+    11% 82%, 13% 76%, 8% 73%, 10% 67%, 5% 64%, 7% 58%,
+    3% 54%, 5% 48%, 2% 43%, 5% 38%, 3% 32%, 7% 29%,
+    5% 23%, 8% 20%, 4% 18%
+  );
+  user-select: none;
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.car {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6.25%;
+  aspect-ratio: 1;
+  overflow: visible;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.beam {
+  opacity: var(--meadow-beam-opacity);
+}
+
+/* A full-size layer, so percentage translates map onto scene coordinates and
+   the label follows the car without rotating with it. */
+.tagTrack {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  will-change: transform;
+}

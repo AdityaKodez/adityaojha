@@ -1,17 +1,11 @@
 export const notFoundConfig = {
   title: "Page not found",
   code: "404",
-  heading: "A little off the map.",
+  label: "Route not found",
+  heading: "Took a wrong turn.",
   description:
-    "This page has wandered off. Let's get you back to familiar ground.",
+    "This road doesn't lead to a page. Head back home, or take the scenic route through the components.",
+  carLabel: "You",
   home: { label: "Back to home", href: "/" },
   components: { label: "Explore components", href: "/components" },
-  artwork: {
-    map: {
-      src: "/images/not-found-map.webp",
-      width: 1000,
-      height: 667,
-    },
-    plane: { src: "/images/profile-stickers/plane.webp" },
-  },
 } as const;
