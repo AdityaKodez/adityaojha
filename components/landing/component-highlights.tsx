@@ -4,7 +4,7 @@ import {
   getEnabledComponents,
 } from "@/config/components";
 import Link from "next/link";
-import { BsArrowUpRightCircle } from "react-icons/bs";
+import { ArrowUpRightCircle } from "@/components/shared/site-icons";
 
 export function ComponentHighlights() {
   const components = getEnabledComponents();
@@ -60,7 +60,7 @@ export function ComponentHighlights() {
           className="flex items-center gap-2 font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
           {`${componentsSectionConfig.seeMoreLabel} ${components.length} components`}
-          <BsArrowUpRightCircle className="size-3.5" />
+          <ArrowUpRightCircle className="size-3.5" />
         </Link>
       </div>
     </section>

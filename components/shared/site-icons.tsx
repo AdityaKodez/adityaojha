@@ -1,115 +1,120 @@
 "use client";
 
 import {
-  Activity01Icon,
-  Add01Icon,
-  AlertCircleIcon,
-  ArrowDown01Icon,
-  ArrowLeft02Icon,
-  ArrowRight02Icon,
-  ArrowUpRight01Icon,
-  BookmarkCheck01Icon,
-  Cancel01Icon,
-  CircleArrowDown02Icon,
-  CircleIcon,
-  ColorPickerIcon,
-  CommandLineIcon,
-  ComputerIcon,
-  ContrastIcon,
-  Copy01Icon,
-  FolderOpenIcon,
-  GameController03Icon,
-  HandshakeIcon,
-  Home03Icon,
-  ImageAdd01Icon,
-  Layers01Icon,
-  Link01Icon,
-  LiveStreaming01Icon,
-  Loading03Icon,
-  Message01Icon,
-  MessageSquareQuoteIcon,
-  Moon02Icon,
-  MusicNote03Icon,
-  RotateLeft01Icon,
-  Search01Icon,
-  SentIcon,
-  Share08Icon,
-  ShieldCheckIcon,
-  SmilePlusIcon,
-  SourceCodeIcon,
-  SquareLock02Icon,
-  Sun03Icon,
-  Sword03Icon,
-  Target02Icon,
-  Task01Icon,
-  Tick02Icon,
-  Tv01Icon,
-  UnavailableIcon,
-  Upload01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import type { SVGProps } from "react";
+  Activity as ActivityGlyph,
+  ArrowBigDown as ArrowBigDownGlyph,
+  ArrowBigUp as ArrowBigUpGlyph,
+  ArrowLeft as ArrowLeftGlyph,
+  ArrowRight as ArrowRightGlyph,
+  ArrowUpRight as ArrowUpRightGlyph,
+  BookmarkCheck as BookmarkCheckGlyph,
+  Check as CheckGlyph,
+  ChevronDown as ChevronDownGlyph,
+  Circle as CircleGlyph,
+  CircleAlert as CircleAlertGlyph,
+  CircleArrowDown as CircleArrowDownGlyph,
+  CircleOff as CircleOffGlyph,
+  Code as CodeGlyph,
+  Contrast as ContrastGlyph,
+  Copy as CopyGlyph,
+  Focus as FocusGlyph,
+  FolderOpen as FolderOpenGlyph,
+  Forward as ForwardGlyph,
+  Gamepad2 as Gamepad2Glyph,
+  HeartHandshake as HeartHandshakeGlyph,
+  House as HouseGlyph,
+  ImagePlus as ImagePlusGlyph,
+  Layers as LayersGlyph,
+  Link as LinkGlyph,
+  ListTodo as ListTodoGlyph,
+  LoaderCircle as LoaderCircleGlyph,
+  LockKeyhole as LockKeyholeGlyph,
+  MessageCircle as MessageCircleGlyph,
+  MessageSquareQuote as MessageSquareQuoteGlyph,
+  Monitor as MonitorGlyph,
+  Moon as MoonGlyph,
+  Music as MusicGlyph,
+  Plus as PlusGlyph,
+  Radio as RadioGlyph,
+  RotateCcw as RotateCcwGlyph,
+  Search as SearchGlyph,
+  Send as SendGlyph,
+  ShieldCheck as ShieldCheckGlyph,
+  SmilePlus as SmilePlusGlyph,
+  Sun as SunGlyph,
+  SwatchBook as SwatchBookGlyph,
+  Swords as SwordsGlyph,
+  Terminal as TerminalGlyph,
+  TrendingDown as TrendingDownGlyph,
+  TrendingUp as TrendingUpGlyph,
+  Tv as TvGlyph,
+  Upload as UploadGlyph,
+  X as XGlyph,
+  type IconProps,
+} from "scribbles-icons";
+import type { ComponentType, SVGProps } from "react";
 
 type SiteIconProps = SVGProps<SVGSVGElement> & { size?: number | string };
 
-// Keep the site's component-valued icon slots and SVG props intact.
-// Published components continue to own their Lucide icons independently.
-function createSiteIcon(icon: IconSvgElement) {
-  return function SiteIcon({ strokeWidth = 1.8, ...props }: SiteIconProps) {
-    return (
-      <HugeiconsIcon
-        icon={icon}
-        strokeWidth={Number(strokeWidth)}
-        aria-hidden="true"
-        {...props}
-      />
-    );
+// Scope the fill weight to site controls, never a global icon provider.
+// Registry components, demos, brand marks, and custom stickers keep their icons.
+function createSiteIcon(
+  Icon: ComponentType<IconProps>,
+  weight: IconProps["weight"] = "fill",
+) {
+  return function SiteIcon(props: SiteIconProps) {
+    return <Icon size={24} aria-hidden="true" {...props} weight={weight} />;
   };
 }
 
-export const Activity = createSiteIcon(Activity01Icon);
-export const ArrowDownCircleIcon = createSiteIcon(CircleArrowDown02Icon);
-export const ArrowLeft = createSiteIcon(ArrowLeft02Icon);
-export const ArrowRight = createSiteIcon(ArrowRight02Icon);
+export const Activity = createSiteIcon(ActivityGlyph);
+export const ArrowBigDown = createSiteIcon(ArrowBigDownGlyph);
+export const ArrowBigUp = createSiteIcon(ArrowBigUpGlyph);
+export const ArrowDownCircleIcon = createSiteIcon(CircleArrowDownGlyph);
+export const ArrowLeft = createSiteIcon(ArrowLeftGlyph);
+export const ArrowRight = createSiteIcon(ArrowRightGlyph);
+export const ArrowUpRight = createSiteIcon(ArrowUpRightGlyph);
+export const ArrowUpRightCircle = createSiteIcon(ArrowUpRightGlyph);
+export const BookmarkCheckIcon = createSiteIcon(BookmarkCheckGlyph);
+export const Check = createSiteIcon(CheckGlyph);
+export const ChevronDown = createSiteIcon(ChevronDownGlyph);
+export const Circle = createSiteIcon(CircleGlyph);
+export const CircleAlert = createSiteIcon(CircleAlertGlyph);
+export const CircleOff = createSiteIcon(CircleOffGlyph);
+export const Code = createSiteIcon(CodeGlyph);
+export const Contrast = createSiteIcon(ContrastGlyph);
+export const Copy = createSiteIcon(CopyGlyph);
+export const Focus = createSiteIcon(FocusGlyph);
+export const FolderOpen = createSiteIcon(FolderOpenGlyph);
+export const ForwardIcon = createSiteIcon(ForwardGlyph);
+export const Gamepad2 = createSiteIcon(Gamepad2Glyph);
+export const HeartHandshake = createSiteIcon(HeartHandshakeGlyph);
+export const Home = createSiteIcon(HouseGlyph);
+export const ImagePlus = createSiteIcon(ImagePlusGlyph);
+export const Layers = createSiteIcon(LayersGlyph);
+export const Link = createSiteIcon(LinkGlyph);
+export const ListTodo = createSiteIcon(ListTodoGlyph);
+export const Loader2 = createSiteIcon(LoaderCircleGlyph);
+export const LockKeyhole = createSiteIcon(LockKeyholeGlyph);
+export const Message = createSiteIcon(MessageCircleGlyph);
+export const MessageSquareQuote = createSiteIcon(MessageSquareQuoteGlyph);
+export const Monitor = createSiteIcon(MonitorGlyph);
+export const Moon = createSiteIcon(MoonGlyph);
+export const Music = createSiteIcon(MusicGlyph);
+export const Plus = createSiteIcon(PlusGlyph);
+export const Radio = createSiteIcon(RadioGlyph);
+export const RotateCcw = createSiteIcon(RotateCcwGlyph);
+export const Search = createSiteIcon(SearchGlyph, "bold");
+export const Send = createSiteIcon(SendGlyph);
+export const ShieldCheck = createSiteIcon(ShieldCheckGlyph);
+export const SmilePlus = createSiteIcon(SmilePlusGlyph);
+export const Sun = createSiteIcon(SunGlyph);
+export const SwatchBook = createSiteIcon(SwatchBookGlyph);
+export const Swords = createSiteIcon(SwordsGlyph);
+export const Terminal = createSiteIcon(TerminalGlyph);
+export const TrendingDown = createSiteIcon(TrendingDownGlyph);
+export const TrendingUp = createSiteIcon(TrendingUpGlyph);
+export const Tv = createSiteIcon(TvGlyph);
+export const Upload = createSiteIcon(UploadGlyph);
+export const X = createSiteIcon(XGlyph);
 export const ArrowRightIcon = ArrowRight;
-export const ArrowUpRight = createSiteIcon(ArrowUpRight01Icon);
-export const BookmarkCheckIcon = createSiteIcon(BookmarkCheck01Icon);
-export const Check = createSiteIcon(Tick02Icon);
-export const ChevronDown = createSiteIcon(ArrowDown01Icon);
-export const Circle = createSiteIcon(CircleIcon);
-export const CircleAlert = createSiteIcon(AlertCircleIcon);
-export const CircleOff = createSiteIcon(UnavailableIcon);
-export const Code = createSiteIcon(SourceCodeIcon);
-export const Contrast = createSiteIcon(ContrastIcon);
-export const Copy = createSiteIcon(Copy01Icon);
-export const Focus = createSiteIcon(Target02Icon);
-export const FolderOpen = createSiteIcon(FolderOpenIcon);
-export const ForwardIcon = createSiteIcon(Share08Icon);
-export const Gamepad2 = createSiteIcon(GameController03Icon);
-export const HeartHandshake = createSiteIcon(HandshakeIcon);
-export const Home = createSiteIcon(Home03Icon);
-export const ImagePlus = createSiteIcon(ImageAdd01Icon);
-export const Layers = createSiteIcon(Layers01Icon);
-export const Link = createSiteIcon(Link01Icon);
-export const ListTodo = createSiteIcon(Task01Icon);
-export const Loader2 = createSiteIcon(Loading03Icon);
-export const LockKeyhole = createSiteIcon(SquareLock02Icon);
-export const Message = createSiteIcon(Message01Icon);
-export const MessageSquareQuote = createSiteIcon(MessageSquareQuoteIcon);
-export const Monitor = createSiteIcon(ComputerIcon);
-export const Moon = createSiteIcon(Moon02Icon);
-export const Music = createSiteIcon(MusicNote03Icon);
-export const Plus = createSiteIcon(Add01Icon);
-export const Radio = createSiteIcon(LiveStreaming01Icon);
-export const RotateCcw = createSiteIcon(RotateLeft01Icon);
-export const Search = createSiteIcon(Search01Icon);
-export const Send = createSiteIcon(SentIcon);
-export const ShieldCheck = createSiteIcon(ShieldCheckIcon);
-export const SmilePlus = createSiteIcon(SmilePlusIcon);
-export const Sun = createSiteIcon(Sun03Icon);
-export const SwatchBook = createSiteIcon(ColorPickerIcon);
-export const Swords = createSiteIcon(Sword03Icon);
-export const Terminal = createSiteIcon(CommandLineIcon);
-export const Tv = createSiteIcon(Tv01Icon);
-export const Upload = createSiteIcon(Upload01Icon);
-export const X = createSiteIcon(Cancel01Icon);

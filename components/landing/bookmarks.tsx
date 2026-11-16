@@ -2,8 +2,7 @@
 
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
-import { ArrowDownCircleIcon, ArrowRightIcon } from "@/components/shared/site-icons";
+import { ArrowBigDown, ArrowBigUp, ArrowUpRight } from "@/components/shared/site-icons";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -65,7 +64,7 @@ export function Bookmarks() {
                     </p>
                   </div>
 
-                  <ArrowRightIcon className="ml-auto size-3.5 text-muted-foreground/30 transition-all group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:-rotate-45 group-hover:text-primary" />
+                  <ArrowUpRight className="ml-auto size-3.5 text-muted-foreground/30 transition-all group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:text-primary" />
                 </div>
               </Link>
               <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-muted-foreground/5" />
@@ -91,12 +90,11 @@ export function Bookmarks() {
             className="flex cursor-pointer items-center gap-2 font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
             {showAll ? "Show less" : `View all ${items.length} bookmarks`}
-            <ArrowDownCircleIcon
-              className={cn(
-                "size-3.5 transition-transform",
-                showAll && "rotate-180",
-              )}
-            />
+            {showAll ? (
+              <ArrowBigUp className="size-3.5" />
+            ) : (
+              <ArrowBigDown className="size-3.5" />
+            )}
           </button>
         </div>
       )}

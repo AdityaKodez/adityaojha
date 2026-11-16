@@ -1,5 +1,5 @@
 export const diwaliConfig = {
-  enabled: true,
+  enabled: false,
   greeting: "Happy Diwali",
   actionLabel: "Celebrate Diwali",
   sceneTitle: "A moonlit Diwali courtyard",

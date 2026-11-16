@@ -45,7 +45,7 @@ database, no auth, no payments. All content is typed configuration.
 | Styling | Tailwind 4 via `@tailwindcss/postcss`, plus `@tailwindcss/typography` and `tw-animate-css` |
 | Primitives | Radix UI and Base UI, vendored into `components/ui/`; Vaul for the mobile suggestion drawer |
 | Motion | Motion 12 |
-| Icons | HugeIcons for site controls via `components/shared/site-icons.tsx`; `lucide-react` remains in shared UI, published components, and demos; `react-icons` and local assets supply brand icons |
+| Icons | Scribbles (`scribbles-icons` 1.0.1), fill weight (Search uses bold), for site controls via `components/shared/site-icons.tsx`; `lucide-react` remains in shared UI, published registry components, and demos. Custom sticker icons, illustrations, brand icons from `react-icons`, and local brand assets stay unchanged; do not use a global Scribbles provider |
 | Fonts | DM Sans (body), Geist Mono, and Instrument Serif; OG TTFs in `lib/fonts/` |
 | Theming | `next-themes`, class-based dark mode |
 | Dates | `date-fns` 4 with `date-fns-tz` |
@@ -308,6 +308,7 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   `.liquid-glass`, `.bottom-blur`, and the blueprint background used on card
   hover. Prefer these over repeating the utility stack.
 - `config/diwali.ts` controls the dithered courtyard decoration beside About,
+  currently disabled with `enabled: false`,
   outside the home page's right content edge in the former lightsaber slot.
   It appears from 80rem upward, like the previous margin decorations, and
   remains independent of the header logo. Hover and keyboard focus show the shared

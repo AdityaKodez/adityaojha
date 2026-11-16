@@ -10,7 +10,7 @@ import {
 import type { Testimonial } from "@/config/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { BsArrowUpRightCircle } from "react-icons/bs";
+import { ArrowUpRightCircle } from "@/components/shared/site-icons";
 
 const MARQUEE_SPEED = 64;
 const MARQUEE_SPEED_HOVER = 24;
@@ -109,7 +109,7 @@ export function Testimonials() {
           className="flex items-center gap-2 font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
           {`${testimonialsSectionConfig.seeMoreLabel} ${getAllTestimonials().length} testimonials`}
-          <BsArrowUpRightCircle className="size-3.5" />
+          <ArrowUpRightCircle className="size-3.5" />
         </Link>
       </div>
     </section>

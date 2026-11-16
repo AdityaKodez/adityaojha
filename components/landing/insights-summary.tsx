@@ -1,3 +1,4 @@
+import { TrendingDown, TrendingUp } from "@/components/shared/site-icons";
 import { insightsConfig } from "@/config/insights";
 import type { InsightSummary } from "@/config/types";
 import { cn } from "@/lib/utils";
@@ -49,15 +50,11 @@ function Trend({
         className,
       )}
     >
-      {(positive || negative) && (
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 10 10"
-          className={cn("size-2 fill-current", negative && "rotate-180")}
-        >
-          <path d="M5 1.5 9 8H1z" />
-        </svg>
-      )}
+      {positive ? (
+        <TrendingUp className="size-3 shrink-0" />
+      ) : negative ? (
+        <TrendingDown className="size-3 shrink-0" />
+      ) : null}
       <span className="sr-only">
         {positive ? "Up " : negative ? "Down " : ""}
       </span>

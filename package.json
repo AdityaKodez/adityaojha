@@ -44,6 +44,7 @@
     "react-use-measure": "^2.1.7",
     "rehype-pretty-code": "^0.14.5",
     "remark-gfm": "^4.0.1",
+    "scribbles-icons": "1.0.1",
     "shadcn": "^4.0.5",
     "shiki": "^4.4.3",
     "standardwebhooks": "^1.1.1",
