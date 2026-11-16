@@ -6,7 +6,8 @@ const rawUserId = process.env.DISCORD_USER_ID ?? "1243105196477911061";
 const DISCORD_USER_ID = /^\d{17,20}$/.test(rawUserId)
   ? rawUserId
   : "1243105196477911061";
-export const revalidate = 60;
+// Cache the response at the CDN only, without an additional ISR entry.
+export const dynamic = "force-dynamic";
 
 const NO_CACHE_HEADERS = {
   "Cache-Control": "no-store, no-cache, must-revalidate",
@@ -20,7 +21,7 @@ export async function GET() {
     const response = await fetch(
       `https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`,
       {
-        next: { revalidate: 60 },
+        cache: "no-store",
         headers: { Accept: "application/json" },
         signal: controller.signal,
       },

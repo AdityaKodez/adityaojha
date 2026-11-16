@@ -3,9 +3,9 @@ import "server-only";
 const GITHUB_GRAPHQL_API = "https://api.github.com/graphql";
 
 const QUERY = `
-  query($username: String!, $from: DateTime, $to: DateTime) {
+  query($username: String!) {
     user(login: $username) {
-      contributionsCollection(from: $from, to: $to) {
+      contributionsCollection {
         contributionCalendar {
           weeks {
             contributionDays {
@@ -50,10 +50,6 @@ export async function fetchGithubData(
     throw new Error("GITHUB_TOKEN is missing");
   }
 
-  const now = new Date();
-  const from = new Date(now);
-  from.setFullYear(now.getFullYear() - 1);
-
   try {
     const response = await fetch(GITHUB_GRAPHQL_API, {
       method: "POST",
@@ -63,13 +59,14 @@ export async function fetchGithubData(
       },
       body: JSON.stringify({
         query: QUERY,
-        variables: {
-          username,
-          from: from.toISOString(),
-          to: now.toISOString(),
-        },
+        // GitHub defaults to the last year through now. Keep the body stable
+        // so each render reuses the same cache entry instead of timestamping it.
+        variables: { username },
       }),
-      next: { revalidate: 60 },
+      cache: "force-cache",
+      // Match analytics freshness instead of regenerating the homepage each minute.
+      next: { revalidate: 900 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!response.ok) {

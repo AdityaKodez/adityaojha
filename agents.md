@@ -650,6 +650,11 @@ Rules:
 
 Gotchas:
 
+- GitHub contributions use a stable GraphQL request body and a 15-minute
+  revalidation interval, matching Insights and the visitor count. GitHub's
+  default date range covers the last year through the current time; do not
+  put per-render timestamps into the cached request. Discord status uses
+  only the CDN's 60-second cache, without a second ISR or fetch cache.
 - A dev server is normally already running on http://localhost:3000. Starting a
   second one fails with "Another next dev server is already running", reuse
   the existing one rather than switching ports.
