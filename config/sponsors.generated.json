@@ -22,5 +22,15 @@
     "claimed": true,
     "url": "https://anubhavchoubey.com/",
     "logo": "/sponsors/pay_0Nrz8A7y7OLbCFQGFEDz6.jpg"
+  },
+  {
+    "id": "pay_0Ns6Owuj2MkWlwm9bDjIX",
+    "name": "Abdullah Al Noman",
+    "date": "2026-11-16",
+    "seat": 2,
+    "order": 3,
+    "enabled": true,
+    "paymentId": "pay_0Ns6Owuj2MkWlwm9bDjIX",
+    "claimed": false
   }
 ]
