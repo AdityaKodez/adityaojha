@@ -57,14 +57,14 @@ export function VisitorCounterOdometer({ visitors }: { visitors: number }) {
         <AppBadgeSticker
           width={37}
           height={18}
-          className="ml-1 mr-2"
+          className="ml-1.5"
           aria-hidden="true"
           focusable="false"
         />
         {/* tracking-normal plus an explicit gap: the digits are separate flex
             items, so inherited letter-spacing would space them unevenly. The
             gap mirrors the 0.15em rhythm of the surrounding text. */}
-        <span className="ml-2 flex items-center gap-[0.15em] font-medium tracking-normal text-foreground">
+        <span className="ml-1.5 flex items-center gap-[0.15em] font-medium tracking-normal text-foreground">
           <span className="leading-none">+</span>
           {chars.map((char, index) =>
             char >= "0" && char <= "9" ? (
