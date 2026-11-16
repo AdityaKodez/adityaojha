@@ -1,6 +1,5 @@
 "use client";
 
-import { InfiniteSlider } from "@/components/motion-primitives/infinite-slider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   getAllTestimonials,
@@ -11,14 +10,42 @@ import type { Testimonial } from "@/config/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ArrowUpRightCircle } from "@/components/shared/site-icons";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 
 const MARQUEE_SPEED = 64;
 const MARQUEE_SPEED_HOVER = 24;
+const MARQUEE_GAP = 15;
+/* Must match the slide's w-85 / md:w-87.5 classes. */
+const SLIDE_WIDTH = 340;
+const SLIDE_WIDTH_MD = 350;
 
 const enabledTestimonials = getEnabledTestimonials();
 const marqueeSplit = Math.ceil(enabledTestimonials.length / 2);
 const marqueeTop = enabledTestimonials.slice(0, marqueeSplit);
 const marqueeBottom = enabledTestimonials.slice(marqueeSplit);
+
+/* One copy of the row plus the gap that follows it, at the shared px/s. */
+function marqueeDuration(count: number, slideWidth: number) {
+  return (count * (slideWidth + MARQUEE_GAP)) / MARQUEE_SPEED;
+}
+
+/* The marquee is a CSS animation, so hover only changes its playback rate
+   instead of writing a transform every frame. */
+function setPlaybackRate(element: HTMLElement, rate: number) {
+  for (const animation of element.getAnimations()) {
+    animation.playbackRate = rate;
+  }
+}
+
+function handlePointerEnter(event: ReactPointerEvent<HTMLDivElement>) {
+  if (event.pointerType !== "mouse") return;
+  setPlaybackRate(event.currentTarget, MARQUEE_SPEED_HOVER / MARQUEE_SPEED);
+}
+
+function handlePointerLeave(event: ReactPointerEvent<HTMLDivElement>) {
+  if (event.pointerType !== "mouse") return;
+  setPlaybackRate(event.currentTarget, 1);
+}
 
 function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
   return (
@@ -46,7 +73,12 @@ function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
 
         <figcaption className="mt-auto flex items-center gap-4 pt-5">
           <Avatar className="size-9">
-            <AvatarImage src={testimonial.image} alt={testimonial.name} />
+            <AvatarImage
+              src={testimonial.image}
+              alt={testimonial.name}
+              loading="lazy"
+              decoding="async"
+            />
             <AvatarFallback>{testimonial.avatar}</AvatarFallback>
           </Avatar>
 
@@ -72,23 +104,37 @@ function TestimonialsTrack({
   reverse?: boolean;
 }) {
   return (
-    <InfiniteSlider
-      gap={15}
-      speed={MARQUEE_SPEED}
-      speedOnHover={MARQUEE_SPEED_HOVER}
-      reverse={reverse}
-      className="border-y border-border"
-    >
-      {items.map((testimonial) => (
-        <TestimonialSlide key={testimonial.id} testimonial={testimonial} />
-      ))}
-    </InfiniteSlider>
+    <div className="overflow-clip border-y border-border">
+      <div
+        className="testimonial-marquee"
+        data-reverse={reverse ? "true" : undefined}
+        style={
+          {
+            "--marquee-duration": `${marqueeDuration(items.length, SLIDE_WIDTH)}s`,
+            "--marquee-duration-md": `${marqueeDuration(items.length, SLIDE_WIDTH_MD)}s`,
+          } as CSSProperties
+        }
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+      >
+        {[0, 1].map((copy) => (
+          <div key={copy} className="flex shrink-0 gap-[15px] pr-[15px]">
+            {items.map((testimonial) => (
+              <TestimonialSlide
+                key={`${copy}-${testimonial.id}`}
+                testimonial={testimonial}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
 export function Testimonials() {
   return (
-    <section className="border-t border-dashed pt-8 overflow-hidden">
+    <section className="border-t border-dashed pt-8">
       <h2 className="no-js-visible section-heading mb-3">
         Community
       </h2>

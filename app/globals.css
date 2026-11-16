@@ -290,6 +290,31 @@ body:has([data-not-found]) [data-site-surface] {
     @apply text-xl font-semibold border-y border-dashed bg-muted/20 px-6 py-2;
   }
 
+  /* -------------------------------------------------------------------------
+     Testimonial marquee (components/landing/testimonials.tsx)
+
+     Two identical copies of the row sit side by side, and the track moves by
+     exactly half its own width, so the loop is seamless with no per-frame JS.
+     Each row sets its duration from its item count to keep both rows at the
+     same px/s. Hover slowdown changes the running animation's playback rate.
+  ------------------------------------------------------------------------- */
+  .testimonial-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee-left var(--marquee-duration, 60s) linear infinite;
+    will-change: transform;
+  }
+
+  .testimonial-marquee[data-reverse="true"] {
+    animation-name: marquee-right;
+  }
+
+  @media (width >= 48rem) {
+    .testimonial-marquee {
+      animation-duration: var(--marquee-duration-md, var(--marquee-duration, 60s));
+    }
+  }
+
   .micro-transition {
     transition-property: transform, background-color, border-color, color, opacity, box-shadow;
     transition-duration: var(--motion-duration-base);
@@ -906,6 +931,16 @@ code[data-theme*=" "] span,
   50% { transform: rotate(10deg); }
   60% { transform: rotate(0deg); }
   100% { transform: rotate(0deg); }
+}
+
+@keyframes marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marquee-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
 }
 
 @utility no-scrollbar {
