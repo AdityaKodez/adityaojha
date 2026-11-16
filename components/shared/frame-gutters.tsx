@@ -112,6 +112,7 @@ export function FrameGutters() {
   return (
     <div
       aria-hidden
+      data-frame-gutters=""
       className="pointer-events-none fixed inset-0 z-0 hidden select-none overflow-hidden xl:block"
     >
       <div className="relative mx-auto h-full w-full max-w-[var(--frame-max-w)]">

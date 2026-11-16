@@ -1,54 +1,107 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
-import { ArrowRightIcon } from "@/components/shared/site-icons";
+import { Fragment } from "react";
+import { motion, useMotionValue, useReducedMotion, type Variants } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { notFoundConfig } from "@/config/not-found";
-import { revealVariants } from "@/lib/motion";
-import { NotFoundScene } from "./not-found-scene";
+import { FoxDrawing } from "./not-found-illustrations";
+import { NOT_FOUND_EASE, notFoundTiming } from "./not-found-timing";
+import styles from "./not-found.module.css";
 
-const itemVariants = revealVariants();
-const sceneVariants = revealVariants({ y: 16 });
+const headingWords = notFoundConfig.heading.split(" ");
 
-export function NotFoundContent() {
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      y: { type: "spring", stiffness: 420, damping: 30 },
+      opacity: { duration: 0.3, ease: NOT_FOUND_EASE },
+    },
+  },
+};
+
+const reducedItemVariants: Variants = {
+  hidden: { opacity: 1, y: 0 },
+  visible: { opacity: 1, y: 0 },
+};
+
+export function NotFoundContent({
+  onHomePointerChange,
+  onHomeFocusChange,
+}: {
+  onHomePointerChange: (active: boolean) => void;
+  onHomeFocusChange: (active: boolean) => void;
+}) {
+  const reduceMotion = useReducedMotion() ?? false;
+  const sleepingFox = useMotionValue(0);
+
+  const containerVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: reduceMotion
+        ? { staggerChildren: 0 }
+        : { delayChildren: notFoundTiming.text, staggerChildren: 0.12 },
+    },
+  };
+
+  const headingVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: reduceMotion ? 0 : 0.07 },
+    },
+  };
+
+  const children = reduceMotion ? reducedItemVariants : itemVariants;
+
   return (
     <motion.div
+      className={styles.content}
+      variants={containerVariants}
       initial="hidden"
       animate="visible"
-      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-      className="w-full max-w-lg text-center"
     >
-      <motion.div
-        data-reveal=""
-        variants={sceneVariants}
-        className="no-js-visible mx-auto mb-6 mt-4 w-4/5 max-w-90"
-      >
-        <NotFoundScene carLabel={notFoundConfig.carLabel} />
-      </motion.div>
-
-      <motion.div data-reveal="" variants={itemVariants} className="no-js-visible relative">
-        <h1 className="text-balance font-serif text-4xl font-medium italic tracking-tight sm:text-[2.75rem]">
-          <span className="sr-only">{notFoundConfig.code}. </span>
-          {notFoundConfig.heading}
-        </h1>
-        <p className="mx-auto mt-3 max-w-76 text-pretty text-sm leading-relaxed text-muted-foreground">
-          {notFoundConfig.description}
-        </p>
-      </motion.div>
-
-      <motion.div
-        data-reveal=""
-        variants={itemVariants}
-        className="no-js-visible mt-6 flex flex-wrap items-center justify-center gap-2"
-      >
-        <Button asChild variant="ghost" className="group h-9 gap-1.5 px-3">
-          <Link href={notFoundConfig.components.href}>
-            {notFoundConfig.components.label}
-            <ArrowRightIcon
+      <motion.p data-reveal="" variants={children} className={`${styles.label} no-js-visible`}>
+        {notFoundConfig.code}<span aria-hidden="true"> · </span>{notFoundConfig.label}
+      </motion.p>
+      <motion.h1 variants={headingVariants} className={styles.heading} aria-label={notFoundConfig.heading}>
+        {headingWords.map((word, index) => (
+          <Fragment key={`${word}-${index}`}>
+            {index > 0 ? " " : null}
+            <motion.span
+              data-reveal=""
               aria-hidden="true"
-              className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none"
-            />
+              variants={children}
+              className={`${styles.word} no-js-visible`}
+            >
+              {word}
+            </motion.span>
+          </Fragment>
+        ))}
+      </motion.h1>
+      <motion.p data-reveal="" variants={children} className={`${styles.description} no-js-visible`}>
+        {notFoundConfig.description}
+      </motion.p>
+      <motion.div data-reveal="" variants={children} className={`${styles.action} no-js-visible`}>
+        <Button asChild variant="secondary" className={styles.homeButton}>
+          <Link
+            href={notFoundConfig.home.href}
+            onPointerEnter={(event) => {
+              if (event.pointerType === "mouse") onHomePointerChange(true);
+            }}
+            onPointerLeave={() => onHomePointerChange(false)}
+            onPointerDown={() => onHomePointerChange(true)}
+            onPointerUp={() => onHomePointerChange(false)}
+            onPointerCancel={() => onHomePointerChange(false)}
+            onFocus={() => onHomeFocusChange(true)}
+            onBlur={() => onHomeFocusChange(false)}
+          >
+            <span aria-hidden="true" className={styles.buttonFox}>
+              <FoxDrawing reaction={sleepingFox} perched />
+            </span>
+            {notFoundConfig.home.label}
           </Link>
         </Button>
       </motion.div>

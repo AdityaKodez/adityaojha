@@ -332,10 +332,41 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   Geist Serif heading, and paper-cut garden from `config/opengraph.ts`.
   Keep route descriptions, URLs, and install commands readable above the
   artwork, with no dark grid or heavy panel. The homepage OG stays unchanged.
-- The 404 page uses a scenery illustration up to 360px wide, clipped
-  to an opaque asymmetric torn-paper edge without blur or pixel fading.
-  Sponsors follows the 404 content inside main, with the shared footer after main.
-- The shared footer on `/`, `/components`, `/testimonials`, and the 404 page stays within the centered page frame, with a
+- The 404 page is a standalone, full-viewport paper scene with the lost hiker,
+  snail, mole, pine, sleeping fox, and grass drawn as inline SVG paths in
+  `app/not-found-illustrations.tsx`, with no raster images or embedded bitmaps.
+  CSS places each drawing independently at 80% of its original size;
+  mobile moves them above and below the centered text. Keep its copy in
+  `config/not-found.ts`, with a sans-serif heading and one rounded home button.
+  The hiker and his question marks are separate SVG drawings,
+  positioned at the top left. He follows fine-pointer movement slightly and
+  checks his map, scratches his head, and redraws his question mark on activation.
+  The snail retreats into its shell, the mole ducks behind its mound, and the
+  fox wakes, perks its ears, yawns, and settles back to sleep. Each character
+  is a keyboard-accessible button with a tap reaction. Repeated activations
+  never stack timelines. Controls stay disabled without JavaScript.
+  Hovering, focusing, or pressing Back to home morphs the hiker's question mark
+  into an exclamation, draws the map route, and turns the mole toward home with
+  a "Found it!" note. Navigation proceeds immediately. Shared intent lives in
+  `app/not-found-experience.tsx`, without global events or a context provider.
+  These brief SVG path morphs are an exception to transform-only motion;
+  idle sway, breathing, and floating notes animate transform and opacity only.
+  Idle motion pauses offscreen and in hidden tabs. Reduced motion uses instant
+  pose changes without pointer tracking. The
+  doodles and notes enter with a parent-driven stagger, and the text follows
+  with its own stagger and a word-by-word heading. Light mode uses a pure
+  white background and dark mode uses pure black. Dark illustrations keep
+  soft paper fills and charcoal ink, with muted lines for grass and notes,
+  rather than inverting into bright outlines. Keep the palette scoped to the
+  scene and derived from semantic tokens.
+  It keeps the shared header and mobile Menu, with the doodles offset below
+  the header and above the Menu. It has no frame gutters, frame borders,
+  sponsors, or footer.
+  The server-rendered `data-not-found` marker scopes the shared shell exception
+  in `globals.css`, including without JavaScript. The pine and grass stay
+  still after entering, and all artwork adapts to dark mode. Reduced motion
+  and no JavaScript show the final scene and text immediately.
+- The shared footer on `/`, `/components`, and `/testimonials` stays within the centered page frame, with a
   code-rendered, blue dithered Earth rising from the bottom. Keep its quote and
   credit in `footerConfig` in `config/site.ts`. The Earth turns slowly while
   visible and stays still for reduced motion. The quote, live Discord status,
@@ -363,6 +394,7 @@ This site is drawn with hairlines, and hairlines compound fast. The rule is
 simple: **one border per edge, one mechanism per element.**
 
 - The shell owns the outer frame. `app/layout.tsx` draws the centered column
+  (the standalone 404 is exempt),
   (`max-w-[var(--frame-max-w)]`), the muted gutter (`px-2 border-x`),
   FrameGutters, and BottomNav. The bottom fade (one masked backdrop blur plus
   PixelDissolve) stays on `app/page.tsx` only. `<main>` inside the shell

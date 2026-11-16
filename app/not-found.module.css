@@ -1,0 +1,111 @@
+.page {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: max(100svh, 42rem);
+  place-items: center;
+  overflow: clip;
+  background: var(--not-found-paper);
+  color: var(--foreground);
+  padding: max(13rem, env(safe-area-inset-top)) 1.5rem max(13rem, env(safe-area-inset-bottom));
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 54rem;
+  text-align: center;
+}
+
+.label {
+  margin-bottom: 2.5rem;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.heading {
+  font-size: clamp(2.125rem, 4vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.word {
+  display: inline-block;
+}
+
+.description {
+  max-width: 41rem;
+  margin: 1.25rem auto 0;
+  color: var(--muted-foreground);
+  font-size: clamp(0.875rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.action:has(:focus-visible) {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.homeButton {
+  position: relative;
+  height: 3rem;
+  margin-top: 2.75rem;
+  overflow: visible;
+  border: 0;
+  border-radius: 9999px;
+  padding-inline: 2.5rem;
+  background: var(--not-found-button);
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 500;
+  transition-property: background-color, transform;
+}
+
+.buttonFox {
+  --not-found-drawing-paper: var(--not-found-paper);
+  --not-found-ink: var(--foreground);
+  position: absolute;
+  right: 1.25rem;
+  bottom: calc(100% - 2px);
+  width: 4.2rem;
+  aspect-ratio: 380 / 186;
+  pointer-events: none;
+}
+
+.buttonFox > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+:global(.dark) .buttonFox {
+  --not-found-drawing-paper: color-mix(in oklch, var(--foreground) 84%, var(--background));
+  --not-found-ink: var(--background);
+}
+
+.homeButton:hover {
+  background: color-mix(in oklch, var(--not-found-button), var(--foreground) 7%);
+}
+
+.homeButton:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 5px;
+  box-shadow: none;
+}
+
+@media (max-width: 767px) {
+  .page { min-height: max(100svh, 43rem); }
+  .content { max-width: 23rem; }
+  .label { margin-bottom: 1.75rem; font-size: 0.875rem; }
+  .description { max-width: 19rem; font-size: 0.875rem; }
+  .homeButton { margin-top: 2rem; font-size: 0.875rem; }
+  .buttonFox { width: 3.675rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homeButton { transition: none; transform: none; }
+}

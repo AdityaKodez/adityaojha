@@ -59,6 +59,8 @@
      both read it, so a route can widen the column without the header drifting
      out of alignment. `/components` switches it in card view. */
   --frame-max-w: 48rem;
+  --not-found-paper: oklch(1 0 0);
+  --not-found-button: oklch(0.94 0 0);
   --motion-duration-fast: 180ms;
   --motion-duration-base: 220ms;
   --motion-duration-slow: 280ms;
@@ -173,6 +175,8 @@
 }
 
 .dark {
+  --not-found-paper: oklch(0 0 0);
+  --not-found-button: oklch(0.22 0 0);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --verse-text-blend: screen;
@@ -267,6 +271,20 @@ html,
 body {
     scrollbar-gutter:auto;
 }
+
+body:has([data-not-found]) [data-frame-gutters] {
+  display: none;
+}
+
+body:has([data-not-found]) [data-site-frame] {
+  max-width: none;
+}
+
+body:has([data-not-found]) [data-site-surface] {
+  border: 0;
+  background: transparent;
+}
+
 @layer components {
   .section-heading {
     @apply text-xl font-semibold border-y border-dashed bg-muted/20 px-6 py-2;

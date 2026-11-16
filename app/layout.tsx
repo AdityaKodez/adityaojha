@@ -166,14 +166,18 @@ export default function RootLayout({
         <ThemeProvider>
           <TooltipProvider>
             <PostHogProvider>
-              <SiteHeader />
-              <FrameGutters />
-              <div className="relative mx-auto w-full max-w-[var(--frame-max-w)]">
-                <div className="relative w-full border-x bg-muted/20">
+              <div data-site-chrome="" className="contents">
+                <SiteHeader />
+                <FrameGutters />
+              </div>
+              <div data-site-frame="" className="relative mx-auto w-full max-w-[var(--frame-max-w)]">
+                <div data-site-surface="" className="relative w-full border-x bg-muted/20">
                   {children}
                 </div>
-                <BottomNav />
-                <BackToTop />
+                <div data-site-chrome="" className="contents">
+                  <BottomNav />
+                  <BackToTop />
+                </div>
               </div>
             </PostHogProvider>
           </TooltipProvider>
