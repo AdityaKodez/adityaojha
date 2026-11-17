@@ -216,21 +216,18 @@ export interface Testimonial {
   enabled?: boolean;
 }
 
-export interface ProjectMetric {
-  icon: "users" | "chart";
-  label: string;
-}
-
 export type ProjectStatus = "building" | "new" | "shipped";
 
 export interface Project {
   id: string;
   title: string;
+  tagline: string;
 
   description: string;
   content?: string;
   image: string;
   imageAlt: string;
+  imageTone: "light" | "dark";
   liveUrl?: string;
   githubUrl?: string;
 
@@ -239,7 +236,6 @@ export interface Project {
   category: string;
 
   tags: string[];
-  metrics?: ProjectMetric[];
   order: number;
   enabled?: boolean;
 }

@@ -16,6 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
+import actionStyles from "@/components/shared/primary-action.module.css";
 import { CopyStatusIcon } from "@/components/showcase/copy-status-icon";
 
 const contactChannels = siteConfig.contact.channels
@@ -67,7 +68,7 @@ export function CTA() {
       <div>
         <p className="px-6 text-sm text-muted-foreground mb-4">{siteConfig.contact.description}</p>
         <div className="px-6 mb-6">
-          <Button asChild size="lg" className="w-fit">
+          <Button asChild size="lg" className={`w-fit ${actionStyles.primaryAction}`}>
             <Link
               href="https://x.com/AdiKodez"
               target="_blank"

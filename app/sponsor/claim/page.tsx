@@ -1,6 +1,8 @@
 import { siteConfig } from "@/config/site";
-import BitBlob from "@/components/landing/bit";
+import { handwriting } from "@/components/shared/doodles";
+import { cn } from "@/lib/utils";
 import { Metadata } from "next";
+import Link from "next/link";
 import { Suspense } from "react";
 import { ClaimForm } from "./claim-form";
 
@@ -13,18 +15,15 @@ export const metadata: Metadata = {
 
 const PAGE_URL = `${siteConfig.meta.url}/sponsor/claim`;
 
-/**
- * The page column. The heading band, the intro, the form and the footer all
- * use this exact string so their left edges line up. Keep it in sync with
- * COLUMN in claim-form.tsx.
- */
-const COLUMN = "mx-auto w-full max-w-2xl px-4";
+/** Keep in sync with COLUMN in claim-form.tsx. */
+const COLUMN = "mx-auto w-full max-w-[30.5rem]";
 
 export default function SponsorClaimPage() {
   return (
     <main
       id="sponsor-claim"
-      className="relative flex min-h-dvh flex-col overflow-x-clip border-x border-b-2 bg-background pt-14"
+      data-project-page=""
+      className="relative flex min-h-dvh flex-col justify-center overflow-x-clip bg-background px-5 pt-16 pb-24 md:pb-12"
     >
       <script
         type="application/ld+json"
@@ -39,43 +38,32 @@ export default function SponsorClaimPage() {
         }}
       />
 
-      <header>
-        {/* .section-heading owns the full-bleed dashed band, so its own px-6 is
-            cancelled and the text sits in the page column instead. */}
-        <h1 className="section-heading px-0">
-          <span className={`${COLUMN} block`}>Claim your seat.</span>
+      <header className={COLUMN}>
+        <Link
+          href="/sponsor"
+          className="mb-8 inline-flex min-h-11 items-center rounded-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+        >
+          <span className={cn(handwriting.className, "text-xl leading-none")}>
+            Sponsor
+          </span>
+        </Link>
+        <h1 className="text-[15px] font-medium leading-6 text-foreground">
+          Claim your seat
         </h1>
-        <div className={`${COLUMN} flex items-start gap-5 pb-8 pt-6`}>
-          <div className="min-w-0 flex-1">
-            <p className="text-balance text-base font-medium tracking-tight">Make yourself at home.</p>
-            <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
-              A little support, with your name on it. Add a link and a logo so
-              people know who’s helping keep the work independent.
-            </p>
-          </div>
-          <div className="w-24 shrink-0 sm:w-28">
-            <div aria-hidden="true" className="relative flex size-24 items-center justify-center sm:size-28">
-              <BitBlob
-                awake
-                gaze="left"
-                className="relative size-14 -rotate-6 [&_.bit-body]:[animation:none] [&_.bit-eye]:[animation:none] sm:size-16"
-              />
-            </div>
-            <p aria-hidden="true" className="mt-1.5 text-center font-serif text-xs italic leading-tight text-muted-foreground">
-              Thank you
-            </p>
-          </div>
-        </div>
+        <p className="pb-8 text-pretty text-[15px] leading-6 text-muted-foreground">
+          Add your name, a link and a logo so people know who helps keep the
+          work independent.
+        </p>
       </header>
 
       {/* Keep the search-param reader behind Suspense for static rendering. */}
       <Suspense fallback={
-        <div role="status" className={`${COLUMN} pb-8`}>
-          <div aria-hidden className="space-y-5">
-            <div className="h-5 w-40 rounded-md bg-muted" />
-            <div className="h-11 rounded-md bg-muted/60" />
-            <div className="h-11 rounded-md bg-muted/60" />
-            <div className="h-72 rounded-md bg-muted/40" />
+        <div role="status" className={COLUMN}>
+          <div aria-hidden className="flex flex-col gap-5">
+            <div className="h-5 w-40 rounded-full bg-muted" />
+            <div className="h-11 rounded-full bg-muted/60" />
+            <div className="h-11 rounded-full bg-muted/60" />
+            <div className="h-14 rounded-full bg-muted/40" />
           </div>
           <span className="sr-only">Loading your seat details…</span>
         </div>

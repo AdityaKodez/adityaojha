@@ -187,7 +187,6 @@ export function SiteCommandPalette({
       open={open}
       onOpenChange={onOpenChange}
       recents
-      disableOnMobile
       hotkey={false}
     />
   );

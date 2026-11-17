@@ -177,18 +177,17 @@ const NEXT_STEPS = [
 ] as const;
 
 const inputClass =
-  "micro-transition min-h-11 w-full min-w-0 rounded-md bg-background px-3 py-2.5 text-sm text-foreground ring-1 ring-inset ring-border " +
-  "placeholder:text-muted-foreground hover:ring-muted-foreground/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60";
+  "micro-transition min-h-11 w-full min-w-0 rounded-full bg-muted px-4 py-2.5 text-sm text-foreground " +
+  "placeholder:text-muted-foreground hover:bg-muted/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60";
 const labelClass = "mb-2 block text-sm font-medium text-foreground";
-/**
- * The page column. Must match COLUMN in page.tsx so the form, the heading and
- * the footer share one left edge.
- */
-const COLUMN = "mx-auto w-full max-w-2xl px-4";
+/** Must match COLUMN in page.tsx so every block shares one left edge. */
+const COLUMN = "mx-auto w-full max-w-[30.5rem]";
 const linkClass =
   "micro-transition rounded-sm text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
 const actionClass =
-  "micro-transition inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+  "micro-transition inline-flex h-9 items-center justify-center gap-1.5 rounded-full px-4 text-[13px] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+const primaryClass = `${actionClass} bg-foreground text-background hover:bg-foreground/85`;
+const secondaryClass = `${actionClass} bg-secondary text-secondary-foreground hover:bg-secondary/80`;
 
 /** One receipt line. `div` inside `dl` is valid and keeps the pair aligned. */
 function SummaryRow({
@@ -346,11 +345,11 @@ export function ClaimForm() {
 
   return (
     <>
-      <div className={`${COLUMN} pb-8`}>
+      <div className={COLUMN}>
         {status === "success" ? (
           <section aria-labelledby="claim-success" className="pb-2">
             <motion.div {...revealOnMount({ y: 6 })}>
-              <p className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 font-mono text-[11px] text-primary ring-1 ring-inset ring-primary/25">
+              <p className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 font-mono text-[11px] text-foreground">
                 <Check aria-hidden className="size-3" />
                 Seat claimed
               </p>
@@ -367,9 +366,9 @@ export function ClaimForm() {
                 There is nothing else for you to do.
               </p>
 
-              <div className="mt-7 border-t border-dashed pt-6">
+              <div className="mt-8">
                 <p className="text-sm font-medium tracking-tight">What you saved</p>
-                <dl className="mt-2 divide-y divide-dashed">
+                <dl className="mt-2">
                   <SummaryRow label="Display name">
                     {claimed?.name || (
                       <span className="text-muted-foreground">Left as it was</span>
@@ -399,19 +398,19 @@ export function ClaimForm() {
                 </dl>
               </div>
 
-              <div className="mt-7 border-t border-dashed pt-6">
+              <div className="mt-8">
                 <p className="text-sm font-medium tracking-tight">What happens next</p>
-                <ol className="mt-3 space-y-3">
+                <ol className="mt-3 flex flex-col gap-3">
                   {NEXT_STEPS.map((step) => (
                     <li key={step.label} className="flex items-start gap-3">
                       <span
                         aria-hidden="true"
                         className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full ${
                           step.state === "done"
-                            ? "bg-primary text-primary-foreground"
+                            ? "bg-foreground text-background"
                             : step.state === "active"
-                              ? "ring-1 ring-inset ring-primary/50"
-                              : "ring-1 ring-inset ring-border"
+                              ? "bg-muted"
+                              : "bg-muted/50"
                         }`}
                       >
                         {step.state === "done" ? (
@@ -420,7 +419,7 @@ export function ClaimForm() {
                           <span
                             className={`size-1.5 rounded-full ${
                               step.state === "active"
-                                ? "bg-primary motion-safe:animate-pulse"
+                                ? "bg-foreground motion-safe:animate-pulse"
                                 : "bg-muted-foreground/40"
                             }`}
                           />
@@ -443,19 +442,16 @@ export function ClaimForm() {
                 </ol>
               </div>
 
-              <div className="mt-7 border-t border-dashed pt-5">
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href="/#sponsors"
-                    className={`${actionClass} bg-primary text-primary-foreground hover:bg-primary/90`}
-                  >
+              <div className="mt-8">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Link href="/#sponsors" className={primaryClass}>
                     See the supporters <ArrowRight aria-hidden className="size-4" />
                   </Link>
                   <a
                     href={SHARE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${actionClass} bg-background ring-1 ring-inset ring-border hover:bg-muted`}
+                    className={secondaryClass}
                   >
                     Share on X <ArrowUpRight aria-hidden className="size-4" />
                     <span className="sr-only">, opens in a new tab</span>
@@ -476,7 +472,7 @@ export function ClaimForm() {
           >
             <fieldset disabled={status === "submitting"} className="min-w-0">
               <legend className="mb-1 flex items-center gap-2.5 text-sm font-medium tracking-tight">
-                <span className="font-mono text-[11px] tabular-nums text-primary">01</span>
+                <span className="font-mono text-[11px] tabular-nums text-muted-foreground">01</span>
                 Find your payment
               </legend>
               <p className="mb-5 text-xs leading-relaxed text-muted-foreground">
@@ -539,16 +535,16 @@ export function ClaimForm() {
               </details>
             </fieldset>
 
-            <fieldset disabled={status === "submitting"} className="mt-7 min-w-0 border-t border-dashed pt-6">
+            <fieldset disabled={status === "submitting"} className="mt-10 min-w-0">
               <legend className="sr-only">Personalize your seat</legend>
               <div aria-hidden="true" className="mb-1 flex items-center gap-2.5 text-sm font-medium tracking-tight">
-                <span className="font-mono text-[11px] tabular-nums text-primary">02</span>
+                <span className="font-mono text-[11px] tabular-nums text-muted-foreground">02</span>
                 Personalize your seat
               </div>
               <p className="mb-5 text-xs leading-relaxed text-muted-foreground">
                 All optional. Leave a field blank to keep its current details.
               </p>
-              <div className="space-y-5">
+              <div className="flex flex-col gap-5">
                 <div>
                   <label htmlFor="claim-name" className={labelClass}>Display name</label>
                   <input
@@ -568,10 +564,10 @@ export function ClaimForm() {
                   {/* The scheme is part of the control, not something to type.
                       type="text" on purpose: a bare host is valid here, and
                       native url validation would reject it before submit. */}
-                  <div className="micro-transition flex min-h-11 items-stretch overflow-hidden rounded-md bg-background ring-1 ring-inset ring-border focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring">
+                  <div className="micro-transition flex min-h-11 items-stretch overflow-hidden rounded-full bg-muted hover:bg-muted/80 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring">
                     <span
                       aria-hidden="true"
-                      className="flex select-none items-center border-r bg-muted px-3 font-mono text-xs text-muted-foreground"
+                      className="flex select-none items-center pl-4 font-mono text-xs text-muted-foreground"
                     >
                       https://
                     </span>
@@ -588,7 +584,7 @@ export function ClaimForm() {
                       onChange={handleLinkChange}
                       placeholder="your-site.dev"
                       aria-describedby="claim-url-help"
-                      className="min-h-11 w-full min-w-0 bg-transparent px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+                      className="min-h-11 w-full min-w-0 bg-transparent py-2.5 pl-1 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
                     />
                   </div>
                   <p id="claim-url-help" className="mt-2 text-xs text-muted-foreground">
@@ -597,7 +593,7 @@ export function ClaimForm() {
                 </div>
                 <div>
                   <label htmlFor="claim-logo" className={labelClass}>Your logo</label>
-                  <div className="relative rounded-md bg-muted/20 ring-1 ring-inset ring-border focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring">
+                  <div className="relative rounded-full bg-muted focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring">
                     <input
                       ref={logoInputRef}
                       id="claim-logo"
@@ -609,7 +605,7 @@ export function ClaimForm() {
                       aria-invalid={Boolean(logoError)}
                       className="peer sr-only"
                     />
-                    <label htmlFor="claim-logo" className="micro-transition flex min-h-20 cursor-pointer items-center gap-3 rounded-md p-3 hover:bg-muted/60 peer-disabled:cursor-wait peer-disabled:opacity-60">
+                    <label htmlFor="claim-logo" className="micro-transition flex min-h-14 cursor-pointer items-center gap-3 rounded-full p-2 pr-5 hover:bg-muted/80 peer-disabled:cursor-wait peer-disabled:opacity-60">
                       <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-background text-muted-foreground">
                         {logoPreview ? (
                           // Local upload thumbnail; no remote image request.
@@ -634,20 +630,20 @@ export function ClaimForm() {
               </div>
             </fieldset>
 
-            <div className="mt-7 border-t border-dashed pt-5">
+            <div className="mt-10">
               {error && (
                 <div
                   ref={errorRef}
                   tabIndex={-1}
                   role="alert"
-                  className="mb-4 space-y-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive"
+                  className="mb-4 flex flex-col gap-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive"
                 >
-                  <p className="flex items-start gap-2 rounded-md bg-destructive/5 p-3 text-xs leading-relaxed text-destructive">
+                  <p className="flex items-start gap-2 rounded-2xl bg-destructive/5 p-3 text-xs leading-relaxed text-destructive">
                     <CircleAlert aria-hidden className="mt-0.5 size-4 shrink-0" />
                     <span>{error.message}</span>
                   </p>
                   {error.code === "not-registered" && (
-                    <div className="rounded-md bg-muted/20 p-3 ring-1 ring-inset ring-border">
+                    <div className="rounded-2xl bg-muted p-4">
                       <p className="text-sm font-medium tracking-tight">
                         Already paid, or still need a seat?
                       </p>
@@ -657,7 +653,7 @@ export function ClaimForm() {
                       <a
                         href={CHECKOUT_HREF}
                         aria-busy={checkingOut}
-                        className={`${actionClass} mt-3 w-full bg-background ring-1 ring-inset ring-border hover:bg-muted ${
+                        className={`${primaryClass} mt-3 ${
                           checkingOut ? "cursor-wait opacity-60" : ""
                         }`}
                         onClick={(event) => {
@@ -692,7 +688,7 @@ export function ClaimForm() {
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className="micro-transition inline-flex min-h-11 w-full touch-manipulation items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-wait disabled:opacity-60"
+                className={`${primaryClass} touch-manipulation disabled:cursor-wait disabled:opacity-60`}
               >
                 {status === "submitting"
                   ? <><Loader2 aria-hidden className="size-4 motion-safe:animate-spin" /> Saving your seat…</>
@@ -707,22 +703,14 @@ export function ClaimForm() {
         )}
       </div>
 
-      {/* mt-auto pins the band to the bottom of the min-h-dvh frame, so the
-          short success state does not leave the frame hanging mid-page. */}
-      <footer className="mt-auto border-t border-dashed bg-muted/15 py-8 text-center">
-        <div className={COLUMN}>
-          <h2 className="text-balance text-base font-medium tracking-tight">Bit’s got good company.</h2>
-          <p className="mx-auto mt-2 max-w-md text-pretty text-sm leading-relaxed text-muted-foreground">
-            Thanks for backing the work. You help keep the components free and the little experiments going.
-          </p>
-          <div className="mx-auto mt-6 flex flex-col items-center gap-1 text-xs leading-relaxed text-muted-foreground">
+      <footer className={`${COLUMN} pt-10`}>
+        <div className="flex flex-col items-start gap-1 text-xs leading-relaxed text-muted-foreground">
             <p>{status === "success" ? "Need to change something later?" : "Just paid? Your seat may take a minute or two to register."}</p>
             <a href={X_URL} target="_blank" rel="noopener noreferrer" className={`${linkClass} inline-flex min-h-9 items-center gap-1.5`}>
               {status === "success" ? "DM me on X" : "Need a hand? DM me"}
               <ArrowUpRight aria-hidden className="size-3.5" />
               <span className="sr-only">{status === "success" ? "" : " on X"}{X_HANDLE ? ` (${X_HANDLE.handle})` : ""}, opens in a new tab</span>
             </a>
-          </div>
         </div>
       </footer>
     </>

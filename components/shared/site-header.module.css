@@ -107,12 +107,6 @@
   background: var(--secondary);
 }
 
-@media (width < 48rem) {
-  .searchUtility {
-    display: none;
-  }
-}
-
 @media (hover: hover) and (pointer: fine) {
   .tab:hover {
     --tab-fill: color-mix(in oklch, var(--secondary) 88%, var(--foreground));

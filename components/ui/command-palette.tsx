@@ -147,7 +147,7 @@ const PaletteRow = React.memo(function PaletteRow({
         </span>
       )}
       {item.shortcut && (
-        <Kbd>{item.shortcut}</Kbd>
+        <Kbd className="pointer-coarse:hidden">{item.shortcut}</Kbd>
       )}
       {item.page && (
         <ChevronRight
@@ -509,7 +509,7 @@ export function CommandPalette({
                   ) : (
                     <span
                       aria-hidden
-                      className={cn(kbdClass, "shrink-0 text-[10px]")}
+                      className={cn(kbdClass, "shrink-0 text-[10px] pointer-coarse:hidden")}
                     >
                       Esc
                     </span>
@@ -586,7 +586,7 @@ export function CommandPalette({
                 </CommandPrimitive.List>
 
                 {/* footer — part of the muted container, no rule */}
-                <div className="flex shrink-0 items-center gap-4 px-3.5 py-2.5 text-xs text-muted-foreground">
+                <div className="flex shrink-0 items-center gap-4 px-3.5 py-2.5 text-xs text-muted-foreground pointer-coarse:hidden">
                   <span className="flex items-center gap-1.5">
                     <span className={cn(kbdClass, "h-4 px-1 [&_svg]:size-2.5")}>
                       <ArrowUp aria-hidden />

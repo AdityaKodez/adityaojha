@@ -1,0 +1,44 @@
+.doodle {
+  overflow: visible;
+  transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.doodle path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(.group):hover .doodle path,
+  :global(.group):focus-visible .doodle path {
+    animation: draw 520ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+
+  :global(.group):hover .doodle path:nth-of-type(2),
+  :global(.group):focus-visible .doodle path:nth-of-type(2) {
+    animation-delay: 110ms;
+  }
+
+  :global(.group):hover .doodle path:nth-of-type(3),
+  :global(.group):focus-visible .doodle path:nth-of-type(3) {
+    animation-delay: 220ms;
+  }
+
+  :global(.group):hover .doodle,
+  :global(.group):focus-visible .doodle {
+    transform: rotate(-8deg) translateY(-1px);
+  }
+
+  :global(.group):active .doodle {
+    transform: rotate(-8deg) scale(0.88);
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

@@ -25,9 +25,10 @@ export async function generateMetadata({
   }
 
   const url = `${siteConfig.meta.url}/project/${project.id}`;
+  const title = `${project.title}: ${project.tagline}`;
 
   return {
-    title: project.title,
+    title,
     description: project.description,
     keywords: [
       ...siteConfig.meta.keywords,
@@ -41,13 +42,13 @@ export async function generateMetadata({
     openGraph: {
       type: "article",
       url,
-      title: project.title,
+      title,
       description: project.description,
       siteName: siteConfig.meta.shortTitle,
     },
     twitter: {
       card: "summary_large_image",
-      title: project.title,
+      title,
       description: project.description,
       creator: siteConfig.meta.twitterCreator,
     },
@@ -60,18 +61,13 @@ export default async function ProjectPage({
   params: Promise<{ id: string }>;
 }) {
   const resolvedParams = await params;
-  const enabled = [...projectsConfig]
-    .filter((p) => p.enabled !== false)
-    .sort((a, b) => a.order - b.order);
-  const index = enabled.findIndex((p) => p.id === resolvedParams.id);
-  const project = enabled[index];
+  const project = projectsConfig.find(
+    (p) => p.id === resolvedParams.id && p.enabled !== false,
+  );
 
   if (!project) {
     notFound();
   }
 
-  const prev = index > 0 ? enabled[index - 1] : undefined;
-  const next = index < enabled.length - 1 ? enabled[index + 1] : undefined;
-
-  return <ProjectContent project={project} prev={prev} next={next} />;
+  return <ProjectContent project={project} />;
 }

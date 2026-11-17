@@ -1,5 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { openGraphConfig } from "@/config/opengraph";
+import { Footer } from "@/components/landing/footer";
 import { Metadata } from "next";
 import { SponsorPage } from "./sponsor-page";
 
@@ -71,17 +72,20 @@ function buildJsonLd() {
 
 export default function SponsorRoute() {
   return (
-    <main
-      id="sponsor"
-      className="relative flex min-h-dvh flex-col overflow-x-clip border-x border-b-2 bg-background pt-14"
-    >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(buildJsonLd()).replace(/</g, "\\u003c"),
-        }}
-      />
-      <SponsorPage />
-    </main>
+    <>
+      <main
+        id="sponsor"
+        className="relative flex min-h-dvh flex-col overflow-x-clip border-x bg-background pt-14"
+      >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(buildJsonLd()).replace(/</g, "\\u003c"),
+          }}
+        />
+        <SponsorPage />
+      </main>
+      <Footer />
+    </>
   );
 }

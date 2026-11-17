@@ -1,0 +1,25 @@
+.primaryAction {
+  border: 0;
+  border-radius: 9999px;
+  color: var(--mascot-glint);
+  background: var(--mascot-ink);
+  box-shadow: none;
+  transition: background-color 180ms ease;
+}
+
+.primaryAction:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .primaryAction:hover {
+    background: color-mix(in oklch, var(--mascot-ink) 85%, var(--mascot-glint));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryAction {
+    transition: none;
+  }
+}

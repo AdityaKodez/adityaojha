@@ -32,16 +32,16 @@ import type { ReactElement } from "react";
 import { Suspense } from "react";
 import type { ProjectExplorerItem } from "@/components/project-explorer";
 
-/* The explorer never reads case-study content, tags, or metrics, so those
+/* The explorer never reads case-study content, tags, or status, so those
    fields stay on the server instead of crossing the client boundary. */
 const explorerProjects: ProjectExplorerItem[] = projectsConfig.map(
   (project) => ({
     id: project.id,
     title: project.title,
+    subtitle: project.tagline,
     year: project.year,
     description: project.description,
     category: project.category,
-    status: project.status,
     liveUrl: project.liveUrl,
     githubUrl: project.githubUrl,
     image: project.image,

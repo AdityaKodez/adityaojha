@@ -133,10 +133,12 @@ All types live in `config/types.ts`.
   `shortcutKey`, `tooltipDefault`.
 - **`Testimonial`**, `id`, `name`, `role`, `content`, `avatar`, `image`,
   `href` (optional), `order`, `enabled`.
-- **`Project`**, `id`, `title`, `description`, `content`, `image`, `imageAlt`,
-  `liveUrl`, `githubUrl`, `year`, `status` (`building`, `new`, `shipped`),
-  `category`, `tags`, `metrics` (icon `users` or `chart`, plus `label`),
-  `order`, `enabled`.
+- **`Project`**, `id`, `title` (name only), `tagline`, `description` (one
+  sentence), `content` (one short paragraph), `image`, `imageAlt`,
+  `imageTone` (`light` screenshots are inverted in dark mode), `liveUrl`,
+  `githubUrl`, `year`, `status` (`building`, `new`, `shipped`), `category`,
+  `tags`, `order`, `enabled`. `status` and `tags` feed metadata and
+  `llms.txt` only and are never rendered as pills.
 - **`ExperienceItem`**, `id`, `role`, `company`, `period`, `summary`,
   `highlights`, `order`, `enabled`.
 - **`Bookmark` / `Certification`**, `id`, `url`, `title`, `domain`, `date`
@@ -193,6 +195,15 @@ The home page is a loop, not a hand-written layout.
   `componentsSectionConfig.previewCount` registry entries and ends in a
   `see all n components` link to `/components`. Keep it that way, the full
   catalog lives on the route, not on the home page.
+- `projects` (Work) keeps the year folders and paper hover card. Rows show the
+  name plus `tagline`, a Scribbles arrow, and no status pills, and open the
+  live site. `/project/[id]` is one narrow, vertically centered column that
+  fits the viewport without scrolling. `data-project-page` drops the frame
+  borders and gutters, like the 404. It shows a handwritten (Caveat) "Work" back link with a folder doodle from `components/shared/doodles.tsx`; doodles redraw stroke by stroke and tilt on hover and focus, and stay still with reduced motion, the
+  name with tagline and year, the image on
+  `components/shared/paper-frame.tsx` (scales down with viewport height), one
+  sentence plus one short paragraph, black `Live site` and secondary
+  `Source code` rounded-full pills with arrow and code doodles, and no prev/next links. No tag or status pills. Keep project copy short.
 
 Insights sits directly after Sponsors and shows visitor and view trend lines for
 the last 7 UTC days on a shared count scale. Both lines touch the frame edges,
@@ -297,7 +308,7 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   and one focus target per pair. Desktop uses the logo for Home and shows
   Components, Testimonials, and Sponsor as direct links. GitHub stays a separate header control
   with its star count, alongside search and theme. Mobile keeps the compact
-  header and a matching bottom Menu trigger. Navigation copy and destinations
+  header, including the search button, and a matching bottom Menu trigger. Navigation copy and destinations
   live in `config/navigation.ts`; the mobile menu uses the shared Popover primitive.
   The menu is one opaque rounded panel with paper-cut icons on the left and
   a subtle active row. Home uses the shared paper-cut illustration in the menu,

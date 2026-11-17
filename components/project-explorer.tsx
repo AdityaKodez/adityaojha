@@ -13,13 +13,23 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useId, useMemo, useState, useSyncExternalStore } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 
 export type ProjectStatus = "building" | "new" | "shipped";
 
 export interface ProjectExplorerItem {
   id: string;
   title: string;
+  /** Secondary text beside the name. Falls back to the part of `title` after " — ". */
+  subtitle?: string;
   year: number;
   description?: string;
   category?: string;
@@ -211,6 +221,7 @@ interface PreviewHandlers {
   onPreviewEnd: () => void;
   showHoverPreview: boolean;
   onProjectClick?: (project: ProjectExplorerItem, targetType: "case_study" | "external_url", url: string) => void;
+  linkIcon?: ReactNode;
 }
 
 function WorkRow({
@@ -219,8 +230,11 @@ function WorkRow({
   onPreviewEnd,
   showHoverPreview,
   onProjectClick,
+  linkIcon,
 }: { project: ProjectExplorerItem } & PreviewHandlers) {
-  const [name, subtitle] = project.title.split(" — ");
+  const [titleName, titleSubtitle] = project.title.split(" — ");
+  const name = project.subtitle ? project.title : titleName;
+  const subtitle = project.subtitle ?? titleSubtitle;
   const href = project.href ?? project.liveUrl ?? (project.id ? `/project/${project.id}` : "#");
   const isExternal = Boolean(
     project.liveUrl ||
@@ -274,10 +288,12 @@ function WorkRow({
 
         {project.status ? <StatusBadge status={project.status} /> : null}
 
-        <ArrowUpRight
+        <span
           aria-hidden="true"
-          className="size-3.5 shrink-0 text-muted-foreground/30 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary group-focus-visible:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:text-primary"
-        />
+          className="inline-flex shrink-0 text-muted-foreground/30 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary group-focus-visible:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:text-primary"
+        >
+          {linkIcon ?? <ArrowUpRight className="size-3.5" />}
+        </span>
       </Link>
     </li>
   );
@@ -299,6 +315,8 @@ export type ProjectExplorerProps = {
   onProjectClick?: (project: ProjectExplorerItem, targetType: "case_study" | "external_url", url: string) => void;
   /** Optional callback fired when a year folder is expanded or collapsed. */
   onYearToggle?: (year: number, action: "expand" | "collapse") => void;
+  /** Replace the arrow shown at the end of each row. Default: lucide `ArrowUpRight`. */
+  linkIcon?: ReactNode;
   /** Optional DOM id for the section container */
   id?: string;
   /** Additional classes for the container section */
@@ -314,6 +332,7 @@ export function ProjectExplorer({
   id,
   onProjectClick,
   onYearToggle,
+  linkIcon,
   className,
 }: ProjectExplorerProps) {
   const [activeProject, setActiveProject] = useState<ProjectExplorerItem | null>(null);
@@ -480,6 +499,7 @@ export function ProjectExplorer({
                         onPreviewEnd={handlePreviewEnd}
                         showHoverPreview={showHoverPreview}
                         onProjectClick={onProjectClick}
+                        linkIcon={linkIcon}
                       />
                     ))}
                   </motion.ul>

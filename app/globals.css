@@ -285,6 +285,15 @@ body:has([data-not-found]) [data-site-surface] {
   background: transparent;
 }
 
+body:has([data-project-page]) [data-frame-gutters] {
+  display: none;
+}
+
+body:has([data-project-page]) [data-site-surface] {
+  border: 0;
+  background: transparent;
+}
+
 @layer components {
   .section-heading {
     @apply text-xl font-semibold border-y border-dashed bg-muted/20 px-6 py-2;

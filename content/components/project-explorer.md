@@ -56,6 +56,7 @@ The **Interactive Project Explorer** organizes work chronologically with paper-c
 | `showHeading` | `boolean` | `true` | Show or hide the top section heading rule and title. |
 | `defaultOpen` | `"all" \| "latest"` | `"all"` | Open all folders or only the most recent year. |
 | `showHoverPreview` | `boolean` | `true` | Toggle floating cursor preview cards on row hover/focus. |
+| `linkIcon` | `ReactNode` | `ArrowUpRight` | Replace the arrow at the end of each row. |
 | `className` | `string` | `undefined` | Additional CSS classes for the root container. |
 
 ## Data Structure
@@ -66,6 +67,7 @@ export type ProjectStatus = "building" | "new" | "shipped";
 export interface ProjectExplorerItem {
   id: string;
   title: string;
+  subtitle?: string; // falls back to the text after " — " in title
   year: number;
   description?: string;
   category?: string;

@@ -12,7 +12,7 @@ export function BottomNav() {
     <motion.div
       {...revealOnMount({ y: -10 })}
       key={pathname}
-      className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] left-6 z-[60] md:hidden"
+      className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] left-6 z-50 md:hidden"
     >
       <SiteNavigationMenu />
     </motion.div>

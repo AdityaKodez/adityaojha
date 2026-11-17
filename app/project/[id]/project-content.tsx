@@ -1,84 +1,37 @@
 "use client";
 
 import { markdownComponents } from "@/lib/markdown/markdown-components";
-import { Badge } from "@/components/ui/badge";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { PaperFrame } from "@/components/shared/paper-frame";
 import { projectsSectionConfig } from "@/config/projects";
 import type { Project } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 import { revealVariants } from "@/lib/motion";
 import {
-  ArrowLeft,
-  ArrowRight,
-  ForwardIcon,
-} from "@/components/shared/site-icons";
+  ArrowDoodle,
+  CodeDoodle,
+  FolderDoodle,
+  handwriting,
+} from "@/components/shared/doodles";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-      delayChildren: 0.04,
-    },
+    transition: { staggerChildren: 0.06, delayChildren: 0.04 },
   },
 };
 
-const itemVariants = revealVariants({ y: 12 });
+const itemVariants = revealVariants({ y: 10 });
 
-function StatusBadge({ status }: { status: Project["status"] }) {
-  if (status === "shipped") return null;
-
-  if (status === "building") {
-    return (
-      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-blue-500/10 px-1.5 py-0.5 font-sans text-[10px] leading-none text-blue-600 dark:text-blue-400">
-        <span className="relative flex size-1.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-60 motion-reduce:animate-none" />
-          <span className="relative inline-flex size-1.5 rounded-full bg-blue-500" />
-        </span>
-        building&hellip;
-      </span>
-    );
-  }
-
-  return (
-    <span className="inline-flex shrink-0 items-center rounded-sm bg-amber-500/10 px-1.5 py-0.5 font-sans text-[10px] leading-none text-amber-600 dark:text-amber-400">
-      new
-    </span>
-  );
-}
-
-type ProjectNav = Pick<Project, "id" | "title">;
-
-export function ProjectContent({
-  project,
-  prev,
-  next,
-}: {
-  project: Project;
-  prev?: ProjectNav;
-  next?: ProjectNav;
-}) {
+const pillClass = "group h-9 gap-1.5 rounded-full px-4 text-[13px]";
+export function ProjectContent({ project }: { project: Project }) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -87,117 +40,85 @@ export function ProjectContent({
       variants={containerVariants}
       initial={shouldReduceMotion ? "visible" : "hidden"}
       animate="visible"
-      className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x border-b-2 bg-background pt-14 pb-12"
+      data-project-page=""
+      className="relative flex min-h-dvh flex-col justify-center overflow-x-clip bg-background px-5 pt-16 pb-24 md:pb-12"
     >
-      {/* Breadcrumb */}
-      <motion.div variants={itemVariants} className="px-6 pt-4 border-t border-dashed">
-        <Breadcrumb>
-          <BreadcrumbList className="text-xs">
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/#projects">
-                  {projectsSectionConfig.title}
-                </Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem className="min-w-0">
-              <BreadcrumbPage className="truncate max-w-[40ch]">
-                {project.title}
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </motion.div>
-
-      {/* Title bar */}
-      <motion.h1 variants={itemVariants} className="section-heading text-balance">
-        {project.title}
-      </motion.h1>
-
-      {/* Meta */}
-      <motion.div
-        variants={itemVariants}
-        className="px-6 flex flex-wrap items-center gap-x-3 gap-y-2"
-      >
-        <p className="font-mono text-xs text-muted-foreground">
-          <span className="tabular-nums">{project.year}</span>
-          <span aria-hidden="true" className="mx-2 text-muted-foreground/50">
-            {"//"}
+      <article className="mx-auto flex w-full max-w-[30.5rem] flex-col">
+      <motion.div variants={itemVariants} className="mb-8">
+        <Link
+          href="/#projects"
+          className="group inline-flex min-h-11 items-center gap-1.5 rounded-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+        >
+          <FolderDoodle className="size-6" />
+          <span className={cn(handwriting.className, "text-xl leading-none")}>
+            {projectsSectionConfig.title}
           </span>
-          {project.category}
-        </p>
-        <StatusBadge status={project.status} />
+        </Link>
       </motion.div>
 
-      {/* Description */}
-      <motion.div variants={itemVariants} className="px-6">
-        <p className="text-base text-muted-foreground leading-relaxed text-pretty">
-          {project.description}
-        </p>
-      </motion.div>
+        <motion.header variants={itemVariants}>
+          <h1 className="text-[15px] font-medium leading-6 text-foreground">
+            {project.title}
+          </h1>
+          <p className="text-[15px] leading-6 text-muted-foreground">
+            {project.tagline}, {project.year}
+          </p>
+        </motion.header>
 
-      <motion.div
-        variants={itemVariants}
-        className="aspect-video relative bg-muted overflow-hidden border-y"
-      >
-        <Image
-          src={project.image}
-          alt={project.imageAlt}
-          fill
-          sizes="(min-width: 768px) 768px, 100vw"
-          className="object-cover"
-          priority
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 ring-1 ring-black/10 ring-inset dark:ring-white/15"
-        />
-      </motion.div>
+        <motion.div variants={itemVariants} className="pt-5">
+          <PaperFrame className="aspect-[16/10] w-full min-w-[12rem] max-w-[min(100%,calc((100dvh-30rem)*1.6))]">
+            <Image
+              src={project.image}
+              alt={project.imageAlt}
+              fill
+              sizes="(min-width: 640px) 488px, 100vw"
+              className={cn(
+                "object-cover object-top",
+                project.imageTone === "light" &&
+                  "dark:[filter:invert(0.9)_hue-rotate(180deg)]",
+              )}
+              priority
+            />
+          </PaperFrame>
+        </motion.div>
 
-      <motion.div
-        variants={itemVariants}
-        className="px-6 flex flex-wrap items-center justify-between gap-4"
-      >
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <Badge key={tag} variant="secondary" className="text-xs">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-3">
-          {project.liveUrl && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button asChild>
-                    <Link
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => {
-                        trackEvent("project_live_preview_clicked", {
-                          project_id: project.id,
-                          live_url: project.liveUrl!,
-                        });
-                      }}
-                    >
-                      Live Preview{" "}
-                      <ForwardIcon aria-hidden="true" className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Visit live site</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+        <motion.div variants={itemVariants} className="pt-5">
+          <p className="text-[15px] leading-7 text-foreground text-pretty">
+            {project.description}
+          </p>
+          {project.content && (
+            <div className="prose mt-3 max-w-none text-[15px] leading-7 text-muted-foreground [&_p]:my-0">
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                {project.content}
+              </ReactMarkdown>
+            </div>
           )}
+        </motion.div>
 
+        <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2 pt-5">
+          {project.liveUrl && (
+            <Button
+              asChild
+              className={`${pillClass} bg-foreground text-background hover:bg-foreground/85 [a]:hover:bg-foreground/85`}
+            >
+              <Link
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent("project_live_preview_clicked", {
+                    project_id: project.id,
+                    live_url: project.liveUrl!,
+                  });
+                }}
+              >
+                {projectsSectionConfig.liveButtonLabel}
+                <ArrowDoodle className="size-4" />
+              </Link>
+            </Button>
+          )}
           {project.githubUrl && (
-            <Button asChild variant="outline">
+            <Button asChild variant="secondary" className={pillClass}>
               <Link
                 href={project.githubUrl}
                 target="_blank"
@@ -209,96 +130,13 @@ export function ProjectContent({
                   });
                 }}
               >
-                <FaGithub aria-hidden="true" className="mr-2 h-4 w-4" />
-                Source Code
+                <CodeDoodle className="size-4" />
+                {projectsSectionConfig.sourceButtonLabel}
               </Link>
             </Button>
           )}
-        </div>
-      </motion.div>
-
-      {project.content && (
-        <motion.section
-          variants={itemVariants}
-          aria-label="Case study"
-          className="border-t border-dashed px-6 py-6"
-        >
-          <div className="prose prose-neutral dark:prose-invert max-w-none">
-            {typeof project.content === "string" ? (
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={markdownComponents}
-              >
-                {project.content}
-              </ReactMarkdown>
-            ) : (
-              project.content
-            )}
-          </div>
-        </motion.section>
-      )}
-
-      {/* Prev / next */}
-      <motion.nav
-        variants={itemVariants}
-        aria-label="More projects"
-        className="border-t border-dashed px-6 py-6 flex items-start justify-between gap-4"
-      >
-        <div className="min-w-0 flex-1">
-          {prev ? (
-            <Link
-              href={`/project/${prev.id}`}
-              className="group inline-flex min-w-0 max-w-full flex-col gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            >
-              <span className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground">
-                <ArrowLeft
-                  aria-hidden="true"
-                  className="h-3 w-3 transition-transform group-hover:-translate-x-0.5"
-                />
-                Prev
-              </span>
-              <span className="truncate text-sm font-medium group-hover:text-primary group-hover:underline group-hover:underline-offset-4">
-                {prev.title}
-              </span>
-            </Link>
-          ) : (
-            <Link
-              href="/#projects"
-              className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            >
-              <ArrowLeft aria-hidden="true" className="h-3 w-3" />
-              All work
-            </Link>
-          )}
-        </div>
-        <div className="min-w-0 flex-1 text-right">
-          {next ? (
-            <Link
-              href={`/project/${next.id}`}
-              className="group inline-flex min-w-0 max-w-full flex-col items-end gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            >
-              <span className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground">
-                Next
-                <ArrowRight
-                  aria-hidden="true"
-                  className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
-                />
-              </span>
-              <span className="truncate text-sm font-medium group-hover:text-primary group-hover:underline group-hover:underline-offset-4">
-                {next.title}
-              </span>
-            </Link>
-          ) : (
-            <Link
-              href="/#projects"
-              className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            >
-              All work
-              <ArrowRight aria-hidden="true" className="h-3 w-3" />
-            </Link>
-          )}
-        </div>
-      </motion.nav>
+        </motion.div>
+      </article>
     </motion.main>
   );
 }
