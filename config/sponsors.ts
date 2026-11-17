@@ -48,7 +48,6 @@ export const sponsorsSectionConfig: SponsorsSectionConfig = {
   thanks: "Thank you all.",
   supportLabel: "Become a supporter",
   supportNote: "Once. Here for good.",
-  seats: 6,
   tiers: sponsorTiers,
 };
 
@@ -147,13 +146,9 @@ export function getAllSponsors(): Sponsor[] {
   return [...sponsorsConfig, ...generated].sort((a, b) => a.order - b.order);
 }
 
-/** Enabled hand-edited supporters and paid supporters within the seat range. */
-export function getEnabledSponsors(seats: number): Sponsor[] {
-  return getAllSponsors().filter(
-    (sponsor) =>
-      sponsor.enabled !== false &&
-      (sponsor.seat === undefined || sponsor.seat < seats),
-  );
+/** All enabled hand-edited and paid supporters. */
+export function getEnabledSponsors(): Sponsor[] {
+  return getAllSponsors().filter((sponsor) => sponsor.enabled !== false);
 }
 
 export function getEnabledSupportLinks(): SponsorSupportLink[] {

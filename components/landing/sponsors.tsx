@@ -2,7 +2,6 @@
 
 import Avvvatars from "avvvatars-react";
 import {
-  getAllSponsors,
   getEnabledSponsors,
   getEnabledSupportLinks,
   sponsorTiers,
@@ -217,15 +216,7 @@ function SupportLinks() {
 }
 
 export function SponsorsSection() {
-  const {
-    seats: configuredSeats,
-    heading,
-    description,
-  } = sponsorsSectionConfig;
-  const seats = Math.max(
-    configuredSeats,
-    getAllSponsors().filter((sponsor) => sponsor.enabled !== false).length,
-  );
+  const { heading, description } = sponsorsSectionConfig;
 
   return (
     <section className="relative border-y border-dashed pt-6">
@@ -237,7 +228,7 @@ export function SponsorsSection() {
           {description}
         </p>
         <div className="flex flex-col gap-3">
-          <SponsorList sponsors={getEnabledSponsors(seats)} />
+          <SponsorList sponsors={getEnabledSponsors()} />
           <SupportLinks />
         </div>
       </div>

@@ -105,7 +105,7 @@ component.
 | `config/registry.ts` | Registry helpers, `getAddCommands()` (`@akoder/<id>` per package manager), `getItemUrl()` and `registryConfig.itemUrlPattern` for the direct-URL fallback |
 | `config/world-cities.ts` | City coordinates used by the dotted world map |
 | `config/insights.ts` | Home Insights heading, 7-day range, and accessible chart copy |
-| `config/sponsors.ts` | `sponsorsSectionConfig` (supporter copy, seat count, CTAs) + `sponsorsConfig`, one entry per supporter |
+| `config/sponsors.ts` | `sponsorsSectionConfig` (supporter copy and CTAs) + `sponsorsConfig`, one entry per supporter |
 
 Pattern to copy: every domain exports a section config object (heading text) and
 a typed item array. Every item carries `id`, `order`, and an optional `enabled`
@@ -184,7 +184,7 @@ The home page is a loop, not a hand-written layout.
   About's greeting: Instrument Serif italic, 25px with a 32px line height,
   21px horizontal and 1px vertical padding, and 24px above the heading band.
   The section also renders at the bottom of `/components` and `/testimonials`.
-  `/sponsor` explains support and reuses the list. Keep the payment product id
+  `/sponsor` explains support and reuses the list. Show all enabled supporters without a seat limit. Keep the payment product id
   and seat indices unchanged when changing the presentation.
   Hand-edited supporters live in `config/sponsors.ts` and may omit `seat`.
   Keep them out of `config/sponsors.generated.json`, which belongs to the Dodo

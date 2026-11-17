@@ -374,7 +374,6 @@ export interface SponsorsSectionConfig {
   thanks: string;
   supportLabel: string;
   supportNote: string;
-  seats: number;
   tiers: SponsorTier[];
 }
 
