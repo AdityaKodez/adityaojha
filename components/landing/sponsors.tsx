@@ -15,7 +15,7 @@ import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiBuymeacoffee } from "react-icons/si";
-import { CursorTagItem } from "./cursor-tag";
+import { CursorTagItem, CursorTagList } from "./cursor-tag";
 import { Signature } from "./signature";
 
 const badgeSpring = { type: "spring", duration: 0.35, bounce: 0.3 } as const;
@@ -86,7 +86,7 @@ function SponsorList({ sponsors }: { sponsors: Sponsor[] }) {
   const { supportLabel, supportNote } = sponsorsSectionConfig;
 
   return (
-    <ul className="flex flex-wrap items-center gap-3">
+    <CursorTagList className="flex flex-wrap items-center gap-3">
       {sponsors.map((sponsor) => {
         const url = sponsor.url;
         const logo = (
@@ -161,7 +161,7 @@ function SponsorList({ sponsors }: { sponsors: Sponsor[] }) {
           <Plus className="size-5" aria-hidden />
         </motion.a>
       </CursorTagItem>
-    </ul>
+    </CursorTagList>
   );
 }
 
@@ -169,7 +169,7 @@ function SupportLinks() {
   const gestures = useTileGestures();
 
   return (
-    <ul aria-label="Support links" className="flex flex-wrap items-center gap-3">
+    <CursorTagList aria-label="Support links" className="flex flex-wrap items-center gap-3">
       {getEnabledSupportLinks().map((link) => {
         const { Icon, BadgeIcon, tile, badge } = supportTiles[link.icon];
 
@@ -211,7 +211,7 @@ function SupportLinks() {
           </CursorTagItem>
         );
       })}
-    </ul>
+    </CursorTagList>
   );
 }
 
