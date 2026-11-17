@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 
+// <!-- next-upgrade: security; path="." -->
 const isDev = process.env.NODE_ENV === "development";
 
 const securityHeaders = [
@@ -45,6 +46,7 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
+    agentUpgrade: "security",
     optimizePackageImports: ["lucide-react", "react-icons", "date-fns"],
   },
   async headers() {
