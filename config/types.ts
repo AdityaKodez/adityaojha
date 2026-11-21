@@ -230,6 +230,7 @@ export interface Project {
   imageTone: "light" | "dark";
   liveUrl?: string;
   githubUrl?: string;
+  npmPackage?: string;
 
   year: number;
   status: ProjectStatus;

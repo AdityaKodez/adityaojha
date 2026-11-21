@@ -1,8 +1,11 @@
 import { projectsConfig } from "@/config/projects";
 import { siteConfig } from "@/config/site";
+import { getNpmWeeklyDownloads } from "@/lib/npm";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProjectContent } from "./project-content";
+
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   return projectsConfig.map((project) => ({
@@ -69,5 +72,9 @@ export default async function ProjectPage({
     notFound();
   }
 
-  return <ProjectContent project={project} />;
+  const weeklyDownloads = project.npmPackage
+    ? await getNpmWeeklyDownloads(project.npmPackage)
+    : null;
+
+  return <ProjectContent project={project} weeklyDownloads={weeklyDownloads} />;
 }

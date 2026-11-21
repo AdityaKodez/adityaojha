@@ -8,6 +8,27 @@ export const projectsSectionConfig = {
 
 export const projectsConfig: Project[] = [
   {
+    id: "trazo",
+    title: "Trazo",
+    tagline: "Hand-drawn crayon SVG stickers",
+    description:
+      "Hand-drawn wax-crayon SVG stickers you can recolor live, copy, or install from npm.",
+    content:
+      "A collection of 71 chunky crayon stickers including sea creatures, cats, arrows, stars, clouds and emphasis marks. Recolor them live on the interactive canvas, copy clean SVGs or install trazo-stickers in React.",
+    image: "/trazo.png",
+    imageAlt: "Trazo homepage",
+    imageTone: "light",
+    liveUrl: "https://trazo.akoder.xyz",
+    githubUrl: "https://github.com/AdityaKodez/trazo",
+    npmPackage: "trazo-stickers",
+    tags: ["React", "SVG", "Design", "Open Source"],
+    year: 2026,
+    status: "new",
+    category: "Open source",
+    order: 1,
+    enabled: true,
+  },
+  {
     id: "talvess",
     title: "Talvess",
     tagline: "Cookieless web analytics",
@@ -23,7 +44,7 @@ export const projectsConfig: Project[] = [
     year: 2026,
     status: "shipped",
     category: "Analytics",
-    order: 1,
+    order: 2,
     enabled: true,
   },
   {
@@ -42,7 +63,7 @@ export const projectsConfig: Project[] = [
     year: 2026,
     status: "shipped",
     category: "Developer tools",
-    order: 2,
+    order: 3,
     enabled: true,
   },
   {
@@ -62,7 +83,7 @@ export const projectsConfig: Project[] = [
     year: 2026,
     status: "new",
     category: "AI / Education",
-    order: 3,
+    order: 4,
     enabled: true,
   },
   {
@@ -82,7 +103,7 @@ export const projectsConfig: Project[] = [
     year: 2025,
     status: "shipped",
     category: "Open source",
-    order: 4,
+    order: 5,
     enabled: true,
   },
   {
@@ -101,7 +122,7 @@ export const projectsConfig: Project[] = [
     year: 2025,
     status: "shipped",
     category: "SaaS",
-    order: 5,
+    order: 6,
     enabled: true,
   },
   {
@@ -120,7 +141,7 @@ export const projectsConfig: Project[] = [
     year: 2025,
     status: "shipped",
     category: "Education",
-    order: 6,
+    order: 7,
     enabled: true,
   },
 ];
