@@ -11,11 +11,16 @@ import type { Sponsor } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { Message, Plus } from "@/components/shared/site-icons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiBuymeacoffee } from "react-icons/si";
-import { CursorTagItem, CursorTagList } from "./cursor-tag";
 import { Signature } from "./signature";
 
 const badgeSpring = { type: "spring", duration: 0.35, bounce: 0.3 } as const;
@@ -86,7 +91,7 @@ function SponsorList({ sponsors }: { sponsors: Sponsor[] }) {
   const { supportLabel, supportNote } = sponsorsSectionConfig;
 
   return (
-    <CursorTagList className="flex flex-wrap items-center gap-3">
+    <ul className="flex flex-wrap items-center gap-3">
       {sponsors.map((sponsor) => {
         const url = sponsor.url;
         const logo = (
@@ -111,57 +116,69 @@ function SponsorList({ sponsors }: { sponsors: Sponsor[] }) {
         );
 
         return (
-          <CursorTagItem key={sponsor.id} label={sponsor.name}>
-            {url ? (
-              <motion.a
-                href={withReferral(url)}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={sponsor.name}
-                className={className}
-                {...gestures}
-                onClick={() =>
-                  trackEvent("sponsor_link_clicked", {
-                    sponsor_name: sponsor.name,
-                    seat: sponsor.seat,
-                    url,
-                    location: window.location.pathname,
-                  })
-                }
-              >
-                {logo}
-              </motion.a>
-            ) : (
-              <motion.span
-                role="img"
-                tabIndex={0}
-                aria-label={sponsor.name}
-                className={className}
-                {...gestures}
-              >
-                {logo}
-              </motion.span>
-            )}
-          </CursorTagItem>
+          <li key={sponsor.id} className="shrink-0">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                {url ? (
+                  <motion.a
+                    href={withReferral(url)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={sponsor.name}
+                    className={className}
+                    {...gestures}
+                    onClick={() =>
+                      trackEvent("sponsor_link_clicked", {
+                        sponsor_name: sponsor.name,
+                        seat: sponsor.seat,
+                        url,
+                        location: window.location.pathname,
+                      })
+                    }
+                  >
+                    {logo}
+                  </motion.a>
+                ) : (
+                  <motion.span
+                    role="img"
+                    tabIndex={0}
+                    aria-label={sponsor.name}
+                    className={className}
+                    {...gestures}
+                  >
+                    {logo}
+                  </motion.span>
+                )}
+              </TooltipTrigger>
+              <TooltipContent sideOffset={8} className="font-mono text-[11px] font-normal">
+                {sponsor.name}
+              </TooltipContent>
+            </Tooltip>
+          </li>
         );
       })}
-      <CursorTagItem
-        label={supportLabel}
-        note={`${SEAT_PRICE_LABEL} · ${supportNote}`}
-      >
-        <motion.a
-          href="/api/sponsor-checkout"
-          aria-label={supportLabel}
-          className={cn(
-            badgeClass,
-            "bg-background text-muted-foreground ring-1 ring-inset ring-border transition-colors hover:bg-secondary hover:text-secondary-foreground",
-          )}
-          {...gestures}
-        >
-          <Plus className="size-5" aria-hidden />
-        </motion.a>
-      </CursorTagItem>
-    </CursorTagList>
+      <li className="shrink-0">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <motion.a
+              href="/api/sponsor-checkout"
+              aria-label={supportLabel}
+              className={cn(
+                badgeClass,
+                "bg-background text-muted-foreground ring-1 ring-inset ring-border transition-colors hover:bg-secondary hover:text-secondary-foreground",
+              )}
+              {...gestures}
+            >
+              <Plus className="size-5" aria-hidden />
+            </motion.a>
+          </TooltipTrigger>
+          <TooltipContent sideOffset={8} className="flex-col gap-0.5 font-mono text-[11px] font-normal">
+            <span>{supportLabel}</span>
+            <span className="opacity-70">{SEAT_PRICE_LABEL} · {supportNote}</span>
+          </TooltipContent>
+        </Tooltip>
+      </li>
+    </ul>
   );
 }
 
@@ -169,49 +186,56 @@ function SupportLinks() {
   const gestures = useTileGestures();
 
   return (
-    <CursorTagList aria-label="Support links" className="flex flex-wrap items-center gap-3">
+    <ul aria-label="Support links" className="flex flex-wrap items-center gap-3">
       {getEnabledSupportLinks().map((link) => {
         const { Icon, BadgeIcon, tile, badge } = supportTiles[link.icon];
 
         return (
-          <CursorTagItem key={link.id} label={link.label}>
-            <motion.a
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={link.label}
-              className={tileClass}
-              {...gestures}
-              onClick={() =>
-                trackEvent("sponsor_support_link_clicked", {
-                  link_id: link.id,
-                  url: link.href,
-                  location: window.location.pathname,
-                })
-              }
-            >
-              <span
-                className={cn(
-                  "absolute inset-0 flex items-center justify-center overflow-hidden rounded-[inherit] shadow-xs shadow-foreground/10 ring-1 ring-inset",
-                  tile,
-                )}
-              >
-                <Icon className="size-6" aria-hidden />
-              </span>
-              <span
-                aria-hidden
-                className={cn(
-                  "absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full ring-2 ring-background",
-                  badge,
-                )}
-              >
-                <BadgeIcon className="size-3" strokeWidth={2.4} />
-              </span>
-            </motion.a>
-          </CursorTagItem>
+          <li key={link.id} className="shrink-0">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <motion.a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                  className={tileClass}
+                  {...gestures}
+                  onClick={() =>
+                    trackEvent("sponsor_support_link_clicked", {
+                      link_id: link.id,
+                      url: link.href,
+                      location: window.location.pathname,
+                    })
+                  }
+                >
+                  <span
+                    className={cn(
+                      "absolute inset-0 flex items-center justify-center overflow-hidden rounded-[inherit] shadow-xs shadow-foreground/10 ring-1 ring-inset",
+                      tile,
+                    )}
+                  >
+                    <Icon className="size-6" aria-hidden />
+                  </span>
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full ring-2 ring-background",
+                      badge,
+                    )}
+                  >
+                    <BadgeIcon className="size-3" strokeWidth={2.4} />
+                  </span>
+                </motion.a>
+              </TooltipTrigger>
+              <TooltipContent sideOffset={8} className="font-mono text-[11px] font-normal">
+                {link.label}
+              </TooltipContent>
+            </Tooltip>
+          </li>
         );
       })}
-    </CursorTagList>
+    </ul>
   );
 }
 
@@ -227,10 +251,12 @@ export function SponsorsSection() {
         <p className="max-w-md text-pretty text-sm leading-relaxed text-muted-foreground">
           {description}
         </p>
-        <div className="flex flex-col gap-3">
-          <SponsorList sponsors={getEnabledSponsors()} />
-          <SupportLinks />
-        </div>
+        <TooltipProvider delayDuration={100} disableHoverableContent>
+          <div className="flex flex-col gap-3">
+            <SponsorList sponsors={getEnabledSponsors()} />
+            <SupportLinks />
+          </div>
+        </TooltipProvider>
       </div>
       <Signature
         className="pointer-events-none absolute right-6 top-1/2 h-12 w-auto -translate-y-1/2 text-foreground/80 max-sm:hidden"

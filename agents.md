@@ -171,17 +171,15 @@ The home page is a loop, not a hand-written layout.
   one invitation, and a thank-you note with the shared signature. Logo tiles and
   the invitation use inset rings, not borders. It is not an orbit or a grid of
   empty seats. On the home page it sits directly after About.
-  Supporter names appear in the cursor pill on hover and keyboard focus. Logo hover
+  Supporter names appear in tooltips on hover and keyboard focus. Logo hover
   motion uses the banner's 0.35s spring with 0.3 bounce and respects reduced
   motion. The invitation's hover uses secondary colors, never primary.
   The invitation links directly to `/api/sponsor-checkout` with a plain anchor
   so visitors continue to Dodo's hosted checkout.
   A second row under the supporters holds the support links from
   `sponsorSupportLinks` in `config/sponsors.ts`: Buy me a coffee and Talk on X.
-  Each tile has a small corner badge. With a mouse, the native cursor is
-  replaced by a blue pointer and name pill from
-  `components/landing/cursor-tag.tsx`. Keyboard focus shows the same pill, and
-  touch and pen input keep the normal cursor.
+  Each tile has a small corner badge and shows its label in a tooltip on hover
+  and keyboard focus.
   Its “Sponsors” heading matches
   About's greeting: Instrument Serif italic, 25px with a 32px line height,
   21px horizontal and 1px vertical padding, and 24px above the heading band.
