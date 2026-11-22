@@ -263,13 +263,19 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   has 56px top padding to clear them.
   Keep interaction motion such as
   folder expansion, hover previews, and the testimonial slider. The GitHub
-  contribution calendar fades in with a subtle scale settle when its server-loaded
-  content mounts inside the existing Suspense boundary. The calendar pads forward
+  contribution calendar renders directly inside its Suspense boundary without a
+  Framer Motion mount animation. Non-zero days show their contribution count
+  directly on the circular dots, packed tightly in the grid. Hovering across the
+  calendar keeps one shared pointer-events-none tooltip open and glides it
+  smoothly between cells until the pointer leaves. The calendar pads forward
   with faint outlined upcoming days to `githubSectionConfig.minWeeks` columns so
   it fills the frame. When it first scrolls into view, its dots pop in as a
   left-to-right wave (scale and opacity only); reduced motion, no JavaScript,
-  and a calendar already in view on load show it immediately. Entrances on other
-  surfaces use the shared reveal helpers in
+  and a calendar already in view on load show it immediately. Stickers from the
+  curated `githubRepoStickers` list in `config/github.ts` (`trazo-stickers`)
+  mark dates when the profile owner created a public, non-fork repository.
+  Their tooltip shows only the repository name and star count.
+  Entrances on other surfaces use the shared reveal helpers in
   `lib/motion.ts` (`reveal`, `revealOnMount`, `revealVariants`): a 0.18s
   opacity with the ease `[0.22, 1, 0.36, 1]` plus a settle spring on `y`. Only
   `opacity` and `transform` are animated, never `filter` (animated blur forces

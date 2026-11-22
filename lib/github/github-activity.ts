@@ -9,8 +9,9 @@ const DAY_MS = 86_400_000;
 export function buildActivityCalendar(data: Contribution[], minWeeks = 0) {
   if (data.length === 0) return null;
 
-  const byDate = new Map<string, number>();
-  for (const { date, count } of data) {
+  const byDate = new Map<string, Contribution>();
+  for (const contribution of data) {
+    const { date, count } = contribution;
     const timestamp = Date.parse(`${date}T00:00:00Z`);
     if (
       !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
@@ -22,7 +23,7 @@ export function buildActivityCalendar(data: Contribution[], minWeeks = 0) {
     ) {
       throw new Error(`Invalid GitHub contribution for ${date}`);
     }
-    byDate.set(date, count);
+    byDate.set(date, contribution);
   }
 
   const dates = [...byDate.keys()].sort();
@@ -38,10 +39,12 @@ export function buildActivityCalendar(data: Contribution[], minWeeks = 0) {
     const date = new Date(gridStart + index * DAY_MS)
       .toISOString()
       .slice(0, 10);
+    const contribution = byDate.get(date);
     return {
       date,
       // Missing records stay unknown. Padding outside the returned range is blank.
-      count: byDate.get(date) ?? null,
+      count: contribution?.count ?? null,
+      newRepositories: contribution?.newRepositories,
       inRange: index >= firstIndex && index <= lastIndex,
       upcoming: index > lastIndex,
     };

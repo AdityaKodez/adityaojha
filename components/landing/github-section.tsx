@@ -3,8 +3,6 @@ import { githubSectionConfig } from "@/config/github";
 import { siteConfig } from "@/config/site";
 import { fetchGithubData } from "@/lib/github/github";
 import { buildActivityCalendar } from "@/lib/github/github-activity";
-import { revealOnMount } from "@/lib/motion";
-import * as motion from "motion/react-client";
 
 export async function GitHubSection() {
   const contributions = await fetchGithubData(
@@ -21,14 +19,7 @@ export async function GitHubSection() {
 
   return (
     <div className="border-t border-dashed p-2">
-      <motion.div
-        className="no-js-visible"
-        {...revealOnMount({ y: 0 })}
-        initial={{ opacity: 0, scale: 0.99 }}
-        animate={{ opacity: 1, scale: 1 }}
-      >
-        <GitHubActivity key={calendar.end} calendar={calendar} />
-      </motion.div>
+      <GitHubActivity key={calendar.end} calendar={calendar} />
     </div>
   );
 }

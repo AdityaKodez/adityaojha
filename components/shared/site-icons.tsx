@@ -41,6 +41,7 @@ import {
   Send as SendGlyph,
   ShieldCheck as ShieldCheckGlyph,
   SmilePlus as SmilePlusGlyph,
+  Star as StarGlyph,
   Sun as SunGlyph,
   SwatchBook as SwatchBookGlyph,
   Swords as SwordsGlyph,
@@ -108,6 +109,7 @@ export const Search = createSiteIcon(SearchGlyph, "bold");
 export const Send = createSiteIcon(SendGlyph);
 export const ShieldCheck = createSiteIcon(ShieldCheckGlyph);
 export const SmilePlus = createSiteIcon(SmilePlusGlyph);
+export const Star = createSiteIcon(StarGlyph);
 export const Sun = createSiteIcon(SunGlyph);
 export const SwatchBook = createSiteIcon(SwatchBookGlyph);
 export const Swords = createSiteIcon(SwordsGlyph);
