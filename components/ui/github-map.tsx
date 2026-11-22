@@ -187,8 +187,8 @@ type TooltipTarget = {
   pinned: boolean;
 };
 
-const dotMotion =
-  "group-data-[phase=armed]/cal:opacity-0 group-data-[phase=shown]/cal:animate-in group-data-[phase=shown]/cal:fade-in group-data-[phase=shown]/cal:zoom-in group-data-[phase=shown]/cal:fill-mode-both group-data-[phase=shown]/cal:duration-500 group-data-[phase=shown]/cal:ease-[cubic-bezier(0.34,1.56,0.64,1)]";
+const colMotion =
+  "group-data-[phase=armed]/cal:opacity-0 group-data-[phase=shown]/cal:animate-[github-col-in_280ms_cubic-bezier(0.34,1.45,0.64,1)_backwards] motion-reduce:animate-none motion-reduce:opacity-100";
 
 const tooltipGlide =
   "transition-[transform,opacity] duration-150 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none";
@@ -269,8 +269,8 @@ export function buildActivityCalendar(
   return { start, end, firstIndex, lastIndex, weekCount, days, months };
 }
 
-function dotDelay(column: number, row: number) {
-  return `${column * 14 + row * 24}ms`;
+function colDelay(column: number) {
+  return `${column * 9}ms`;
 }
 
 function resolveColor(count: number, colors: readonly string[]) {
@@ -343,7 +343,6 @@ type CalendarGridProps = {
   colors: readonly string[];
   showCounts: boolean;
   copy: Required<GitHubCalendarLabels>;
-  phase: Phase;
   selectedIndex: number;
   dayLabels: DayLabel[];
   stickerByIndex: Map<number, StickerDef>;
@@ -361,7 +360,6 @@ const CalendarGrid = memo(function CalendarGrid({
   colors,
   showCounts,
   copy,
-  phase,
   selectedIndex,
   dayLabels,
   stickerByIndex,
@@ -379,17 +377,21 @@ const CalendarGrid = memo(function CalendarGrid({
       role="grid"
       aria-label={copy.calendarLabel}
       aria-describedby={hintId}
-      data-phase={phase}
-      className="group/cal py-1"
+      className="group/cal flex py-1"
       onPointerOver={onPointerOver}
       onFocus={onFocus}
       onBlur={onBlur}
       onClick={onClick}
       onKeyDown={onKeyDown}
     >
-      {copy.weekdays.map((weekday, row) => (
-        <div key={weekday} role="row" aria-label={weekday} className="flex">
-          {Array.from({ length: calendar.weekCount }, (_, column) => {
+      {Array.from({ length: calendar.weekCount }, (_, column) => (
+        <div
+          key={column}
+          role="row"
+          className={cn("flex snap-start flex-col", colMotion)}
+          style={{ animationDelay: colDelay(column) }}
+        >
+          {copy.weekdays.map((_, row) => {
             const index = column * 7 + row;
             const day = calendar.days[index];
             const label = dayLabels[index];
@@ -401,19 +403,12 @@ const CalendarGrid = memo(function CalendarGrid({
               <div
                 key={day.date}
                 role="gridcell"
-                className={cn(
-                  "relative flex size-[13px] shrink-0 items-center justify-center",
-                  row === 0 && "snap-start",
-                )}
+                className="relative flex size-[13px] shrink-0 items-center justify-center"
               >
                 {day.upcoming && (
                   <span
                     aria-hidden="true"
-                    className={cn(
-                      "size-3 rounded-full ring-1 ring-inset ring-border",
-                      dotMotion,
-                    )}
-                    style={{ animationDelay: dotDelay(column, row) }}
+                    className="size-3 rounded-full ring-1 ring-inset ring-border"
                   />
                 )}
                 {day.inRange && (
@@ -429,11 +424,7 @@ const CalendarGrid = memo(function CalendarGrid({
                     {stickerDef ? (
                       <span
                         aria-hidden="true"
-                        className={cn(
-                          "pointer-events-none flex size-3 shrink-0 items-center justify-center",
-                          dotMotion,
-                        )}
-                        style={{ animationDelay: dotDelay(column, row) }}
+                        className="pointer-events-none flex size-3 shrink-0 items-center justify-center"
                       >
                         <Sticker
                           def={stickerDef}
@@ -453,10 +444,8 @@ const CalendarGrid = memo(function CalendarGrid({
                             day.count > 0 &&
                             backgroundColor &&
                             countTextClass(day.count, backgroundColor),
-                          dotMotion,
                         )}
                         style={{
-                          animationDelay: dotDelay(column, row),
                           backgroundColor,
                         }}
                       >
@@ -505,9 +494,9 @@ function GitHubCalendarView({
     left: number;
     arrowLeft: number;
   } | null>(null);
-  const [phase, setPhase] = useState<Phase>("idle");
   const [scrollerWidth, setScrollerWidth] = useState<number | null>(null);
 
+  const phaseRef = useRef<Phase>("idle");
   const wrapper = useRef<HTMLDivElement>(null);
   const grid = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
@@ -582,20 +571,25 @@ function GitHubCalendarView({
 
   useEffect(() => {
     const node = grid.current;
+    if (!node) return;
     if (
       !animateOnScroll ||
-      !node ||
       typeof IntersectionObserver === "undefined" ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
       node.getBoundingClientRect().top < window.innerHeight
     ) {
+      phaseRef.current = "idle";
+      delete node.dataset.phase;
       return;
     }
-    setPhase("armed");
+    if (phaseRef.current === "shown") return;
+    phaseRef.current = "armed";
+    node.dataset.phase = "armed";
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        setPhase("shown");
+        phaseRef.current = "shown";
+        node.dataset.phase = "shown";
         observer.disconnect();
       },
       { threshold: 0.4 },
@@ -830,6 +824,18 @@ function GitHubCalendarView({
       className={cn("relative", className)}
       onPointerLeave={onGridPointerLeave}
     >
+      <style>{`
+        @keyframes github-col-in {
+          from {
+            opacity: 0;
+            transform: scale(0.84);
+          }
+          to {
+            opacity: 1;
+            transform: none;
+          }
+        }
+      `}</style>
       <p id={hintId} className="sr-only">
         {copy.keyboardHint}
       </p>
@@ -870,7 +876,6 @@ function GitHubCalendarView({
             colors={colors}
             showCounts={showCounts}
             copy={copy}
-            phase={phase}
             selectedIndex={activeSelectedIndex}
             dayLabels={dayLabels}
             stickerByIndex={stickerByIndex}
