@@ -228,6 +228,7 @@ export interface Project {
   image: string;
   imageAlt: string;
   imageTone: "light" | "dark";
+  faviconTone?: "light" | "dark";
   liveUrl?: string;
   githubUrl?: string;
   npmPackage?: string;

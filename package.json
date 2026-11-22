@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "prebuild": "node scripts/build-registry.mjs",
+    "projects:icons": "node --experimental-strip-types scripts/sync-project-icons.mjs",
     "registry:build": "node scripts/build-registry.mjs"
   },
   "dependencies": {
@@ -62,6 +63,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
+    "parse5": "7.3.0",
+    "sharp": "0.35.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

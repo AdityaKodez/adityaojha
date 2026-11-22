@@ -135,7 +135,8 @@ All types live in `config/types.ts`.
   `href` (optional), `order`, `enabled`.
 - **`Project`**, `id`, `title` (name only), `tagline`, `description` (one
   sentence), `content` (one short paragraph), `image`, `imageAlt`,
-  `imageTone` (`light` screenshots are inverted in dark mode), `liveUrl`,
+  `imageTone` (`light` screenshots are inverted in dark mode), `faviconTone`
+  (optional monochrome mark tone for palette contrast), `liveUrl`,
   `githubUrl`, `year`, `status` (`building`, `new`, `shipped`), `category`,
   `tags`, `order`, `enabled`. `status` and `tags` feed metadata and
   `llms.txt` only and are never rendered as pills.
@@ -313,6 +314,13 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   while the header retains the compact animated logo. Header label and icon
   faces are 28.8px tall. Header controls and menu rows retain 44px click targets.
   Hover icon motion is limited to fine pointers without reduced motion.
+  Project rows in the site command palette use local copies of each app's
+  favicon. Run `npm run projects:icons` with Node 22.15 or newer after adding a
+  project or changing an app's icon. The script reads `config/projects.ts`,
+  checks the icon declarations and `/favicon.ico`, and updates the images in
+  `public/images/project-favicons/` and their generated lookup in `config/`.
+  A failed refresh keeps the previous icon and reports the failure. The palette
+  uses the folder icon when the local image is missing or fails to load.
 - Shared utility classes: `.section-heading`, `.micro-transition`,
   `.liquid-glass`, `.bottom-blur`, and the blueprint background used on card
   hover. Prefer these over repeating the utility stack.

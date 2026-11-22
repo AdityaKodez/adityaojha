@@ -14,9 +14,10 @@ import {
   Sun,
 } from "@/components/shared/site-icons";
 import { FaGithub } from "react-icons/fa6";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { getComponentIcon } from "@/components/showcase/component-icons";
 import {
@@ -27,9 +28,44 @@ import {
 } from "@/components/ui/command-palette";
 import { getEnabledComponents } from "@/config/components";
 import { bookshelfConfig } from "@/config/books";
+import projectFavicons from "@/config/project-favicons.generated.json";
 import { projectsConfig } from "@/config/projects";
 import { siteConfig } from "@/config/site";
+import type { Project } from "@/config/types";
 import { playCopySound } from "@/lib/copy-sound";
+import { cn } from "@/lib/utils";
+
+const faviconByProject = new Map(Object.entries(projectFavicons));
+
+function ProjectIcon({
+  src,
+  tone,
+}: {
+  src?: string;
+  tone?: Project["faviconTone"];
+}) {
+  const [failed, setFailed] = useState(false);
+
+  if (!src || failed) {
+    return <FolderOpen aria-hidden className="size-4" />;
+  }
+
+  return (
+    <Image
+      src={src}
+      alt=""
+      width={16}
+      height={16}
+      className={cn(
+        "size-4 rounded-sm object-contain",
+        tone === "dark" && "dark:invert",
+        tone === "light" && "invert dark:invert-0",
+      )}
+      unoptimized
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 /**
  * The site-wide command palette, mounted once in the header. Every route is a
@@ -65,7 +101,12 @@ export function SiteCommandPalette({
     const projectItems: CommandPaletteItem[] = projectsConfig.map((project) => ({
       id: `project-${project.id}`,
       label: project.title,
-      icon: <FolderOpen className="size-4" />,
+      icon: (
+        <ProjectIcon
+          src={faviconByProject.get(project.id)}
+          tone={project.faviconTone}
+        />
+      ),
       keywords: ["project", "case study", project.category, project.id],
       onSelect: go(`/project/${project.id}`),
     }));
