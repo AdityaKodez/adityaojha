@@ -239,9 +239,9 @@ export const componentRegistry: ComponentDoc[] = [
   {
     id: "github-map",
     title: "GitHub Heatmap",
-    summary: "A contribution calendar with themed colors and date tooltips.",
+    summary: "A contribution dot calendar with inline counts, gliding tooltips, and repo stickers.",
     description:
-      "An interactive 52-week contribution activity graph with date-fns interval calculation, theme-aware level colors, and date tooltips.",
+      "An interactive GitHub contribution calendar with circular dots, inline daily counts, a gliding tooltip, keyboard grid navigation, scroll-wave reveal, and optional repository stickers.",
     icon: "git",
     demoPath: "app/components/[id]/demos/github-map-demo.tsx",
     docPath: "content/components/github-map.md",

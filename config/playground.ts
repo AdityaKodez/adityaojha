@@ -263,14 +263,31 @@ const PLAYGROUNDS: Record<string, PlaygroundSchema> = {
 
   "github-map": {
     componentName: "GitHubCalendar",
-    controls: [{ kind: "palette", key: "palette", default: "github" }],
+    controls: [
+      { kind: "palette", key: "palette", default: "theme" },
+      {
+        kind: "toggle",
+        key: "showCounts",
+        label: "Counts",
+        description: "Show numbers inside active dots",
+        default: true,
+      },
+      {
+        kind: "toggle",
+        key: "showLegend",
+        label: "Legend",
+        description: "Intensity scale below the grid",
+        default: true,
+      },
+    ],
     resolve: (values, palette) => ({
-      colors: [
-        // Level 0 is the empty cell, so it stays the theme token; the ramp
-        // supplies the four contribution levels.
-        HEATMAP_EMPTY_CELL,
-        ...palette.colors.slice(1),
-      ],
+      // Keep the component's theme-aware blue heatmap tokens on the default preview.
+      colors:
+        palette.id === "theme"
+          ? undefined
+          : [HEATMAP_EMPTY_CELL, ...palette.colors.slice(1)],
+      showCounts: values.showCounts,
+      showLegend: values.showLegend,
     }),
   },
 

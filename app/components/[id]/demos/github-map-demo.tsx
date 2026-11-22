@@ -1,56 +1,75 @@
 "use client";
 
 import { useMemo } from "react";
-import { format, subDays } from "date-fns";
 
-import { GitHubCalendar } from "@/components/ui/github-map";
+import {
+  GitHubCalendar,
+  type ContributionDay,
+  type GitHubCalendarProps,
+} from "@/components/ui/github-map";
 
-const GITHUB_GREENS = [
-  "var(--heatmap-level-0)",
-  "#9be9a8",
-  "#40c463",
-  "#30a14e",
-  "#216e39",
-];
+const DAY_MS = 86_400_000;
 
-export function generateMockContributions(): { date: string; count: number }[] {
-  const result: { date: string; count: number }[] = [];
-  const today = new Date();
+const SAMPLE_REPOSITORIES: Record<number, { name: string; stars: number }[]> = {
+  16: [{ name: "trazo-stickers", stars: 142 }],
+  64: [{ name: "akoder-ui", stars: 89 }],
+  138: [{ name: "prompt-kit", stars: 64 }],
+  214: [{ name: "gridly", stars: 37 }],
+  296: [{ name: "verse-text", stars: 51 }],
+};
 
-  for (let i = 365; i >= 0; i--) {
-    const day = subDays(today, i);
-    const dayOfWeek = day.getDay();
+export function generateMockContributions(): ContributionDay[] {
+  const result: ContributionDay[] = [];
+  const now = new Date();
+  const todayUtc = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+  );
+
+  for (let i = 364; i >= 0; i--) {
+    const date = new Date(todayUtc - i * DAY_MS).toISOString().slice(0, 10);
+    const dayOfWeek = new Date(todayUtc - i * DAY_MS).getUTCDay();
     const normalized = Math.abs(
-      Math.sin(i * 12.9898 + (i % 7)) * 43758.5453 % 1,
+      (Math.sin(i * 12.9898 + (i % 7)) * 43758.5453) % 1,
     );
     const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
     const count = isWeekend
-      ? normalized > 0.7
-        ? Math.floor(normalized * 4)
+      ? normalized > 0.68
+        ? Math.floor(normalized * 5)
         : 0
-      : normalized > 0.3
-        ? Math.floor(normalized * 12) + 1
+      : normalized > 0.28
+        ? Math.floor(normalized * 14) + 1
         : 0;
+    const newRepositories = SAMPLE_REPOSITORIES[i];
 
-    result.push({ date: format(day, "yyyy-MM-dd"), count });
+    result.push({
+      date,
+      count: newRepositories ? Math.max(count, 4) : count,
+      ...(newRepositories ? { newRepositories } : {}),
+    });
   }
 
   return result;
 }
 
-/**
- * The colour scale is the panel-driven prop; the mock data stays here.
- */
 export function GitHubMapDemo({
-  colors = GITHUB_GREENS,
-}: {
-  colors?: string[];
-} = {}) {
+  colors,
+  showCounts = true,
+  showLegend = true,
+  minWeeks = 57,
+}: Partial<GitHubCalendarProps> = {}) {
   const data = useMemo(() => generateMockContributions(), []);
 
   return (
-    <div className="w-full">
-      <GitHubCalendar data={data} colors={colors} />
+    <div className="min-w-0 w-full">
+      <GitHubCalendar
+        data={data}
+        colors={colors}
+        showCounts={showCounts}
+        showLegend={showLegend}
+        minWeeks={minWeeks}
+      />
     </div>
   );
 }

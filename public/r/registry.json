@@ -343,7 +343,7 @@
       "name": "github-map",
       "type": "registry:ui",
       "title": "GitHub Heatmap",
-      "description": "An interactive 52-week contribution activity graph with date-fns interval calculation, theme-aware level colors, and date tooltips.",
+      "description": "An interactive GitHub contribution calendar with circular dots, inline daily counts, a gliding tooltip, keyboard grid navigation, scroll-wave reveal, and optional repository stickers.",
       "author": "Aditya Ojha <https://akoder.xyz>",
       "categories": [
         "visualization",
@@ -352,12 +352,10 @@
         "chart"
       ],
       "dependencies": [
-        "date-fns",
-        "radix-ui"
+        "lucide-react",
+        "trazo-stickers"
       ],
-      "registryDependencies": [
-        "tooltip"
-      ],
+      "registryDependencies": [],
       "meta": {
         "docs": "https://akoder.xyz/components/github-map",
         "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/github-map.tsx"
@@ -368,7 +366,7 @@
           "type": "registry:ui"
         }
       ],
-      "docs": "## Installation\n\n```bash\nnpx shadcn@latest add @akoder/github-map\n```\n\n## Usage\n\n```tsx\nimport { GitHubCalendar } from \"@/components/ui/github-map\";\n\nexport function ActivityGraph() {\n  return <GitHubCalendar data={[{ date: \"2025-01-01\", count: 4 }]} />;\n}\n```"
+      "docs": "## Installation\n\n```bash\nnpx shadcn add @akoder/github-map\n```\n\n## Usage\n\n```tsx\nimport { GitHubCalendar } from \"@/components/ui/github-map\";\n\nexport function ActivityGraph() {\n  return (\n    <GitHubCalendar\n      data={[\n        { date: \"2025-01-01\", count: 4 },\n        { date: \"2025-01-02\", count: 9, newRepositories: [{ name: \"trazo-stickers\", stars: 142 }] },\n      ]}\n      minWeeks={57}\n    />\n  );\n}\n```\n\nPass daily UTC `YYYY-MM-DD` contribution entries in `data`. Non-zero circular dots display their daily count, one shared pointer-events-none tooltip glides smoothly between hovered cells, and days with `newRepositories` display curated `trazo-stickers` markers. See https://akoder.xyz/components/github-map for the complete props reference."
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
