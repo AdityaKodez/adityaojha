@@ -51,7 +51,7 @@ function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
   return (
     <figure
       className={cn(
-        "group relative flex w-85 shrink-0 flex-col border-x border-border p-5 transition-colors hover:bg-muted/10 md:w-87.5",
+        "group relative flex w-85 shrink-0 flex-col border-x border-border px-4 py-3.5 transition-colors hover:bg-muted/10 md:w-87.5",
         testimonial.href && "cursor-pointer",
       )}
     >
@@ -67,12 +67,12 @@ function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
             aria-label={`Open original post from ${testimonial.name}`}
           />
         ) : null}
-        <blockquote className="text-sm leading-snug text-muted-foreground">
+        <blockquote className="line-clamp-2 text-sm leading-snug text-muted-foreground">
           {testimonial.content}
         </blockquote>
 
-        <figcaption className="mt-auto flex items-center gap-4 pt-5">
-          <Avatar className="size-9">
+        <figcaption className="mt-auto flex items-center gap-3 pt-3">
+          <Avatar className="size-8">
             <AvatarImage
               src={testimonial.image}
               alt={testimonial.name}
@@ -99,12 +99,19 @@ function TestimonialSlide({ testimonial }: { testimonial: Testimonial }) {
 function TestimonialsTrack({
   items,
   reverse = false,
+  borderTop = true,
 }: {
   items: Testimonial[];
   reverse?: boolean;
+  borderTop?: boolean;
 }) {
   return (
-    <div className="overflow-clip border-y border-border">
+    <div
+      className={cn(
+        "overflow-clip border-b border-border",
+        borderTop && "border-t",
+      )}
+    >
       <div
         className="testimonial-marquee"
         data-reverse={reverse ? "true" : undefined}
@@ -138,10 +145,10 @@ export function Testimonials() {
       <h2 className="no-js-visible section-heading mb-3">
         Community
       </h2>
-      <div className="relative mb-[15px] flex flex-col gap-[15px]">
+      <div className="relative mb-[15px] flex flex-col">
         <TestimonialsTrack items={marqueeTop} />
         {marqueeBottom.length > 0 && (
-          <TestimonialsTrack items={marqueeBottom} reverse />
+          <TestimonialsTrack items={marqueeBottom} reverse borderTop={false} />
         )}
         {/* pointer-events-none: these sit at z-10 above the slider and would
             otherwise swallow interaction in the outer 32px on each side. */}
