@@ -17,7 +17,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { navigationConfig } from "@/config/navigation";
-import { StarBurstSticker } from "stick-it-up";
+import { Starfish } from "trazo-stickers";
 import styles from "./site-header.module.css";
 
 const SiteCommandPalette = dynamic(
@@ -36,7 +36,7 @@ function OpenSourceStarIcon() {
           <OpenSrc size="16.2" />
         </span>
         <span className="absolute inset-0 rotate-y-180 backface-hidden">
-          <StarBurstSticker
+          <Starfish
             size={16.2}
             style={{ display: "block" }}
             aria-hidden="true"

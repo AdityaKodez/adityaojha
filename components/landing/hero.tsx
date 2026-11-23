@@ -6,10 +6,10 @@ import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
 import { MOTION_EASE } from "@/lib/motion";
-import { RotatingGlobe } from "./rotating-globe";
 import { motion, type Variants } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useHaptic } from "react-haptic";
+import { Earth } from "trazo-stickers";
 
 // Keep blur on the text itself, so the banner and section shell stay sharp.
 const textVariants: Variants = {
@@ -43,7 +43,6 @@ export function Hero() {
   const { vibrate } = useHaptic();
   const vibrateAudio = useRef<HTMLAudioElement>(null);
   const lastWaveTrackRef = useRef<number>(0);
-  const [isLocationHovered, setIsLocationHovered] = useState(false);
   const [isLocationTooltipOpen, setIsLocationTooltipOpen] = useState(false);
   const [locationTime, setLocationTime] = useState<string | null>(null);
 
@@ -162,14 +161,15 @@ export function Hero() {
             </span>
             <Tooltip onOpenChange={setIsLocationTooltipOpen}>
               <TooltipTrigger
-                className="micro-transition flex min-h-4 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-sm text-xs text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground sm:text-sm"
-                onMouseEnter={() => setIsLocationHovered(true)}
-                onMouseLeave={() => setIsLocationHovered(false)}
-                onFocus={() => setIsLocationHovered(true)}
-                onBlur={() => setIsLocationHovered(false)}
+                className="group micro-transition flex min-h-4 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-sm text-xs text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground sm:text-sm"
               >
-
-                <RotatingGlobe isHovered={isLocationHovered} />
+                <Earth
+                  size={18}
+                  style={{ display: "block" }}
+                  className="shrink-0 transition-transform duration-300 ease-out motion-safe:group-hover:rotate-12 motion-safe:group-hover:scale-110 motion-safe:group-focus-visible:rotate-12 motion-safe:group-focus-visible:scale-110 motion-reduce:transition-none"
+                  aria-hidden="true"
+                  focusable="false"
+                />
                 <motion.span
                   data-reveal=""
                   className="no-js-visible inline-block font-sans"
