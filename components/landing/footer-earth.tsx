@@ -74,6 +74,7 @@ export function FooterEarth() {
     let lastFrame = 0;
     let elapsed = 0;
     let orbit: Animation | undefined;
+    let imageBuffer: ImageData | null = null;
 
     const updateOrbit = () => {
       if (!orbit) return;
@@ -90,7 +91,13 @@ export function FooterEarth() {
     const draw = () => {
       const width = canvas.width;
       const height = canvas.height;
-      const image = context.createImageData(width, height);
+      if (width <= 1 || height <= 1) return;
+      if (!imageBuffer || imageBuffer.width !== width || imageBuffer.height !== height) {
+        imageBuffer = context.createImageData(width, height);
+      } else {
+        imageBuffer.data.fill(0);
+      }
+      const image = imageBuffer;
       const radius = width * 0.68;
       const centerY = height + Math.sqrt(radius * radius - width * width / 4);
       const angle = 0.1 + elapsed * 0.000018;

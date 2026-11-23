@@ -10,7 +10,13 @@ import type { Testimonial } from "@/config/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ArrowUpRightCircle } from "@/components/shared/site-icons";
-import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 
 const MARQUEE_SPEED = 64;
 const MARQUEE_SPEED_HOVER = 24;
@@ -100,10 +106,12 @@ function TestimonialsTrack({
   items,
   reverse = false,
   borderTop = true,
+  paused = false,
 }: {
   items: Testimonial[];
   reverse?: boolean;
   borderTop?: boolean;
+  paused?: boolean;
 }) {
   return (
     <div
@@ -115,6 +123,7 @@ function TestimonialsTrack({
       <div
         className="testimonial-marquee"
         data-reverse={reverse ? "true" : undefined}
+        data-paused={paused ? "true" : undefined}
         style={
           {
             "--marquee-duration": `${marqueeDuration(items.length, SLIDE_WIDTH)}s`,
@@ -140,15 +149,38 @@ function TestimonialsTrack({
 }
 
 export function Testimonials() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "120px 0px" },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="border-t border-dashed pt-8">
+    <section ref={sectionRef} className="border-t border-dashed pt-8">
       <h2 className="no-js-visible section-heading mb-3">
         Community
       </h2>
       <div className="relative mb-[15px] flex flex-col">
-        <TestimonialsTrack items={marqueeTop} />
+        <TestimonialsTrack items={marqueeTop} paused={!inView} />
         {marqueeBottom.length > 0 && (
-          <TestimonialsTrack items={marqueeBottom} reverse borderTop={false} />
+          <TestimonialsTrack
+            items={marqueeBottom}
+            reverse
+            borderTop={false}
+            paused={!inView}
+          />
         )}
         {/* pointer-events-none: these sit at z-10 above the slider and would
             otherwise swallow interaction in the outer 32px on each side. */}

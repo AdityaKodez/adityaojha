@@ -178,25 +178,16 @@ function MascotArt({ mascot, seed }: { mascot: Mascot; seed: number }) {
           <rect x="-12" y="-20" width="88" height="63" />
         </clipPath>
         <clipPath id={`${uid}-shape`}>{mascot.shape}</clipPath>
-        <filter id={`${uid}-grain`} x="0" y="0" width="100%" height="100%">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="1.35"
-            numOctaves="1"
-            seed={seed}
-            stitchTiles="stitch"
-          />
-          <feColorMatrix values="0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 0 0.04 18 0 0 0 -10.8" />
-        </filter>
-        <filter id={`${uid}-flecks`} x="0" y="0" width="100%" height="100%">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="1.05"
-            seed={seed + 7}
-            stitchTiles="stitch"
-          />
-          <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 18 0 0 -10.4" />
-        </filter>
+        <pattern
+          id={`${uid}-grain`}
+          width="4"
+          height="4"
+          patternUnits="userSpaceOnUse"
+          patternTransform={`rotate(${(seed * 17) % 90})`}
+        >
+          <circle cx="1" cy="1" r="0.55" fill="var(--mascot-ink)" fillOpacity="0.18" />
+          <circle cx="3" cy="2.8" r="0.45" fill="var(--mascot-glint)" fillOpacity="0.22" />
+        </pattern>
         <radialGradient id={`${uid}-light`} cx="34%" cy="22%" r="72%">
           <stop offset="0" className={styles.lightStop} stopOpacity="0.46" />
           <stop offset="0.48" className={styles.lightStop} stopOpacity="0.08" />
@@ -215,14 +206,7 @@ function MascotArt({ mascot, seed }: { mascot: Mascot; seed: number }) {
             <rect
               width="64"
               height="56"
-              filter={`url(#${uid}-grain)`}
-              className={styles.grain}
-            />
-            <rect
-              width="64"
-              height="56"
-              filter={`url(#${uid}-flecks)`}
-              className={styles.flecks}
+              fill={`url(#${uid}-grain)`}
             />
             <g className={styles.rim}>{mascot.shape}</g>
           </g>
@@ -307,7 +291,7 @@ export function AboutMascots() {
     if (!finePointer.matches || reduced.matches || !target) return;
 
     let frame = 0;
-    let visible = false;
+    let listening = false;
     let pointer = { x: 0, y: 0 };
     const clamp = (value: number) => Math.max(-1, Math.min(1, value)).toFixed(3);
 
@@ -325,19 +309,34 @@ export function AboutMascots() {
 
     const onMove = (event: PointerEvent) => {
       pointer = { x: event.clientX, y: event.clientY };
-      if (visible && !frame) frame = window.requestAnimationFrame(update);
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+
+    const stopListening = () => {
+      if (!listening) return;
+      listening = false;
+      window.removeEventListener("pointermove", onMove);
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+        frame = 0;
+      }
     };
 
     const observer = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
+      if (entry.isIntersecting) {
+        if (!listening) {
+          listening = true;
+          window.addEventListener("pointermove", onMove, { passive: true });
+        }
+      } else {
+        stopListening();
+      }
     });
     observer.observe(target);
-    window.addEventListener("pointermove", onMove, { passive: true });
 
     return () => {
       observer.disconnect();
-      window.removeEventListener("pointermove", onMove);
-      if (frame) window.cancelAnimationFrame(frame);
+      stopListening();
     };
   }, []);
 

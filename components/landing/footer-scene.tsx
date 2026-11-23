@@ -1,12 +1,18 @@
 "use client";
 
-import { Fragment, type ReactNode } from "react";
-import { motion, useReducedMotion, useSpring, type Variants } from "motion/react";
+import { Fragment, useRef, type ReactNode } from "react";
+import dynamic from "next/dynamic";
+import { motion, useInView, useReducedMotion, useSpring, type Variants } from "motion/react";
 import { DiscordStatus } from "@/components/landing/discord-status";
-import { FooterEarth } from "@/components/landing/footer-earth";
 import { footerConfig } from "@/config/site";
 import { MOTION_EASE } from "@/lib/motion";
 import { CoffeeSticker } from "stick-it-up";
+
+const FooterEarth = dynamic(
+  () =>
+    import("@/components/landing/footer-earth").then((mod) => mod.FooterEarth),
+  { ssr: false },
+);
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 12 },
@@ -37,6 +43,8 @@ const wordVariants: Variants = {
 
 export function FooterScene({ children }: { children: ReactNode }) {
   const reducedMotion = useReducedMotion();
+  const earthStageRef = useRef<HTMLDivElement>(null);
+  const earthMounted = useInView(earthStageRef, { once: true, margin: "400px" });
   const x = useSpring(0, parallaxSpring);
   const y = useSpring(0, parallaxSpring);
   const rotate = useSpring(0, parallaxSpring);
@@ -55,37 +63,6 @@ export function FooterScene({ children }: { children: ReactNode }) {
       <noscript>
         <style>{`[data-footer-reveal] [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }`}</style>
       </noscript>
-      {/* Displacement map behind the visitor pill's liquid glass. Zero-sized
-          and inert; only the filter definition is referenced, by the
-          .liquid-glass rule in app/globals.css. */}
-      <svg aria-hidden="true" className="absolute size-0">
-        <defs>
-          <filter
-            id="glass-refraction"
-            x="-20%"
-            y="-20%"
-            width="140%"
-            height="140%"
-            colorInterpolationFilters="sRGB"
-          >
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.01 0.01"
-              numOctaves="2"
-              seed="4"
-              result="noise"
-            />
-            <feGaussianBlur in="noise" stdDeviation="2" result="softNoise" />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="softNoise"
-              scale="40"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
-          </filter>
-        </defs>
-      </svg>
       <motion.div
         className="relative z-10 mx-auto flex max-w-[var(--frame-max-w)] flex-col items-center px-6 pt-14 sm:pt-20"
         initial="hidden"
@@ -151,6 +128,7 @@ export function FooterScene({ children }: { children: ReactNode }) {
       </motion.div>
 
       <motion.div
+        ref={earthStageRef}
         aria-hidden="true"
         data-reveal=""
         variants={earthVariants}
@@ -179,7 +157,7 @@ export function FooterScene({ children }: { children: ReactNode }) {
               rotate: reducedMotion ? 0 : rotate,
             }}
           >
-            <FooterEarth />
+            {earthMounted ? <FooterEarth /> : null}
           </motion.div>
         </div>
 

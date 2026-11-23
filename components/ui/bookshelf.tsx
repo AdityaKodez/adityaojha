@@ -62,8 +62,8 @@ function BookCover({
           width={book.cover.width}
           height={book.cover.height}
           alt={book.cover.alt}
-          loading="eager"
-          decoding="sync"
+          loading="lazy"
+          decoding="async"
           className={styles.coverImage}
           onError={() => setFailed(true)}
         />
@@ -265,7 +265,8 @@ export function Bookshelf({
                         alt=""
                         width={book.spine.width}
                         height={book.spine.height}
-                        loading="eager"
+                        loading="lazy"
+                        decoding="async"
                         className={styles.spineImage}
                       />
                     </motion.span>

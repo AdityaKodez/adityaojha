@@ -98,7 +98,7 @@ export function InteractiveSticker({
         />
       </motion.button>
       {soundSrc ? (
-        <audio ref={audioRef} src={soundSrc} preload="auto" />
+        <audio ref={audioRef} src={soundSrc} preload="none" />
       ) : null}
     </>
   );

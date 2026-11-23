@@ -318,6 +318,11 @@ body:has([data-project-page]) [data-site-surface] {
     animation-name: marquee-right;
   }
 
+  .testimonial-marquee[data-paused="true"] {
+    animation-play-state: paused;
+    will-change: auto;
+  }
+
   @media (width >= 48rem) {
     .testimonial-marquee {
       animation-duration: var(--marquee-duration-md, var(--marquee-duration, 60s));
@@ -367,22 +372,11 @@ body:has([data-project-page]) [data-site-surface] {
       0 10px 28px -12px rgb(0 0 0 / 0.35);
   }
 
-  /* The refraction pass, taken only by engines that paint SVG filter
-     references in backdrop-filter. The frost above is the fallback. */
-  @supports (backdrop-filter: url("#glass-refraction")) {
-    .liquid-glass {
-      -webkit-backdrop-filter: blur(2px) saturate(180%) url("#glass-refraction");
-      backdrop-filter: blur(2px) saturate(180%) url("#glass-refraction");
-    }
-  }
-
   /* -------------------------------------------------------------------------
-     Bottom blur (app/page.tsx)
+     Bottom fade (app/page.tsx)
 
-     One masked backdrop blur for the fixed bottom fade, replacing the old
-     stacked progressive-blur layers: the same dissolve into the screen edge
-     from a single element. The mask ramps the blur in from the top of the
-     band so content leaves softly instead of hitting a hard line.
+     A lightweight gradient fade for the fixed bottom edge, avoiding per-frame
+     backdrop-filter repaints while scrolling. Pairs with PixelDissolve.
   ------------------------------------------------------------------------- */
   .bottom-blur {
     pointer-events: none;
@@ -391,10 +385,12 @@ body:has([data-project-page]) [data-site-surface] {
     bottom: 0;
     z-index: 10;
     height: calc(80px + env(safe-area-inset-bottom));
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 78%);
-    mask-image: linear-gradient(to bottom, transparent 0%, #000 78%);
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      color-mix(in oklab, var(--background) 72%, transparent) 55%,
+      var(--background) 100%
+    );
   }
 
   @media (width < 48rem) {

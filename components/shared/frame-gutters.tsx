@@ -44,13 +44,26 @@ export function FrameGutters() {
 
     // The bands are fixed, so their boxes only move on resize — measure once
     // and reuse instead of reading layout on every pointer sample.
-    let boxes: { el: HTMLDivElement; left: number; top: number }[] = [];
+    const MASK_REACH_PX = 128;
+    let boxes: {
+      el: HTMLDivElement;
+      left: number;
+      right: number;
+      top: number;
+      lit: boolean;
+    }[] = [];
     const measure = () => {
       boxes = [];
       for (const el of [leftLit.current, rightLit.current]) {
         if (!el) continue;
         const rect = el.getBoundingClientRect();
-        boxes.push({ el, left: rect.left, top: rect.top });
+        boxes.push({
+          el,
+          left: rect.left,
+          right: rect.right,
+          top: rect.top,
+          lit: false,
+        });
       }
     };
 
@@ -60,10 +73,21 @@ export function FrameGutters() {
 
     const paint = () => {
       frame = 0;
-      for (const { el, left, top } of boxes) {
-        el.style.setProperty("--gutter-x", `${clientX - left}px`);
-        el.style.setProperty("--gutter-y", `${clientY - top}px`);
-        el.style.setProperty("--gutter-lit", "1");
+      for (const box of boxes) {
+        const nearBand =
+          clientX >= box.left - MASK_REACH_PX &&
+          clientX <= box.right + MASK_REACH_PX;
+        if (nearBand) {
+          box.el.style.setProperty("--gutter-x", `${clientX - box.left}px`);
+          box.el.style.setProperty("--gutter-y", `${clientY - box.top}px`);
+          if (!box.lit) {
+            box.el.style.setProperty("--gutter-lit", "1");
+            box.lit = true;
+          }
+        } else if (box.lit) {
+          box.el.style.setProperty("--gutter-lit", "0");
+          box.lit = false;
+        }
       }
     };
 
@@ -74,7 +98,12 @@ export function FrameGutters() {
     };
 
     const dim = () => {
-      for (const { el } of boxes) el.style.setProperty("--gutter-lit", "0");
+      for (const box of boxes) {
+        if (box.lit) {
+          box.el.style.setProperty("--gutter-lit", "0");
+          box.lit = false;
+        }
+      }
     };
 
     const stopListening = () => {
