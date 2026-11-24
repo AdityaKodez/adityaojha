@@ -127,6 +127,12 @@ export interface FooterConfig {
   };
 }
 
+export interface TrazoColophonConfig {
+  label: string;
+  ctaLabel: string;
+  href: string;
+}
+
 export type AboutGreetings = Record<"morning" | "afternoon" | "evening", string>;
 
 export interface AboutItem {
@@ -398,7 +404,6 @@ export interface SponsorPageConfig {
 }
 
 export type ComponentIcon =
-  | "home"
   | "bookshelf"
   | "testimonial"
   | "reactions"
@@ -516,7 +521,7 @@ export interface SiteNavigationItem {
   id: string;
   label: string;
   href: string;
-  icon: ComponentIcon;
+  icon: "home" | "stack" | "testimonial" | "sparkles";
   order: number;
 }
 

@@ -3,12 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { createElement } from "react";
 import { MarkdownAsync } from "react-markdown";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 
-import { getComponentIcon } from "@/components/showcase/component-icons";
+import { PortfolioSticker } from "@/components/shared/portfolio-sticker";
 import { CopyPageMenu } from "@/components/showcase/copy-page-menu";
 import { InstallCommand } from "@/components/showcase/copy-block";
 import { ManualInstall } from "@/components/showcase/manual-install";
@@ -76,9 +75,9 @@ export default async function ComponentDetailPage({
     notFound();
   }
 
-  const componentIcon = createElement(getComponentIcon(component.icon), {
-    className: "size-4 shrink-0 text-muted-foreground",
-  });
+  const componentIcon = (
+    <PortfolioSticker name={component.icon} className="size-4 shrink-0" />
+  );
   const root = process.cwd();
 
   // Demo source (raw + syntax-highlighted HTML).
@@ -112,7 +111,6 @@ export default async function ComponentDetailPage({
 
   const railItems: RailItem[] = [
     ...getEnabledComponents().map((c) => {
-      const Icon = getComponentIcon(c.icon);
       return {
         id: c.id,
         label: c.title,
@@ -122,7 +120,7 @@ export default async function ComponentDetailPage({
           description: c.description,
           icon: (
             <span className="relative inline-flex">
-              <Icon className="h-4 w-4" />
+              <PortfolioSticker name={c.icon} className="size-4" />
               {c.new && (
                 <span
                   className="absolute -top-1.5 -right-1.5 size-2 rounded-full bg-sky-500 ring-2 ring-background"

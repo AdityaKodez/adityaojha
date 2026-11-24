@@ -20,6 +20,7 @@ import {
   useMemo,
   useState,
   useSyncExternalStore,
+  type ComponentType,
   type ReactNode,
 } from "react";
 
@@ -317,6 +318,8 @@ export type ProjectExplorerProps = {
   onYearToggle?: (year: number, action: "expand" | "collapse") => void;
   /** Replace the arrow shown at the end of each row. Default: lucide `ArrowUpRight`. */
   linkIcon?: ReactNode;
+  /** Artwork for the year toggle, with the current expanded state. */
+  yearIcon?: ComponentType<{ open: boolean; className?: string }>;
   /** Optional DOM id for the section container */
   id?: string;
   /** Additional classes for the container section */
@@ -333,6 +336,7 @@ export function ProjectExplorer({
   onProjectClick,
   onYearToggle,
   linkIcon,
+  yearIcon: YearIcon = PaperFolderIcon,
   className,
 }: ProjectExplorerProps) {
   const [activeProject, setActiveProject] = useState<ProjectExplorerItem | null>(null);
@@ -463,7 +467,7 @@ export function ProjectExplorer({
                 aria-expanded={isOpen}
                 className="group mb-1 flex min-h-10 cursor-pointer select-none items-center gap-1.5 rounded-sm px-1 py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/40"
               >
-                <PaperFolderIcon
+                <YearIcon
                   open={isOpen}
                   className="-rotate-6 transition-transform duration-200 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:-rotate-12 motion-safe:group-focus-visible:-translate-y-0.5 motion-safe:group-focus-visible:-rotate-12 motion-reduce:rotate-0 motion-reduce:transition-none"
                 />

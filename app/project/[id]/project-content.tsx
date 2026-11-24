@@ -3,6 +3,7 @@
 import { markdownComponents } from "@/lib/markdown/markdown-components";
 import { Button } from "@/components/ui/button";
 import { PaperFrame } from "@/components/shared/paper-frame";
+import { PortfolioSticker } from "@/components/shared/portfolio-sticker";
 import { projectsSectionConfig } from "@/config/projects";
 import type { Project } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
@@ -11,7 +12,6 @@ import { revealVariants } from "@/lib/motion";
 import {
   ArrowDoodle,
   CodeDoodle,
-  FolderDoodle,
   handwriting,
 } from "@/components/shared/doodles";
 import { motion, useReducedMotion, type Variants } from "motion/react";
@@ -55,7 +55,10 @@ export function ProjectContent({
           href="/#projects"
           className="group inline-flex min-h-11 items-center gap-1.5 rounded-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
-          <FolderDoodle className="size-6" />
+          <PortfolioSticker
+            name="work-closed"
+            className="size-7 motion-safe:transition-transform motion-safe:group-focus-visible:-rotate-6 motion-safe:pointer-fine:group-hover:-rotate-6"
+          />
           <span className={cn(handwriting.className, "text-xl leading-none")}>
             {projectsSectionConfig.title}
           </span>

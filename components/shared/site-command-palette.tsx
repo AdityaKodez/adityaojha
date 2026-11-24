@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useMemo, useState } from "react";
 
-import { getComponentIcon } from "@/components/showcase/component-icons";
+import { PortfolioSticker } from "@/components/shared/portfolio-sticker";
 import {
   CommandPalette,
   type CommandPaletteGroup,
@@ -87,11 +87,10 @@ export function SiteCommandPalette({
 
     const componentItems: CommandPaletteItem[] = getEnabledComponents().map(
       (component) => {
-        const Icon = getComponentIcon(component.icon);
         return {
           id: `component-${component.id}`,
           label: component.title,
-          icon: <Icon className="size-4" />,
+          icon: <PortfolioSticker name={component.icon} className="size-4" />,
           keywords: ["component", "showcase", component.id],
           onSelect: go(`/components/${component.id}`),
         };

@@ -4,6 +4,7 @@ import { Fragment, useRef, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { motion, useInView, useReducedMotion, useSpring, type Variants } from "motion/react";
 import { DiscordStatus } from "@/components/landing/discord-status";
+import { TrazoColophon } from "@/components/landing/trazo-colophon";
 import { footerConfig } from "@/config/site";
 import { MOTION_EASE } from "@/lib/motion";
 import { CoffeeSticker } from "stick-it-up";
@@ -124,6 +125,14 @@ export function FooterScene({ children }: { children: ReactNode }) {
               focusable="false"
             />
           </p>
+        </motion.div>
+
+        <motion.div
+          data-reveal=""
+          variants={itemVariants}
+          className="mt-4"
+        >
+          <TrazoColophon />
         </motion.div>
       </motion.div>
 

@@ -1,5 +1,11 @@
 import { socialsConfig } from "@/config/socials";
-import type { AboutGreetings, AboutItem, FooterConfig, PortfolioConfig } from "@/config/types";
+import type {
+  AboutGreetings,
+  AboutItem,
+  FooterConfig,
+  PortfolioConfig,
+  TrazoColophonConfig,
+} from "@/config/types";
 import SoloLearnIcon from "@/public/sololearn-icon";
 import BrandNextjs from "@/public/stacks/nextjs";
 import X from "@/public/x-icon";
@@ -42,6 +48,12 @@ export const footerConfig: FooterConfig = {
     width: 1264,
     height: 600,
   },
+};
+
+export const trazoColophonConfig: TrazoColophonConfig = {
+  label: "Explore the Trazo sticker library",
+  ctaLabel: "Explore Trazo",
+  href: "https://trazo.akoder.xyz/library?utm_source=akoder.xyz&utm_medium=referral&utm_campaign=portfolio_stickers&utm_content=site_colophon",
 };
 
 export const siteConfig: PortfolioConfig = {

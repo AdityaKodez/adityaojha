@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { Plus } from "@/components/shared/site-icons";
-import { getComponentIcon } from "@/components/showcase/component-icons";
+import { getNavigationIcon } from "@/components/showcase/component-icons";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { navigationConfig, navigationItems } from "@/config/navigation";
 import type { SiteNavigationItem } from "@/config/types";
@@ -22,7 +22,7 @@ export function isNavigationItemActive(item: SiteNavigationItem, pathname: strin
 
 export const siteNavigationItems = navigationItems.map((item) => ({
   ...item,
-  Icon: getComponentIcon(item.icon),
+  Icon: getNavigationIcon(item.icon),
 }));
 
 export function SiteNavigationMenu() {

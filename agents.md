@@ -194,11 +194,18 @@ The home page is a loop, not a hand-written layout.
   `componentsSectionConfig.previewCount` registry entries and ends in a
   `see all n components` link to `/components`. Keep it that way, the full
   catalog lives on the route, not on the home page.
+  Its artwork is shared with the catalog, component detail pages, and command
+  palette. `ComponentDoc.icon` names a Trazo-style SVG in
+  `public/images/portfolio-stickers/`, rendered by `PortfolioSticker`. Check
+  new illustrations at 36px and 16px on both themes. Keep the New label beside
+  the title so it leaves the illustration visible.
 - `projects` (Work) keeps the year folders and paper hover card. Rows show the
   name plus `tagline`, a Scribbles arrow, and no status pills, and open the
-  live site. `/project/[id]` is one narrow, vertically centered column that
-  fits the viewport without scrolling. `data-project-page` drops the frame
-  borders and gutters, like the 404. It shows a handwritten (Caveat) "Work" back link with a folder doodle from `components/shared/doodles.tsx`; doodles redraw stroke by stroke and tilt on hover and focus, and stay still with reduced motion, the
+  live site. `HomeProjectExplorer` supplies open and closed Trazo folders to
+  the shared explorer's year toggle. `/project/[id]` is one narrow, vertically
+  centered column that fits the viewport without scrolling. `data-project-page` drops the frame
+  borders and gutters, like the 404. It shows a handwritten (Caveat) "Work"
+  back link with the closed folder sticker, the
   name with tagline and year, the image on
   `components/shared/paper-frame.tsx` (scales down with viewport height), one
   sentence plus one short paragraph, black `Live site` and secondary
@@ -406,7 +413,9 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   code-rendered, blue dithered Earth rising from the bottom. Keep its quote and
   credit in `footerConfig` in `config/site.ts`. The Earth turns slowly while
   visible and stays still for reduced motion. The quote, live Discord status,
-  and credit sit above it, clear of the fixed bottom controls. The visitor count
+  credit, and `TrazoColophon` pill button (`trazoColophonConfig` in `config/site.ts`,
+  with fanned `trazo-stickers` inside a secondary rounded-full `Button`) sit above
+  it, clear of the fixed bottom controls. The visitor count
   floats centered over the Earth as a liquid-glass pill (`.liquid-glass`, with
   the displacement map rendered by `footer-scene.tsx`).
   Its historical snapshot lives in `config/visitor-count.ts`: Vercel through

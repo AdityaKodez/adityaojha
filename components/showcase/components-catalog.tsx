@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import type { ComponentDoc } from "@/config/types";
-import { getComponentIcon } from "@/components/showcase/component-icons";
+import { PortfolioSticker } from "@/components/shared/portfolio-sticker";
 
 interface ComponentsCatalogProps {
   components: ComponentDoc[];
@@ -11,7 +11,6 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2">
       {components.map((c) => {
-        const Icon = getComponentIcon(c.icon);
         return (
           <Link
             key={c.id}
@@ -19,21 +18,21 @@ export function ComponentsCatalog({ components }: ComponentsCatalogProps) {
             className="group group/component-card relative flex items-stretch border-b sm:border-b-0"
           >
             <div className="relative z-10 flex h-full w-full items-center gap-4 px-4 py-5 transition-colors hover:bg-muted/10">
-              <div className="micro-transition relative flex size-[33.3px] shrink-0 items-center justify-center text-muted-foreground motion-safe:pointer-fine:group-hover/component-card:[transform:translateY(-2px)_rotate(6deg)]">
-                <Icon className="size-full" />
-                {c.new && (
-                  <span
-                    className="absolute -right-1 top-0 -rotate-6 rounded-full bg-primary px-1.5 py-0.5 font-mono text-[9px] leading-3 font-medium text-primary-foreground"
-                    aria-label="New component"
-                  >
-                    New
-                  </span>
-                )}
-              </div>
+              <PortfolioSticker
+                name={c.icon}
+                className="micro-transition size-9 shrink-0 motion-safe:pointer-fine:group-hover/component-card:[transform:translateY(-2px)_rotate(6deg)]"
+              />
               <div className="flex min-w-0 grow flex-col">
-                <h3 className="truncate text-sm font-medium tracking-tight text-foreground">
-                  {c.title}
-                </h3>
+                <div className="flex items-center gap-1.5">
+                  <h3 className="truncate text-sm font-medium tracking-tight text-foreground">
+                    {c.title}
+                  </h3>
+                  {c.new && (
+                    <span className="shrink-0 rounded-full bg-primary px-1.5 py-0.5 font-mono text-[9px] leading-3 font-medium text-primary-foreground">
+                      New
+                    </span>
+                  )}
+                </div>
                 <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
                   {c.summary ?? c.description}
                 </p>
