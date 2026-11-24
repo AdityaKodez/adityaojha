@@ -5,7 +5,8 @@ import { RotatingInstallCommand } from "@/components/showcase/rotating-install-c
 import { SponsorsSection } from "@/components/landing/sponsors";
 import { Footer } from "@/components/landing/footer";
 import { SideNote } from "@/components/shared/side-note";
-import { getEnabledComponents } from "@/config/components";
+import { CodeXml, Heart, Sparkle, Terminal } from "@/components/shared/site-icons";
+import { componentsPageBenefits, getEnabledComponents } from "@/config/components";
 import { openGraphConfig } from "@/config/opengraph";
 import { sectionNotes } from "@/config/section-notes";
 import type { Metadata } from "next";
@@ -28,6 +29,13 @@ export const metadata: Metadata = {
   },
 };
 
+const benefitIcons = {
+  heart: Heart,
+  terminal: Terminal,
+  code: CodeXml,
+  sparkle: Sparkle,
+};
+
 export default function ComponentsPage() {
   const components = getEnabledComponents();
   const note = sectionNotes.components;
@@ -42,6 +50,22 @@ export default function ComponentsPage() {
             </p>
           </div>
           <h1 className="section-heading">drop in.<br className="sm:hidden" /> customize. ship.</h1>
+
+          <ul className="grid gap-x-8 gap-y-5 border-b px-6 py-5 sm:grid-cols-2">
+            {componentsPageBenefits.map(({ icon, title, description }) => {
+              const Icon = benefitIcons[icon];
+
+              return (
+                <li key={icon} className="flex items-start gap-3">
+                  <Icon className="mt-0.5 size-4 shrink-0" />
+                  <div className="min-w-0">
+                    <h2 className="text-sm leading-5 font-medium tracking-tight">{title}</h2>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
 
           <section className="px-6 py-2">
             <RotatingInstallCommand

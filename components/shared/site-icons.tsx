@@ -15,12 +15,14 @@ import {
   CircleArrowDown as CircleArrowDownGlyph,
   CircleOff as CircleOffGlyph,
   Code as CodeGlyph,
+  CodeXml as CodeXmlGlyph,
   Contrast as ContrastGlyph,
   Copy as CopyGlyph,
   Focus as FocusGlyph,
   FolderOpen as FolderOpenGlyph,
   Forward as ForwardGlyph,
   Gamepad2 as Gamepad2Glyph,
+  Heart as HeartGlyph,
   HeartHandshake as HeartHandshakeGlyph,
   House as HouseGlyph,
   ImagePlus as ImagePlusGlyph,
@@ -41,6 +43,7 @@ import {
   Send as SendGlyph,
   ShieldCheck as ShieldCheckGlyph,
   SmilePlus as SmilePlusGlyph,
+  Sparkle as SparkleGlyph,
   Star as StarGlyph,
   Sun as SunGlyph,
   SwatchBook as SwatchBookGlyph,
@@ -83,12 +86,14 @@ export const Circle = createSiteIcon(CircleGlyph);
 export const CircleAlert = createSiteIcon(CircleAlertGlyph);
 export const CircleOff = createSiteIcon(CircleOffGlyph);
 export const Code = createSiteIcon(CodeGlyph);
+export const CodeXml = createSiteIcon(CodeXmlGlyph);
 export const Contrast = createSiteIcon(ContrastGlyph);
 export const Copy = createSiteIcon(CopyGlyph);
 export const Focus = createSiteIcon(FocusGlyph);
 export const FolderOpen = createSiteIcon(FolderOpenGlyph);
 export const ForwardIcon = createSiteIcon(ForwardGlyph);
 export const Gamepad2 = createSiteIcon(Gamepad2Glyph);
+export const Heart = createSiteIcon(HeartGlyph);
 export const HeartHandshake = createSiteIcon(HeartHandshakeGlyph);
 export const Home = createSiteIcon(HouseGlyph);
 export const ImagePlus = createSiteIcon(ImagePlusGlyph);
@@ -109,6 +114,7 @@ export const Search = createSiteIcon(SearchGlyph, "bold");
 export const Send = createSiteIcon(SendGlyph);
 export const ShieldCheck = createSiteIcon(ShieldCheckGlyph);
 export const SmilePlus = createSiteIcon(SmilePlusGlyph);
+export const Sparkle = createSiteIcon(SparkleGlyph);
 export const Star = createSiteIcon(StarGlyph);
 export const Sun = createSiteIcon(SunGlyph);
 export const SwatchBook = createSiteIcon(SwatchBookGlyph);

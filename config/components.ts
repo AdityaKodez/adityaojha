@@ -40,6 +40,29 @@ export const componentsSectionConfig = {
   },
 };
 
+export const componentsPageBenefits = [
+  {
+    icon: "heart",
+    title: "Built for interaction",
+    description: "Try the motion and details in the live demos.",
+  },
+  {
+    icon: "terminal",
+    title: "Install with shadcn",
+    description: "Add components from @akoder with one command.",
+  },
+  {
+    icon: "code",
+    title: "Source you can edit",
+    description: "Edit the component files directly in your project.",
+  },
+  {
+    icon: "sparkle",
+    title: "Docs for your agent",
+    description: "Copy the Markdown docs or a prompt for your coding agent.",
+  },
+] as const;
+
 export const componentRegistry: ComponentDoc[] = [
   {
     id: "bookshelf",
