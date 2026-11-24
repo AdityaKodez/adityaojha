@@ -329,7 +329,7 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   no-JavaScript fallback.
 - The shared header uses separate rounded label and icon pieces, with one link
   and one focus target per pair. Desktop uses the logo for Home and shows
-  Components, Testimonials, and Sponsor as direct links. The separate GitHub
+  Components, Testimonials, and Sponsor as direct links, each paired with a Trazo-style sticker (`public/images/portfolio-stickers/nav-*.svg`, shared with the mobile menu through `getNavigationIcon`). The separate GitHub
   control shows the GitHub logo and repository star count, alongside search
   and theme. The logo flips to the Trazo starfish on fine-pointer hover or
   keyboard focus when reduced motion is off. Mobile keeps the compact

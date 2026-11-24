@@ -1,7 +1,9 @@
 import Image from "next/image";
 import type { ComponentIcon } from "@/config/types";
 
-type PortfolioStickerName = ComponentIcon | "work-open" | "work-closed";
+export type NavigationStickerName = "nav-home" | "nav-components" | "nav-testimonials" | "nav-sponsor";
+
+type PortfolioStickerName = ComponentIcon | "work-open" | "work-closed" | NavigationStickerName;
 
 export function PortfolioSticker({
   name,

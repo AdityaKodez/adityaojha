@@ -1,4 +1,5 @@
 import type { ComponentType, CSSProperties, ReactNode, SVGProps } from "react";
+import { PortfolioSticker, type NavigationStickerName } from "@/components/shared/portfolio-sticker";
 import type { SiteNavigationItem } from "@/config/types";
 import { cn } from "@/lib/utils";
 
@@ -81,51 +82,16 @@ export function PrintDots({ x, y }: { x: number; y: number }) {
   );
 }
 
-function HomeIcon(props: ComponentIconProps) {
-  return (
-    <PaperCutIcon {...props} tilt={-6} silhouette="M9 29 31 10 54 29 49 29 49 51 15 51 15 29Z">
-      <path d="m9 29 22-19 23 19-6 2-17-14-16 14Z" fill="var(--cutout-accent)" />
-      <path d="M27 51V35h10v16" fill="var(--cutout-paper)" />
-      <path d="M41 32h4v7h-4Z" fill="currentColor" strokeWidth="1.5" />
-      <PrintDots x={17} y={38} />
-    </PaperCutIcon>
-  );
+function createNavigationIcon(name: NavigationStickerName) {
+  return function NavigationIcon({ className }: ComponentIconProps) {
+    return <PortfolioSticker name={name} className={className} />;
+  };
 }
-
-function TestimonialIcon(props: ComponentIconProps) {
-  return (
-    <PaperCutIcon {...props} accent="var(--chart-1)" silhouette="M13 12 48 10Q54 11 53 18L51 41Q51 46 44 46H29L17 54 19 45H13Q8 45 9 38L10 18Q10 13 13 12Z">
-      <path d="M20 22h9v9h-5q0 5-6 7M36 21h9v9h-5q0 5-6 7" fill="currentColor" strokeWidth="2" />
-      <PrintDots x={35} y={37} />
-    </PaperCutIcon>
-  );
-}
-
-function GlyphCardIcon(props: ComponentIconProps) {
-  return (
-    <PaperCutIcon {...props} accent="var(--chart-1)" tilt={7} silhouette="M15 12 42 9Q46 9 48 14L55 39Q56 44 51 47L23 55Q18 56 16 51L8 24Q7 20 10 17Z">
-      <path d="m15 12 7 29q1 3 5 2l28-7M22 43l1 12" />
-      <path d="m22 33 3-16 12 12m-13-3 8-2" />
-      <PrintDots x={34} y={42} />
-    </PaperCutIcon>
-  );
-}
-
-function SparklesIcon(props: ComponentIconProps) {
-  return (
-    <PaperCutIcon {...props} tilt={8} silhouette="M29 10 35 25 51 30 36 37 30 54 23 39 8 33 23 26Z">
-      <path d="m29 10 1 23 21-3-15 7-6 17V33L8 33l15-7Z" fill="currentColor" strokeWidth="1.5" />
-      <path d="m47 8 1 5 5 2-5 2-1 5-2-5-4-2 4-2Z" fill="var(--chart-1)" strokeWidth="2" />
-      <path d="m12 47-2 3m34-3 3 3" strokeWidth="2.5" />
-    </PaperCutIcon>
-  );
-}
-
 const navigationIcons: Record<SiteNavigationItem["icon"], ComponentType<ComponentIconProps>> = {
-  home: HomeIcon,
-  stack: GlyphCardIcon,
-  testimonial: TestimonialIcon,
-  sparkles: SparklesIcon,
+  home: createNavigationIcon("nav-home"),
+  stack: createNavigationIcon("nav-components"),
+  testimonial: createNavigationIcon("nav-testimonials"),
+  sparkles: createNavigationIcon("nav-sponsor"),
 };
 
 export function getNavigationIcon(name: SiteNavigationItem["icon"]) {
