@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { navigationConfig } from "@/config/navigation";
 import { FaGithub } from "react-icons/fa6";
+import { Starfish } from "trazo-stickers";
 import styles from "./site-header.module.css";
 
 const SiteCommandPalette = dynamic(
@@ -26,6 +27,21 @@ const SiteCommandPalette = dynamic(
     ),
   { ssr: false },
 );
+
+function GitHubStarIcon() {
+  return (
+    <span aria-hidden="true" className="relative block size-[16.2px] shrink-0 perspective-near">
+      <span className="relative block size-full transform-3d motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-safe:pointer-fine:group-hover:rotate-x-12 motion-safe:pointer-fine:group-hover:rotate-y-180 motion-safe:group-focus-visible:rotate-x-12 motion-safe:group-focus-visible:rotate-y-180">
+        <span className="absolute inset-0 backface-hidden">
+          <FaGithub className="block size-full" focusable="false" />
+        </span>
+        <span className="absolute inset-0 rotate-y-180 backface-hidden">
+          <Starfish size={16.2} style={{ display: "block" }} focusable="false" />
+        </span>
+      </span>
+    </span>
+  );
+}
 
 function GitHubNavLink() {
   const [starCount, setStarCount] = useState<string | null>(null);
@@ -84,10 +100,10 @@ function GitHubNavLink() {
               star_count: starCount,
             });
           }}
-          className="flex h-11 shrink-0 items-center rounded-xl text-muted-foreground outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="group flex h-11 shrink-0 items-center rounded-xl text-muted-foreground outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           <span className="flex h-[28.8px] min-w-[39.6px] items-center justify-center gap-[5.4px] rounded-3xl bg-secondary px-[10.8px]">
-            <FaGithub aria-hidden="true" focusable="false" className="size-[16.2px] shrink-0" />
+            <GitHubStarIcon />
             {starCount !== null && <span className="font-mono text-[10px]">{starCount}</span>}
           </span>
         </Link>

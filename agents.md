@@ -313,7 +313,8 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   and one focus target per pair. Desktop uses the logo for Home and shows
   Components, Testimonials, and Sponsor as direct links. The separate GitHub
   control shows the GitHub logo and repository star count, alongside search
-  and theme. Mobile keeps the compact
+  and theme. The logo flips to the Trazo starfish on fine-pointer hover or
+  keyboard focus when reduced motion is off. Mobile keeps the compact
   header, including the search button, and a matching bottom Menu trigger. Navigation copy and destinations
   live in `config/navigation.ts`; the mobile menu uses the shared Popover primitive.
   The menu is one opaque rounded panel with paper-cut icons on the left and
