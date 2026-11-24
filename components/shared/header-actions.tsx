@@ -11,13 +11,12 @@ import { revealOnMount } from "@/lib/motion";
 import dynamic from "next/dynamic";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
-import OpenSrc from "@/public/stacks/open-src";
 import { Moon, Search, Sun } from "@/components/shared/site-icons";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { navigationConfig } from "@/config/navigation";
-import { Starfish } from "trazo-stickers";
+import { FaGithub } from "react-icons/fa6";
 import styles from "./site-header.module.css";
 
 const SiteCommandPalette = dynamic(
@@ -27,26 +26,6 @@ const SiteCommandPalette = dynamic(
     ),
   { ssr: false },
 );
-
-function OpenSourceStarIcon() {
-  return (
-    <span aria-hidden className="relative block size-[16.2px] shrink-0 perspective-near">
-      <span className="relative block size-full transform-3d transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:rotate-x-12 group-hover:rotate-y-180 group-focus-visible:rotate-x-12 group-focus-visible:rotate-y-180 motion-reduce:transition-none">
-        <span className="absolute inset-0 backface-hidden">
-          <OpenSrc size="16.2" />
-        </span>
-        <span className="absolute inset-0 rotate-y-180 backface-hidden">
-          <Starfish
-            size={16.2}
-            style={{ display: "block" }}
-            aria-hidden="true"
-            focusable="false"
-          />
-        </span>
-      </span>
-    </span>
-  );
-}
 
 function GitHubNavLink() {
   const [starCount, setStarCount] = useState<string | null>(null);
@@ -105,10 +84,10 @@ function GitHubNavLink() {
               star_count: starCount,
             });
           }}
-          className="group flex h-11 shrink-0 items-center rounded-xl text-muted-foreground outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="flex h-11 shrink-0 items-center rounded-xl text-muted-foreground outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           <span className="flex h-[28.8px] min-w-[39.6px] items-center justify-center gap-[5.4px] rounded-3xl bg-secondary px-[10.8px]">
-            <OpenSourceStarIcon />
+            <FaGithub aria-hidden="true" focusable="false" className="size-[16.2px] shrink-0" />
             {starCount !== null && <span className="font-mono text-[10px]">{starCount}</span>}
           </span>
         </Link>
