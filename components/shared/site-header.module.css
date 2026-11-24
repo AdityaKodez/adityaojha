@@ -11,8 +11,33 @@
   flex-shrink: 0;
 }
 
+.tab,
+.utility,
+.githubLink {
+  --surface-fill: var(--secondary);
+  --surface-top: color-mix(in oklch, var(--surface-fill) 62%, var(--background));
+  --surface-bottom: color-mix(in oklch, var(--surface-fill) 94%, var(--foreground));
+  --surface-highlight: color-mix(in oklch, var(--background) 85%, transparent);
+  --surface-lip: color-mix(in oklch, var(--foreground) 7%, transparent);
+  --surface-ring: color-mix(in oklch, var(--foreground) 12%, transparent);
+  --surface-shadow-sm: color-mix(in oklch, var(--foreground) 10%, transparent);
+  --surface-shadow-lg: color-mix(in oklch, var(--foreground) 8%, transparent);
+  -webkit-tap-highlight-color: transparent;
+}
+
+:global(.dark) .tab,
+:global(.dark) .utility,
+:global(.dark) .githubLink {
+  --surface-top: color-mix(in oklch, var(--surface-fill) 92%, var(--foreground));
+  --surface-bottom: color-mix(in oklch, var(--surface-fill) 86%, var(--background));
+  --surface-highlight: color-mix(in oklch, var(--foreground) 14%, transparent);
+  --surface-lip: color-mix(in oklch, var(--background) 42%, transparent);
+  --surface-ring: color-mix(in oklch, var(--foreground) 13%, transparent);
+  --surface-shadow-sm: color-mix(in oklch, var(--background) 78%, transparent);
+  --surface-shadow-lg: color-mix(in oklch, var(--background) 55%, transparent);
+}
+
 .tab {
-  --tab-fill: var(--secondary);
   --tab-ink: var(--secondary-foreground);
   display: inline-flex;
   height: 44px;
@@ -22,21 +47,33 @@
   border-radius: var(--radius-xl);
   color: var(--tab-ink);
   outline-offset: 2px;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .tab:focus-visible,
-.utility:focus-visible {
+.utility:focus-visible,
+.githubLink:focus-visible {
   outline: 2px solid var(--ring);
 }
 
 .label,
-.tile {
+.tile,
+.utilityFace,
+.githubFace {
   display: inline-flex;
   height: 28.8px;
   align-items: center;
   justify-content: center;
-  background: var(--tab-fill);
+  background: linear-gradient(180deg, var(--surface-top), var(--surface-bottom));
+  box-shadow:
+    inset 0 1px 0 var(--surface-highlight),
+    inset 0 -1px 0 var(--surface-lip),
+    0 0 0 1px var(--surface-ring),
+    0 1px 2px var(--surface-shadow-sm),
+    0 4px 10px -4px var(--surface-shadow-lg);
+  transition:
+    box-shadow var(--motion-duration-fast) var(--motion-ease-standard),
+    transform var(--motion-duration-fast) var(--motion-ease-standard),
+    color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .label {
@@ -59,20 +96,57 @@
 }
 
 .accent {
-  --tab-fill: color-mix(in oklch, var(--primary) 12%, var(--background));
+  --surface-fill: color-mix(in oklch, var(--primary) 11%, var(--background));
+  --surface-ring: color-mix(in oklch, var(--primary) 24%, transparent);
   --tab-ink: var(--primary);
+}
+
+:global(.dark) .accent {
+  --surface-fill: color-mix(in oklch, var(--primary) 17%, var(--background));
+  --surface-top: color-mix(in oklch, var(--surface-fill) 88%, var(--primary));
+  --surface-bottom: color-mix(in oklch, var(--surface-fill) 84%, var(--background));
+  --surface-highlight: color-mix(in oklch, var(--primary) 28%, transparent);
+  --surface-ring: color-mix(in oklch, var(--primary) 30%, transparent);
 }
 
 .tab[data-active="true"],
 .tab[data-state="open"],
 .mobileTrigger {
-  --tab-fill: var(--foreground);
+  --surface-fill: var(--foreground);
+  --surface-top: color-mix(in oklch, var(--foreground) 90%, var(--background));
+  --surface-bottom: var(--foreground);
+  --surface-highlight: color-mix(in oklch, var(--background) 20%, transparent);
+  --surface-lip: color-mix(in oklch, var(--background) 10%, transparent);
+  --surface-ring: color-mix(in oklch, var(--foreground) 25%, transparent);
   --tab-ink: var(--background);
 }
 
+:global(.dark) .tab[data-active="true"],
+:global(.dark) .tab[data-state="open"],
+:global(.dark) .mobileTrigger {
+  --surface-top: var(--foreground);
+  --surface-bottom: color-mix(in oklch, var(--foreground) 88%, var(--background));
+  --surface-highlight: color-mix(in oklch, var(--foreground) 65%, transparent);
+  --surface-lip: color-mix(in oklch, var(--background) 20%, transparent);
+  --surface-ring: color-mix(in oklch, var(--foreground) 30%, transparent);
+}
+
 .accent[data-active="true"] {
-  --tab-fill: var(--primary);
+  --surface-fill: var(--primary);
+  --surface-top: color-mix(in oklch, var(--primary) 88%, var(--primary-foreground));
+  --surface-bottom: color-mix(in oklch, var(--primary) 92%, var(--foreground));
+  --surface-highlight: color-mix(in oklch, var(--primary-foreground) 26%, transparent);
+  --surface-lip: color-mix(in oklch, var(--foreground) 18%, transparent);
+  --surface-ring: color-mix(in oklch, var(--primary) 45%, transparent);
   --tab-ink: var(--primary-foreground);
+}
+
+:global(.dark) .accent[data-active="true"] {
+  --surface-top: color-mix(in oklch, var(--primary) 88%, var(--foreground));
+  --surface-bottom: color-mix(in oklch, var(--primary) 86%, var(--primary-foreground));
+  --surface-highlight: color-mix(in oklch, var(--foreground) 32%, transparent);
+  --surface-lip: color-mix(in oklch, var(--primary-foreground) 35%, transparent);
+  --surface-ring: color-mix(in oklch, var(--primary) 45%, transparent);
 }
 
 .tab[data-state="open"] .plus {
@@ -100,49 +174,102 @@
   display: flex;
   position: relative;
   width: 28.8px;
-  height: 28.8px;
-  align-items: center;
-  justify-content: center;
   border-radius: var(--radius-lg);
-  background: var(--secondary);
+}
+
+.githubLink {
+  display: inline-flex;
+  height: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  border-radius: var(--radius-xl);
+  color: var(--muted-foreground);
+  outline-offset: 2px;
+}
+
+.githubFace {
+  min-width: 39.6px;
+  gap: 5.4px;
+  border-radius: var(--radius-3xl);
+  padding-inline: 10.8px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .tab:hover {
-    --tab-fill: color-mix(in oklch, var(--secondary) 88%, var(--foreground));
+  .tab:hover,
+  .utility:hover,
+  .githubLink:hover {
+    --surface-fill: color-mix(in oklch, var(--secondary) 92%, var(--foreground));
+    --surface-ring: color-mix(in oklch, var(--foreground) 18%, transparent);
+    --surface-shadow-sm: color-mix(in oklch, var(--foreground) 14%, transparent);
+    --surface-shadow-lg: color-mix(in oklch, var(--foreground) 12%, transparent);
+  }
+
+  :global(.dark) .tab:hover,
+  :global(.dark) .utility:hover,
+  :global(.dark) .githubLink:hover {
+    --surface-fill: color-mix(in oklch, var(--secondary) 86%, var(--foreground));
+    --surface-highlight: color-mix(in oklch, var(--foreground) 20%, transparent);
+    --surface-ring: color-mix(in oklch, var(--foreground) 20%, transparent);
+    --surface-shadow-sm: color-mix(in oklch, var(--background) 85%, transparent);
+    --surface-shadow-lg: color-mix(in oklch, var(--background) 65%, transparent);
   }
 
   .accent:hover {
-    --tab-fill: color-mix(in oklch, var(--primary) 20%, var(--background));
+    --surface-fill: color-mix(in oklch, var(--primary) 18%, var(--background));
+    --surface-ring: color-mix(in oklch, var(--primary) 34%, transparent);
+  }
+
+  :global(.dark) .accent:hover {
+    --surface-fill: color-mix(in oklch, var(--primary) 24%, var(--background));
+    --surface-highlight: color-mix(in oklch, var(--primary) 36%, transparent);
+    --surface-ring: color-mix(in oklch, var(--primary) 40%, transparent);
   }
 
   .tab[data-active="true"]:hover,
   .tab[data-state="open"]:hover,
   .mobileTrigger:hover {
-    --tab-fill: var(--foreground);
+    --surface-fill: var(--foreground);
   }
 
   .accent[data-active="true"]:hover {
-    --tab-fill: var(--primary);
+    --surface-fill: var(--primary);
   }
 
-  .utility:hover {
+  .utility:hover,
+  .githubLink:hover {
     color: var(--foreground);
   }
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tab:hover .label,
+  .tab:hover .tile,
+  .utility:hover .utilityFace,
+  .githubLink:hover .githubFace {
+    transform: translateY(-0.5px);
+  }
+
   .tab:hover .tile > svg:not(.plus) {
     transform: translateY(-2px) rotate(-7deg);
   }
 
   .tab:active .label,
-  .tab:active .tile {
+  .tab:active .tile,
+  .utility:active .utilityFace,
+  .githubLink:active .githubFace {
     transform: translateY(1px);
+    box-shadow:
+      inset 0 1px 1.5px var(--surface-lip),
+      0 0 0 1px var(--surface-ring),
+      0 1px 1px var(--surface-shadow-sm);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .label,
+  .tile,
+  .utilityFace,
+  .githubFace,
   .tile > svg {
     transition: none;
   }

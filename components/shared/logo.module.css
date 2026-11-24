@@ -1,5 +1,8 @@
 .logo {
   transition: transform 180ms var(--motion-ease-standard);
+  filter:
+    drop-shadow(0 0 1px var(--background))
+    drop-shadow(0 0 5px color-mix(in oklch, var(--background) 90%, transparent));
 }
 
 :global(a:focus-visible) .logo {

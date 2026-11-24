@@ -16,17 +16,54 @@ const textVariants: Variants = {
   hidden: {
     opacity: 0,
     filter: "blur(3px)",
-    y: 8,
+    y: 10,
   },
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
     transition: {
-      duration: 0.5,
+      duration: 0.46,
       ease: MOTION_EASE,
       delay,
-      opacity: { duration: 0.28, ease: MOTION_EASE, delay },
+      opacity: { duration: 0.24, ease: MOTION_EASE, delay },
+    },
+  }),
+};
+
+const badgeVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 5,
+    scale: 0.88,
+    rotate: -10,
+  },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotate: 0,
+    transition: {
+      duration: 0.38,
+      ease: MOTION_EASE,
+      delay,
+      opacity: { duration: 0.2, ease: MOTION_EASE, delay },
+    },
+  }),
+};
+
+const dotVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.5,
+  },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.26,
+      ease: MOTION_EASE,
+      delay,
     },
   }),
 };
@@ -101,7 +138,7 @@ export function Hero() {
 
   return (
     <motion.section
-      className="relative z-20 space-y-4 px-6 pt-4"
+      className="relative z-20 space-y-4 px-6 pt-0"
       initial="hidden"
       animate="visible"
     >
@@ -122,7 +159,8 @@ export function Hero() {
             />
             <motion.span
               data-reveal=""
-              variants={textVariants}
+              variants={badgeVariants}
+              custom={0.12}
               className="no-js-visible flex items-center"
             >
               <span
@@ -156,27 +194,33 @@ export function Hero() {
               </span>
             </motion.span>
             </div>
-            <span className="size-2 rounded-full bg-muted ring-1 ring-inset ring-muted max-sm:hidden">
-
-            </span>
+            <motion.span
+              data-reveal=""
+              variants={dotVariants}
+              custom={0.14}
+              aria-hidden="true"
+              className="no-js-visible size-2 rounded-full bg-muted ring-1 ring-inset ring-muted max-sm:hidden"
+            />
             <Tooltip onOpenChange={setIsLocationTooltipOpen}>
               <TooltipTrigger
-                className="group micro-transition flex min-h-4 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-sm text-xs text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground sm:text-sm"
+                className="group micro-transition flex min-h-4 shrink-0 items-center whitespace-nowrap rounded-sm text-xs text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground sm:text-sm"
               >
-                <Earth
-                  size={18}
-                  style={{ display: "block" }}
-                  className="shrink-0 transition-transform duration-300 ease-out motion-safe:group-hover:rotate-12 motion-safe:group-hover:scale-110 motion-safe:group-focus-visible:rotate-12 motion-safe:group-focus-visible:scale-110 motion-reduce:transition-none"
-                  aria-hidden="true"
-                  focusable="false"
-                />
                 <motion.span
                   data-reveal=""
-                  className="no-js-visible inline-block font-sans"
+                  className="no-js-visible flex items-center gap-1.5"
                   variants={textVariants}
-                  custom={0.26}
+                  custom={0.16}
                 >
-                  {siteConfig.personal.location.label}
+                  <Earth
+                    size={18}
+                    style={{ display: "block" }}
+                    className="shrink-0 transition-transform duration-300 ease-out motion-safe:group-hover:rotate-12 motion-safe:group-hover:scale-110 motion-safe:group-focus-visible:rotate-12 motion-safe:group-focus-visible:scale-110 motion-reduce:transition-none"
+                    aria-hidden="true"
+                    focusable="false"
+                  />
+                  <span className="inline-block font-sans">
+                    {siteConfig.personal.location.label}
+                  </span>
                 </motion.span>
               </TooltipTrigger>
               <TooltipContent>
@@ -191,7 +235,7 @@ export function Hero() {
             data-reveal=""
             className="no-js-visible text-lg sm:text-sm md:text-lg font-semibold leading-[1.05] tracking-tight text-balance"
             variants={textVariants}
-            custom={0.1}
+            custom={0.22}
           >
             <span className="whitespace-nowrap">
               {heroConfig.headlineBefore} {heroConfig.highlightedPhrases[0]}
@@ -206,7 +250,7 @@ export function Hero() {
             data-reveal=""
             className="no-js-visible mt-2 text-sm text-muted-foreground max-sm:text-xs"
             variants={textVariants}
-            custom={0.18}
+            custom={0.3}
           >
             {afterHighlight === undefined ? (
               heroConfig.description

@@ -100,9 +100,9 @@ function GitHubNavLink() {
               star_count: starCount,
             });
           }}
-          className="group flex h-11 shrink-0 items-center rounded-xl text-muted-foreground outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className={`group ${styles.githubLink} outline-none`}
         >
-          <span className="flex h-[28.8px] min-w-[39.6px] items-center justify-center gap-[5.4px] rounded-3xl bg-secondary px-[10.8px]">
+          <span className={styles.githubFace}>
             <GitHubStarIcon />
             {starCount !== null && <span className="font-mono text-[10px]">{starCount}</span>}
           </span>

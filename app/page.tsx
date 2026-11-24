@@ -85,7 +85,7 @@ export default function Home() {
     <>
       <main
         id="main-content"
-        className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x bg-background pt-8 xl:overflow-x-visible"
+        className="relative flex min-h-dvh flex-col gap-y-4 overflow-x-clip border-x bg-background pt-0 xl:overflow-x-visible"
       >
         <div id="hero" className="bg-background scroll-mt-20">
           <ProfileBanner />

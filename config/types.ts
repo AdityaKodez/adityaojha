@@ -111,16 +111,6 @@ export interface HeroConfig {
   descriptionHighlight: string;
 }
 
-export interface ProfileBannerSticker {
-  id: "notebook" | "keyboard" | "plane" | "coffee";
-  src: string;
-  alt: string;
-  label: string;
-  tilt: number;
-  order: number;
-  soundSrc?: string;
-}
-
 export interface AboutConfig {
   title: string;
   body: string;

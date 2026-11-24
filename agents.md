@@ -289,8 +289,19 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   44px target intact. The candle flame, wax drip, Vader swap, and
   corner spider web are removed. The hero text and footer
   quote words are deliberate exceptions and keep their blur-to-sharp resolve.
-  The portrait overlaps the banner at its lower-left edge, with the intro
-  text aligned below it in the original GitHub layout.
+  The hero banner renders a full-bleed pure ordered-dither canvas
+  (`components/landing/hero-fluid-dither.tsx`) flush at the top of `<main>`,
+  sized at 136px tall on mobile and 164px from the small breakpoint, using the
+  five `--hero-wave-stop-*` palette tokens in `app/globals.css` (slate ink,
+  signature Earth blues, and a warm terracotta spike accent) with solid 4 by 4
+  Bayer pixels and no background glow wash. On mount it materializes with a
+  top-down 0.65s Bayer cascade, then drifts slowly with rough spikes, uneven
+  downs, open negative-space pockets, and a soft organic clearing around the
+  top-left header logo; it pauses offscreen and in hidden tabs, holds a static
+  frame for reduced motion, and supports a subtle fine-pointer disturbance on
+  hover.
+  The portrait overlaps the wave at its lower-left edge at 61px on mobile and
+  109px from the small breakpoint, with the intro text aligned below it.
   The profile uses the transparent spiky-haired mascot sticker at
   `public/images/profile-mascot-sticker.webp`, configured by `personal.avatar`.
   Its static grayscale, contrast, brightness, and drop-shadow filters live in
@@ -298,11 +309,11 @@ animation, and the dashed top rule. Do not hand-roll a second variant.
   the black hair or white face. Keep the cutout free of a background tile.
   The hero name uses the supplied `VerseText` component for its comic print
   and idle glitch, with the foreground and `--verse-text-blend` theme tokens.
-  Keep its built-in reduced-motion and offscreen pauses. The headline,
-  description, and location reveal once on mount with a 3px blur, an 8px rise,
-  and a 0.5s ease-out, with short overlapping delays. Animate only the text, keeping
-  the hero shell and banner still. Reduced motion and no JavaScript show the
-  text immediately, sharp and fully visible. The footer
+  Keep its built-in reduced-motion and offscreen pauses. The wave badge,
+  separator dot, Earth + location pair, headline, and description reveal once
+  on mount in top-to-bottom reading order with a 3px blur, 10px rise, and
+  0.46s ease-out (`MOTION_EASE`). Reduced motion and no JavaScript show
+  everything immediately, sharp and fully visible. The footer
   also has a slower one-time staggered entrance for its text and live status.
   The Earth reveals independently once it clears the bottom fade, with a
   80px viewport inset. It follows pointer movement with subtle spring-driven
