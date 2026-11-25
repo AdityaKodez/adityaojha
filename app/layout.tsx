@@ -5,7 +5,9 @@ import { PostHogProvider } from "@/components/shared/posthog-provider";
 import { SiteHeader } from "@/components/shared/site-header";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { heroConfig } from "@/config/hero";
 import { siteConfig } from "@/config/site";
+import { socialsConfig } from "@/config/socials";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/next";
 import { Metadata, Viewport } from "next";
@@ -96,6 +98,8 @@ export const metadata: Metadata = {
   },
 };
 
+const portfolioProfileUrl = "https://portfolios.here/aditya-ojha";
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -115,7 +119,7 @@ const jsonLd = {
       name: siteConfig.personal.fullName,
       url: siteConfig.meta.url,
       jobTitle: "Product Engineer and SaaS Builder",
-      description: siteConfig.meta.description,
+      description: heroConfig.description,
       knowsAbout: [
         "Next.js",
         "TypeScript",
@@ -127,9 +131,13 @@ const jsonLd = {
         "AWS",
       ],
       sameAs: [
-        "https://github.com/AdityaKodez",
-        "https://x.com/AdiKodez",
+        ...socialsConfig.flatMap((profile) =>
+          profile.enabled !== false && profile.action === "external" && profile.href
+            ? [profile.href]
+            : [],
+        ),
         "https://linkedin.com/in/adityakodez",
+        portfolioProfileUrl,
       ],
       image: `${siteConfig.meta.url}/profile.png`,
     },
@@ -152,6 +160,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="me" href={portfolioProfileUrl} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
