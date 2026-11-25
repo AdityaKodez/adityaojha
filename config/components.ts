@@ -59,7 +59,7 @@ export const componentsPageBenefits = [
   {
     icon: "sparkle",
     title: "Docs for your agent",
-    description: "Copy the Markdown docs or a prompt for your coding agent.",
+    description: "Copy the Markdown docs or a prompt for your agent.",
   },
 ] as const;
 
