@@ -65,6 +65,19 @@ export const componentsPageBenefits = [
 
 export const componentRegistry: ComponentDoc[] = [
   {
+    id: "usage-card",
+    title: "Usage card",
+    summary: "A nested quota card with status pills and an inline-labeled progress bar.",
+    description:
+      "A concentric usage meter card with semantic threshold status pills, tabular quota readouts, and an inline-labeled progress bar.",
+    icon: "usage",
+    demoPath: "app/components/[id]/demos/usage-card-demo.tsx",
+    docPath: "content/components/usage-card.md",
+    order: -6,
+    enabled: true,
+    new: true,
+  },
+  {
     id: "bookshelf",
     title: "Bookshelf",
     summary: "An interactive shelf with book spines and expanding covers.",
@@ -88,7 +101,6 @@ export const componentRegistry: ComponentDoc[] = [
     docPath: "content/components/fluid-testimonial-card.md",
     order: -4,
     enabled: true,
-    new: true,
   },
   {
     id: "emoji-reactions",

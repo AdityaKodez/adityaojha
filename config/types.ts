@@ -404,6 +404,7 @@ export interface SponsorPageConfig {
 }
 
 export type ComponentIcon =
+  | "usage"
   | "bookshelf"
   | "testimonial"
   | "reactions"

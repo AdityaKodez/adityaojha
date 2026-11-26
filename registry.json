@@ -4,6 +4,39 @@
   "homepage": "https://akoder.xyz",
   "items": [
     {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "usage-card",
+      "type": "registry:ui",
+      "title": "Usage card",
+      "description": "A concentric usage meter card with semantic threshold status pills, tabular quota readouts, and an inline-labeled progress bar.",
+      "author": "Aditya Ojha <https://akoder.xyz>",
+      "categories": [
+        "usage",
+        "quota",
+        "progress",
+        "billing",
+        "card",
+        "accessibility"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@akoder/workflow-status"
+      ],
+      "meta": {
+        "docs": "https://akoder.xyz/components/usage-card",
+        "source": "https://github.com/AdityaKodez/adityaojha/blob/main/components/ui/usage-card.tsx"
+      },
+      "files": [
+        {
+          "path": "components/ui/usage-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "docs": "## Installation\n\n```bash\nnpx shadcn add @akoder/usage-card\n```\n\n## Usage\n\n```tsx\nimport { Sofa } from \"lucide-react\";\nimport { UsageCard } from \"@/components/ui/usage-card\";\n\nexport function WorkspaceSeats() {\n  return <UsageCard label=\"Seats used\" value={18} limit={25} icon={<Sofa />} />;\n}\n```\n\nReuses `@akoder/workflow-status` for the semantic status pill. Thresholds default to `dangerThreshold={80}`, with an optional `warningThreshold` tier, explicit `status` override, deterministic number formatting, and `role=\"progressbar\"` accessibility. See https://akoder.xyz/components/usage-card for the complete props reference."
+    },
+    {
       "name": "bookshelf",
       "type": "registry:ui",
       "title": "Bookshelf",

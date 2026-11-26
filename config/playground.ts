@@ -88,6 +88,57 @@ export function findPalette(id: string): PlaygroundPalette {
  * snippet reads like the props table.
  */
 const PLAYGROUNDS: Record<string, PlaygroundSchema> = {
+  "usage-card": {
+    componentName: "UsageCard",
+    controls: [
+      {
+        kind: "slider",
+        key: "value",
+        label: "Value",
+        min: 0,
+        max: 25,
+        step: 1,
+        default: 18,
+        format: (value) => `${value} / 25`,
+      },
+      {
+        kind: "slider",
+        key: "dangerThreshold",
+        label: "Danger threshold",
+        min: 50,
+        max: 100,
+        step: 5,
+        default: 80,
+        format: (value) => `${value}%`,
+      },
+      {
+        kind: "segmented",
+        key: "status",
+        label: "Status",
+        options: [
+          { value: "auto", label: "Auto" },
+          { value: "good", label: "Good" },
+          { value: "warning", label: "Warning" },
+          { value: "action-required", label: "Action required" },
+        ],
+        default: "auto",
+      },
+      {
+        kind: "toggle",
+        key: "showStatus",
+        label: "Status pill",
+        description: "Show the semantic badge in the header",
+        default: true,
+      },
+    ],
+    // The demo owns the label, limit, and icon; the panel drives value and badge state.
+    resolve: (values) => ({
+      value: values.value,
+      dangerThreshold: values.dangerThreshold,
+      status: values.status === "auto" ? undefined : values.status,
+      showStatus: values.showStatus,
+    }),
+  },
   bookshelf: {
     componentName: "Bookshelf",
     controls: [
