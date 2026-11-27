@@ -13,6 +13,7 @@ import {
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
@@ -67,10 +68,13 @@ function RailDash({ scale, isActive }: { scale: number; isActive: boolean }) {
       <m.span
         aria-hidden
         className={cn(
-          "block h-0.5 w-full origin-left rounded-full transition-colors duration-300 ease-out motion-reduce:transition-none",
+          "pointer-events-none block h-0.5 w-full origin-left rounded-full motion-safe:transition-[background-color,scale,translate] motion-safe:duration-150 motion-safe:ease-[var(--motion-ease-standard,cubic-bezier(0.22,1,0.36,1))]",
+          scale === 1
+            ? "motion-safe:group-hover/rail-mark:translate-x-1.5"
+            : "motion-safe:group-hover/rail-mark:scale-x-125",
           isActive
             ? "bg-foreground"
-            : "bg-muted-foreground/40 group-hover:bg-muted-foreground"
+            : "bg-muted-foreground/40 group-hover/rail-mark:bg-muted-foreground"
         )}
         style={{ scaleX }}
       />
@@ -238,65 +242,70 @@ export function SectionRail({
         // The dash stays 2px tall; a 14px row around it (offset by -my-1.5 so
         // the visible gap is unchanged) is what you actually click.
         const rowClass = cn(
-          "group -my-1.5 flex w-14 cursor-pointer items-center py-1.5",
+          "group/rail-mark -my-1.5 flex w-14 cursor-pointer items-center py-1.5",
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         );
+        // Give each label its own pointer grace area so it stays hoverable
+        // without delaying the next label when crossing rows.
         return (
-          <Tooltip key={item.id}>
-            <TooltipTrigger asChild>
-              {item.href ? (
-                <Link
-                  href={item.href}
-                  aria-label={item.label}
-                  aria-current={isActive ? "page" : undefined}
-                  className={rowClass}
-                >
-                  <RailDash scale={scale} isActive={isActive} />
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  aria-label={item.label}
-                  aria-current={isActive ? "location" : undefined}
-                  onClick={() => scrollTo(item.id)}
-                  className={rowClass}
-                >
-                  <RailDash scale={scale} isActive={isActive} />
-                </button>
-              )}
-            </TooltipTrigger>
-            <TooltipContent
-              side="right"
-              sideOffset={10}
-              hideArrow={Boolean(item.card)}
-              className={cn(
-                item.card &&
-                  "block w-60 rounded-xl bg-card p-3 text-card-foreground ring-1 ring-inset ring-foreground/10"
-              )}
-            >
-              {item.card ? (
-                <div className="text-left">
-                  <div className="flex items-center gap-1">
-                    {item.card.icon ? (
-                      <span className="flex size-7 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground ring-1 ring-inset ring-muted-foreground/10">
-                        {item.card.icon}
-                      </span>
+          <TooltipProvider key={item.id} delayDuration={0} skipDelayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    aria-label={item.label}
+                    aria-current={isActive ? "page" : undefined}
+                    className={rowClass}
+                  >
+                    <RailDash scale={scale} isActive={isActive} />
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    aria-label={item.label}
+                    aria-current={isActive ? "location" : undefined}
+                    onClick={() => scrollTo(item.id)}
+                    className={rowClass}
+                  >
+                    <RailDash scale={scale} isActive={isActive} />
+                  </button>
+                )}
+              </TooltipTrigger>
+              <TooltipContent
+                side="right"
+                sideOffset={10}
+                hideArrow={Boolean(item.card)}
+                style={{ animation: "none" }}
+                className={cn(
+                  item.card &&
+                    "block w-60 rounded-xl bg-card p-3 text-card-foreground ring-1 ring-inset ring-foreground/10"
+                )}
+              >
+                {item.card ? (
+                  <div className="text-left">
+                    <div className="flex items-center gap-1">
+                      {item.card.icon ? (
+                        <span className="flex size-7 shrink-0 items-center justify-center rounded-sm bg-background text-muted-foreground ring-1 ring-inset ring-muted-foreground/10">
+                          {item.card.icon}
+                        </span>
+                      ) : null}
+                      <p className="text-sm font-medium leading-snug">
+                        {item.card.title}
+                      </p>
+                    </div>
+                    {item.card.description ? (
+                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                        {item.card.description}
+                      </p>
                     ) : null}
-                    <p className="text-sm font-medium leading-snug">
-                      {item.card.title}
-                    </p>
                   </div>
-                  {item.card.description ? (
-                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
-                      {item.card.description}
-                    </p>
-                  ) : null}
-                </div>
-              ) : (
-                <p>{item.label}</p>
-              )}
-            </TooltipContent>
-          </Tooltip>
+                ) : (
+                  <p>{item.label}</p>
+                )}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         );
       })}
     </nav>
