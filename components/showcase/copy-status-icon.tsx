@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import { Copy, X } from "@/components/shared/site-icons";
 import type { CopyStatus } from "@/lib/use-copy";
@@ -35,7 +35,7 @@ export function CopyStatusIcon({
       className={cn("relative inline-flex size-3.5 shrink-0", className)}
     >
       <AnimatePresence initial={false}>
-        <motion.span
+        <m.span
           key={status}
           className={cn(
             "absolute inset-0 inline-flex items-center justify-center",
@@ -63,7 +63,7 @@ export function CopyStatusIcon({
               strokeLinejoin="round"
               className="size-full"
             >
-              <motion.path
+              <m.path
                 d="M5 14L8.5 17.5L19 6.5"
                 initial={{ pathLength: reducedMotion ? 1 : 0 }}
                 animate={{ pathLength: 1 }}
@@ -81,7 +81,7 @@ export function CopyStatusIcon({
           ) : (
             <Copy className="size-full" />
           )}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </span>
   );

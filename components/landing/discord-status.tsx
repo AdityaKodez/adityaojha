@@ -25,7 +25,7 @@ import {
 } from "@/components/landing/discord-activity-icons";
 import {
   AnimatePresence,
-  motion,
+  m,
   useInView,
   useReducedMotion,
 } from "motion/react";
@@ -142,7 +142,7 @@ function Artwork({ presence, active }: { presence: Presence; active: boolean }) 
   return (
     <div className="relative size-7 shrink-0">
       <AnimatePresence initial={false}>
-        <motion.div
+        <m.div
           key={presence.image ?? presence.title}
           className="absolute inset-0 flex items-center justify-center text-muted-foreground"
           initial={reducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.86 }}
@@ -170,13 +170,13 @@ function Artwork({ presence, active }: { presence: Presence; active: boolean }) 
           ) : (
             <FallbackIcon size={28} className="size-7" />
           )}
-        </motion.div>
+        </m.div>
       </AnimatePresence>
       {presence.status && (
         <span aria-hidden="true" className="absolute -bottom-0.5 -right-0.5 size-2">
           {presence.status === "online" && active && !reducedMotion && (
             /* A slow halo says "live" without pulling focus from the quote. */
-            <motion.span
+            <m.span
               className={cn(
                 "absolute inset-0 rounded-full",
                 statusDotColorMap.online,
@@ -191,7 +191,7 @@ function Artwork({ presence, active }: { presence: Presence; active: boolean }) 
               }}
             />
           )}
-          <motion.span
+          <m.span
             key={presence.status}
             className={cn(
               "absolute inset-0 rounded-full ring-[1.5px] ring-background",
@@ -214,7 +214,7 @@ function ListeningBars({ active }: { active: boolean }) {
   return (
     <span aria-hidden="true" className="inline-flex h-2 shrink-0 items-end gap-px">
       {[0, 1, 2].map((bar) => (
-        <motion.span
+        <m.span
           key={bar}
           className="h-full w-0.5 origin-bottom rounded-full bg-success"
           initial={{ scaleY: 0.5 }}
@@ -268,7 +268,7 @@ function CopyHandleButton() {
 
   return (
     <>
-      <motion.button
+      <m.button
         type="button"
         onClick={handleCopy}
         aria-label={`Copy Discord username ${discordSocial.copyValue}`}
@@ -289,7 +289,7 @@ function CopyHandleButton() {
             const offset = index < activeIndex ? -10 : 10;
 
             return (
-              <motion.span
+              <m.span
                 key={labelStatus}
                 className={cn(
                   "col-start-1 row-start-1 whitespace-nowrap",
@@ -308,11 +308,11 @@ function CopyHandleButton() {
                 }
               >
                 {labels[labelStatus]}
-              </motion.span>
+              </m.span>
             );
           })}
         </span>
-      </motion.button>
+      </m.button>
       <span className="sr-only" aria-live="polite">
         {status === "idle" ? "" : labels[status]}
       </span>
@@ -344,7 +344,7 @@ function PresenceCard({ poll }: { poll: boolean }) {
       <Artwork presence={presence} active={poll} />
       <div className="relative min-w-0 flex-1">
         <AnimatePresence initial={false} mode="popLayout">
-          <motion.div
+          <m.div
             key={`${presence.title}\n${presence.subtitle}`}
             initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
@@ -362,7 +362,7 @@ function PresenceCard({ poll }: { poll: boolean }) {
                 <span className="truncate">{presence.subtitle}</span>
               </p>
             )}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
       <CopyHandleButton />

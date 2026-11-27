@@ -1,10 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { LazyMotion, m, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import { reveal, revealDelay } from "@/lib/motion";
 import styles from "./bookshelf.module.css";
+
+// Load layout-projection features lazily so routes only download domMax when
+// the bookshelf hydrates, while keeping the component self-contained for registry consumers.
+const loadDomMax = () => import("motion/react").then((mod) => mod.domMax);
 
 const TRANSITION = { duration: 0.38, ease: [0.22, 1, 0.36, 1] as const };
 const LIFT_TRANSITION = {
@@ -163,6 +167,7 @@ export function Bookshelf({
   }
 
   return (
+    <LazyMotion features={loadDomMax}>
     <div
       ref={root}
       role="group"
@@ -183,7 +188,7 @@ export function Bookshelf({
             } as CSSProperties;
 
             return (
-              <motion.div
+              <m.div
                 key={book.id}
                 className={styles.reveal}
                 {...(revealOnScroll && !reduceMotion
@@ -195,7 +200,7 @@ export function Bookshelf({
                     })
                   : { initial: false })}
               >
-                <motion.button
+                <m.button
                   type="button"
                   layout="position"
                   transition={transition}
@@ -221,7 +226,7 @@ export function Bookshelf({
                     )
                   }
                 >
-                  <motion.span
+                  <m.span
                     className={styles.artwork}
                     initial={false}
                     animate={{
@@ -238,7 +243,7 @@ export function Bookshelf({
                           : LIFT_TRANSITION
                     }
                   >
-                    <motion.span
+                    <m.span
                       className={styles.volume}
                       initial={false}
                       animate={{ opacity: active ? 1 : 0 }}
@@ -250,8 +255,8 @@ export function Bookshelf({
                         book={book}
                         unavailableMessage={coverUnavailableMessage}
                       />
-                    </motion.span>
-                    <motion.span
+                    </m.span>
+                    <m.span
                       className={styles.spine}
                       initial={false}
                       animate={{ opacity: active ? 0 : 1 }}
@@ -269,15 +274,16 @@ export function Bookshelf({
                         decoding="async"
                         className={styles.spineImage}
                       />
-                    </motion.span>
-                  </motion.span>
-                </motion.button>
-              </motion.div>
+                    </m.span>
+                  </m.span>
+                </m.button>
+              </m.div>
             );
           })}
         </div>
       </div>
       <div className={styles.baseline} aria-hidden="true" />
     </div>
+    </LazyMotion>
   );
 }

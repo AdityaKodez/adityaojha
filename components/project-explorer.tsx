@@ -7,7 +7,9 @@ import {
 } from "lucide-react";
 import {
   AnimatePresence,
-  motion,
+  domAnimation,
+  LazyMotion,
+  m,
   useReducedMotion,
   useSpring,
 } from "motion/react";
@@ -441,6 +443,7 @@ export function ProjectExplorer({
   );
 
   return (
+    <LazyMotion features={domAnimation}>
     <section
       id={id}
       className={cn(showHeading && "border-t border-dashed", "pt-6", className)}
@@ -488,7 +491,7 @@ export function ProjectExplorer({
 
               <AnimatePresence initial={false}>
                 {isOpen && (
-                  <motion.ul
+                  <m.ul
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
@@ -506,7 +509,7 @@ export function ProjectExplorer({
                         linkIcon={linkIcon}
                       />
                     ))}
-                  </motion.ul>
+                  </m.ul>
                 )}
               </AnimatePresence>
             </div>
@@ -516,7 +519,7 @@ export function ProjectExplorer({
 
       <AnimatePresence>
         {showPreview && activeProject ? (
-          <motion.div
+          <m.div
             key={activeProject.id}
             aria-hidden="true"
             initial={{ opacity: 0, scale: 0.92, rotate: -2 }}
@@ -565,10 +568,11 @@ export function ProjectExplorer({
                 </span>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         ) : null}
       </AnimatePresence>
     </section>
+    </LazyMotion>
   );
 }
 

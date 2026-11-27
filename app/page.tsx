@@ -19,30 +19,12 @@ import { PixelDissolve } from "@/components/ui/pixel-dissolve";
 import { SideNote } from "@/components/shared/side-note";
 import { projectsConfig, projectsSectionConfig } from "@/config/projects";
 import { getEnabledBooks } from "@/config/books";
-import { diwaliConfig } from "@/config/diwali";
 import { sectionNotes } from "@/config/section-notes";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
-import dynamic from "next/dynamic";
 import type { ReactElement } from "react";
 import { Suspense } from "react";
 import type { ProjectExplorerItem } from "@/components/project-explorer";
-
-const Experience = dynamic(() =>
-  import("@/components/landing/experience").then((m) => m.Experience),
-);
-const Services = dynamic(() =>
-  import("@/components/landing/services").then((m) => m.Services),
-);
-const HowIWork = dynamic(() =>
-  import("@/components/landing/how-i-work").then((m) => m.HowIWork),
-);
-const CTA = dynamic(() =>
-  import("@/components/landing/cta").then((m) => m.CTA),
-);
-const DiwaliScene = dynamic(() =>
-  import("@/components/landing/diwali-scene").then((m) => m.DiwaliScene),
-);
 
 /* The explorer never reads case-study content, tags, or status, so those
    fields stay on the server instead of crossing the client boundary. */
@@ -63,7 +45,12 @@ const explorerProjects: ProjectExplorerItem[] = projectsConfig.map(
   }),
 );
 
-const staticSections: Record<Exclude<SectionId, "github">, () => ReactElement> = {
+// Disabled sections (experience, services, workflow, contact) are intentionally
+// omitted here so Turbopack does not include their client chunks in `/` while
+// their sectionFlags remain false. Re-add a factory here when enabling one.
+const staticSections: Partial<
+  Record<Exclude<SectionId, "github">, () => ReactElement>
+> = {
   socials: () => <Social />,
   skills: () => <Skills />,
   about: () => <About />,
@@ -80,10 +67,6 @@ const staticSections: Record<Exclude<SectionId, "github">, () => ReactElement> =
   certifications: () => <Certifications />,
   insights: () => <Insights />,
   sponsors: () => <SponsorsSection />,
-  experience: () => <Experience />,
-  services: () => <Services />,
-  workflow: () => <HowIWork />,
-  contact: () => <CTA />,
 };
 
 export default function Home() {
@@ -111,13 +94,19 @@ export default function Home() {
             return null;
           }
 
+          const renderSection =
+            sectionId === "github" ? null : staticSections[sectionId];
+          if (sectionId !== "github" && !renderSection) {
+            return null;
+          }
+
           const content =
             sectionId === "github" ? (
               <Suspense key="github" fallback={<GitSkeleton />}>
                 <GitHubSection />
               </Suspense>
             ) : (
-              staticSections[sectionId]()
+              renderSection!()
             );
           const note = sectionNotes[sectionId];
 
@@ -127,7 +116,6 @@ export default function Home() {
               id={sectionId}
               className="relative bg-background scroll-mt-20"
             >
-              {sectionId === "about" && diwaliConfig.enabled && <DiwaliScene />}
               {note && <SideNote side={note.side}>{note.text}</SideNote>}
               {content}
             </div>

@@ -2,7 +2,7 @@
 
 import { Fragment, useRef, type ReactNode } from "react";
 import dynamic from "next/dynamic";
-import { motion, useInView, useReducedMotion, useSpring, type Variants } from "motion/react";
+import { m, useInView, useReducedMotion, useSpring, type Variants } from "motion/react";
 import { DiscordStatus } from "@/components/landing/discord-status";
 import { TrazoColophon } from "@/components/landing/trazo-colophon";
 import { SiteSticker } from "@/components/shared/site-sticker";
@@ -64,7 +64,7 @@ export function FooterScene({ children }: { children: ReactNode }) {
       <noscript>
         <style>{`[data-footer-reveal] [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }`}</style>
       </noscript>
-      <motion.div
+      <m.div
         className="relative z-10 mx-auto flex max-w-[var(--frame-max-w)] flex-col items-center px-6 pt-14 sm:pt-20"
         initial="hidden"
         whileInView="visible"
@@ -72,7 +72,7 @@ export function FooterScene({ children }: { children: ReactNode }) {
         variants={{ visible: { transition: { staggerChildren: 0.16 } } }}
       >
         <figure className="max-w-sm text-center">
-          <motion.blockquote
+          <m.blockquote
             className="text-balance font-serif text-2xl italic leading-snug text-foreground"
             variants={{ visible: { transition: { staggerChildren: 0.075 } } }}
           >
@@ -82,36 +82,36 @@ export function FooterScene({ children }: { children: ReactNode }) {
                 {footerConfig.quote.split(" ").map((word, index) => (
                   <Fragment key={`${word}-${index}`}>
                     {index > 0 && " "}
-                    <motion.span
+                    <m.span
                       data-reveal=""
                       className="inline-block"
                       variants={wordVariants}
                     >
                       {word}
-                    </motion.span>
+                    </m.span>
                   </Fragment>
                 ))}
               </span>
             </p>
-          </motion.blockquote>
-          <motion.figcaption
+          </m.blockquote>
+          <m.figcaption
             data-reveal=""
             variants={itemVariants}
             className="mt-4 font-mono text-[10px] tracking-[0.12em] text-muted-foreground"
           >
             {footerConfig.attribution}
-          </motion.figcaption>
+          </m.figcaption>
         </figure>
 
-        <motion.div
+        <m.div
           data-reveal=""
           variants={itemVariants}
           className="mt-7 w-full max-w-[19rem]"
         >
           <DiscordStatus />
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           data-reveal=""
           variants={itemVariants}
           className="mt-5 flex flex-col items-center gap-1 sm:flex-row sm:gap-6"
@@ -126,18 +126,18 @@ export function FooterScene({ children }: { children: ReactNode }) {
               aria-hidden="true"
             />
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           data-reveal=""
           variants={itemVariants}
           className="mt-4"
         >
           <TrazoColophon />
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
 
-      <motion.div
+      <m.div
         ref={earthStageRef}
         aria-hidden="true"
         data-reveal=""
@@ -159,7 +159,7 @@ export function FooterScene({ children }: { children: ReactNode }) {
         className="relative mt-2 h-48 select-none overflow-hidden sm:h-52"
       >
         <div className="relative left-1/2 h-full w-[calc(100%+24px)] min-w-180 -translate-x-1/2">
-          <motion.div
+          <m.div
             className="h-full origin-bottom"
             style={{
               x: reducedMotion ? 0 : x,
@@ -168,13 +168,13 @@ export function FooterScene({ children }: { children: ReactNode }) {
             }}
           >
             {earthMounted ? <FooterEarth /> : null}
-          </motion.div>
+          </m.div>
         </div>
 
         <div className="absolute inset-x-4 top-1/2 z-10 flex -translate-y-1/2 justify-center">
           {children}
         </div>
-      </motion.div>
+      </m.div>
     </footer>
   );
 }

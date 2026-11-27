@@ -7,7 +7,7 @@ import { heroConfig } from "@/config/hero";
 import { personalClientConfig } from "@/config/site-client";
 import { trackEvent } from "@/lib/analytics";
 import { MOTION_EASE } from "@/lib/motion";
-import { motion, type Variants } from "motion/react";
+import { m, type Variants } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useHaptic } from "react-haptic";
 
@@ -137,7 +137,7 @@ export function Hero() {
   }, []);
 
   return (
-    <motion.section
+    <m.section
       className="relative z-20 space-y-4 px-6 pt-0"
       initial="hidden"
       animate="visible"
@@ -157,7 +157,7 @@ export function Hero() {
                 } as CSSProperties
               }
             />
-            <motion.span
+            <m.span
               data-reveal=""
               variants={badgeVariants}
               custom={0.12}
@@ -192,9 +192,9 @@ export function Hero() {
                   />
                 )}
               </span>
-            </motion.span>
+            </m.span>
             </div>
-            <motion.span
+            <m.span
               data-reveal=""
               variants={dotVariants}
               custom={0.14}
@@ -205,7 +205,7 @@ export function Hero() {
               <TooltipTrigger
                 className="group micro-transition flex min-h-4 shrink-0 items-center whitespace-nowrap rounded-sm text-xs text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/20 hover:text-foreground sm:text-sm"
               >
-                <motion.span
+                <m.span
                   data-reveal=""
                   className="no-js-visible flex items-center gap-1.5"
                   variants={textVariants}
@@ -222,7 +222,7 @@ export function Hero() {
                   <span className="inline-block font-sans">
                     {personalClientConfig.location.label}
                   </span>
-                </motion.span>
+                </m.span>
               </TooltipTrigger>
               <TooltipContent>
                 <span className="font-sans text-xs tracking-wider">
@@ -232,7 +232,7 @@ export function Hero() {
             </Tooltip>
           </div>
 
-          <motion.h1
+          <m.h1
             data-reveal=""
             className="no-js-visible text-lg sm:text-sm md:text-lg font-semibold leading-[1.05] tracking-tight text-balance"
             variants={textVariants}
@@ -245,9 +245,9 @@ export function Hero() {
               in {heroConfig.highlightedPhrases[1]}
             </span>
             {headlineAfter}
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             data-reveal=""
             className="no-js-visible mt-2 text-sm text-muted-foreground max-sm:text-xs"
             variants={textVariants}
@@ -264,12 +264,12 @@ export function Hero() {
                 {afterHighlight}
               </>
             )}
-          </motion.p>
+          </m.p>
 
         </div>
       </div>
 
       <audio src="/vibration.mp3" ref={vibrateAudio} loop preload="none" />
-    </motion.section>
+    </m.section>
   );
 }

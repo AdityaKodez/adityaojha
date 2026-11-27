@@ -4,73 +4,65 @@ import { gzipSync } from "node:zlib";
 
 const root = process.cwd();
 const iconsDir = path.join(root, "node_modules", "scribbles-icons", "dist", "icons");
-const outputPath = path.join(root, "public", "icons", "site-icons.svg");
+const outDir = path.join(root, "public", "icons");
 
-// Every scribbles-icons glyph used by components/shared/site-icons.tsx
-// (53 existing site-control glyphs + 8 sponsor-page glyphs; Heart is shared).
-const SITE_ICONS = [
-  { name: "Activity", weight: "fill" },
-  { name: "Armchair", weight: "fill" },
-  { name: "ArrowBigDown", weight: "fill" },
-  { name: "ArrowBigUp", weight: "fill" },
-  { name: "ArrowLeft", weight: "fill" },
-  { name: "ArrowRight", weight: "fill" },
-  { name: "ArrowUpRight", weight: "fill" },
-  { name: "BookmarkCheck", weight: "fill" },
-  { name: "Check", weight: "fill" },
-  { name: "ChevronDown", weight: "fill" },
-  { name: "Circle", weight: "fill" },
-  { name: "CircleAlert", weight: "fill" },
-  { name: "CircleArrowDown", weight: "fill" },
-  { name: "CircleOff", weight: "fill" },
-  { name: "Code", weight: "fill" },
-  { name: "CodeXml", weight: "fill" },
-  { name: "Coffee", weight: "fill" },
-  { name: "Contrast", weight: "fill" },
-  { name: "Copy", weight: "fill" },
-  { name: "FlaskConical", weight: "fill" },
-  { name: "Focus", weight: "fill" },
-  { name: "FolderOpen", weight: "fill" },
-  { name: "Forward", weight: "fill" },
-  { name: "Gamepad2", weight: "fill" },
-  { name: "HandHeart", weight: "fill" },
-  { name: "Heart", weight: "fill" },
-  { name: "HeartHandshake", weight: "fill" },
-  { name: "House", weight: "fill" },
-  { name: "ImagePlus", weight: "fill" },
-  { name: "Layers", weight: "fill" },
-  { name: "Link", weight: "fill" },
-  { name: "ListTodo", weight: "fill" },
-  { name: "LoaderCircle", weight: "fill" },
-  { name: "LockKeyhole", weight: "fill" },
-  { name: "MessageCircle", weight: "fill" },
-  { name: "MessageSquareQuote", weight: "fill" },
-  { name: "Monitor", weight: "fill" },
-  { name: "Moon", weight: "fill" },
-  { name: "Music", weight: "fill" },
-  { name: "PartyPopper", weight: "fill" },
-  { name: "PenLine", weight: "fill" },
-  { name: "Plus", weight: "fill" },
-  { name: "Radio", weight: "fill" },
-  { name: "Receipt", weight: "fill" },
-  { name: "RotateCcw", weight: "fill" },
-  { name: "Search", weight: "bold" },
-  { name: "Send", weight: "fill" },
-  { name: "ShieldCheck", weight: "fill" },
-  { name: "SmilePlus", weight: "fill" },
-  { name: "Sparkle", weight: "fill" },
-  { name: "Sparkles", weight: "fill" },
-  { name: "Star", weight: "fill" },
-  { name: "Sun", weight: "fill" },
-  { name: "SwatchBook", weight: "fill" },
-  { name: "Swords", weight: "fill" },
-  { name: "Terminal", weight: "fill" },
-  { name: "TrendingDown", weight: "fill" },
-  { name: "TrendingUp", weight: "fill" },
-  { name: "Tv", weight: "fill" },
-  { name: "Upload", weight: "fill" },
-  { name: "X", weight: "fill" },
-];
+// Split sprites by surface so `/` only preloads the 14 icons it actually uses
+// (~35 KB gz instead of ~173 KB gz). 14 unused legacy glyphs were pruned.
+const SPRITES = {
+  "site-icons": [
+    { name: "ArrowBigDown", weight: "fill" },
+    { name: "ArrowBigUp", weight: "fill" },
+    { name: "ArrowUpRight", weight: "fill" },
+    { name: "BookmarkCheck", weight: "fill" },
+    { name: "Copy", weight: "fill" },
+    { name: "MessageCircle", weight: "fill" },
+    { name: "Moon", weight: "fill" },
+    { name: "Plus", weight: "fill" },
+    { name: "Search", weight: "bold" },
+    { name: "Star", weight: "fill" },
+    { name: "Sun", weight: "fill" },
+    { name: "TrendingDown", weight: "fill" },
+    { name: "TrendingUp", weight: "fill" },
+    { name: "X", weight: "fill" },
+  ],
+  "sponsor-icons": [
+    { name: "Armchair", weight: "fill" },
+    { name: "ArrowRight", weight: "fill" },
+    { name: "Check", weight: "fill" },
+    { name: "CircleAlert", weight: "fill" },
+    { name: "Coffee", weight: "fill" },
+    { name: "FlaskConical", weight: "fill" },
+    { name: "HandHeart", weight: "fill" },
+    { name: "Heart", weight: "fill" },
+    { name: "LoaderCircle", weight: "fill" },
+    { name: "LockKeyhole", weight: "fill" },
+    { name: "PartyPopper", weight: "fill" },
+    { name: "PenLine", weight: "fill" },
+    { name: "Receipt", weight: "fill" },
+    { name: "Sparkles", weight: "fill" },
+    { name: "Upload", weight: "fill" },
+  ],
+  "extra-icons": [
+    { name: "ArrowLeft", weight: "fill" },
+    { name: "ChevronDown", weight: "fill" },
+    { name: "Code", weight: "fill" },
+    { name: "CodeXml", weight: "fill" },
+    { name: "Contrast", weight: "fill" },
+    { name: "FolderOpen", weight: "fill" },
+    { name: "HeartHandshake", weight: "fill" },
+    { name: "House", weight: "fill" },
+    { name: "ImagePlus", weight: "fill" },
+    { name: "Layers", weight: "fill" },
+    { name: "Link", weight: "fill" },
+    { name: "MessageSquareQuote", weight: "fill" },
+    { name: "Monitor", weight: "fill" },
+    { name: "RotateCcw", weight: "fill" },
+    { name: "Send", weight: "fill" },
+    { name: "ShieldCheck", weight: "fill" },
+    { name: "Sparkle", weight: "fill" },
+    { name: "Terminal", weight: "fill" },
+  ],
+};
 
 function toKebabId(name) {
   return name
@@ -186,23 +178,26 @@ function compactPathData(d, iconName) {
   return out;
 }
 
-const symbols = SITE_ICONS.map(({ name, weight }) => {
-  const filePath = path.join(iconsDir, `${name}.js`);
-  const source = readFileSync(filePath, "utf-8");
-  const rawPath = extractWeightPath(source, name, weight);
-  const d = compactPathData(rawPath, name);
-  const id = toKebabId(name);
-  return `<symbol id="${id}" viewBox="0 0 256 256"><path d="${d}"/></symbol>`;
-});
+mkdirSync(outDir, { recursive: true });
 
-const sprite = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">${symbols.join("")}</svg>\n`;
+for (const [spriteName, icons] of Object.entries(SPRITES)) {
+  const symbols = icons.map(({ name, weight }) => {
+    const filePath = path.join(iconsDir, `${name}.js`);
+    const source = readFileSync(filePath, "utf-8");
+    const rawPath = extractWeightPath(source, name, weight);
+    const d = compactPathData(rawPath, name);
+    const id = toKebabId(name);
+    return `<symbol id="${id}" viewBox="0 0 256 256"><path d="${d}"/></symbol>`;
+  });
 
-mkdirSync(path.dirname(outputPath), { recursive: true });
-writeFileSync(outputPath, sprite, "utf-8");
+  const sprite = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">${symbols.join("")}</svg>\n`;
+  const outputPath = path.join(outDir, `${spriteName}.svg`);
+  writeFileSync(outputPath, sprite, "utf-8");
 
-const rawBytes = Buffer.byteLength(sprite, "utf-8");
-const gzBytes = gzipSync(sprite, { level: 9 }).byteLength;
+  const rawBytes = Buffer.byteLength(sprite, "utf-8");
+  const gzBytes = gzipSync(sprite, { level: 9 }).byteLength;
 
-console.log(
-  `Emitted public/icons/site-icons.svg (${SITE_ICONS.length} icons, ${(rawBytes / 1024).toFixed(1)} KB raw, ${(gzBytes / 1024).toFixed(1)} KB gz)`,
-);
+  console.log(
+    `Emitted public/icons/${spriteName}.svg (${icons.length} icons, ${(rawBytes / 1024).toFixed(1)} KB raw, ${(gzBytes / 1024).toFixed(1)} KB gz)`,
+  );
+}

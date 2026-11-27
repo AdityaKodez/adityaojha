@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { Plus } from "@/components/shared/site-icons";
 import { getNavigationIcon } from "@/components/showcase/component-icons";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -13,7 +13,7 @@ import { revealDelay, revealOnMount } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import styles from "./site-header.module.css";
 
-const MotionLink = motion.create(Link);
+const MotionLink = m.create(Link);
 
 export function isNavigationItemActive(item: SiteNavigationItem, pathname: string) {
   const path = item.href;
@@ -32,7 +32,7 @@ export function SiteNavigationMenu() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <motion.button
+        <m.button
           type="button"
           {...revealOnMount({ y: -10 })}
           aria-label={open ? navigationConfig.close : navigationConfig.menu}
@@ -40,7 +40,7 @@ export function SiteNavigationMenu() {
         >
           <span className={styles.label}>{navigationConfig.menu}</span>
           <span aria-hidden="true" className={styles.tile}><Plus className={styles.plus} /></span>
-        </motion.button>
+        </m.button>
       </PopoverTrigger>
       <PopoverContent
         aria-label={navigationConfig.label}

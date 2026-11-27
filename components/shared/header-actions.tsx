@@ -6,7 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { revealOnMount } from "@/lib/motion";
 import dynamic from "next/dynamic";
 import { bannerClientConfig } from "@/config/site-client";
@@ -179,7 +179,7 @@ export function HeaderActions() {
 
   return (
     <>
-      <motion.div
+      <m.div
         {...revealOnMount({ y: -10 })}
         className="pointer-events-auto flex shrink-0 items-center"
       >
@@ -220,7 +220,7 @@ export function HeaderActions() {
             <p>{bannerClientConfig.themeTooltip} <Kbd>{bannerClientConfig.themeShortcut}</Kbd></p>
           </TooltipContent>
         </Tooltip>
-      </motion.div>
+      </m.div>
 
       <audio
         ref={themeAudioRef}

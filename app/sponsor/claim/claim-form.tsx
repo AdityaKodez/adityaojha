@@ -13,7 +13,7 @@ import {
   LockKeyhole,
   Upload,
 } from "@/components/shared/site-icons";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -348,7 +348,7 @@ export function ClaimForm() {
       <div className={COLUMN}>
         {status === "success" ? (
           <section aria-labelledby="claim-success" className="pb-2">
-            <motion.div {...revealOnMount({ y: 6 })}>
+            <m.div {...revealOnMount({ y: 6 })}>
               <p className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 font-mono text-[11px] text-foreground">
                 <Check aria-hidden className="size-3" />
                 Seat claimed
@@ -462,7 +462,7 @@ export function ClaimForm() {
                   there is nothing to manage.
                 </p>
               </div>
-            </motion.div>
+            </m.div>
           </section>
         ) : (
           <form

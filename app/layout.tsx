@@ -1,6 +1,7 @@
 import { BottomNav } from "@/components/landing/bottom-nav";
 import { BackToTop } from "@/components/shared/back-to-top";
 import { FrameGutters } from "@/components/shared/frame-gutters";
+import { MotionProvider } from "@/components/shared/motion-provider";
 import { PostHogProvider } from "@/components/shared/posthog-provider";
 import { SiteHeader } from "@/components/shared/site-header";
 import { ThemeProvider } from "@/components/shared/theme-provider";
@@ -179,23 +180,25 @@ export default function RootLayout({
           <style>{`.no-js-visible { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important; stroke-dasharray: none !important; }`}</style>
         </noscript>
         <ThemeProvider>
-          <TooltipProvider>
-            <PostHogProvider>
-              <div data-site-chrome="" className="contents">
-                <SiteHeader />
-                <FrameGutters />
-              </div>
-              <div data-site-frame="" className="relative mx-auto w-full max-w-[var(--frame-max-w)]">
-                <div data-site-surface="" className="relative w-full border-x bg-muted/20">
-                  {children}
-                </div>
+          <MotionProvider>
+            <TooltipProvider>
+              <PostHogProvider>
                 <div data-site-chrome="" className="contents">
-                  <BottomNav />
-                  <BackToTop />
+                  <SiteHeader />
+                  <FrameGutters />
                 </div>
-              </div>
-            </PostHogProvider>
-          </TooltipProvider>
+                <div data-site-frame="" className="relative mx-auto w-full max-w-[var(--frame-max-w)]">
+                  <div data-site-surface="" className="relative w-full border-x bg-muted/20">
+                    {children}
+                  </div>
+                  <div data-site-chrome="" className="contents">
+                    <BottomNav />
+                    <BackToTop />
+                  </div>
+                </div>
+              </PostHogProvider>
+            </TooltipProvider>
+          </MotionProvider>
         </ThemeProvider>
         <Analytics />
         <Script

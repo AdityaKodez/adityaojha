@@ -11,7 +11,7 @@ import type { Sponsor } from "@/config/types";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { Message, Plus } from "@/components/shared/site-icons";
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import {
   useCallback,
@@ -170,14 +170,14 @@ function TileFrame({
   };
 
   const inner = (
-    <motion.span
+    <m.span
       initial={false}
       animate={animate}
       transition={badgeSpring}
       className={visualClassName}
     >
       {children}
-    </motion.span>
+    </m.span>
   );
 
   const describedBy = tooltip.activeId === id ? tooltip.tooltipId : undefined;

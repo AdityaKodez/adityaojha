@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { SiteNavigationMenu } from "@/components/shared/site-navigation";
 import { revealOnMount } from "@/lib/motion";
 
@@ -9,12 +9,12 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <motion.div
+    <m.div
       {...revealOnMount({ y: -10 })}
       key={pathname}
       className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] left-6 z-50 md:hidden"
     >
       <SiteNavigationMenu />
-    </motion.div>
+    </m.div>
   );
 }

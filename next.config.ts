@@ -59,10 +59,32 @@ const nextConfig: NextConfig = {
     ],
   },
   async headers() {
+    const staticAssetCache = [
+      {
+        key: "Cache-Control",
+        value: "public, max-age=604800, stale-while-revalidate=2592000",
+      },
+    ];
     return [
       {
         source: "/:path*",
         headers: securityHeaders,
+      },
+      {
+        source: "/icons/:path*",
+        headers: staticAssetCache,
+      },
+      {
+        source: "/images/:path*",
+        headers: staticAssetCache,
+      },
+      {
+        source: "/testimonial/:path*",
+        headers: staticAssetCache,
+      },
+      {
+        source: "/sponsors/:path*",
+        headers: staticAssetCache,
       },
     ];
   },

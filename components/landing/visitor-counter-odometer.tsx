@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 import { SiteSticker } from "@/components/shared/site-sticker";
 
 /* Odometer digits roll inside a fixed-height cell. Same spring as the shared
@@ -21,7 +21,7 @@ function Digit({ digit, animate }: { digit: number; animate: boolean }) {
       className="inline-block overflow-hidden"
       style={{ height: CELL_HEIGHT }}
     >
-      <motion.span
+      <m.span
         className="flex flex-col"
         initial={{ y: 0 }}
         animate={{ y: `calc(${digit} * -${CELL_HEIGHT})` }}
@@ -36,7 +36,7 @@ function Digit({ digit, animate }: { digit: number; animate: boolean }) {
             {n}
           </span>
         ))}
-      </motion.span>
+      </m.span>
     </span>
   );
 }

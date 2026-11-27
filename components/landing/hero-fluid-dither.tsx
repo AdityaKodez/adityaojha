@@ -135,6 +135,7 @@ export function HeroFluidDither({ className }: { className?: string }) {
     let elapsed = 0;
     let appearElapsed = reducedMotion.matches ? APPEAR_DURATION : 0;
     let lastTimestamp = 0;
+    let lastDrawTimestamp = 0;
     let pointerX = -1;
     let pointerStrength = 0;
 
@@ -293,12 +294,14 @@ export function HeroFluidDither({ className }: { className?: string }) {
         frameId = 0;
       }
       lastTimestamp = 0;
+      lastDrawTimestamp = 0;
     };
 
     const tick = (timestamp: number) => {
       frameId = 0;
       if (!visible || document.hidden || reducedMotion.matches) {
         lastTimestamp = 0;
+        lastDrawTimestamp = 0;
         return;
       }
 
@@ -315,7 +318,13 @@ export function HeroFluidDither({ className }: { className?: string }) {
         pointerStrength = Math.min(1, pointerStrength + dt * 2.4);
       }
 
-      draw(elapsed);
+      // Keep full 60fps during the initial 0.65s appear cascade and while
+      // hovering, then throttle slow ambient drift to ~20fps to cut idle CPU.
+      const highPriority = appearElapsed < APPEAR_DURATION || pointerStrength > 0.005;
+      if (highPriority || !lastDrawTimestamp || timestamp - lastDrawTimestamp >= 50) {
+        lastDrawTimestamp = timestamp;
+        draw(elapsed);
+      }
       frameId = window.requestAnimationFrame(tick);
     };
 

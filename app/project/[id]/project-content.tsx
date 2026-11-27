@@ -13,7 +13,7 @@ import {
   CodeDoodle,
   handwriting,
 } from "@/components/shared/doodles";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { m, useReducedMotion, type Variants } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -41,7 +41,7 @@ export function ProjectContent({
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.main
+    <m.main
       id="main-content"
       variants={containerVariants}
       initial={shouldReduceMotion ? "visible" : "hidden"}
@@ -50,7 +50,7 @@ export function ProjectContent({
       className="relative flex min-h-dvh flex-col justify-center overflow-x-clip bg-background px-5 pt-16 pb-24 md:pb-12"
     >
       <article className="mx-auto flex w-full max-w-[30.5rem] flex-col">
-      <motion.div variants={itemVariants} className="mb-8">
+      <m.div variants={itemVariants} className="mb-8">
         <Link
           href="/#projects"
           className="group inline-flex min-h-11 items-center gap-1.5 rounded-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
@@ -63,18 +63,18 @@ export function ProjectContent({
             {projectsSectionConfig.title}
           </span>
         </Link>
-      </motion.div>
+      </m.div>
 
-        <motion.header variants={itemVariants}>
+        <m.header variants={itemVariants}>
           <h1 className="text-[15px] font-medium leading-6 text-foreground">
             {project.title}
           </h1>
           <p className="text-[15px] leading-6 text-muted-foreground">
             {project.tagline}, {project.year}
           </p>
-        </motion.header>
+        </m.header>
 
-        <motion.div variants={itemVariants} className="pt-5">
+        <m.div variants={itemVariants} className="pt-5">
           <div className="w-full min-w-[12rem] max-w-[min(100%,calc((100dvh-30rem)*1.6))]">
             <PaperFrame className="aspect-[16/10] w-full">
               <Image
@@ -106,9 +106,9 @@ export function ProjectContent({
               </div>
             )}
           </div>
-        </motion.div>
+        </m.div>
 
-        <motion.div variants={itemVariants} className="pt-5">
+        <m.div variants={itemVariants} className="pt-5">
           <p className="text-[15px] leading-7 text-foreground text-pretty">
             {project.description}
           </p>
@@ -117,9 +117,9 @@ export function ProjectContent({
               {renderedContent}
             </div>
           )}
-        </motion.div>
+        </m.div>
 
-        <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2 pt-5">
+        <m.div variants={itemVariants} className="flex flex-wrap items-center gap-2 pt-5">
           {project.liveUrl && (
             <Button
               asChild
@@ -159,8 +159,8 @@ export function ProjectContent({
               </Link>
             </Button>
           )}
-        </motion.div>
+        </m.div>
       </article>
-    </motion.main>
+    </m.main>
   );
 }

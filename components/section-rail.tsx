@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useSpring } from "motion/react";
+import { domAnimation, LazyMotion, m, useSpring } from "motion/react";
 import {
   useEffect,
   useMemo,
@@ -63,16 +63,18 @@ function RailDash({ scale, isActive }: { scale: number; isActive: boolean }) {
   }, [scale, scaleX]);
 
   return (
-    <motion.span
-      aria-hidden
-      className={cn(
-        "block h-0.5 w-full origin-left rounded-full transition-colors duration-300 ease-out motion-reduce:transition-none",
-        isActive
-          ? "bg-foreground"
-          : "bg-muted-foreground/40 group-hover:bg-muted-foreground"
-      )}
-      style={{ scaleX }}
-    />
+    <LazyMotion features={domAnimation}>
+      <m.span
+        aria-hidden
+        className={cn(
+          "block h-0.5 w-full origin-left rounded-full transition-colors duration-300 ease-out motion-reduce:transition-none",
+          isActive
+            ? "bg-foreground"
+            : "bg-muted-foreground/40 group-hover:bg-muted-foreground"
+        )}
+        style={{ scaleX }}
+      />
+    </LazyMotion>
   );
 }
 
