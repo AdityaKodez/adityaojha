@@ -47,7 +47,16 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     agentUpgrade: "security",
-    optimizePackageImports: ["lucide-react", "react-icons", "date-fns"],
+    optimizePackageImports: [
+      "lucide-react",
+      "react-icons",
+      "date-fns",
+      "motion",
+      "radix-ui",
+      "@base-ui/react",
+      "trazo-stickers",
+      "scribbles-icons",
+    ],
   },
   async headers() {
     return [

@@ -3,18 +3,13 @@ import { Bookmarks } from "@/components/landing/bookmarks";
 import { Bookshelf } from "@/components/landing/bookshelf";
 import { Certifications } from "@/components/landing/certifications";
 import { ComponentHighlights } from "@/components/landing/component-highlights";
-import { CTA } from "@/components/landing/cta";
-import { DiwaliScene } from "@/components/landing/diwali-scene";
-import { Experience } from "@/components/landing/experience";
 import { Footer } from "@/components/landing/footer";
 import { GitHubSection } from "@/components/landing/github-section";
 import { Hero } from "@/components/landing/hero";
 import { Insights } from "@/components/landing/insights";
 import { ProfileBanner } from "@/components/landing/profile-banner";
-import { HowIWork } from "@/components/landing/how-i-work";
 import { HomeProjectExplorer } from "@/components/landing/home-project-explorer";
 import { HomeSectionRail } from "@/components/landing/home-section-rail";
-import { Services } from "@/components/landing/services";
 import { GitSkeleton } from "@/components/skeletons/github-skeleton";
 import { Skills } from "@/components/landing/skills";
 import Social from "@/components/landing/social";
@@ -28,9 +23,26 @@ import { diwaliConfig } from "@/config/diwali";
 import { sectionNotes } from "@/config/section-notes";
 import { siteConfig } from "@/config/site";
 import type { SectionId } from "@/config/types";
+import dynamic from "next/dynamic";
 import type { ReactElement } from "react";
 import { Suspense } from "react";
 import type { ProjectExplorerItem } from "@/components/project-explorer";
+
+const Experience = dynamic(() =>
+  import("@/components/landing/experience").then((m) => m.Experience),
+);
+const Services = dynamic(() =>
+  import("@/components/landing/services").then((m) => m.Services),
+);
+const HowIWork = dynamic(() =>
+  import("@/components/landing/how-i-work").then((m) => m.HowIWork),
+);
+const CTA = dynamic(() =>
+  import("@/components/landing/cta").then((m) => m.CTA),
+);
+const DiwaliScene = dynamic(() =>
+  import("@/components/landing/diwali-scene").then((m) => m.DiwaliScene),
+);
 
 /* The explorer never reads case-study content, tags, or status, so those
    fields stay on the server instead of crossing the client boundary. */
@@ -51,27 +63,27 @@ const explorerProjects: ProjectExplorerItem[] = projectsConfig.map(
   }),
 );
 
-const staticSections: Record<Exclude<SectionId, "github">, ReactElement> = {
-  socials: <Social />,
-  skills: <Skills />,
-  about: <About />,
-  testimonials: <Testimonials />,
-  projects: (
+const staticSections: Record<Exclude<SectionId, "github">, () => ReactElement> = {
+  socials: () => <Social />,
+  skills: () => <Skills />,
+  about: () => <About />,
+  testimonials: () => <Testimonials />,
+  projects: () => (
     <HomeProjectExplorer
       projects={explorerProjects}
       title={projectsSectionConfig.title}
     />
   ),
-  components: <ComponentHighlights />,
-  bookmarks: <Bookmarks />,
-  bookshelf: <Bookshelf books={getEnabledBooks()} />,
-  certifications: <Certifications />,
-  insights: <Insights />,
-  sponsors: <SponsorsSection />,
-  experience: <Experience />,
-  services: <Services />,
-  workflow: <HowIWork />,
-  contact: <CTA />,
+  components: () => <ComponentHighlights />,
+  bookmarks: () => <Bookmarks />,
+  bookshelf: () => <Bookshelf books={getEnabledBooks()} />,
+  certifications: () => <Certifications />,
+  insights: () => <Insights />,
+  sponsors: () => <SponsorsSection />,
+  experience: () => <Experience />,
+  services: () => <Services />,
+  workflow: () => <HowIWork />,
+  contact: () => <CTA />,
 };
 
 export default function Home() {
@@ -105,7 +117,7 @@ export default function Home() {
                 <GitHubSection />
               </Suspense>
             ) : (
-              staticSections[sectionId]
+              staticSections[sectionId]()
             );
           const note = sectionNotes[sectionId];
 

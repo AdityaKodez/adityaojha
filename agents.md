@@ -528,7 +528,7 @@ Two surfaces render Markdown and they must stay in sync.
 | Surface | Renderer | File |
 | --- | --- | --- |
 | Component docs at `/components/[id]` | `MarkdownAsync` from `next-mdx-remote`, server-rendered | `app/components/[id]/page.tsx` |
-| Project case studies | `react-markdown`, client-rendered | `app/project/[id]/project-content.tsx` |
+| Project case studies | `MarkdownAsync` from `react-markdown`, server-rendered | `app/project/[id]/page.tsx` |
 
 - Both pass the shared override map from `lib/markdown/markdown-components.tsx`.
   Never inline a second set of overrides.

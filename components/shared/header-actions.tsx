@@ -9,7 +9,7 @@ import {
 import { motion } from "motion/react";
 import { revealOnMount } from "@/lib/motion";
 import dynamic from "next/dynamic";
-import { siteConfig } from "@/config/site";
+import { bannerClientConfig } from "@/config/site-client";
 import { trackEvent } from "@/lib/analytics";
 import { Moon, Search, Sun } from "@/components/shared/site-icons";
 import { useTheme } from "next-themes";
@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { navigationConfig } from "@/config/navigation";
 import { FaGithub } from "react-icons/fa6";
-import { Starfish } from "trazo-stickers";
+import { SiteSticker } from "@/components/shared/site-sticker";
 import styles from "./site-header.module.css";
 
 const SiteCommandPalette = dynamic(
@@ -36,7 +36,12 @@ function GitHubStarIcon() {
           <FaGithub className="block size-full" focusable="false" />
         </span>
         <span className="absolute inset-0 rotate-y-180 backface-hidden">
-          <Starfish size={16.2} style={{ display: "block" }} focusable="false" />
+          <SiteSticker
+            name="starfish"
+            size={16.2}
+            loading="eager"
+            style={{ display: "block" }}
+          />
         </span>
       </span>
     </span>
@@ -49,7 +54,7 @@ function GitHubNavLink() {
   useEffect(() => {
     const controller = new AbortController();
     try {
-      const path = new URL(siteConfig.banner.openSourceUrl).pathname
+      const path = new URL(bannerClientConfig.openSourceUrl).pathname
         .split("/")
         .filter(Boolean);
       const [owner, repo] = path;
@@ -90,13 +95,13 @@ function GitHubNavLink() {
     <Tooltip>
       <TooltipTrigger asChild>
         <Link
-          href={siteConfig.banner.openSourceUrl}
+          href={bannerClientConfig.openSourceUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={navigationConfig.githubLabel}
           onClick={() => {
             trackEvent("github_repo_clicked", {
-              repo_url: siteConfig.banner.openSourceUrl,
+              repo_url: bannerClientConfig.openSourceUrl,
               star_count: starCount,
             });
           }}
@@ -108,7 +113,7 @@ function GitHubNavLink() {
           </span>
         </Link>
       </TooltipTrigger>
-      <TooltipContent><p>{siteConfig.banner.openSourceTooltip}</p></TooltipContent>
+      <TooltipContent><p>{bannerClientConfig.openSourceTooltip}</p></TooltipContent>
     </Tooltip>
   );
 }
@@ -154,7 +159,7 @@ export function HeaderActions() {
       }
 
       if (
-        e.key.toLowerCase() === siteConfig.banner.themeShortcut.toLowerCase()
+        e.key.toLowerCase() === bannerClientConfig.themeShortcut.toLowerCase()
       ) {
         e.preventDefault();
         toggleTheme("shortcut_key");
@@ -201,7 +206,7 @@ export function HeaderActions() {
           <TooltipTrigger asChild>
             <button
               type="button"
-              aria-label={siteConfig.banner.themeToggleLabel}
+              aria-label={bannerClientConfig.themeToggleLabel}
               className={`${styles.utility} cursor-pointer`}
               onClick={() => toggleTheme("button")}
             >
@@ -212,14 +217,14 @@ export function HeaderActions() {
             </button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{siteConfig.banner.themeTooltip} <Kbd>{siteConfig.banner.themeShortcut}</Kbd></p>
+            <p>{bannerClientConfig.themeTooltip} <Kbd>{bannerClientConfig.themeShortcut}</Kbd></p>
           </TooltipContent>
         </Tooltip>
       </motion.div>
 
       <audio
         ref={themeAudioRef}
-        src={siteConfig.banner.switchAudioSrc}
+        src={bannerClientConfig.switchAudioSrc}
         preload="none"
       />
 

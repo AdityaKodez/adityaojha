@@ -161,6 +161,12 @@ export default function RootLayout({
     >
       <head>
         <link rel="me" href={portfolioProfileUrl} />
+        <link
+          rel="preload"
+          as="image"
+          type="image/svg+xml"
+          href="/icons/site-icons.svg"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -193,7 +199,7 @@ export default function RootLayout({
         </ThemeProvider>
         <Analytics />
         <Script
-          defer
+          strategy="lazyOnload"
           src="https://talvess.vercel.app/script.js"
           data-website-id="60de5aa9-eea8-4f05-b1d6-8a3d244d5644"
         />

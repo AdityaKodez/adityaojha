@@ -5,9 +5,9 @@ import dynamic from "next/dynamic";
 import { motion, useInView, useReducedMotion, useSpring, type Variants } from "motion/react";
 import { DiscordStatus } from "@/components/landing/discord-status";
 import { TrazoColophon } from "@/components/landing/trazo-colophon";
-import { footerConfig } from "@/config/site";
+import { SiteSticker } from "@/components/shared/site-sticker";
+import { footerClientConfig as footerConfig } from "@/config/site-client";
 import { MOTION_EASE } from "@/lib/motion";
-import { CoffeeSticker } from "stick-it-up";
 
 const FooterEarth = dynamic(
   () =>
@@ -118,11 +118,12 @@ export function FooterScene({ children }: { children: ReactNode }) {
         >
           <p className="text-center font-mono text-[11px] leading-relaxed tracking-[0.06em] text-muted-foreground">
             {footerConfig.credit}
-            <CoffeeSticker
+            <SiteSticker
+              name="coffee"
               size="1.6em"
+              loading="lazy"
               className="ml-1.5 align-middle"
               aria-hidden="true"
-              focusable="false"
             />
           </p>
         </motion.div>

@@ -1,5 +1,5 @@
+import { PeaceHandSticker } from "@/components/shared/site-sticker";
 import type { HeroConfig } from "@/config/types";
-import { PeaceHandSticker } from "stick-it-up";
 
 export const heroConfig: HeroConfig = {
   greeting: "Aditya Ojha",

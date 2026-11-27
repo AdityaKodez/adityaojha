@@ -8,7 +8,7 @@ import {
   type DiscordStatus as DiscordStatusType,
   type LanyardData,
 } from "@/lib/discord-status";
-import { siteConfig } from "@/config/site";
+import { personalClientConfig } from "@/config/site-client";
 import { socialsConfig } from "@/config/socials";
 import { trackEvent } from "@/lib/analytics";
 import { useQuery } from "@/lib/react-query";
@@ -72,7 +72,7 @@ type Presence = {
 
 function describePresence(data: LanyardData | undefined): Presence {
   const avatar = {
-    image: siteConfig.personal.avatar.src,
+    image: personalClientConfig.avatar.src,
     fallbackIcon: null,
     listening: false,
   };

@@ -1,6 +1,6 @@
 "use client";
 
-import Avvvatars from "avvvatars-react";
+import dynamic from "next/dynamic";
 import {
   getEnabledSponsors,
   getEnabledSupportLinks,
@@ -26,6 +26,8 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 import { SiBuymeacoffee } from "react-icons/si";
 import { Signature } from "./signature";
+
+const Avvvatars = dynamic(() => import("avvvatars-react"), { ssr: false });
 
 const badgeSpring = { type: "spring", duration: 0.35, bounce: 0.3 } as const;
 const tooltipGlide =

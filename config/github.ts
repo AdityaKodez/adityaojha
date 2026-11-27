@@ -1,32 +1,18 @@
-import {
-  asteriskDef,
-  flowerRedDef,
-  flowerYellowDef,
-  lightningBoltDef,
-  pinkDinoDef,
-  redCrabDef,
-  sixStarDef,
-  solidStarDef,
-  spiralDef,
-  starOutlineDef,
-  starfishDef,
-  sunBurstDef,
-  type StickerDef,
-} from "trazo-stickers/svg";
+import type { SiteStickerName } from "@/components/shared/site-sticker";
 
-export const githubRepoStickers: readonly StickerDef[] = [
-  sunBurstDef,
-  solidStarDef,
-  starfishDef,
-  lightningBoltDef,
-  flowerRedDef,
-  sixStarDef,
-  pinkDinoDef,
-  flowerYellowDef,
-  redCrabDef,
-  spiralDef,
-  asteriskDef,
-  starOutlineDef,
+export const githubRepoStickers: readonly SiteStickerName[] = [
+  "sun-burst",
+  "solid-star",
+  "starfish",
+  "lightning-bolt",
+  "flower-red",
+  "six-star",
+  "pink-dino",
+  "flower-yellow",
+  "red-crab",
+  "spiral",
+  "asterisk",
+  "star-outline",
 ];
 
 export const githubSectionConfig = {

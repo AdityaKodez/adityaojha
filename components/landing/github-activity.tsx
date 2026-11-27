@@ -13,7 +13,7 @@ import {
   type KeyboardEvent,
   type PointerEvent,
 } from "react";
-import { Sticker } from "trazo-stickers";
+import { SiteSticker } from "@/components/shared/site-sticker";
 import { Star } from "@/components/shared/site-icons";
 import {
   githubRepoStickers,
@@ -140,7 +140,7 @@ const CalendarGrid = memo(function CalendarGrid({
             const index = column * 7 + row;
             const day = calendar.days[index];
             const label = dayLabels[index];
-            const stickerDef = stickerByIndex.get(index);
+            const stickerName = stickerByIndex.get(index);
             return (
               <div
                 key={day.date}
@@ -163,16 +163,16 @@ const CalendarGrid = memo(function CalendarGrid({
                     data-count={day.count ?? "missing"}
                     className="group relative flex size-full cursor-pointer items-center justify-center rounded-full outline-none hover:z-10 focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-foreground"
                   >
-                    {stickerDef ? (
+                    {stickerName ? (
                       <span
                         aria-hidden="true"
                         className="pointer-events-none flex size-3 shrink-0 items-center justify-center"
                       >
-                        <Sticker
-                          def={stickerDef}
+                        <SiteSticker
+                          name={stickerName}
                           size={12}
+                          loading="lazy"
                           className="block size-full motion-safe:transition-transform motion-safe:duration-150 [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-125"
-                          focusable="false"
                         />
                       </span>
                     ) : (
@@ -622,11 +622,11 @@ export function GitHubActivity({ calendar }: { calendar: ActivityCalendar }) {
         <span>{copy.more}</span>
         {stickerByIndex.size > 0 && (
           <span className="ml-2 flex items-center gap-1">
-            <Sticker
-              def={githubRepoStickers[0]}
+            <SiteSticker
+              name={githubRepoStickers[0]}
               size={12}
+              loading="lazy"
               className="block shrink-0"
-              focusable="false"
             />
             {copy.newRepository}
           </span>

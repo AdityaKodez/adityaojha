@@ -1,8 +1,11 @@
 import { projectsConfig } from "@/config/projects";
 import { siteConfig } from "@/config/site";
+import { markdownComponents } from "@/lib/markdown/markdown-components";
 import { getNpmWeeklyDownloads } from "@/lib/npm";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { MarkdownAsync } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { ProjectContent } from "./project-content";
 
 export const revalidate = 3600;
@@ -72,9 +75,24 @@ export default async function ProjectPage({
     notFound();
   }
 
-  const weeklyDownloads = project.npmPackage
-    ? await getNpmWeeklyDownloads(project.npmPackage)
-    : null;
+  const [weeklyDownloads, renderedContent] = await Promise.all([
+    project.npmPackage
+      ? getNpmWeeklyDownloads(project.npmPackage)
+      : Promise.resolve(null),
+    project.content
+      ? MarkdownAsync({
+          remarkPlugins: [remarkGfm],
+          components: markdownComponents,
+          children: project.content,
+        })
+      : Promise.resolve(null),
+  ]);
 
-  return <ProjectContent project={project} weeklyDownloads={weeklyDownloads} />;
+  return (
+    <ProjectContent
+      project={project}
+      weeklyDownloads={weeklyDownloads}
+      renderedContent={renderedContent}
+    />
+  );
 }

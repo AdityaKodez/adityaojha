@@ -1,8 +1,8 @@
 import { ArrowUpRightCircle } from "@/components/shared/site-icons";
+import { SiteSticker } from "@/components/shared/site-sticker";
 import { Button } from "@/components/ui/button";
-import { trazoColophonConfig } from "@/config/site";
+import { trazoColophonConfig } from "@/config/site-client";
 import { cn } from "@/lib/utils";
-import { FlowerYellow, RedCrab, Starfish } from "trazo-stickers";
 
 const stickerMotion =
   "inline-flex size-5 items-center justify-center motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.34,1.56,0.64,1)]";
@@ -33,10 +33,11 @@ export function TrazoColophon({ className }: { className?: string }) {
               "translate-x-0.5 -rotate-12 scale-90 motion-safe:pointer-fine:group-hover/trazo:-translate-x-0.5 motion-safe:pointer-fine:group-hover/trazo:-translate-y-px motion-safe:pointer-fine:group-hover/trazo:-rotate-20 motion-safe:pointer-fine:group-hover/trazo:scale-95 motion-safe:group-focus-visible/trazo:-translate-x-0.5 motion-safe:group-focus-visible/trazo:-rotate-20",
             )}
           >
-            <FlowerYellow
+            <SiteSticker
+              name="flower-yellow"
               size={18}
+              loading="lazy"
               className="size-[18px]"
-              focusable="false"
             />
           </span>
           <span
@@ -45,7 +46,12 @@ export function TrazoColophon({ className }: { className?: string }) {
               "relative z-10 motion-safe:pointer-fine:group-hover/trazo:-translate-y-0.5 motion-safe:pointer-fine:group-hover/trazo:rotate-6 motion-safe:pointer-fine:group-hover/trazo:scale-105 motion-safe:group-focus-visible/trazo:-translate-y-0.5 motion-safe:group-focus-visible/trazo:rotate-6",
             )}
           >
-            <Starfish size={19} className="size-[19px]" focusable="false" />
+            <SiteSticker
+              name="starfish"
+              size={19}
+              loading="lazy"
+              className="size-[19px]"
+            />
           </span>
           <span
             className={cn(
@@ -53,7 +59,12 @@ export function TrazoColophon({ className }: { className?: string }) {
               "-translate-x-0.5 rotate-12 scale-90 motion-safe:pointer-fine:group-hover/trazo:translate-x-0.5 motion-safe:pointer-fine:group-hover/trazo:-translate-y-px motion-safe:pointer-fine:group-hover/trazo:rotate-20 motion-safe:pointer-fine:group-hover/trazo:scale-95 motion-safe:group-focus-visible/trazo:translate-x-0.5 motion-safe:group-focus-visible/trazo:rotate-20",
             )}
           >
-            <RedCrab size={18} className="size-[18px]" focusable="false" />
+            <SiteSticker
+              name="red-crab"
+              size={18}
+              loading="lazy"
+              className="size-[18px]"
+            />
           </span>
         </span>
         <span>{trazoColophonConfig.ctaLabel}</span>

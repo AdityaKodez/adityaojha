@@ -1,6 +1,6 @@
 "use client";
 
-import { siteConfig } from "@/config/site";
+import { siteUrl } from "@/config/site-client";
 import { socialsConfig } from "@/config/socials";
 import { sponsorTiers } from "@/config/sponsors";
 import { revealOnMount } from "@/lib/motion";
@@ -156,7 +156,7 @@ function useClaimDraft() {
 
 const SHARE_URL = `https://x.com/intent/post?text=${encodeURIComponent(
   `Just backed ${X_HANDLE?.handle ?? "@AdiKodez"}’s work. Small support, good company.`,
-)}&url=${encodeURIComponent(`${siteConfig.meta.url}/#sponsors`)}`;
+)}&url=${encodeURIComponent(`${siteUrl}/#sponsors`)}`;
 
 const NEXT_STEPS = [
   {

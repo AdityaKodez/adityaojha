@@ -1,3 +1,10 @@
+import {
+  bannerClientConfig,
+  footerClientConfig,
+  personalClientConfig,
+  siteUrl,
+  trazoColophonConfig as trazoColophon,
+} from "@/config/site-client";
 import { socialsConfig } from "@/config/socials";
 import type {
   AboutGreetings,
@@ -39,26 +46,13 @@ export const aboutItems: AboutItem[] = [
   },
 ];
 
-export const footerConfig: FooterConfig = {
-  quote: "The soul becomes dyed with the color of its thoughts.",
-  attribution: "Marcus Aurelius",
-  credit: "Made with <3 and lots of coffee.",
-  artwork: {
-    src: "/images/footer-garden-strip.webp",
-    width: 1264,
-    height: 600,
-  },
-};
+export const footerConfig: FooterConfig = footerClientConfig;
 
-export const trazoColophonConfig: TrazoColophonConfig = {
-  label: "Explore the Trazo sticker library",
-  ctaLabel: "Explore Trazo",
-  href: "https://trazo.akoder.xyz/library?utm_source=akoder.xyz&utm_medium=referral&utm_campaign=portfolio_stickers&utm_content=site_colophon",
-};
+export const trazoColophonConfig: TrazoColophonConfig = trazoColophon;
 
 export const siteConfig: PortfolioConfig = {
   meta: {
-    url: "https://akoder.xyz",
+    url: siteUrl,
     title: "Aditya Ojha — Building SaaS in Public",
     titleTemplate: "%s | Aditya Ojha",
     shortTitle: "Aditya Ojha",
@@ -79,7 +73,7 @@ export const siteConfig: PortfolioConfig = {
       "AdityaKodez",
       "SaaS",
     ],
-    authors: [{ name: "Aditya", url: "https://akoder.xyz" }],
+    authors: [{ name: "Aditya", url: siteUrl }],
     creator: "Aditya",
     publisher: "Aditya",
     classification: "Portfolio",
@@ -127,36 +121,23 @@ export const siteConfig: PortfolioConfig = {
         allow: "/",
         disallow: ["/api/"],
       },
-      sitemap: "https://akoder.xyz/sitemap.xml",
+      sitemap: `${siteUrl}/sitemap.xml`,
     },
     sitemap: [
-      { url: "https://akoder.xyz", changeFrequency: "monthly", priority: 1 },
+      { url: siteUrl, changeFrequency: "monthly", priority: 1 },
       {
-        url: "https://akoder.xyz/testimonials",
+        url: `${siteUrl}/testimonials`,
         changeFrequency: "monthly",
         priority: 0.6,
       },
       {
-        url: "https://akoder.xyz/sponsor",
+        url: `${siteUrl}/sponsor`,
         changeFrequency: "monthly",
         priority: 0.6,
       },
     ],
   },
-  personal: {
-    fullName: "Aditya Ojha",
-    firstName: "Aditya",
-    avatar: {
-      src: "/images/profile-mascot-sticker.webp",
-      alt: "Paper-cut sticker of Aditya's spiky-haired avatar",
-      fallback: "AK",
-    },
-    location: {
-      label: "New Delhi, India",
-      timeZone: "Asia/Kolkata",
-    },
-    githubUsername: "AdityaKodez",
-  },
+  personal: personalClientConfig,
   sectionOrder: [
     "projects",
     "socials",
@@ -189,16 +170,7 @@ export const siteConfig: PortfolioConfig = {
     github: true,
     contact: false,
   },
-  banner: {
-    imageSrc: "/images/profile-banner-cutout.webp",
-    imageAlt: "Paper cutouts of a keyboard, notebook, paper plane, and coffee cup",
-    openSourceUrl: "https://github.com/AdityaKodez/adityaojha",
-    openSourceTooltip: "This project is open source!",
-    themeToggleLabel: "Toggle theme",
-    themeShortcut: "D",
-    themeTooltip: "Toggle theme",
-    switchAudioSrc: "/switch.mp3",
-  },
+  banner: bannerClientConfig,
   about: {
     title: "Hello there !",
     body: aboutItems.map(({ lead, body }) => `${lead} ${body}`).join(" "),

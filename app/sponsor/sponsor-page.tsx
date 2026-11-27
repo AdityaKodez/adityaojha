@@ -1,15 +1,7 @@
-"use client";
-
 import { SponsorsSection } from "@/components/landing/sponsors";
-import { socialsConfig } from "@/config/socials";
-import { sponsorPageConfig, sponsorTiers } from "@/config/sponsors";
-import { trackEvent } from "@/lib/analytics";
-import { ArrowRight, ArrowUpRight } from "@/components/shared/site-icons";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import type { ComponentType } from "react";
 import {
   Armchair,
+  ArrowUpRight,
   Coffee,
   FlaskConical,
   HandHeart,
@@ -18,16 +10,13 @@ import {
   PenLine,
   Receipt,
   Sparkles,
-  type IconProps,
-} from "scribbles-icons";
-
-/**
- * Plain anchors to the checkout route on purpose: it 302s to Dodo's hosted
- * checkout, which a client-side router would try to render instead of
- * following.
- */
-const CHECKOUT_HREF = "/api/sponsor-checkout";
-const CLAIM_HREF = "/sponsor/claim";
+  type SiteIconProps,
+} from "@/components/shared/site-icons";
+import { socialsConfig } from "@/config/socials";
+import { sponsorPageConfig, sponsorTiers } from "@/config/sponsors";
+import { cn } from "@/lib/utils";
+import type { ComponentType } from "react";
+import { SponsorCta } from "./sponsor-cta";
 
 const enabledTiers = sponsorTiers.filter((tier) => tier.enabled !== false);
 const seatPrice = enabledTiers[0]?.price ?? 5;
@@ -36,22 +25,10 @@ const X_URL =
   socialsConfig.find((social) => social.id === "x")?.href ??
   "https://x.com/AdiKodez";
 
-const pillClass =
-  "micro-transition inline-flex h-9 items-center justify-center gap-1.5 rounded-full px-4 text-[13px] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
-const primaryClass = `${pillClass} bg-foreground text-background hover:bg-foreground/85`;
-const secondaryClass = `${pillClass} bg-secondary text-secondary-foreground hover:bg-secondary/80`;
 const quietLinkClass =
   "micro-transition rounded-sm text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
 
-function trackCta(cta: "checkout" | "claim") {
-  trackEvent("sponsor_cta_clicked", {
-    location: "/sponsor",
-    surface: "hero",
-    cta,
-  });
-}
-
-type Scribble = ComponentType<IconProps>;
+type Scribble = ComponentType<SiteIconProps>;
 
 const WHY_ICONS: Scribble[] = [Heart, Receipt, FlaskConical];
 const STEP_ICONS: Scribble[] = [Armchair, PenLine, PartyPopper];
@@ -63,24 +40,17 @@ function HeroScribbles() {
       aria-hidden="true"
       className="pointer-events-none relative hidden size-40 shrink-0 text-foreground sm:block"
     >
-      <HandHeart
-        size={96}
-        weight="fill"
-        className="absolute left-6 top-8 -rotate-6"
-      />
+      <HandHeart size={96} className="absolute left-6 top-8 -rotate-6" />
       <Coffee
         size={40}
-        weight="fill"
         className="absolute right-0 top-0 rotate-12 text-muted-foreground"
       />
       <Sparkles
         size={28}
-        weight="fill"
         className="absolute left-0 top-2 -rotate-12 text-muted-foreground"
       />
       <Heart
         size={22}
-        weight="fill"
         className="absolute bottom-2 right-4 rotate-6 text-primary"
       />
     </div>
@@ -113,7 +83,7 @@ function NumberedList({
                   index % 2 === 0 ? "-rotate-6" : "rotate-6",
                 )}
               >
-                <Icon size={30} weight="fill" />
+                <Icon size={30} />
               </span>
               <div className="min-w-0 pt-0.5">
                 <p className="flex items-baseline gap-2 text-sm font-medium tracking-tight">
@@ -153,23 +123,7 @@ export function SponsorPage() {
                 {description}
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <a
-                href={CHECKOUT_HREF}
-                className={primaryClass}
-                onClick={() => trackCta("checkout")}
-              >
-                Take a seat, ${seatPrice}
-                <ArrowRight aria-hidden className="size-4" />
-              </a>
-              <Link
-                href={CLAIM_HREF}
-                className={secondaryClass}
-                onClick={() => trackCta("claim")}
-              >
-                Already paid? Claim it
-              </Link>
-            </div>
+            <SponsorCta seatPrice={seatPrice} />
             <p className="text-xs leading-relaxed text-muted-foreground">
               One payment, no subscription. Questions?{" "}
               <a

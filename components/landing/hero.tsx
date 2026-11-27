@@ -1,15 +1,15 @@
 "use client";
 
+import { SiteSticker } from "@/components/shared/site-sticker";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { VerseText } from "@/components/verse-text";
 import { heroConfig } from "@/config/hero";
-import { siteConfig } from "@/config/site";
+import { personalClientConfig } from "@/config/site-client";
 import { trackEvent } from "@/lib/analytics";
 import { MOTION_EASE } from "@/lib/motion";
 import { motion, type Variants } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useHaptic } from "react-haptic";
-import { Earth } from "trazo-stickers";
 
 // Keep blur on the text itself, so the banner and section shell stay sharp.
 const textVariants: Variants = {
@@ -69,7 +69,7 @@ const dotVariants: Variants = {
 };
 
 const locationTimeFormatter = new Intl.DateTimeFormat("en-GB", {
-  timeZone: siteConfig.personal.location.timeZone,
+  timeZone: personalClientConfig.location.timeZone,
   hour: "2-digit",
   minute: "2-digit",
   second: "2-digit",
@@ -185,10 +185,10 @@ export function Hero() {
                 ) : (
                   <heroConfig.waveEmoji
                     size="1em"
+                    loading="eager"
                     style={{ display: "block" }}
                     className="transition-transform duration-200 ease-out motion-safe:hover:scale-110 motion-reduce:transition-none"
                     aria-hidden="true"
-                    focusable="false"
                   />
                 )}
               </span>
@@ -211,15 +211,16 @@ export function Hero() {
                   variants={textVariants}
                   custom={0.16}
                 >
-                  <Earth
+                  <SiteSticker
+                    name="earth"
                     size={18}
+                    loading="eager"
                     style={{ display: "block" }}
                     className="shrink-0 transition-transform duration-300 ease-out motion-safe:group-hover:rotate-12 motion-safe:group-hover:scale-110 motion-safe:group-focus-visible:rotate-12 motion-safe:group-focus-visible:scale-110 motion-reduce:transition-none"
                     aria-hidden="true"
-                    focusable="false"
                   />
                   <span className="inline-block font-sans">
-                    {siteConfig.personal.location.label}
+                    {personalClientConfig.location.label}
                   </span>
                 </motion.span>
               </TooltipTrigger>

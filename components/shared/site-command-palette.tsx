@@ -30,7 +30,7 @@ import { getEnabledComponents } from "@/config/components";
 import { bookshelfConfig } from "@/config/books";
 import projectFavicons from "@/config/project-favicons.generated.json";
 import { projectsConfig } from "@/config/projects";
-import { siteConfig } from "@/config/site";
+import { bannerClientConfig, siteUrl } from "@/config/site-client";
 import type { Project } from "@/config/types";
 import { playCopySound } from "@/lib/copy-sound";
 import { cn } from "@/lib/utils";
@@ -163,7 +163,7 @@ export function SiteCommandPalette({
             badge: "external",
             keywords: ["repo", "source", "repository", "code", "stars"],
             onSelect: () =>
-              window.open(siteConfig.banner.openSourceUrl, "_blank"),
+              window.open(bannerClientConfig.openSourceUrl, "_blank"),
           },
           {
             id: "copy-url",
@@ -172,7 +172,7 @@ export function SiteCommandPalette({
             keywords: ["link", "share", "address", "copy"],
             onSelect: () => {
               navigator.clipboard
-                ?.writeText(siteConfig.meta.url)
+                ?.writeText(siteUrl)
                 .then(() => playCopySound())
                 .catch(() => {});
             },

@@ -1,6 +1,5 @@
 "use client";
 
-import { markdownComponents } from "@/lib/markdown/markdown-components";
 import { Button } from "@/components/ui/button";
 import { PaperFrame } from "@/components/shared/paper-frame";
 import { PortfolioSticker } from "@/components/shared/portfolio-sticker";
@@ -17,8 +16,7 @@ import {
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import type { ReactNode } from "react";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -34,9 +32,11 @@ const pillClass = "group h-9 gap-1.5 rounded-full px-4 text-[13px]";
 export function ProjectContent({
   project,
   weeklyDownloads,
+  renderedContent,
 }: {
   project: Project;
   weeklyDownloads?: number | null;
+  renderedContent?: ReactNode;
 }) {
   const shouldReduceMotion = useReducedMotion();
 
@@ -112,11 +112,9 @@ export function ProjectContent({
           <p className="text-[15px] leading-7 text-foreground text-pretty">
             {project.description}
           </p>
-          {project.content && (
+          {renderedContent && (
             <div className="prose mt-3 max-w-none text-[15px] leading-7 text-muted-foreground [&_p]:my-0">
-              <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
-                {project.content}
-              </ReactMarkdown>
+              {renderedContent}
             </div>
           )}
         </motion.div>
