@@ -643,10 +643,11 @@ Rules:
   The How I Work rows reuse the same `PaperCutIcon` base for their
   scope, communication, and handoff icons, keyed by the item`s `icon` field.
   Discord activity fallback icons in `components/landing/discord-activity-icons.tsx`
-  reuse `PaperCutIcon` and `PrintDots` for music, watching, gaming, streaming,
-  coding, competition, and other activities. Keep the 28px illustrations free
-  of background tiles, with the same paper edges, ink, tilt, and accent wash.
-  Activity artwork and album covers still take priority when available.
+  use Trazo-style stickers (`public/images/portfolio-stickers/activity-*.svg`)
+  via `PortfolioSticker` for music, watching, gaming, streaming, coding,
+  competition, and other activities. Keep the 28px illustrations free of
+  background tiles. Activity artwork and album covers still take priority when
+  available.
   The project explorer`s year folders draw with the same paper-cut recipe (offset
   shadow, paper edge, blue wash, halftone dots) instead of per-year color fills.
 - Set `enabled: false` to hide an entry without deleting it.
